@@ -1,0 +1,48 @@
+{
+  "name": "@roninbuilders/contracts",
+  "version": "0.0.0",
+  "description": "Ronin Network Contracts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "tsup --watch; tsc -w",
+    "build": "tsup",
+    "format": "pnpm dlx @biomejs/biome format src --write",
+    "upload": "pnpm run build && pnpm publish",
+    "clean": "rm -rf .turbo && rm -rf dist"
+  },
+  "type": "module",
+  "author": "Glitch-txs",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "typescript": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "contracts",
+    "ronin",
+    "defi",
+    "network",
+    "web3"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roninbuilders/contracts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "@biomejs/biome": "1.3.3"
+  }
+}
