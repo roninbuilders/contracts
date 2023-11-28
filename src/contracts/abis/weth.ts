@@ -16,19 +16,19 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Approval',
@@ -45,13 +45,13 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_sender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Deposit',
@@ -68,19 +68,19 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Transfer',
@@ -97,13 +97,13 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_sender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Withdrawal',
@@ -120,13 +120,13 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'allowance',
@@ -135,7 +135,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -150,13 +150,13 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'approve',
@@ -165,7 +165,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -180,7 +180,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'balanceOf',
@@ -189,7 +189,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -206,7 +206,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -233,7 +233,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -250,7 +250,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -267,7 +267,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -282,13 +282,13 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'transfer',
@@ -297,7 +297,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -312,19 +312,19 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'transferFrom',
@@ -333,7 +333,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -348,7 +348,7 @@ export const WETH_ABI = [
 				internal_type: '',
 				name: '_wad',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'withdraw',

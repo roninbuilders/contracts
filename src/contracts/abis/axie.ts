@@ -16,13 +16,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminChanged',
@@ -39,7 +39,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminRemoved',
@@ -56,19 +56,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'Approval',
@@ -85,19 +85,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'ApprovalForAll',
@@ -114,13 +114,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_breedCount',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'AxieBreedCountUpdated',
@@ -137,7 +137,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
@@ -155,7 +155,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'AxieEvolved',
@@ -172,7 +172,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
@@ -222,7 +222,7 @@ export const AXIE_ABI = [
 						type: 'uint16',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'AxieMinted',
@@ -239,7 +239,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'AxieSpawn',
@@ -256,7 +256,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
@@ -306,7 +306,7 @@ export const AXIE_ABI = [
 						type: 'uint16',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -348,7 +348,7 @@ export const AXIE_ABI = [
 						],
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'AxieggMinted',
@@ -365,25 +365,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_sireId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_matronId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'birthDate',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -401,7 +401,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -419,7 +419,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'AxieggSpawned',
@@ -436,7 +436,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_minter',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'MinterAdded',
@@ -453,7 +453,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_minter',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'MinterRemoved',
@@ -470,13 +470,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_nonce',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'NonceUpdated',
@@ -503,25 +503,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'PermissionSet',
@@ -538,19 +538,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'PermissionSetAll',
@@ -567,7 +567,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_seeder',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SeederAdded',
@@ -584,7 +584,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_seeder',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SeederRemoved',
@@ -601,7 +601,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SpenderUnwhitelisted',
@@ -618,7 +618,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SpenderWhitelisted',
@@ -635,19 +635,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'TokenOperatorSet',
@@ -664,25 +664,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'TokenPermissionSet',
@@ -699,19 +699,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'Transfer',
@@ -738,7 +738,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_addedMinters',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'addMinters',
@@ -755,7 +755,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_addedSeeders',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'addSeeders',
@@ -774,7 +774,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -789,13 +789,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'approve',
@@ -812,13 +812,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_sireId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_matronId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'areAxiesEligibleForPairing',
@@ -827,7 +827,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -842,7 +842,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'axie',
@@ -851,19 +851,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: 'sireId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'matronId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'birthDate',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -881,19 +881,19 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'breedCount',
 				type: 'uint8',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'level',
 				type: 'uint16',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -910,7 +910,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -925,7 +925,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'axiegg',
@@ -946,7 +946,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -964,7 +964,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -979,7 +979,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'balanceOf',
@@ -988,7 +988,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_balance',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1005,7 +1005,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1020,13 +1020,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieIds',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_seeds',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'batchGrowAxieggsToAdults',
@@ -1043,25 +1043,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_axiePackages',
 				type: 'bytes[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_axieggPackages',
 				type: 'bytes[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'batchMintAxieggs',
@@ -1078,19 +1078,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_packages',
 				type: 'bytes[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'batchMintAxies',
@@ -1107,13 +1107,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_sireId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_matronId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'breedAxies',
@@ -1122,7 +1122,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1139,7 +1139,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1156,7 +1156,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1173,7 +1173,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1188,7 +1188,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'changeAdmin',
@@ -1207,7 +1207,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1222,7 +1222,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -1240,7 +1240,7 @@ export const AXIE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'evolveAxie',
@@ -1259,7 +1259,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1274,7 +1274,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getApproved',
@@ -1283,7 +1283,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1298,7 +1298,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getAxie',
@@ -1351,7 +1351,7 @@ export const AXIE_ABI = [
 						type: 'uint16',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1366,7 +1366,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getAxiegg',
@@ -1411,7 +1411,7 @@ export const AXIE_ABI = [
 						],
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1426,7 +1426,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getRequirementsForBreeding',
@@ -1435,7 +1435,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1450,13 +1450,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_seed',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'growAxieggToAdult',
@@ -1473,7 +1473,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'hoppingAxieId',
@@ -1482,7 +1482,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1497,13 +1497,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isApprovedForAll',
@@ -1512,7 +1512,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1527,19 +1527,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'isAuthorized',
@@ -1548,7 +1548,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1563,19 +1563,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'isFunctionOperatorOfToken',
@@ -1584,7 +1584,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1599,7 +1599,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_addr',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isMinter',
@@ -1608,7 +1608,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1623,19 +1623,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'isPermissionSet',
@@ -1644,7 +1644,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1659,13 +1659,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isPermissionSetAll',
@@ -1674,7 +1674,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1689,13 +1689,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isTokenOperator',
@@ -1704,7 +1704,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1719,7 +1719,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -1769,7 +1769,7 @@ export const AXIE_ABI = [
 						type: 'uint16',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'mintAxie',
@@ -1778,7 +1778,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1793,13 +1793,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_hoppingAxieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -1849,13 +1849,13 @@ export const AXIE_ABI = [
 						type: 'uint16',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'mintPromoAxie',
@@ -1872,7 +1872,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'minter',
@@ -1881,7 +1881,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1896,7 +1896,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'minters',
@@ -1905,7 +1905,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1922,7 +1922,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1937,7 +1937,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'neededPotionForBreeding',
@@ -1946,7 +1946,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1961,7 +1961,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'nonces',
@@ -1970,7 +1970,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -1985,19 +1985,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'operatorPermission',
@@ -2006,7 +2006,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2021,7 +2021,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'ownerOf',
@@ -2030,7 +2030,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2057,7 +2057,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2074,7 +2074,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2099,7 +2099,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_removedMinters',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'removeMinters',
@@ -2116,7 +2116,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_removedSeeders',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'removeSeeders',
@@ -2133,19 +2133,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'safeTransferFrom',
@@ -2162,25 +2162,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'safeTransferFrom',
@@ -2197,7 +2197,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'seeder',
@@ -2206,7 +2206,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2221,7 +2221,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'seeders',
@@ -2230,7 +2230,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2245,7 +2245,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_toAdultDuration',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'setAdultDuration',
@@ -2262,13 +2262,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setAllPermissionFor',
@@ -2285,13 +2285,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setApprovalForAll',
@@ -2308,7 +2308,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieBreedLimit',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		name: 'setAxieBreedLimit',
@@ -2325,7 +2325,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_baseTokenURI',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		name: 'setBaseTokenURI',
@@ -2342,7 +2342,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_breedingFee',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'setBreedingFee',
@@ -2359,7 +2359,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_breedingFeeToken',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'setBreedingFeeToken',
@@ -2376,7 +2376,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_breedingPotion',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'setBreedingPotionContract',
@@ -2393,7 +2393,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_currentAxieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'setCurrentAxieId',
@@ -2410,25 +2410,25 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setFunctionOperatorForToken',
@@ -2445,7 +2445,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_geneBrewerContract',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'setGeneBrewerContract',
@@ -2462,13 +2462,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieIds',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_hoppingAxieIds',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'setHoppingAxieIds',
@@ -2485,7 +2485,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_neededPotionForBreeding',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'setNeededPotionForBreeding',
@@ -2502,19 +2502,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setPermissionFor',
@@ -2531,7 +2531,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_preExecutionLogicContract',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'setPreExecutionLogicContract',
@@ -2548,19 +2548,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setTokenOperator',
@@ -2577,7 +2577,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenReceiver',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'setTokenReceiver',
@@ -2594,7 +2594,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'stageOf',
@@ -2603,7 +2603,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2618,7 +2618,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'stateOf',
@@ -2627,7 +2627,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2642,7 +2642,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_interfaceId',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'supportsInterface',
@@ -2651,7 +2651,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_supported',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2668,7 +2668,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2685,7 +2685,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2700,7 +2700,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_index',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'tokenByIndex',
@@ -2709,7 +2709,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2724,13 +2724,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_index',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'tokenOfOwnerByIndex',
@@ -2739,7 +2739,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2754,19 +2754,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'tokenPermission',
@@ -2775,7 +2775,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2790,13 +2790,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'tokenPermissionInfos',
@@ -2805,13 +2805,13 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'funcSig',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2828,7 +2828,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2843,7 +2843,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'tokenURI',
@@ -2852,7 +2852,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_uri',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2869,7 +2869,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_supply',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -2884,19 +2884,19 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_tokenId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'transferFrom',
@@ -2923,7 +2923,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'unwhitelist',
@@ -2940,7 +2940,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'whitelist',
@@ -2957,7 +2957,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'whitelisted',
@@ -2966,7 +2966,7 @@ export const AXIE_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,

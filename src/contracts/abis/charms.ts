@@ -16,19 +16,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'ApprovalForAll',
@@ -45,7 +45,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'version',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		name: 'Initialized',
@@ -62,7 +62,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'Paused',
@@ -79,19 +79,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'previousAdminRole',
 				type: 'bytes32',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'newAdminRole',
 				type: 'bytes32',
-				indexed: true,
+
 			},
 		],
 		name: 'RoleAdminChanged',
@@ -108,19 +108,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'sender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'RoleGranted',
@@ -137,19 +137,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'sender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'RoleRevoked',
@@ -166,31 +166,31 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'from',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'values',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'TransferBatch',
@@ -207,31 +207,31 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'from',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'TransferSingle',
@@ -248,13 +248,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'value',
 				type: 'string',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'URI',
@@ -271,7 +271,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'Unpaused',
@@ -290,7 +290,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -307,7 +307,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -324,7 +324,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -339,13 +339,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'balanceOf',
@@ -354,7 +354,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -369,13 +369,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'accounts',
 				type: 'address[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'balanceOfBatch',
@@ -384,7 +384,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -399,19 +399,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'burn',
@@ -428,19 +428,19 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'values',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'burnBatch',
@@ -457,7 +457,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		name: 'getRoleAdmin',
@@ -466,7 +466,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -481,13 +481,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'index',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getRoleMember',
@@ -496,7 +496,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -511,7 +511,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		name: 'getRoleMemberCount',
@@ -520,7 +520,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -535,13 +535,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'grantRole',
@@ -558,13 +558,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'hasRole',
@@ -573,7 +573,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -588,25 +588,25 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'name_',
 				type: 'string',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'symbol_',
 				type: 'string',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_admin',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_minters',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'initialize',
@@ -623,13 +623,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isApprovedForAll',
@@ -638,7 +638,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -653,25 +653,25 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'amount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'mint',
@@ -688,25 +688,25 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'amounts',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'mintBatch',
@@ -725,7 +725,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -752,7 +752,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -767,13 +767,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'renounceRole',
@@ -790,13 +790,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'role',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'account',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'revokeRole',
@@ -813,31 +813,31 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'amounts',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'safeBatchTransferFrom',
@@ -854,31 +854,31 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'id',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'amount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'safeTransferFrom',
@@ -895,13 +895,13 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'operator',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: 'approved',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setApprovalForAll',
@@ -918,7 +918,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: 'interfaceId',
 				type: 'bytes4',
-				indexed: false,
+
 			},
 		],
 		name: 'supportsInterface',
@@ -927,7 +927,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -944,7 +944,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -969,7 +969,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'uri',
@@ -978,7 +978,7 @@ export const CHARMS_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,

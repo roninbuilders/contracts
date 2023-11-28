@@ -18,7 +18,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'aggregate',
@@ -27,13 +27,13 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockNumber',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_returnData',
 				type: 'bytes[]',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -60,7 +60,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'blockAndAggregate',
@@ -69,13 +69,13 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockNumber',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_blockHash',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -93,7 +93,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -108,7 +108,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockNumber',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'getBlockHash',
@@ -117,7 +117,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockHash',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -134,7 +134,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockNumber',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -151,7 +151,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_coinbase',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -168,7 +168,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_difficulty',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -185,7 +185,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_gaslimit',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -202,7 +202,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_timestamp',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -219,7 +219,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockHash',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -234,7 +234,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_addr',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'getRonBalance',
@@ -243,7 +243,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_balance',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -258,7 +258,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_requireSuccess',
 				type: 'bool',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -276,7 +276,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'tryAggregate',
@@ -297,7 +297,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -312,7 +312,7 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_requireSuccess',
 				type: 'bool',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -330,7 +330,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'tryBlockAndAggregate',
@@ -339,13 +339,13 @@ export const MULTICALL_ABI = [
 				internal_type: '',
 				name: '_blockNumber',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_blockHash',
 				type: 'bytes32',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -363,7 +363,7 @@ export const MULTICALL_ABI = [
 						type: 'bytes',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,

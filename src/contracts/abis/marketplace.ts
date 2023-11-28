@@ -26,7 +26,7 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+
 				internalType: 'uint8',
 				name: 'version',
 				type: 'uint8',
@@ -39,13 +39,13 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+
 				internalType: 'address',
 				name: 'maker',
 				type: 'address',
 			},
 			{
-				indexed: false,
+
 				internalType: 'uint256',
 				name: 'nonce',
 				type: 'uint256',
@@ -58,13 +58,13 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
 			},
 			{
-				indexed: false,
+
 				internalType: 'address',
 				name: 'requester',
 				type: 'address',
@@ -161,43 +161,43 @@ export const MARKETPLACE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 				internalType: 'struct MarketOrder.Order',
 				name: 'order',
 				type: 'tuple',
 			},
 			{
-				indexed: false,
+
 				internalType: 'bytes32',
 				name: 'orderHash',
 				type: 'bytes32',
 			},
 			{
-				indexed: false,
+
 				internalType: 'uint256',
 				name: 'settlePrice',
 				type: 'uint256',
 			},
 			{
-				indexed: false,
+
 				internalType: 'address',
 				name: 'settleToken',
 				type: 'address',
 			},
 			{
-				indexed: false,
+
 				internalType: 'address',
 				name: 'matcher',
 				type: 'address',
 			},
 			{
-				indexed: false,
+
 				internalType: 'uint256',
 				name: 'realPrice',
 				type: 'uint256',
 			},
 			{
-				indexed: false,
+
 				internalType: 'uint256',
 				name: 'acceptedSettlePrice',
 				type: 'uint256',
@@ -230,7 +230,7 @@ export const MARKETPLACE_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 				internalType: 'struct IMarketCommission.Allocation[]',
 				name: 'receivedAllocs',
 				type: 'tuple[]',
@@ -243,19 +243,19 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
 			},
 			{
-				indexed: true,
+
 				internalType: 'bytes32',
 				name: 'previousAdminRole',
 				type: 'bytes32',
 			},
 			{
-				indexed: true,
+
 				internalType: 'bytes32',
 				name: 'newAdminRole',
 				type: 'bytes32',
@@ -268,19 +268,19 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
 			},
 			{
-				indexed: true,
+
 				internalType: 'address',
 				name: 'account',
 				type: 'address',
 			},
 			{
-				indexed: true,
+
 				internalType: 'address',
 				name: 'sender',
 				type: 'address',
@@ -293,19 +293,19 @@ export const MARKETPLACE_ABI = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
 			},
 			{
-				indexed: true,
+
 				internalType: 'address',
 				name: 'account',
 				type: 'address',
 			},
 			{
-				indexed: true,
+
 				internalType: 'address',
 				name: 'sender',
 				type: 'address',

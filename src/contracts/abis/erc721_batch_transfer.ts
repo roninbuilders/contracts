@@ -6,19 +6,19 @@ export const ERC721_BATCH_TRANSFER_ABI = [
 				internal_type: '',
 				name: '_tokenContract',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_recipients',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'safeBatchTransfer',
@@ -35,19 +35,19 @@ export const ERC721_BATCH_TRANSFER_ABI = [
 				internal_type: '',
 				name: '_tokenContract',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_ids',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_recipient',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'safeBatchTransfer',

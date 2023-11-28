@@ -16,13 +16,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminChanged',
@@ -39,7 +39,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminRemoved',
@@ -56,7 +56,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_breedingEvent',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'addBreedingEvent',
@@ -75,7 +75,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -90,7 +90,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'breedingEvents',
@@ -99,7 +99,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -114,13 +114,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_birthDate',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -138,7 +138,7 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -156,13 +156,13 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_initialSeed',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'brew',
@@ -183,7 +183,7 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -198,7 +198,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'changeAdmin',
@@ -227,7 +227,7 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		name: 'isAgamoGenes',
@@ -236,7 +236,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -251,7 +251,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'mutableBodies',
@@ -260,7 +260,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -277,7 +277,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -292,13 +292,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'partGeneDetails',
@@ -307,7 +307,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -322,13 +322,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_axieId',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_birthDate',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -346,7 +346,7 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
@@ -364,13 +364,13 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_initialSeed',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'peekOffspringGenes',
@@ -391,7 +391,7 @@ export const GENES_BREWER_ABI = [
 						type: 'uint256',
 					},
 				],
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -416,7 +416,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_index',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'removeBreedingEvent',
@@ -433,13 +433,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_bodies',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approve',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		name: 'setMutableBodies',
@@ -456,7 +456,7 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_partDetailRandomRatio',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'setPartDetailRandomRatio',
@@ -473,13 +473,13 @@ export const GENES_BREWER_ABI = [
 				internal_type: '',
 				name: '_partType',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_partGeneDetails',
 				type: 'uint256[]',
-				indexed: false,
+
 			},
 		],
 		name: 'setPartGeneDetails',

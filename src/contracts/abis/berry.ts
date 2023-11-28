@@ -12,9 +12,9 @@ export const BERRY_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-			{ indexed: true, internalType: 'address', name: 'spender', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+			{ internalType: 'address', name: 'owner', type: 'address' },
+			{ internalType: 'address', name: 'spender', type: 'address' },
+			{ internalType: 'uint256', name: 'value', type: 'uint256' },
 		],
 		name: 'Approval',
 		type: 'event',
@@ -22,8 +22,8 @@ export const BERRY_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: false, internalType: 'string', name: 'prevURI', type: 'string' },
-			{ indexed: false, internalType: 'string', name: 'newURI', type: 'string' },
+			{ internalType: 'string', name: 'prevURI', type: 'string' },
+			{ internalType: 'string', name: 'newURI', type: 'string' },
 		],
 		name: 'ContractURIUpdated',
 		type: 'event',
@@ -31,8 +31,8 @@ export const BERRY_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: 'prevOwner', type: 'address' },
-			{ indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+			{ internalType: 'address', name: 'prevOwner', type: 'address' },
+			{ internalType: 'address', name: 'newOwner', type: 'address' },
 		],
 		name: 'OwnerUpdated',
 		type: 'event',
@@ -40,8 +40,8 @@ export const BERRY_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: 'mintedTo', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: 'quantityMinted', type: 'uint256' },
+			{ internalType: 'address', name: 'mintedTo', type: 'address' },
+			{ internalType: 'uint256', name: 'quantityMinted', type: 'uint256' },
 		],
 		name: 'TokensMinted',
 		type: 'event',
@@ -49,9 +49,9 @@ export const BERRY_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: 'from', type: 'address' },
-			{ indexed: true, internalType: 'address', name: 'to', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+			{ internalType: 'address', name: 'from', type: 'address' },
+			{ internalType: 'address', name: 'to', type: 'address' },
+			{ internalType: 'uint256', name: 'value', type: 'uint256' },
 		],
 		name: 'Transfer',
 		type: 'event',

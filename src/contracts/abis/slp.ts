@@ -6,7 +6,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_dailyPotionLimit',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: '',
@@ -23,13 +23,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminChanged',
@@ -46,7 +46,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_oldAdmin',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'AdminRemoved',
@@ -63,19 +63,19 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Approval',
@@ -92,7 +92,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_minter',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'MinterAdded',
@@ -109,7 +109,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_minter',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'MinterRemoved',
@@ -136,13 +136,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_amount',
 				type: 'uint256',
-				indexed: true,
+
 			},
 		],
 		name: 'SmoothLovePotionCheckpoint',
@@ -159,7 +159,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SpenderUnwhitelisted',
@@ -176,7 +176,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: true,
+
 			},
 		],
 		name: 'SpenderWhitelisted',
@@ -193,19 +193,19 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: true,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'Transfer',
@@ -232,7 +232,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_addedMinters',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'addMinters',
@@ -251,7 +251,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -266,13 +266,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'allowance',
@@ -281,7 +281,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -296,13 +296,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'approve',
@@ -311,7 +311,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -326,19 +326,19 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'approveAndCall',
@@ -347,7 +347,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -362,19 +362,19 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'approveAndCallPayable',
@@ -383,7 +383,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: true,
@@ -398,7 +398,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'balanceOf',
@@ -407,7 +407,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -422,7 +422,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'burn',
@@ -431,7 +431,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -446,13 +446,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'burnFrom',
@@ -461,7 +461,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -478,7 +478,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -493,7 +493,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_newAdmin',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'changeAdmin',
@@ -510,25 +510,25 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_amount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_createdAt',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_signature',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'checkpoint',
@@ -537,7 +537,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_balance',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -552,37 +552,37 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_amount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_createdAt',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_signature',
 				type: 'bytes',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_approvedAmount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_data',
 				type: 'bytes',
-				indexed: false,
+
 			},
 		],
 		name: 'checkpointAndCall',
@@ -591,7 +591,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_balance',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: true,
@@ -608,7 +608,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -625,7 +625,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint8',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -640,7 +640,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_owner',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'getCheckpoint',
@@ -649,13 +649,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_amount',
 				type: 'uint256',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_createdAt',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -670,7 +670,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_addr',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'isMinter',
@@ -679,7 +679,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -694,13 +694,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'mint',
@@ -709,7 +709,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -724,7 +724,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'minter',
@@ -733,7 +733,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -748,7 +748,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'minters',
@@ -757,7 +757,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -774,7 +774,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -801,7 +801,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -826,7 +826,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_removedMinters',
 				type: 'address[]',
-				indexed: false,
+
 			},
 		],
 		name: 'removeMinters',
@@ -843,7 +843,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_dailyPotionLimit',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'setDailyPotionLimit',
@@ -862,7 +862,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'string',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -879,7 +879,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -894,13 +894,13 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'transfer',
@@ -909,7 +909,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -924,19 +924,19 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_from',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_to',
 				type: 'address',
-				indexed: false,
+
 			},
 			{
 				internal_type: '',
 				name: '_value',
 				type: 'uint256',
-				indexed: false,
+
 			},
 		],
 		name: 'transferFrom',
@@ -945,7 +945,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_success',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,
@@ -970,7 +970,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'unwhitelist',
@@ -987,7 +987,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '_spender',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'whitelist',
@@ -1004,7 +1004,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'address',
-				indexed: false,
+
 			},
 		],
 		name: 'whitelisted',
@@ -1013,7 +1013,7 @@ export const SLP_ABI = [
 				internal_type: '',
 				name: '',
 				type: 'bool',
-				indexed: false,
+
 			},
 		],
 		payable: false,

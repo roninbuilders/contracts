@@ -3,24 +3,24 @@ export const WRON_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: '_oldAdmin', type: 'address' },
-			{ indexed: true, internalType: 'address', name: '_newAdmin', type: 'address' },
+			{ internalType: 'address', name: '_oldAdmin', type: 'address' },
+			{ internalType: 'address', name: '_newAdmin', type: 'address' },
 		],
 		name: 'AdminChanged',
 		type: 'event',
 	},
 	{
 		anonymous: false,
-		inputs: [{ indexed: true, internalType: 'address', name: '_oldAdmin', type: 'address' }],
+		inputs: [{ internalType: 'address', name: '_oldAdmin', type: 'address' }],
 		name: 'AdminRemoved',
 		type: 'event',
 	},
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: '_owner', type: 'address' },
-			{ indexed: true, internalType: 'address', name: '_spender', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: '_value', type: 'uint256' },
+			{ internalType: 'address', name: '_owner', type: 'address' },
+			{ internalType: 'address', name: '_spender', type: 'address' },
+			{ internalType: 'uint256', name: '_value', type: 'uint256' },
 		],
 		name: 'Approval',
 		type: 'event',
@@ -28,30 +28,30 @@ export const WRON_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: false, internalType: 'address', name: 'sender', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+			{ internalType: 'address', name: 'sender', type: 'address' },
+			{ internalType: 'uint256', name: 'value', type: 'uint256' },
 		],
 		name: 'Deposit',
 		type: 'event',
 	},
 	{
 		anonymous: false,
-		inputs: [{ indexed: true, internalType: 'address', name: '_spender', type: 'address' }],
+		inputs: [{ internalType: 'address', name: '_spender', type: 'address' }],
 		name: 'SpenderUnwhitelisted',
 		type: 'event',
 	},
 	{
 		anonymous: false,
-		inputs: [{ indexed: true, internalType: 'address', name: '_spender', type: 'address' }],
+		inputs: [{ internalType: 'address', name: '_spender', type: 'address' }],
 		name: 'SpenderWhitelisted',
 		type: 'event',
 	},
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: true, internalType: 'address', name: '_from', type: 'address' },
-			{ indexed: true, internalType: 'address', name: '_to', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: '_value', type: 'uint256' },
+			{ internalType: 'address', name: '_from', type: 'address' },
+			{ internalType: 'address', name: '_to', type: 'address' },
+			{ internalType: 'uint256', name: '_value', type: 'uint256' },
 		],
 		name: 'Transfer',
 		type: 'event',
@@ -59,8 +59,8 @@ export const WRON_ABI = [
 	{
 		anonymous: false,
 		inputs: [
-			{ indexed: false, internalType: 'address', name: 'sender', type: 'address' },
-			{ indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+			{ internalType: 'address', name: 'sender', type: 'address' },
+			{ internalType: 'uint256', name: 'value', type: 'uint256' },
 		],
 		name: 'Withdrawal',
 		type: 'event',
