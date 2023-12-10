@@ -1,6 +1,6 @@
 export const AXIE = {
 	name: 'Axie',
-	address: '0xb628acacd0eb58b09bf025d80c818166df1f5759',
+	address: '0x32950db2a7164ae833121501c797d79e7b79d74c',
 	abi: [
 		{
 			inputs: [],
