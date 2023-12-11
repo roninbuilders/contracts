@@ -68,18 +68,18 @@ const balanceInEther = hre.ethers.formatEther(balance)
 console.log(`RON: ${balanceInEther}`)
 
 // get WETH balance
-const wethContract = new hre.ethers.Contract(WETH.address, JSON.stringify(WETH.abi), hre.ethers.provider)
+const wethContract = new hre.ethers.Contract(WETH.address, WETH.abi, hre.ethers.provider)
 const wethBalance = await wethContract.balanceOf(address)
 const wethBalanceInEther = hre.ethers.formatEther(wethBalance)
 console.log(`WETH: ${wethBalanceInEther}`)
 
 // get axies balance 
-const axieContract = new hre.ethers.Contract(AXIE.address, JSON.stringify(AXIE.abi), hre.ethers.provider)
+const axieContract = new hre.ethers.Contract(AXIE.address, AXIE.abi, hre.ethers.provider)
 const axiesBalance = await axieContract.balanceOf(address)
 console.log(`Axies: ${axiesBalance.toString()}`)
 
 // get USDC balance
-const usdcContract = new hre.ethers.Contract(USDC.address, JSON.stringify(USDC.abi), hre.ethers.provider)
+const usdcContract = new hre.ethers.Contract(USDC.address, USDC.abi, hre.ethers.provider)
 const usdcBalance = await usdcContract.balanceOf(address)
 const usdcBalanceFormated = hre.ethers.formatUnits(usdcBalance, 6) // 6 decimals
 console.log(`USDC balance: ${usdcBalanceFormated}`)
