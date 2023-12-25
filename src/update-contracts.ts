@@ -39,14 +39,24 @@ const writeAbiToFile = (address: string, name: string, abi: any) => {
 		address,
 		abi,
 	}
-	fs.writeFileSync(filePath, `export const ${filename.toLocaleUpperCase()} = ${JSON.stringify(contract, null, 2)};`)
+	fs.writeFileSync(filePath, `import { Contract } from "@/contract";\nexport const ${filename.toLocaleUpperCase()}:Contract = ${JSON.stringify(contract, null, 2)};`)
+}
+
+const saveLocalABI = async (contractAddress: string, contractName: string) => {
+	const abi = await fetchAbi(contractAddress)
+	await new Promise((resolve) => setTimeout(resolve, 3000)) // wait 1 second to avoid rate limit
+	if (!abi) {
+		console.log(`ABI not found for ${contractName}`)
+		return // skip if the contract doesn't have an ABI
+	}
+	writeAbiToFile(contractAddress, contractName, abi)
 }
 
 const updateAbis = async () => {
 	console.log('Updating ABIs...')
 	const contracts = await fetchContracts()
 	for (const [index, contract] of Object.entries(contracts)) {
-		break
+
 		// get from object key
 		const contractAddress = index
 		const contractName = (contract as any).name
@@ -56,16 +66,9 @@ const updateAbis = async () => {
 		}
 
 		try {
-			console.log(`Fetching ABI for ${contractName}...`)
-			const abi = await fetchAbi(contractAddress)
-			await new Promise((resolve) => setTimeout(resolve, 1000)) // wait 1 second to avoid rate limit
-			if (!abi) {
-				console.log(`ABI not found for ${contractName}`)
-				continue
-			}
-			writeAbiToFile(contractAddress, contractName, abi)
-		} catch (error) {
-			console.error(error)
+			await saveLocalABI(contractAddress, contractName)
+		} catch (err) {
+			console.error(err)
 		}
 	}
 
