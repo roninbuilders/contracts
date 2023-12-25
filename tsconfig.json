@@ -4,26 +4,42 @@
     /* Modules */
     "module": "esnext",
     "moduleResolution": "node",
-
     /* Emit */
     "declaration": true,
     "noEmit": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2019", "es2017", "dom"],
+    "lib": [
+      "es2019",
+      "es2017",
+      "dom"
+    ],
     "noImplicitAny": true,
     "noUnusedLocals": true,
     // "noUnusedParameters": true,
     "strictNullChecks": true,
-
     /* Type Checking */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
-
     /* Completeness */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
-  "exclude": ["node_modules", "dist", "types", "out", ".next", ".turbo"],
-  "include": ["global.d.ts", "src"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "types",
+    "out",
+    ".next",
+    ".turbo"
+  ],
+  "include": [
+    "global.d.ts",
+    "src"
+  ]
 }
