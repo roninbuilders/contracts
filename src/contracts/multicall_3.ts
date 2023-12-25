@@ -1,4 +1,5 @@
-export const MULTICALL_3 = {
+import { Contract } from '@/contract'
+export const MULTICALL_3: Contract = {
 	name: 'Multicall 3',
 	address: '0xca11bde05977b3631167028862be2a173976ca11',
 	abi: [

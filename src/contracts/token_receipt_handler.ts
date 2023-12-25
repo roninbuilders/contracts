@@ -1,4 +1,5 @@
-export const TOKEN_RECEIPT_HANDLER = {
+import { Contract } from '@/contract'
+export const TOKEN_RECEIPT_HANDLER: Contract = {
 	name: 'Token Receipt Handler',
 	address: '0x2ef1ca1a9a4a6b05eb784db98befb06d24859b16',
 	abi: [

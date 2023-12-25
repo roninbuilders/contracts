@@ -1,4 +1,5 @@
-export const APEIRON_APOSTLE_SEASON_MINTING_CALLER_PROXY = {
+import { Contract } from '@/contract'
+export const APEIRON_APOSTLE_SEASON_MINTING_CALLER_PROXY: Contract = {
 	name: 'Apeiron Apostle Season Minting Caller Proxy',
 	address: '0x078eb21f0b25f3c0bb532057b2f07ce20307d533',
 	abi: [

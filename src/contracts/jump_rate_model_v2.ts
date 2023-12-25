@@ -1,4 +1,5 @@
-export const JUMP_RATE_MODEL_V2 = {
+import { Contract } from '@/contract'
+export const JUMP_RATE_MODEL_V2: Contract = {
 	name: 'Jump Rate Model V2',
 	address: '0xcbb6dcdd897a3c1917100c651b1e5715f8beba5d',
 	abi: [

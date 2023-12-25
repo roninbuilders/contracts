@@ -1,4 +1,5 @@
-export const COLLATERAL_STAKING_MANAGER_PROXY = {
+import { Contract } from '@/contract'
+export const COLLATERAL_STAKING_MANAGER_PROXY: Contract = {
 	name: 'Collateral Staking Manager Proxy',
 	address: '0xc52b45fa1c7d5e9837737b5dfea00440d6875deb',
 	abi: [

@@ -1,4 +1,5 @@
-export const C_ETHER = {
+import { Contract } from '@/contract'
+export const C_ETHER: Contract = {
 	name: 'C Ether',
 	address: '0x82e5030a8f1c08ffe8fd14a09cbffdb5ce26e388',
 	abi: [

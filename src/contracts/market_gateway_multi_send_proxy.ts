@@ -1,4 +1,5 @@
-export const MARKET_GATEWAY_MULTI_SEND_PROXY = {
+import { Contract } from '@/contract'
+export const MARKET_GATEWAY_MULTI_SEND_PROXY: Contract = {
 	name: 'Market Gateway Multi Send Proxy',
 	address: '0x21a0a1c081dc2f3e48dc391786f53035f85ce0bc',
 	abi: [

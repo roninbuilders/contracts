@@ -1,4 +1,5 @@
-export const ATIA_S_BLESSING = {
+import { Contract } from '@/contract'
+export const ATIA_S_BLESSING: Contract = {
 	name: "Atia's Blessing",
 	address: '0x9d3936dbd9a794ee31ef9f13814233d435bd806c',
 	abi: [

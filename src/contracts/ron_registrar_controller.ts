@@ -1,4 +1,5 @@
-export const RON_REGISTRAR_CONTROLLER = {
+import { Contract } from '@/contract'
+export const RON_REGISTRAR_CONTROLLER: Contract = {
 	name: 'RON Registrar Controller',
 	address: '0x7df2732b400ed050c0cfde58a0dbd870c0502792',
 	abi: [

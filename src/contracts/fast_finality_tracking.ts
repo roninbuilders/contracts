@@ -1,4 +1,5 @@
-export const FAST_FINALITY_TRACKING = {
+import { Contract } from '@/contract'
+export const FAST_FINALITY_TRACKING: Contract = {
 	name: 'Fast Finality Tracking',
 	address: '0x241e507363d674c77a9930f31ea26bbc8857949c',
 	abi: [

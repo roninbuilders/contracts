@@ -1,4 +1,5 @@
-export const ERC20_STAKING_POOL = {
+import { Contract } from '@/contract'
+export const ERC20_STAKING_POOL: Contract = {
 	name: 'ERC20 Staking Pool',
 	address: '0xd9e9569ffbf7e4193aea043dec95d3ee262fdfa7',
 	abi: [

@@ -1,4 +1,5 @@
-export const GNOSIS_SAFE_PROXY_FACTORY = {
+import { Contract } from '@/contract'
+export const GNOSIS_SAFE_PROXY_FACTORY: Contract = {
 	name: 'Gnosis Safe Proxy Factory',
 	address: '0xa6b71e26c5e0845f74c812102ca7114b6a896ab2',
 	abi: [

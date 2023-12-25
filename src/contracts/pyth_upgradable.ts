@@ -1,4 +1,5 @@
-export const PYTH_UPGRADABLE = {
+import { Contract } from '@/contract'
+export const PYTH_UPGRADABLE: Contract = {
 	name: 'Pyth Upgradable',
 	address: '0xa2aa501b19aff244d90cc15a4cf739d2725b5729',
 	abi: [

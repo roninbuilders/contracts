@@ -1,4 +1,5 @@
-export const LUNA_N_SOLAR_BURNER_PROXY = {
+import { Contract } from '@/contract'
+export const LUNA_N_SOLAR_BURNER_PROXY: Contract = {
 	name: 'Luna N Solar Burner Proxy',
 	address: '0x4520b9562aab89dae009a840bc0b2f6c755d634c',
 	abi: [

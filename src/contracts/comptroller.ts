@@ -1,4 +1,5 @@
-export const COMPTROLLER = {
+import { Contract } from '@/contract'
+export const COMPTROLLER: Contract = {
 	name: 'Comptroller',
 	address: '0x946ad76fd64b9a926128dfb27b189925d6f806b2',
 	abi: [

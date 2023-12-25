@@ -1,4 +1,5 @@
-export const WHITELIST_DEPLOYER_V2_PROXY = {
+import { Contract } from '@/contract'
+export const WHITELIST_DEPLOYER_V2_PROXY: Contract = {
 	name: 'Whitelist Deployer V2 Proxy',
 	address: '0xc1876d5c4bfaf0ee325e4226b2bdf216d9896ae1',
 	abi: [

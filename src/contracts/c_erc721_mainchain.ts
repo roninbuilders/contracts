@@ -1,4 +1,5 @@
-export const C_ERC721_MAINCHAIN = {
+import { Contract } from '@/contract'
+export const C_ERC721_MAINCHAIN: Contract = {
 	name: 'C Erc721 Mainchain',
 	address: '0x3fbc37b5d67b9d12f1034e39a285af31eb91dfae',
 	abi: [

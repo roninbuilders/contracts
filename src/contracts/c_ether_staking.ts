@@ -1,4 +1,5 @@
-export const C_ETHER_STAKING = {
+import { Contract } from '@/contract'
+export const C_ETHER_STAKING: Contract = {
 	name: 'C Ether Staking',
 	address: '0x3072c438e505a80e97836db638f591492743f3d1',
 	abi: [

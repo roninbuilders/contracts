@@ -1,4 +1,5 @@
-export const KATANA_PAIR = {
+import { Contract } from '@/contract'
+export const KATANA_PAIR: Contract = {
 	name: 'Katana Pair',
 	address: '0x0af2cd30a569b0014fc6eb4e2f911902917590d2',
 	abi: [

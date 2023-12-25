@@ -1,4 +1,5 @@
-export const AXIE_PRE_EXECUTION_LOGIC = {
+import { Contract } from '@/contract'
+export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 	name: 'Axie Pre-Execution Logic',
 	address: '0xfd9d0aa8411e4dbdd44114c54dd85a1fc9f1b72d',
 	abi: [

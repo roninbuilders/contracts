@@ -1,4 +1,5 @@
-export const MARKET_COMMISSION = {
+import { Contract } from '@/contract'
+export const MARKET_COMMISSION: Contract = {
 	name: 'Market Commission',
 	address: '0xbe03b95427d243a19177c22d7728bd11f1895de6',
 	abi: [

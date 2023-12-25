@@ -1,4 +1,5 @@
-export const WRAPPED_RON = {
+import { Contract } from '@/contract'
+export const WRAPPED_RON: Contract = {
 	name: 'Wrapped RON',
 	address: '0xe514d9deb7966c8be0ca922de8a064264ea6bcd4',
 	abi: [

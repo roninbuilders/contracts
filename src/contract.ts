@@ -1,7 +1,7 @@
-import { Abi } from "abitype";
+import { Abi } from 'abitype'
 
 export interface Contract {
-  name: string;
-  address: `0x${string}`
-  abi: Abi | readonly unknown[],
+	name: string
+	address: `0x${string}`
+	abi: Abi | readonly unknown[]
 }

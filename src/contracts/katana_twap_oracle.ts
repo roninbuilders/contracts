@@ -1,4 +1,5 @@
-export const KATANA_TWAP_ORACLE = {
+import { Contract } from '@/contract'
+export const KATANA_TWAP_ORACLE: Contract = {
 	name: 'Katana TWAP Oracle',
 	address: '0x3ea08443db91f3cbf1fbcad2b2d1ca3f4c582fbf',
 	abi: [

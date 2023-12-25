@@ -1,4 +1,5 @@
-export const AFFILIATE_ROUTER = {
+import { Contract } from '@/contract'
+export const AFFILIATE_ROUTER: Contract = {
 	name: 'Affiliate Router',
 	address: '0x7c645c35ab772be52a474b1e08414d55e8ea56d5',
 	abi: [

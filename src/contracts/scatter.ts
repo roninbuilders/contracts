@@ -1,4 +1,5 @@
-export const SCATTER = {
+import { Contract } from '@/contract'
+export const SCATTER: Contract = {
 	name: 'Scatter',
 	address: '0x5d518933351a0bc14b24b329b33b813565608769',
 	abi: [

@@ -1,4 +1,5 @@
-export const NAME_CHECKER = {
+import { Contract } from '@/contract'
+export const NAME_CHECKER: Contract = {
 	name: 'Name Checker',
 	address: '0xdb8eabf4f27baa9c5ebad23fee1cb12037b58065',
 	abi: [

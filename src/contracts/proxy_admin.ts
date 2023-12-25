@@ -1,4 +1,5 @@
-export const PROXY_ADMIN = {
+import { Contract } from '@/contract'
+export const PROXY_ADMIN: Contract = {
 	name: 'Proxy Admin',
 	address: '0xa3e7d085e65cb0b916f6717da876b7be5cc92f03',
 	abi: [

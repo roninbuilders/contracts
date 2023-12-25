@@ -1,4 +1,5 @@
-export const APEIRON_GODIVERSE_COLLECTION = {
+import { Contract } from '@/contract'
+export const APEIRON_GODIVERSE_COLLECTION: Contract = {
 	name: 'Apeiron Godiverse Collection',
 	address: '0xf055f7d74b201ba042ec101ffa6e84c4d3f6f40e',
 	abi: [

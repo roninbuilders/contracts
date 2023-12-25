@@ -1,4 +1,5 @@
-export const METALEND_PREMIUM_USER = {
+import { Contract } from '@/contract'
+export const METALEND_PREMIUM_USER: Contract = {
 	name: 'Metalend Premium User',
 	address: '0xb562695af9c95f4da31cca8be72f1cbed327d54a',
 	abi: [

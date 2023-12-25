@@ -1,4 +1,5 @@
-export const APEIRON_APOSTLE_SEASON_MINTING = {
+import { Contract } from '@/contract'
+export const APEIRON_APOSTLE_SEASON_MINTING: Contract = {
 	name: 'Apeiron Apostle Season Minting',
 	address: '0x153a381d1207862ca003f68600462faa66a828a7',
 	abi: [

@@ -1,4 +1,5 @@
-export const RON_WETH_LP_STAKING_POOL = {
+import { Contract } from '@/contract'
+export const RON_WETH_LP_STAKING_POOL: Contract = {
 	name: 'RON-WETH LP Staking Pool',
 	address: '0xb9072cec557528f81dd25dc474d4d69564956e1e',
 	abi: [

@@ -1,4 +1,5 @@
-export const KATANA_PAIR_PROXY = {
+import { Contract } from '@/contract'
+export const KATANA_PAIR_PROXY: Contract = {
 	name: 'Katana Pair Proxy',
 	address: '0x4f7687affc10857fccd0938ecda0947de7ad3812',
 	abi: [

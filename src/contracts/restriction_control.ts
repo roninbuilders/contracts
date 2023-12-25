@@ -1,4 +1,5 @@
-export const RESTRICTION_CONTROL = {
+import { Contract } from '@/contract'
+export const RESTRICTION_CONTROL: Contract = {
 	name: 'Restriction Control',
 	address: '0x0a2ccb496a78cb855673c679d14c42a9d8b0dfe0',
 	abi: [

@@ -1,4 +1,5 @@
-export const GNOSIS_SAFE = {
+import { Contract } from '@/contract'
+export const GNOSIS_SAFE: Contract = {
 	name: 'Gnosis Safe',
 	address: '0xd9db270c1b5e3bd161e8c8503c55ceabee709552',
 	abi: [

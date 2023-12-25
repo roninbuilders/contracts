@@ -1,4 +1,5 @@
-export const ZOIDS_NFT = {
+import { Contract } from '@/contract'
+export const ZOIDS_NFT: Contract = {
 	name: 'Zoids NFT',
 	address: '0x09433a88c96d032467f81080f80b8d7f6ed2f8d5',
 	abi: [

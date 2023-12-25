@@ -1,4 +1,5 @@
-export const CHRISTMAS_AXIE_RELEASE_2022 = {
+import { Contract } from '@/contract'
+export const CHRISTMAS_AXIE_RELEASE_2022: Contract = {
 	name: 'Christmas Axie Release 2022',
 	address: '0x25e3ee4a68e5d13ea077272d8311a3f4b8a65943',
 	abi: [

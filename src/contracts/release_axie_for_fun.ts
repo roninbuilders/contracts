@@ -1,4 +1,5 @@
-export const RELEASE_AXIE_FOR_FUN = {
+import { Contract } from '@/contract'
+export const RELEASE_AXIE_FOR_FUN: Contract = {
 	name: 'Release Axie For Fun',
 	address: '0xfda966be65c5234a9126e7a8321edd013d3832e3',
 	abi: [

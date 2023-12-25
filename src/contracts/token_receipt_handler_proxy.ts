@@ -1,4 +1,5 @@
-export const TOKEN_RECEIPT_HANDLER_PROXY = {
+import { Contract } from '@/contract'
+export const TOKEN_RECEIPT_HANDLER_PROXY: Contract = {
 	name: 'Token Receipt Handler Proxy',
 	address: '0x4bcc6ea44c86dbba033c1b5404033491b944a86e',
 	abi: [

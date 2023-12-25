@@ -1,4 +1,5 @@
-export const NAME_CHECKER_PROXY = {
+import { Contract } from '@/contract'
+export const NAME_CHECKER_PROXY: Contract = {
 	name: 'Name Checker Proxy',
 	address: '0x486334ab27ffdc989fd6cbaf44e711ffa80a7bc2',
 	abi: [

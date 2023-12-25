@@ -1,4 +1,5 @@
-export const ERC20_STAKING_MANAGER = {
+import { Contract } from '@/contract'
+export const ERC20_STAKING_MANAGER: Contract = {
 	name: 'ERC20 Staking Manager',
 	address: '0xe1147ff24e404ba38202ea4aee04191ef0890db2',
 	abi: [

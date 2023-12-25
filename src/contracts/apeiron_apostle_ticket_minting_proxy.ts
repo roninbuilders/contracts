@@ -1,4 +1,5 @@
-export const APEIRON_APOSTLE_TICKET_MINTING_PROXY = {
+import { Contract } from '@/contract'
+export const APEIRON_APOSTLE_TICKET_MINTING_PROXY: Contract = {
 	name: 'Apeiron Apostle Ticket Minting Proxy',
 	address: '0xa81dfb118569533e094819014f39ef50d4c83edb',
 	abi: [

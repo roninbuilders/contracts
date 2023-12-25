@@ -1,4 +1,5 @@
-export const APP_AXIE_ORDER_EXCHANGE = {
+import { Contract } from '@/contract'
+export const APP_AXIE_ORDER_EXCHANGE: Contract = {
 	name: 'App Axie Order Exchange',
 	address: '0xe35cbc0a0f2025e3bd9ec8e1f30644df333c820f',
 	abi: [

@@ -1,4 +1,5 @@
-export const LAND_STAKING_MANAGER = {
+import { Contract } from '@/contract'
+export const LAND_STAKING_MANAGER: Contract = {
 	name: 'Land Staking Manager',
 	address: '0x7f27e35170472e7f107d3e55c2b9bcd44aa01dd5',
 	abi: [

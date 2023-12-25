@@ -1,4 +1,5 @@
-export const EXCHANGE_PROXY = {
+import { Contract } from '@/contract'
+export const EXCHANGE_PROXY: Contract = {
 	name: 'Exchange Proxy',
 	address: '0x2da06d60bd413bcbb6586430857433bd9d3a4be4',
 	abi: [

@@ -1,4 +1,5 @@
-export const WRON_HELPER = {
+import { Contract } from '@/contract'
+export const WRON_HELPER: Contract = {
 	name: 'WRON Helper',
 	address: '0xcaf3e62b27a3df0766721d1959d22b066e1a57f1',
 	abi: [

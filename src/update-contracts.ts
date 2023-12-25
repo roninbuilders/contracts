@@ -39,7 +39,14 @@ const writeAbiToFile = (address: string, name: string, abi: any) => {
 		address,
 		abi,
 	}
-	fs.writeFileSync(filePath, `import { Contract } from "@/contract";\nexport const ${filename.toLocaleUpperCase()}:Contract = ${JSON.stringify(contract, null, 2)};`)
+	fs.writeFileSync(
+		filePath,
+		`import { Contract } from "@/contract";\nexport const ${filename.toLocaleUpperCase()}:Contract = ${JSON.stringify(
+			contract,
+			null,
+			2,
+		)};`,
+	)
 }
 
 const saveLocalABI = async (contractAddress: string, contractName: string) => {
@@ -56,7 +63,6 @@ const updateAbis = async () => {
 	console.log('Updating ABIs...')
 	const contracts = await fetchContracts()
 	for (const [index, contract] of Object.entries(contracts)) {
-
 		// get from object key
 		const contractAddress = index
 		const contractName = (contract as any).name

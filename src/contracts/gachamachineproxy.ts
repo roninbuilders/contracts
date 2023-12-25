@@ -1,6 +1,7 @@
-export const AXIE_ASCEND_PROXY = {
-	name: 'Axie Ascend Proxy',
-	address: '0xdd1cf28ab12413501ea6750083dc027c5857f4d0',
+import { Contract } from '@/contract'
+export const GACHAMACHINEPROXY: Contract = {
+	name: 'GachaMachineProxy',
+	address: '0x3e0674b1ddc84b0cfd9d773bb2ce23fe8f445de3',
 	abi: [
 		{
 			inputs: [

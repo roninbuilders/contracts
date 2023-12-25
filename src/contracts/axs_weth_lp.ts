@@ -1,4 +1,5 @@
-export const AXS_WETH_LP = {
+import { Contract } from '@/contract'
+export const AXS_WETH_LP: Contract = {
 	name: 'AXS-WETH LP',
 	address: '0xc6344bc1604fcab1a5aad712d766796e2b7a70b9',
 	abi: [

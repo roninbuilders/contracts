@@ -1,4 +1,5 @@
-export const APEIRON_MARKETPLACE_GATEWAY = {
+import { Contract } from '@/contract'
+export const APEIRON_MARKETPLACE_GATEWAY: Contract = {
 	name: 'Apeiron Marketplace Gateway',
 	address: '0xa0dbbdef55bee03c5b3b2a406732d353d15daa4a',
 	abi: [

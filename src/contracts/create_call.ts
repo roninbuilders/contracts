@@ -1,4 +1,5 @@
-export const CREATE_CALL = {
+import { Contract } from '@/contract'
+export const CREATE_CALL: Contract = {
 	name: 'Create Call',
 	address: '0x7cbb62eaa69f79e6873cd1ecb2392971036cfaa4',
 	abi: [

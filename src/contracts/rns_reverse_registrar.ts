@@ -1,4 +1,5 @@
-export const RNS_REVERSE_REGISTRAR = {
+import { Contract } from '@/contract'
+export const RNS_REVERSE_REGISTRAR: Contract = {
 	name: 'RNS Reverse Registrar',
 	address: '0x2dcfb418410bc9c58ee58029fa3c69833a8f3231',
 	abi: [

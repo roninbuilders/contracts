@@ -1,4 +1,5 @@
-export const RNS_UNIFIED_PROXY = {
+import { Contract } from '@/contract'
+export const RNS_UNIFIED_PROXY: Contract = {
 	name: 'RNS Unified Proxy',
 	address: '0x67c409dab0ee741a1b1be874bd1333234cfdbf44',
 	abi: [

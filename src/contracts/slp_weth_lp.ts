@@ -1,4 +1,5 @@
-export const SLP_WETH_LP = {
+import { Contract } from '@/contract'
+export const SLP_WETH_LP: Contract = {
 	name: 'SLP-WETH LP',
 	address: '0x306a28279d04a47468ed83d55088d0dcd1369294',
 	abi: [

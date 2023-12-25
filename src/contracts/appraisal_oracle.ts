@@ -1,4 +1,5 @@
-export const APPRAISAL_ORACLE = {
+import { Contract } from '@/contract'
+export const APPRAISAL_ORACLE: Contract = {
 	name: 'Appraisal Oracle',
 	address: '0x4f6da48bf7b065634995c5d177e6beb162a5602f',
 	abi: [

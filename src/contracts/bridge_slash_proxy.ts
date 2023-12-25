@@ -1,4 +1,5 @@
-export const BRIDGE_SLASH_PROXY = {
+import { Contract } from '@/contract'
+export const BRIDGE_SLASH_PROXY: Contract = {
 	name: 'Bridge Slash Proxy',
 	address: '0x323092ab0900281efd0ef5954b0a612ce7755f9c',
 	abi: [

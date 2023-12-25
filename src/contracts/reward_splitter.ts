@@ -1,4 +1,5 @@
-export const REWARD_SPLITTER = {
+import { Contract } from '@/contract'
+export const REWARD_SPLITTER: Contract = {
 	name: 'Reward Splitter',
 	address: '0x13b17ae62ec87775222789d1c544fe1c1b3dccb3',
 	abi: [

@@ -1,4 +1,5 @@
-export const SIMULATE_TX_ACCESSOR = {
+import { Contract } from '@/contract'
+export const SIMULATE_TX_ACCESSOR: Contract = {
 	name: 'Simulate Tx Accessor',
 	address: '0x59ad6735bcd8152b84860cb256dd9e96b85f69da',
 	abi: [

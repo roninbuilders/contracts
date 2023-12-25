@@ -1,4 +1,5 @@
-export const REGISTRY = {
+import { Contract } from '@/contract'
+export const REGISTRY: Contract = {
 	name: 'Registry',
 	address: '0x3a860626b0467809d50c58bef89b8ac6247fd62a',
 	abi: [

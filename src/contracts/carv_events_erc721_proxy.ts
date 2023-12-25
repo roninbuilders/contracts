@@ -1,4 +1,5 @@
-export const CARV_EVENTS_ERC721_PROXY = {
+import { Contract } from '@/contract'
+export const CARV_EVENTS_ERC721_PROXY: Contract = {
 	name: 'Carv Events ERC721 Proxy',
 	address: '0x9e8b5d57d3360073510011158b0b450cc516eca6',
 	abi: [

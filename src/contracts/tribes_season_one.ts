@@ -1,4 +1,5 @@
-export const TRIBES_SEASON_ONE = {
+import { Contract } from '@/contract'
+export const TRIBES_SEASON_ONE: Contract = {
 	name: 'Tribes Season One',
 	address: '0xf725413164a9f5479940fdc17fe5906cd463a55c',
 	abi: [

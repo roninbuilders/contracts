@@ -1,4 +1,5 @@
-export const AAP_REWARD_PROXY = {
+import { Contract } from '@/contract'
+export const AAP_REWARD_PROXY: Contract = {
 	name: 'AAP Reward Proxy',
 	address: '0xa5cb85d2910e7b384afa3121e7d0a6f623b05da3',
 	abi: [

@@ -1,4 +1,5 @@
-export const AXIE_BADGE_PROXY = {
+import { Contract } from '@/contract'
+export const AXIE_BADGE_PROXY: Contract = {
 	name: 'Axie Badge Proxy',
 	address: '0x1cdb9c49ffc178356cffc0db31a94fb41168a734',
 	abi: [

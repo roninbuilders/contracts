@@ -1,4 +1,5 @@
-export const DAILY_CHECKIN_PROXY = {
+import { Contract } from '@/contract'
+export const DAILY_CHECKIN_PROXY: Contract = {
 	name: 'Daily Checkin Proxy',
 	address: '0x58ad3594758b0f74478dbc07168812ddf460a07f',
 	abi: [

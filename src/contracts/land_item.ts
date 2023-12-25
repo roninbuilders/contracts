@@ -1,4 +1,5 @@
-export const LAND_ITEM = {
+import { Contract } from '@/contract'
+export const LAND_ITEM: Contract = {
 	name: 'Land Item',
 	address: '0xa96660f0e4a3e9bc7388925d245a6d4d79e21259',
 	abi: [

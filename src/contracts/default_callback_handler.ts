@@ -1,4 +1,5 @@
-export const DEFAULT_CALLBACK_HANDLER = {
+import { Contract } from '@/contract'
+export const DEFAULT_CALLBACK_HANDLER: Contract = {
 	name: 'Default Callback Handler',
 	address: '0x1ac114c2099afaf5261731655dc6c306bfcd4dbd',
 	abi: [

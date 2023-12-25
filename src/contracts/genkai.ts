@@ -1,4 +1,5 @@
-export const GENKAI = {
+import { Contract } from '@/contract'
+export const GENKAI: Contract = {
 	name: 'Genkai',
 	address: '0x5e6b2e10808d93a27f23e0af58607142da3f6918',
 	abi: [

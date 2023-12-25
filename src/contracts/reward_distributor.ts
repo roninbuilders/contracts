@@ -1,4 +1,5 @@
-export const REWARD_DISTRIBUTOR = {
+import { Contract } from '@/contract'
+export const REWARD_DISTRIBUTOR: Contract = {
 	name: 'Reward Distributor',
 	address: '0x41a6b90c7a9b861b28fd6b7e614a490b5b7ae6d7',
 	abi: [

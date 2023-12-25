@@ -1,4 +1,5 @@
-export const MULTI_SEND = {
+import { Contract } from '@/contract'
+export const MULTI_SEND: Contract = {
 	name: 'Multi Send',
 	address: '0xa238cbeb142c10ef7ad8442c6d1f9e89e07e7761',
 	abi: [

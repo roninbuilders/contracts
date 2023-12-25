@@ -1,4 +1,5 @@
-export const MYSTIC_GENE_VALIDATOR = {
+import { Contract } from '@/contract'
+export const MYSTIC_GENE_VALIDATOR: Contract = {
 	name: 'Mystic Gene Validator',
 	address: '0x03cbdc84a8352735133b7989199c1b4d06fe2a77',
 	abi: [

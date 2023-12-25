@@ -1,4 +1,5 @@
-export const BRIDGE_REWARD_PROXY = {
+import { Contract } from '@/contract'
+export const BRIDGE_REWARD_PROXY: Contract = {
 	name: 'Bridge Reward Proxy',
 	address: '0x796a163a21e9a659fc9773166e0afdc1eb01aad1',
 	abi: [

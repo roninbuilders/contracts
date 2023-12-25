@@ -1,4 +1,5 @@
-export const MAVIS_PAY = {
+import { Contract } from '@/contract'
+export const MAVIS_PAY: Contract = {
 	name: 'Mavis Pay',
 	address: '0xb9a0914da17b460ff382da8924d9d23f77db0e28',
 	abi: [

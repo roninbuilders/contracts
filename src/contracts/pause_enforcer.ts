@@ -1,4 +1,5 @@
-export const PAUSE_ENFORCER = {
+import { Contract } from '@/contract'
+export const PAUSE_ENFORCER: Contract = {
 	name: 'Pause Enforcer',
 	address: '0x2367cd5468c2b3cd18aa74adb7e14e43426af837',
 	abi: [

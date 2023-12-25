@@ -1,4 +1,5 @@
-export const IAP = {
+import { Contract } from '@/contract'
+export const IAP: Contract = {
 	name: 'IAP',
 	address: '0xcaef47717e49c82deec1a2eebde6d1f5bebfd3ba',
 	abi: [

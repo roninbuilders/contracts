@@ -1,4 +1,5 @@
-export const SKY_MAVIS = {
+import { Contract } from '@/contract'
+export const SKY_MAVIS: Contract = {
 	name: 'Sky Mavis',
 	address: '0x41d8cf42236ae15cc7b0c0df619a95822d7ad423',
 	abi: [

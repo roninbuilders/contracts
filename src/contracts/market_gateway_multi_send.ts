@@ -1,4 +1,5 @@
-export const MARKET_GATEWAY_MULTI_SEND = {
+import { Contract } from '@/contract'
+export const MARKET_GATEWAY_MULTI_SEND: Contract = {
 	name: 'Market Gateway Multi Send',
 	address: '0x01120c9efae8a3d6828fa836e7e05db10cdf21b1',
 	abi: [

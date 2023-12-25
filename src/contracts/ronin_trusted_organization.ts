@@ -1,4 +1,5 @@
-export const RONIN_TRUSTED_ORGANIZATION = {
+import { Contract } from '@/contract'
+export const RONIN_TRUSTED_ORGANIZATION: Contract = {
 	name: 'Ronin Trusted Organization',
 	address: '0x98d0230884448b3e2f09a177433d60fb1e19c090',
 	abi: [

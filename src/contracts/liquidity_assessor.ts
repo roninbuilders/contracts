@@ -1,4 +1,5 @@
-export const LIQUIDITY_ASSESSOR = {
+import { Contract } from '@/contract'
+export const LIQUIDITY_ASSESSOR: Contract = {
 	name: 'Liquidity Assessor',
 	address: '0x9e97f0a5b8582a336123667338992d8a8499cdf3',
 	abi: [

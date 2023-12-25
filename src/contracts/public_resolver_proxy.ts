@@ -1,4 +1,5 @@
-export const PUBLIC_RESOLVER_PROXY = {
+import { Contract } from '@/contract'
+export const PUBLIC_RESOLVER_PROXY: Contract = {
 	name: 'Public Resolver Proxy',
 	address: '0xadb077d236d9e81fb24b96ae9cb8089ab9942d48',
 	abi: [

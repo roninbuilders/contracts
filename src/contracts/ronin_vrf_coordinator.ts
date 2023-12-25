@@ -1,4 +1,5 @@
-export const RONIN_VRF_COORDINATOR = {
+import { Contract } from '@/contract'
+export const RONIN_VRF_COORDINATOR: Contract = {
 	name: 'Ronin VRF Coordinator',
 	address: '0xf9f93977d8289f1f7c88a1ca4274f79c46ee9cfb',
 	abi: [

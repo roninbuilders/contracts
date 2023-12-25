@@ -1,4 +1,5 @@
-export const RNS_UNIFIED = {
+import { Contract } from '@/contract'
+export const RNS_UNIFIED: Contract = {
 	name: 'RNS Unified',
 	address: '0x31b0e375f0eb97deda644209d18749244d2f831e',
 	abi: [

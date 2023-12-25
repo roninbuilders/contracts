@@ -1,4 +1,5 @@
-export const PET = {
+import { Contract } from '@/contract'
+export const PET: Contract = {
 	name: 'PET',
 	address: '0xb806028b6ebc35926442770a8a8a7aeab6e2ce5c',
 	abi: [

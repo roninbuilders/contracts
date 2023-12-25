@@ -1,4 +1,5 @@
-export const MARKET_GATEWAY = {
+import { Contract } from '@/contract'
+export const MARKET_GATEWAY: Contract = {
 	name: 'Market Gateway',
 	address: '0x53a11a02195d284c78b79801056ea893a2e6ea09',
 	abi: [

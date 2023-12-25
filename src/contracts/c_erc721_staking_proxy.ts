@@ -1,4 +1,5 @@
-export const C_ERC721_STAKING_PROXY = {
+import { Contract } from '@/contract'
+export const C_ERC721_STAKING_PROXY: Contract = {
 	name: 'C Erc721 Staking Proxy',
 	address: '0xd54c02d1880e33f53ca2e516a0e979eea30c265c',
 	abi: [

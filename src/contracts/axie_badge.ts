@@ -1,4 +1,5 @@
-export const AXIE_BADGE = {
+import { Contract } from '@/contract'
+export const AXIE_BADGE: Contract = {
 	name: 'Axie Badge',
 	address: '0xa7c80a56d0b064cebf0c5b7ad739d787b049bf47',
 	abi: [

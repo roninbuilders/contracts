@@ -1,4 +1,5 @@
-export const RNS_AUCTION_PROXY = {
+import { Contract } from '@/contract'
+export const RNS_AUCTION_PROXY: Contract = {
 	name: 'RNS Auction Proxy',
 	address: '0xd55e6d80aea1ff4650bc952c1653ab3cf1b940a9',
 	abi: [

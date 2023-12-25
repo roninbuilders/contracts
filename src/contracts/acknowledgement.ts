@@ -1,4 +1,5 @@
-export const ACKNOWLEDGEMENT = {
+import { Contract } from '@/contract'
+export const ACKNOWLEDGEMENT: Contract = {
 	name: 'Acknowledgement',
 	address: '0x0000000000000000000000000000000000000022',
 	abi: [

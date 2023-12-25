@@ -1,4 +1,5 @@
-export const SMOOTH_LOVE_POTION = {
+import { Contract } from '@/contract'
+export const SMOOTH_LOVE_POTION: Contract = {
 	name: 'Smooth Love Potion',
 	address: '0xa8754b9fa15fc18bb59458815510e40a12cd2014',
 	abi: [

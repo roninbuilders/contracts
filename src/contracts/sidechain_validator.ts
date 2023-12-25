@@ -1,4 +1,5 @@
-export const SIDECHAIN_VALIDATOR = {
+import { Contract } from '@/contract'
+export const SIDECHAIN_VALIDATOR: Contract = {
 	name: 'Sidechain Validator',
 	address: '0x0000000000000000000000000000000000000011',
 	abi: [

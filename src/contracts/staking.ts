@@ -1,4 +1,5 @@
-export const STAKING = {
+import { Contract } from '@/contract'
+export const STAKING: Contract = {
 	name: 'Staking',
 	address: '0xe84c84c1e6c488a7947d21027cdd6674821348a1',
 	abi: [

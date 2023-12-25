@@ -1,4 +1,5 @@
-export const SUPERFINE_REWARD_DISTRIBUTION_V1 = {
+import { Contract } from '@/contract'
+export const SUPERFINE_REWARD_DISTRIBUTION_V1: Contract = {
 	name: 'Superfine Reward Distribution V1',
 	address: '0x94c3974c3890ed4767810ec420d0b35165c355a0',
 	abi: [

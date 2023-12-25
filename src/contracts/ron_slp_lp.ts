@@ -1,4 +1,5 @@
-export const RON_SLP_LP = {
+import { Contract } from '@/contract'
+export const RON_SLP_LP: Contract = {
 	name: 'RON-SLP LP',
 	address: '0x8f1c5eda143fa3d1bea8b4e92f33562014d30e0d',
 	abi: [

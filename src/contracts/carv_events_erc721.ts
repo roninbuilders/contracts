@@ -1,4 +1,5 @@
-export const CARV_EVENTS_ERC721 = {
+import { Contract } from '@/contract'
+export const CARV_EVENTS_ERC721: Contract = {
 	name: 'Carv Events ERC721',
 	address: '0xf5198bcdebe9bb5f8f8f789abfa5b3ef52c5e7db',
 	abi: [

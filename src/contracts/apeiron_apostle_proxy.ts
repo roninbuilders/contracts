@@ -1,4 +1,5 @@
-export const APEIRON_APOSTLE_PROXY = {
+import { Contract } from '@/contract'
+export const APEIRON_APOSTLE_PROXY: Contract = {
 	name: 'Apeiron Apostle Proxy',
 	address: '0xcedb8e5c29dc498b8d805852b531849af91dfae3',
 	abi: [

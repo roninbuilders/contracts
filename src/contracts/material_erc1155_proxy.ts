@@ -1,4 +1,5 @@
-export const MATERIAL_ERC1155_PROXY = {
+import { Contract } from '@/contract'
+export const MATERIAL_ERC1155_PROXY: Contract = {
 	name: 'Material ERC1155 Proxy',
 	address: '0x12b707c3d2786570cfdc3a998a085b62acdba4b3',
 	abi: [

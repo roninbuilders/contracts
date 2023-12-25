@@ -1,4 +1,5 @@
-export const LUNACIAN_EXPRESS = {
+import { Contract } from '@/contract'
+export const LUNACIAN_EXPRESS: Contract = {
 	name: 'Lunacian Express',
 	address: '0x20dad05af3f2663c652495f3e581b3fed926f39c',
 	abi: [

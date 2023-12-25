@@ -1,4 +1,5 @@
-export const AXIE_GENE_BREWER = {
+import { Contract } from '@/contract'
+export const AXIE_GENE_BREWER: Contract = {
 	name: 'Axie Gene Brewer',
 	address: '0x54e91daf9362900f94d32bd084beff4bdb73ea62',
 	abi: [

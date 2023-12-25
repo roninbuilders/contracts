@@ -1,4 +1,5 @@
-export const COLLATERAL_STAKING_MEDIATOR = {
+import { Contract } from '@/contract'
+export const COLLATERAL_STAKING_MEDIATOR: Contract = {
 	name: 'Collateral Staking Mediator',
 	address: '0xec8adb923ac6637ac591cbb2a0d0b2d52d41494f',
 	abi: [

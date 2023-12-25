@@ -1,4 +1,5 @@
-export const COMPATIBILITY_FALLBACK_HANDLER = {
+import { Contract } from '@/contract'
+export const COMPATIBILITY_FALLBACK_HANDLER: Contract = {
 	name: 'Compatibility Fallback Handler',
 	address: '0xf48f2b2d2a534e402487b3ee7c18c33aec0fe5e4',
 	abi: [

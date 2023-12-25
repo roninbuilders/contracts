@@ -1,4 +1,5 @@
-export const DAILY_CHECKIN = {
+import { Contract } from '@/contract'
+export const DAILY_CHECKIN: Contract = {
 	name: 'Daily Checkin',
 	address: '0x95b4b8cad3567b5d7ef7399c2ae1d7070692ab0d',
 	abi: [

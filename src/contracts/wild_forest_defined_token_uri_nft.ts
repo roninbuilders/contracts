@@ -1,9 +1,26 @@
-export const AXIE_ASCEND_LOGIC = {
-	name: 'Axie Ascend Logic',
-	address: '0xff3c4d02128fb0976a27bfa1a2b7940ca48a53d8',
+import { Contract } from '@/contract'
+export const WILD_FOREST_DEFINED_TOKEN_URI_NFT: Contract = {
+	name: 'Wild Forest Defined Token Uri Nft',
+	address: '0xdd645c1093be18c9667e1e79957a89b62cc3cba6',
 	abi: [
 		{
-			inputs: [],
+			inputs: [
+				{
+					internalType: 'string',
+					name: 'name',
+					type: 'string',
+				},
+				{
+					internalType: 'string',
+					name: 'symbol',
+					type: 'string',
+				},
+				{
+					internalType: 'address',
+					name: 'ownerAddress',
+					type: 'address',
+				},
+			],
 			stateMutability: 'nonpayable',
 			type: 'constructor',
 		},
@@ -12,107 +29,24 @@ export const AXIE_ASCEND_LOGIC = {
 			inputs: [
 				{
 					indexed: true,
-					internalType: 'contract IERC20',
-					name: 'ascendLevelFeeToken',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'contract IERC20',
-					name: 'baseToken',
-					type: 'address',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256[]',
-					name: 'ascendLevelFees',
-					type: 'uint256[]',
-				},
-				{
-					indexed: false,
-					internalType: 'uint16',
-					name: 'levelMilestone',
-					type: 'uint16',
-				},
-			],
-			name: 'AscendFeeInfoConfigUpdated',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
 					internalType: 'address',
-					name: 'axieContractAddress',
+					name: 'owner',
 					type: 'address',
 				},
-			],
-			name: 'AxieContractAddressUpdated',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
 				{
 					indexed: true,
-					internalType: 'uint256',
-					name: 'axieId',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'level',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'deadline',
-					type: 'uint256',
-				},
-			],
-			name: 'AxieLevelAscended',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
 					internalType: 'address',
-					name: 'feeReceiverAddress',
+					name: 'approved',
 					type: 'address',
 				},
-			],
-			name: 'FeeReceiverAddressUpdated',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
 				{
-					indexed: false,
-					internalType: 'uint8',
-					name: 'version',
-					type: 'uint8',
+					indexed: true,
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
 				},
 			],
-			name: 'Initialized',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'address',
-					name: 'materialContractAddress',
-					type: 'address',
-				},
-			],
-			name: 'MaterialContractAddressUpdated',
+			name: 'Approval',
 			type: 'event',
 		},
 		{
@@ -120,18 +54,56 @@ export const AXIE_ASCEND_LOGIC = {
 			inputs: [
 				{
 					indexed: true,
+					internalType: 'address',
+					name: 'owner',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'operator',
+					type: 'address',
+				},
+				{
+					indexed: false,
+					internalType: 'bool',
+					name: 'approved',
+					type: 'bool',
+				},
+			],
+			name: 'ApprovalForAll',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
 					internalType: 'uint256',
-					name: 'axieId',
+					name: '_fromTokenId',
 					type: 'uint256',
 				},
 				{
 					indexed: false,
 					internalType: 'uint256',
-					name: 'milestoneCount',
+					name: '_toTokenId',
 					type: 'uint256',
 				},
 			],
-			name: 'MysticAxieAscended',
+			name: 'BatchMetadataUpdate',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'uint256',
+					name: '_tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'MetadataUpdate',
 			type: 'event',
 		},
 		{
@@ -226,13 +198,25 @@ export const AXIE_ASCEND_LOGIC = {
 			anonymous: false,
 			inputs: [
 				{
-					indexed: false,
+					indexed: true,
 					internalType: 'address',
-					name: 'routerContractAddress',
+					name: 'from',
 					type: 'address',
 				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'to',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
 			],
-			name: 'RouterContractAddressUpdated',
+			name: 'Transfer',
 			type: 'event',
 		},
 		{
@@ -263,7 +247,7 @@ export const AXIE_ASCEND_LOGIC = {
 		},
 		{
 			inputs: [],
-			name: 'DOMAIN_SEPARATOR',
+			name: 'MINTER_ROLE',
 			outputs: [
 				{
 					internalType: 'bytes32',
@@ -276,38 +260,12 @@ export const AXIE_ASCEND_LOGIC = {
 		},
 		{
 			inputs: [],
-			name: 'DOMAIN_TYPEHASH',
+			name: 'PAUSER_ROLE',
 			outputs: [
 				{
 					internalType: 'bytes32',
 					name: '',
 					type: 'bytes32',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'PERMIT_TYPEHASH',
-			outputs: [
-				{
-					internalType: 'bytes32',
-					name: '',
-					type: 'bytes32',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_ascendLevelFeeToken',
-			outputs: [
-				{
-					internalType: 'contract IERC20',
-					name: '',
-					type: 'address',
 				},
 			],
 			stateMutability: 'view',
@@ -316,141 +274,67 @@ export const AXIE_ASCEND_LOGIC = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			name: '_ascendLevelFees',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_axieContract',
-			outputs: [
-				{
-					internalType: 'contract IAxie',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_baseToken',
-			outputs: [
-				{
-					internalType: 'contract IERC20',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_feeReceiver',
-			outputs: [
-				{
 					internalType: 'address',
-					name: '',
+					name: 'to',
 					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_levelMilestone',
-			outputs: [
-				{
-					internalType: 'uint16',
-					name: '',
-					type: 'uint16',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_materialContract',
-			outputs: [
-				{
-					internalType: 'contract IMaterial',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: '_routerContract',
-			outputs: [
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'axieId',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint16',
-					name: 'targetLevel',
-					type: 'uint16',
 				},
 				{
 					internalType: 'uint256',
-					name: 'deadline',
+					name: 'tokenId',
 					type: 'uint256',
 				},
-				{
-					internalType: 'address[]',
-					name: 'path',
-					type: 'address[]',
-				},
-				{
-					internalType: 'bytes',
-					name: 'signature',
-					type: 'bytes',
-				},
 			],
-			name: 'ascendLevel',
+			name: 'approve',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			inputs: [],
-			name: 'getAscendLevelFees',
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'owner',
+					type: 'address',
+				},
+			],
+			name: 'balanceOf',
 			outputs: [
 				{
-					internalType: 'uint256[]',
+					internalType: 'uint256',
 					name: '',
-					type: 'uint256[]',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'burn',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'getApproved',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
 				},
 			],
 			stateMutability: 'view',
@@ -563,49 +447,81 @@ export const AXIE_ASCEND_LOGIC = {
 		{
 			inputs: [
 				{
-					internalType: 'contract IAxie',
-					name: 'axieContract',
-					type: 'address',
-				},
-				{
-					internalType: 'contract IMaterial',
-					name: 'materialContract',
+					internalType: 'address',
+					name: 'owner',
 					type: 'address',
 				},
 				{
 					internalType: 'address',
-					name: 'routerContract',
+					name: 'operator',
 					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: 'feeReceiver_',
-					type: 'address',
-				},
-				{
-					internalType: 'contract IERC20',
-					name: 'baseToken',
-					type: 'address',
-				},
-				{
-					internalType: 'contract IERC20',
-					name: 'ascendLevelFeeToken',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'ascendLevelFees',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'uint16',
-					name: 'levelMilestone',
-					type: 'uint16',
 				},
 			],
-			name: 'initialize',
-			outputs: [],
+			name: 'isApprovedForAll',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'to',
+					type: 'address',
+				},
+				{
+					internalType: 'string',
+					name: '_tokenUri',
+					type: 'string',
+				},
+			],
+			name: 'mint',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '_tokenId',
+					type: 'uint256',
+				},
+			],
 			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'name',
+			outputs: [
+				{
+					internalType: 'string',
+					name: '',
+					type: 'string',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'ownerOf',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -667,40 +583,22 @@ export const AXIE_ASCEND_LOGIC = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256[]',
-					name: 'ascendLevelFees',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'contract IERC20',
-					name: 'ascendLevelFeeToken',
+					internalType: 'address',
+					name: 'from',
 					type: 'address',
 				},
 				{
-					internalType: 'contract IERC20',
-					name: 'baseToken',
+					internalType: 'address',
+					name: 'to',
 					type: 'address',
 				},
 				{
-					internalType: 'uint16',
-					name: 'levelMilestone',
-					type: 'uint16',
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
 				},
 			],
-			name: 'setAscendLevelFeesInfo',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'contract IAxie',
-					name: 'addr',
-					type: 'address',
-				},
-			],
-			name: 'setAxieContract',
+			name: 'safeTransferFrom',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -709,24 +607,26 @@ export const AXIE_ASCEND_LOGIC = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'addr',
+					name: 'from',
 					type: 'address',
 				},
-			],
-			name: 'setFeeReceiver',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
 				{
-					internalType: 'contract IMaterial',
-					name: 'addr',
+					internalType: 'address',
+					name: 'to',
 					type: 'address',
 				},
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+				{
+					internalType: 'bytes',
+					name: 'data',
+					type: 'bytes',
+				},
 			],
-			name: 'setMaterialContract',
+			name: 'safeTransferFrom',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -735,11 +635,16 @@ export const AXIE_ASCEND_LOGIC = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'addr',
+					name: 'operator',
 					type: 'address',
 				},
+				{
+					internalType: 'bool',
+					name: 'approved',
+					type: 'bool',
+				},
 			],
-			name: 'setRouterContract',
+			name: 'setApprovalForAll',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -761,6 +666,117 @@ export const AXIE_ASCEND_LOGIC = {
 				},
 			],
 			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'symbol',
+			outputs: [
+				{
+					internalType: 'string',
+					name: '',
+					type: 'string',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'index',
+					type: 'uint256',
+				},
+			],
+			name: 'tokenByIndex',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'owner',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: 'index',
+					type: 'uint256',
+				},
+			],
+			name: 'tokenOfOwnerByIndex',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'tokenURI',
+			outputs: [
+				{
+					internalType: 'string',
+					name: '',
+					type: 'string',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'totalSupply',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'from',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'to',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'transferFrom',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{

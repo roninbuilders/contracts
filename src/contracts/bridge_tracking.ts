@@ -1,4 +1,5 @@
-export const BRIDGE_TRACKING = {
+import { Contract } from '@/contract'
+export const BRIDGE_TRACKING: Contract = {
 	name: 'Bridge Tracking',
 	address: '0xfca143fe2751a992e8cff2eb5d64eda809049295',
 	abi: [

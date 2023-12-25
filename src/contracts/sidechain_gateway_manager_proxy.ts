@@ -1,4 +1,5 @@
-export const SIDECHAIN_GATEWAY_MANAGER_PROXY = {
+import { Contract } from '@/contract'
+export const SIDECHAIN_GATEWAY_MANAGER_PROXY: Contract = {
 	name: 'Sidechain Gateway Manager Proxy',
 	address: '0xe35d62ebe18413d96ca2a2f7cf215bb21a406b4b',
 	abi: [

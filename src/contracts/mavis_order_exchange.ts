@@ -1,4 +1,5 @@
-export const MAVIS_ORDER_EXCHANGE = {
+import { Contract } from '@/contract'
+export const MAVIS_ORDER_EXCHANGE: Contract = {
 	name: 'Mavis Order Exchange',
 	address: '0xb24592970973a80014fa80feb895873094909b3c',
 	abi: [

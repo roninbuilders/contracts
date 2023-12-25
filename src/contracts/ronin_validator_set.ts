@@ -1,4 +1,5 @@
-export const RONIN_VALIDATOR_SET = {
+import { Contract } from '@/contract'
+export const RONIN_VALIDATOR_SET: Contract = {
 	name: 'Ronin Validator Set',
 	address: '0xab2985fa821caae0524f6c5657ae40dabdf2eae0',
 	abi: [

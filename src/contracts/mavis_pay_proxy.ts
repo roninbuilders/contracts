@@ -1,4 +1,5 @@
-export const MAVIS_PAY_PROXY = {
+import { Contract } from '@/contract'
+export const MAVIS_PAY_PROXY: Contract = {
 	name: 'Mavis Pay Proxy',
 	address: '0x6af384e0bf2ce190e7260f8aeaeed9116bba36e3',
 	abi: [

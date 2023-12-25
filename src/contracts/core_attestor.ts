@@ -1,4 +1,5 @@
-export const CORE_ATTESTOR = {
+import { Contract } from '@/contract'
+export const CORE_ATTESTOR: Contract = {
 	name: 'Core Attestor',
 	address: '0x065e959ffd4c76ae2e0d31cfcf91c0c9834472ec',
 	abi: [

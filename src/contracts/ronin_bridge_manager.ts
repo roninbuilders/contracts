@@ -1,4 +1,5 @@
-export const RONIN_BRIDGE_MANAGER = {
+import { Contract } from '@/contract'
+export const RONIN_BRIDGE_MANAGER: Contract = {
 	name: 'Ronin Bridge Manager',
 	address: '0x5fa49e6ca54a9daa8eca4f403adbde5ee075d84a',
 	abi: [

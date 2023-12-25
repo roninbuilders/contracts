@@ -1,4 +1,5 @@
-export const ORDER_EXCHANGE_LOGIC = {
+import { Contract } from '@/contract'
+export const ORDER_EXCHANGE_LOGIC: Contract = {
 	name: 'Order Exchange Logic',
 	address: '0xa74f8af1bcb92f3037e6235f26cfc55898a550a8',
 	abi: [

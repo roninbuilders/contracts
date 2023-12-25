@@ -1,4 +1,5 @@
-export const RNS_AUCTION = {
+import { Contract } from '@/contract'
+export const RNS_AUCTION: Contract = {
 	name: 'RNS Auction',
 	address: '0x7b663d7252a8dcd213bbf8f812f3691b78ab62fb',
 	abi: [

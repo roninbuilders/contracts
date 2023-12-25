@@ -1,4 +1,5 @@
-export const MAXIMILLION = {
+import { Contract } from '@/contract'
+export const MAXIMILLION: Contract = {
 	name: 'Maximillion',
 	address: '0x8ec33467a63ff3c660369d60dcba3b98ebd3642d',
 	abi: [

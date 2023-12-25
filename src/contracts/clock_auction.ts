@@ -1,4 +1,5 @@
-export const CLOCK_AUCTION = {
+import { Contract } from '@/contract'
+export const CLOCK_AUCTION: Contract = {
 	name: 'Clock Auction',
 	address: '0x004965ea925a7cc0dfa9c080bba9249aef5e9d54',
 	abi: [

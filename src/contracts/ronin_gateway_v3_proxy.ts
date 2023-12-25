@@ -1,4 +1,5 @@
-export const RONIN_GATEWAY_V3_PROXY = {
+import { Contract } from '@/contract'
+export const RONIN_GATEWAY_V3_PROXY: Contract = {
 	name: 'Ronin Gateway V3 Proxy',
 	address: '0x0cf8ff40a508bdbc39fbe1bb679dcba64e65c7df',
 	abi: [

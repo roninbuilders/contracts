@@ -1,4 +1,5 @@
-export const PIXELS_GAME_TRACKER = {
+import { Contract } from '@/contract'
+export const PIXELS_GAME_TRACKER: Contract = {
 	name: 'Pixels Game Tracker',
 	address: '0x02790f32ad7e7eaaecfb0ad21950829932f1a2ee',
 	abi: [

@@ -1,4 +1,5 @@
-export const MULTI_SEND_CALL_ONLY = {
+import { Contract } from '@/contract'
+export const MULTI_SEND_CALL_ONLY: Contract = {
 	name: 'Multi Send Call Only',
 	address: '0x40a2accbd92bca938b02010e17a5b8929b49130d',
 	abi: [

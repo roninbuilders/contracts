@@ -1,4 +1,5 @@
-export const BLACKLIST_PROXY = {
+import { Contract } from '@/contract'
+export const BLACKLIST_PROXY: Contract = {
 	name: 'Blacklist Proxy',
 	address: '0xe584474bd181a58587e0e5a2fac927352048a2f7',
 	abi: [

@@ -1,4 +1,5 @@
-export const RONIN_GATEWAY_PAUSE_ENFORCER = {
+import { Contract } from '@/contract'
+export const RONIN_GATEWAY_PAUSE_ENFORCER: Contract = {
 	name: 'Ronin Gateway Pause Enforcer',
 	address: '0x09e575648220783fc30e8d78919037e7dc99e83e',
 	abi: [

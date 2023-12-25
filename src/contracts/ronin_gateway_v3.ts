@@ -1,4 +1,5 @@
-export const RONIN_GATEWAY_V3 = {
+import { Contract } from '@/contract'
+export const RONIN_GATEWAY_V3: Contract = {
 	name: 'Ronin Gateway V3',
 	address: '0x1477db6bf449b0eb1191a1f4023867ddceadc504',
 	abi: [

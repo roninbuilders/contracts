@@ -1,4 +1,5 @@
-export const BLACKLIST = {
+import { Contract } from '@/contract'
+export const BLACKLIST: Contract = {
 	name: 'Blacklist',
 	address: '0x40e858815094091f406f6c84bdd0e4fd0bc4f06d',
 	abi: [

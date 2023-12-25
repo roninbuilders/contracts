@@ -1,4 +1,5 @@
-export const ERC721_RECEIPT = {
+import { Contract } from '@/contract'
+export const ERC721_RECEIPT: Contract = {
 	name: 'ERC721 Receipt',
 	address: '0xb01a23d8788d1ffe45430a55fef1a489f6cf04dc',
 	abi: [

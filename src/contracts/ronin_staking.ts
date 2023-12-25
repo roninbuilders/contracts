@@ -1,4 +1,5 @@
-export const RONIN_STAKING = {
+import { Contract } from '@/contract'
+export const RONIN_STAKING: Contract = {
 	name: 'Ronin Staking',
 	address: '0x545edb750eb8769c868429be9586f5857a768758',
 	abi: [

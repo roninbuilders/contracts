@@ -1,4 +1,5 @@
-export const COMMUNITY_INCENTIVES = {
+import { Contract } from '@/contract'
+export const COMMUNITY_INCENTIVES: Contract = {
 	name: 'Community Incentives',
 	address: '0xf603d9a18a5aaca2d11cb43cbb2b6abc4a5b3e61',
 	abi: [

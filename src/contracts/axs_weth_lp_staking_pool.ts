@@ -1,4 +1,5 @@
-export const AXS_WETH_LP_STAKING_POOL = {
+import { Contract } from '@/contract'
+export const AXS_WETH_LP_STAKING_POOL: Contract = {
 	name: 'AXS-WETH LP Staking Pool',
 	address: '0x487671acdea3745b6dac3ae8d1757b44a04bfe8a',
 	abi: [

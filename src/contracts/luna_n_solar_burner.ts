@@ -1,4 +1,5 @@
-export const LUNA_N_SOLAR_BURNER = {
+import { Contract } from '@/contract'
+export const LUNA_N_SOLAR_BURNER: Contract = {
 	name: 'Luna N Solar Burner',
 	address: '0xe8475e0baffc6c34bf29c05c52c79c336bec5dfd',
 	abi: [

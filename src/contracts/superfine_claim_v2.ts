@@ -1,4 +1,5 @@
-export const SUPERFINE_CLAIM_V2 = {
+import { Contract } from '@/contract'
+export const SUPERFINE_CLAIM_V2: Contract = {
 	name: 'Superfine Claim V2',
 	address: '0x32a5712b9a68b970c4a01172be95c4479f3290e8',
 	abi: [

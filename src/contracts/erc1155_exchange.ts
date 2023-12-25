@@ -1,4 +1,5 @@
-export const ERC1155_EXCHANGE = {
+import { Contract } from '@/contract'
+export const ERC1155_EXCHANGE: Contract = {
 	name: 'ERC1155 Exchange',
 	address: '0xffa3b5fec79d842da15ff8862c28f7c8e4ad837c',
 	abi: [

@@ -1,4 +1,5 @@
-export const SUPERFINE_AIRDROP_V3 = {
+import { Contract } from '@/contract'
+export const SUPERFINE_AIRDROP_V3: Contract = {
 	name: 'Superfine Airdrop V3',
 	address: '0x27013d274aa60c6e6883aa2130e8b01249eb11d4',
 	abi: [

@@ -1,4 +1,5 @@
-export const GOVERNANCE_ADMIN = {
+import { Contract } from '@/contract'
+export const GOVERNANCE_ADMIN: Contract = {
 	name: 'Governance Admin',
 	address: '0x84390b8cf3e612e8c80d9ea2e92bcd029151404a',
 	abi: [

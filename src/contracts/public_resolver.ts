@@ -1,4 +1,5 @@
-export const PUBLIC_RESOLVER = {
+import { Contract } from '@/contract'
+export const PUBLIC_RESOLVER: Contract = {
 	name: 'Public Resolver',
 	address: '0x507eb5107c59a2b5af923c38e83af8d59443b62d',
 	abi: [

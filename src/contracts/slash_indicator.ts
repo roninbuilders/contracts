@@ -1,4 +1,5 @@
-export const SLASH_INDICATOR = {
+import { Contract } from '@/contract'
+export const SLASH_INDICATOR: Contract = {
 	name: 'Slash Indicator',
 	address: '0x440baf1c4b008ee4d617a83401f06aa80f5163e9',
 	abi: [

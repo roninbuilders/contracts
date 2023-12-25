@@ -1,4 +1,5 @@
-export const RNS_DOMAIN_PRICE = {
+import { Contract } from '@/contract'
+export const RNS_DOMAIN_PRICE: Contract = {
 	name: 'RNS Domain Price',
 	address: '0x2f8c5e6bbe526d0c88979269f2b249271491717c',
 	abi: [

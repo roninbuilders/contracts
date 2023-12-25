@@ -1,6 +1,7 @@
-export const C_ERC20_PROXY = {
+import { Contract } from '@/contract'
+export const C_ERC20_PROXY: Contract = {
 	name: 'C Erc20 Proxy',
-	address: '0x3ebc36b9545b4b858b1f233d8f2d933c0858f5f4',
+	address: '0x446450d57b4f26691b6cfac92badba5c8d875a4e',
 	abi: [
 		{
 			inputs: [

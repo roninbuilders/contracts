@@ -1,4 +1,5 @@
-export const C_ETHER_PROXY = {
+import { Contract } from '@/contract'
+export const C_ETHER_PROXY: Contract = {
 	name: 'C Ether Proxy',
 	address: '0x1bf2b273745df6a38e5e5f907dcd4d204a4bfe30',
 	abi: [

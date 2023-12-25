@@ -1,4 +1,5 @@
-export const BRIDGE_SLASH = {
+import { Contract } from '@/contract'
+export const BRIDGE_SLASH: Contract = {
 	name: 'Bridge Slash',
 	address: '0x763e39d39a59be7458147c7129fb044b34ab4ca4',
 	abi: [
