@@ -1,6 +1,6 @@
 {
   "name": "@roninbuilders/contracts",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Ronin Network Contracts",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
@@ -49,9 +49,7 @@
     "@types/node": "^20.10.4",
     "ts-node": "^10.9.2",
     "tsup": "^6.7.0",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
+    "typescript": "^5.3.3",
     "abitype": "^0.10.3"
   }
 }
