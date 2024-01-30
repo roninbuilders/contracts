@@ -48,9 +48,9 @@ jobs:
     - name: Increment package version
       # if: steps.git-check.outputs.changes_detected == 'true'
       run: |
+            npm version patch --no-git-tag-version
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        npm version patch --no-git-tag-version
 
     - name: Commit and Push
     #  if: steps.git-check.outputs.changes_detected == 'true'
