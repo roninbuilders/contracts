@@ -14,6 +14,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0 # Fetches all history for all tags and branches
+        token: ${{ secrets.MY_PERSONAL_TOKEN }} # Use the renamed PAT here
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -28,17 +29,17 @@ jobs:
       run: pnpm install
 
     - name: Update Contracts
-      run: pnpm update
+      run: pnpm update-contracts
 
     - name: Format
       run: pnpm format
 
-    - name: Commit changes
+    - name: Commit and Push
       run: |
         git config --global user.name 'alexx855'
         git config --global user.email 'hello@alexpedersen.dev'
-        git add -A
-        git commit -m "Automated build and update" || echo "No changes to commit"
+        git add .
+        git commit -m "Automated build and update" -a || echo "No changes to commit"
         git push
 
     - name: Publish to npm
