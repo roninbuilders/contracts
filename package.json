@@ -1,6 +1,6 @@
 {
   "name": "@roninbuilders/contracts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Ronin Network Contracts",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
@@ -11,10 +11,10 @@
   "scripts": {
     "watch": "tsup --watch; tsc -w",
     "build": "tsup",
-    "update-contracts": "ts-node --esm src/update-contracts.ts",
-    "format": "pnpm dlx @biomejs/biome format src --write",
+    "update-contracts": "node --loader ts-node/esm ./src/update.ts",
+    "format": "pnpm dlx @biomejs/biome format ./src --write",
     "upload": "pnpm run build && pnpm publish",
-    "clean": "rm -rf .turbo && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf ./dist"
   },
   "type": "module",
   "author": "Glitch-txs",
