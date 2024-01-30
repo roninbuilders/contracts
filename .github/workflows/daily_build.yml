@@ -1,0 +1,47 @@
+name: Daily Build and Publish
+
+on:
+  push:
+    branches:
+      - test-actions
+  # schedule:
+  #   - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # Fetches all history for all tags and branches
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # Specify your Node.js version
+        registry-url: 'https://registry.npmjs.org/'
+    
+    - name: Install pnpm
+      run: npm install -g pnpm
+
+    - name: Install Dependencies
+      run: pnpm install
+
+    - name: Update Contracts
+      run: pnpm update
+
+    - name: Format
+      run: pnpm format
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'alexx855'
+        git config --global user.email 'hello@alexpedersen.dev'
+        git add -A
+        git commit -m "Automated build and update" || echo "No changes to commit"
+        git push
+
+    - name: Publish to npm
+      run: npm upload --dry-run
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
