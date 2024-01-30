@@ -1,13 +1,18 @@
 import { Contract } from '@/contract'
-export const EXPEDITION_PRIZES_PROXY: Contract = {
-	name: 'Expedition Prizes Proxy',
-	address: '0xf767c2a449778d4bed3a930c20ecb7e84e3f108b',
+export const MAVIS_STORE_EXTENDED_PROXY: Contract = {
+	name: 'Mavis Store Extended Proxy',
+	address: '0xa650570c41ee2f8448a40e2b45c92f5d2ba13d2f',
 	abi: [
 		{
 			inputs: [
 				{
 					internalType: 'address',
 					name: '_logic',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'admin_',
 					type: 'address',
 				},
 				{

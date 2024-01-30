@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
 export const NEBULA_EXPEDITION_PROXY: Contract = {
 	name: 'Nebula Expedition Proxy',
-	address: '0x4b6f9d702050fa864370926136d25b1de126daa1',
+	address: '0x95a545bf33e29f6787fce060297679d5d89a1107',
 	abi: [
 		{
 			inputs: [

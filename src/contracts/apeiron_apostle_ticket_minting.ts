@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
 export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 	name: 'Apeiron Apostle Ticket Minting',
-	address: '0xdacd2941d4c567ef91fc7684b56bad3192655a0f',
+	address: '0xefa94b28005e266a81c66ca52441eeaa43c06ebc',
 	abi: [
 		{
 			inputs: [],
@@ -101,7 +101,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 			inputs: [
 				{
 					indexed: true,
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '_mintType',
 					type: 'uint8',
 				},
@@ -269,7 +269,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '_mintType',
 					type: 'uint8',
 				},
@@ -298,7 +298,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 				{
 					components: [
 						{
-							internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+							internalType: 'uint8',
 							name: 'mintType',
 							type: 'uint8',
 						},
@@ -490,7 +490,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '_mintType',
 					type: 'uint8',
 				},
@@ -568,7 +568,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 			name: 'ticketContractIdToMintTypeMapping',
 			outputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '',
 					type: 'uint8',
 				},
@@ -579,7 +579,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '',
 					type: 'uint8',
 				},
@@ -672,7 +672,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE[]',
+					internalType: 'uint8[]',
 					name: '_mintTypeArray',
 					type: 'uint8[]',
 				},
@@ -695,7 +695,7 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ApeironApostleTicketMinting.TICKET_MINT_TYPE',
+					internalType: 'uint8',
 					name: '_mintType',
 					type: 'uint8',
 				},

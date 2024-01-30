@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
 export const NEBULA_EXPEDITION: Contract = {
 	name: 'Nebula Expedition',
-	address: '0x20d1b46d17ea3444f4d321bad01833f535c6b16f',
+	address: '0xf49f915085ae0db3c9348877a599f884d4026067',
 	abi: [
 		{
 			inputs: [],
@@ -346,6 +346,11 @@ export const NEBULA_EXPEDITION: Contract = {
 							type: 'uint256[]',
 						},
 						{
+							internalType: 'uint256[]',
+							name: 'apostleWhitelistClasses',
+							type: 'uint256[]',
+						},
+						{
 							internalType: 'uint256',
 							name: 'requiredKeyAmount',
 							type: 'uint256',
@@ -642,6 +647,11 @@ export const NEBULA_EXPEDITION: Contract = {
 						{
 							internalType: 'uint256[]',
 							name: 'optionalAssetWhitelistIds',
+							type: 'uint256[]',
+						},
+						{
+							internalType: 'uint256[]',
+							name: 'apostleWhitelistClasses',
 							type: 'uint256[]',
 						},
 						{

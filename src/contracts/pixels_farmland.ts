@@ -1,34 +1,28 @@
 import { Contract } from '@/contract'
-export const MATERIAL_ERC1155: Contract = {
-	name: 'Material ERC1155',
-	address: '0xb5b69e2f0c3af4fff77bcde7a1b532d9b2e465d8',
+export const PIXELS_FARMLAND: Contract = {
+	name: 'Pixels Farmland',
+	address: '0xf083289535052e8449d69e6dc41c0ae064d8e3f6',
 	abi: [
 		{
-			inputs: [],
-			stateMutability: 'payable',
+			inputs: [
+				{
+					internalType: 'string',
+					name: 'name',
+					type: 'string',
+				},
+				{
+					internalType: 'string',
+					name: 'symbol',
+					type: 'string',
+				},
+				{
+					internalType: 'string',
+					name: 'baseTokenURI',
+					type: 'string',
+				},
+			],
+			stateMutability: 'nonpayable',
 			type: 'constructor',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrLengthMismatch',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrUnauthorized',
-			type: 'error',
 		},
 		{
 			anonymous: false,
@@ -36,7 +30,32 @@ export const MATERIAL_ERC1155: Contract = {
 				{
 					indexed: true,
 					internalType: 'address',
-					name: 'account',
+					name: 'owner',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'approved',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'Approval',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'owner',
 					type: 'address',
 				},
 				{
@@ -59,13 +78,32 @@ export const MATERIAL_ERC1155: Contract = {
 			anonymous: false,
 			inputs: [
 				{
-					indexed: false,
-					internalType: 'uint8',
-					name: 'version',
-					type: 'uint8',
+					indexed: true,
+					internalType: 'uint256',
+					name: '_tokenId',
+					type: 'uint256',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: '_nonce',
+					type: 'uint256',
 				},
 			],
-			name: 'Initialized',
+			name: 'NonceUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Paused',
 			type: 'event',
 		},
 		{
@@ -149,12 +187,6 @@ export const MATERIAL_ERC1155: Contract = {
 				{
 					indexed: true,
 					internalType: 'address',
-					name: 'operator',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
 					name: 'from',
 					type: 'address',
 				},
@@ -165,56 +197,13 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'address',
 				},
 				{
-					indexed: false,
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256[]',
-					name: 'values',
-					type: 'uint256[]',
-				},
-			],
-			name: 'TransferBatch',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
 					indexed: true,
-					internalType: 'address',
-					name: 'operator',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'from',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'to',
-					type: 'address',
-				},
-				{
-					indexed: false,
 					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'value',
+					name: 'tokenId',
 					type: 'uint256',
 				},
 			],
-			name: 'TransferSingle',
+			name: 'Transfer',
 			type: 'event',
 		},
 		{
@@ -222,18 +211,12 @@ export const MATERIAL_ERC1155: Contract = {
 			inputs: [
 				{
 					indexed: false,
-					internalType: 'string',
-					name: 'value',
-					type: 'string',
-				},
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
 				},
 			],
-			name: 'URI',
+			name: 'Unpaused',
 			type: 'event',
 		},
 		{
@@ -263,16 +246,42 @@ export const MATERIAL_ERC1155: Contract = {
 			type: 'function',
 		},
 		{
+			inputs: [],
+			name: 'PAUSER_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'account',
+					name: 'to',
 					type: 'address',
 				},
 				{
 					internalType: 'uint256',
-					name: 'id',
+					name: 'tokenId',
 					type: 'uint256',
+				},
+			],
+			name: 'approve',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'owner',
+					type: 'address',
 				},
 			],
 			name: 'balanceOf',
@@ -289,88 +298,8 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'address[]',
-					name: 'accounts',
-					type: 'address[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-			],
-			name: 'balanceOfBatch',
-			outputs: [
-				{
-					internalType: 'uint256[]',
-					name: '',
-					type: 'uint256[]',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'address',
-					name: 'to',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'amounts',
-					type: 'uint256[]',
-				},
-			],
-			name: 'batchMintMaterials',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
-					internalType: 'address[]',
-					name: 'tos',
-					type: 'address[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'amounts',
-					type: 'uint256[]',
-				},
-			],
-			name: 'bulkMintMaterial',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: 'value',
+					name: '_tokenId',
 					type: 'uint256',
 				},
 			],
@@ -380,42 +309,32 @@ export const MATERIAL_ERC1155: Contract = {
 			type: 'function',
 		},
 		{
-			inputs: [
+			inputs: [],
+			name: 'burnAllowed',
+			outputs: [
 				{
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'values',
-					type: 'uint256[]',
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
 				},
 			],
-			name: 'burnBatch',
-			outputs: [],
-			stateMutability: 'nonpayable',
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
 			inputs: [
 				{
 					internalType: 'uint256',
-					name: 'id',
+					name: 'tokenId',
 					type: 'uint256',
 				},
 			],
-			name: 'exists',
+			name: 'getApproved',
 			outputs: [
 				{
-					internalType: 'bool',
+					internalType: 'address',
 					name: '',
-					type: 'bool',
+					type: 'address',
 				},
 			],
 			stateMutability: 'view',
@@ -529,30 +448,7 @@ export const MATERIAL_ERC1155: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'admin',
-					type: 'address',
-				},
-				{
-					internalType: 'address[]',
-					name: 'minters',
-					type: 'address[]',
-				},
-				{
-					internalType: 'string',
-					name: 'uri_',
-					type: 'string',
-				},
-			],
-			name: 'initialize',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'account',
+					name: 'owner',
 					type: 'address',
 				},
 				{
@@ -575,22 +471,17 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
 					internalType: 'address',
 					name: 'to',
 					type: 'address',
 				},
 				{
 					internalType: 'uint256',
-					name: 'amount',
+					name: 'tokenId',
 					type: 'uint256',
 				},
 			],
-			name: 'mintMaterial',
+			name: 'mint',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -605,7 +496,65 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'string',
 				},
 			],
-			stateMutability: 'pure',
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			name: 'nonces',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'ownerOf',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'pause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'paused',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -657,22 +606,12 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'address',
 				},
 				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'amounts',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'bytes',
-					name: 'data',
-					type: 'bytes',
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
 				},
 			],
-			name: 'safeBatchTransferFrom',
+			name: 'safeTransferFrom',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -691,12 +630,7 @@ export const MATERIAL_ERC1155: Contract = {
 				},
 				{
 					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: 'amount',
+					name: 'tokenId',
 					type: 'uint256',
 				},
 				{
@@ -732,13 +666,32 @@ export const MATERIAL_ERC1155: Contract = {
 			inputs: [
 				{
 					internalType: 'string',
-					name: 'uri_',
+					name: 'baseTokenURI',
 					type: 'string',
 				},
 			],
-			name: 'setURI',
+			name: 'setBaseURI',
 			outputs: [],
 			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: '_tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'stateOf',
+			outputs: [
+				{
+					internalType: 'bytes',
+					name: '',
+					type: 'bytes',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -770,18 +723,49 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'string',
 				},
 			],
-			stateMutability: 'pure',
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'toggleBurnAllowed',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
 			inputs: [
 				{
 					internalType: 'uint256',
-					name: 'id',
+					name: 'index',
 					type: 'uint256',
 				},
 			],
-			name: 'totalSupply',
+			name: 'tokenByIndex',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'owner',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: 'index',
+					type: 'uint256',
+				},
+			],
+			name: 'tokenOfOwnerByIndex',
 			outputs: [
 				{
 					internalType: 'uint256',
@@ -800,7 +784,7 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'uint256',
 				},
 			],
-			name: 'uri',
+			name: 'tokenURI',
 			outputs: [
 				{
 					internalType: 'string',
@@ -809,6 +793,49 @@ export const MATERIAL_ERC1155: Contract = {
 				},
 			],
 			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'totalSupply',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'from',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'to',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: 'tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'transferFrom',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'unpause',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 	],

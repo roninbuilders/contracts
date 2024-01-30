@@ -1,13 +1,18 @@
 import { Contract } from '@/contract'
-export const EXPEDITION_PRIZES_PROXY: Contract = {
-	name: 'Expedition Prizes Proxy',
-	address: '0xf767c2a449778d4bed3a930c20ecb7e84e3f108b',
+export const STORE_COMMISSION_PROXY: Contract = {
+	name: 'Store Commission Proxy',
+	address: '0x5c85819a6d8d08f7b746200a57406cfd2ecaea63',
 	abi: [
 		{
 			inputs: [
 				{
 					internalType: 'address',
 					name: '_logic',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'admin_',
 					type: 'address',
 				},
 				{

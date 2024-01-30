@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
 export const EXPEDITION_PRIZES: Contract = {
 	name: 'Expedition Prizes',
-	address: '0x0a42b24f9df664222e3eabba29ebb597042ea44c',
+	address: '0x256546446be148e77dd8c1f7e15f80eb1e017395',
 	abi: [
 		{
 			inputs: [],

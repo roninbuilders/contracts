@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
-export const LAND_DELEGATION: Contract = {
-	name: 'Land Delegation',
-	address: '0xbcb053aa2465fc0a36256c66b424a77c3e3b2830',
+export const PART_EVOLUTION: Contract = {
+	name: 'Part Evolution',
+	address: '0x70e8c0667aaf20b8e97ec3f8ec11ef2bc89a59bd',
 	abi: [
 		{
 			inputs: [],
@@ -10,163 +10,120 @@ export const LAND_DELEGATION: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'ErrAlreadySteward',
+			name: 'ErrBodyPartAlreadyEvolved',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrAssigneeNonZeroBalance',
+			name: 'ErrBodyPartStillEvolving',
 			type: 'error',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'from',
-					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: 'to',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-			],
-			name: 'ErrCannotTransferLand',
+			inputs: [],
+			name: 'ErrBurnMaterialFailed',
+			type: 'error',
+		},
+		{
+			inputs: [],
+			name: 'ErrInvalidPath',
+			type: 'error',
+		},
+		{
+			inputs: [],
+			name: 'ErrInvalidPathLength',
 			type: 'error',
 		},
 		{
 			inputs: [
 				{
 					internalType: 'uint256',
-					name: 'landId',
+					name: 'evolvedPartCount',
 					type: 'uint256',
 				},
-			],
-			name: 'ErrDelegationNotFound',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrExceedsMaxBatchSize',
-			type: 'error',
-		},
-		{
-			inputs: [
 				{
 					internalType: 'uint256',
-					name: 'landId',
+					name: 'axieLevel',
 					type: 'uint256',
 				},
 			],
-			name: 'ErrInDelegationDuration',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-			],
-			name: 'ErrInRevokeCooldown',
+			name: 'ErrLevelNotReach',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrInvalidConfig',
+			name: 'ErrMaxEvolved',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrInvalidDuration',
+			name: 'ErrMaxEvolvedPart',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrInvalidInput',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-			],
-			name: 'ErrLandAlreadyInDelegation',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-			],
-			name: 'ErrLandNotFound',
+			name: 'ErrNotAuthorized',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrSelfDelegation',
+			name: 'ErrNotExistPartEvolvedWaitsForCompletion',
+			type: 'error',
+		},
+		{
+			inputs: [],
+			name: 'ErrRequestPaymentAmountFailed',
 			type: 'error',
 		},
 		{
 			anonymous: false,
 			inputs: [
 				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'min',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'max',
-					type: 'uint256',
+					indexed: false,
+					internalType: 'contract IAxie',
+					name: 'axieContract',
+					type: 'address',
 				},
 			],
-			name: 'DelegateDurationRangeChanged',
+			name: 'AxieContractUpdated',
 			type: 'event',
 		},
 		{
 			anonymous: false,
 			inputs: [
 				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'owner',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'assignee',
-					type: 'address',
-				},
-				{
 					indexed: false,
 					internalType: 'uint256',
-					name: 'duration',
+					name: '',
 					type: 'uint256',
 				},
 			],
-			name: 'Delegated',
+			name: 'BoostCostMultiplierUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			name: 'EvolutionDurationUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'uint256[]',
+					name: 'fees',
+					type: 'uint256[]',
+				},
+			],
+			name: 'EvolutionFeesUpdated',
 			type: 'event',
 		},
 		{
@@ -187,12 +144,12 @@ export const LAND_DELEGATION: Contract = {
 			inputs: [
 				{
 					indexed: false,
-					internalType: 'contract IERC721',
-					name: 'newLandContract',
+					internalType: 'contract IMaterial',
+					name: 'materialContractAddress',
 					type: 'address',
 				},
 			],
-			name: 'LandContractChanged',
+			name: 'MaterialContractAddressUpdated',
 			type: 'event',
 		},
 		{
@@ -200,12 +157,56 @@ export const LAND_DELEGATION: Contract = {
 			inputs: [
 				{
 					indexed: false,
-					internalType: 'contract ILandStakingPool',
-					name: 'newLandStaking',
-					type: 'address',
+					internalType: 'uint256[]',
+					name: 'costs',
+					type: 'uint256[]',
 				},
 			],
-			name: 'LandStakingContractChanged',
+			name: 'MaterialCostsUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'user',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: 'axieId',
+					type: 'uint256',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: 'finishTs',
+					type: 'uint256',
+				},
+			],
+			name: 'PartEvolutionCreated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'user',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'uint256',
+					name: 'axieId',
+					type: 'uint256',
+				},
+			],
+			name: 'PartEvolutionFinished',
 			type: 'event',
 		},
 		{
@@ -225,51 +226,25 @@ export const LAND_DELEGATION: Contract = {
 			anonymous: false,
 			inputs: [
 				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
+					indexed: false,
 					internalType: 'address',
-					name: 'owner',
+					name: 'baseToken',
 					type: 'address',
 				},
-			],
-			name: 'Retrieved',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
 				{
 					indexed: false,
-					internalType: 'uint256',
-					name: 'newDuration',
-					type: 'uint256',
-				},
-			],
-			name: 'RevokeCooldownDurationChanged',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'landId',
-					type: 'uint256',
-				},
-				{
-					indexed: true,
 					internalType: 'address',
-					name: 'owner',
+					name: 'paymentToken',
 					type: 'address',
 				},
+				{
+					indexed: false,
+					internalType: 'uint256[]',
+					name: 'evolutionFees',
+					type: 'uint256[]',
+				},
 			],
-			name: 'Revoked',
+			name: 'PaymentConfigsUpdated',
 			type: 'event',
 		},
 		{
@@ -353,6 +328,45 @@ export const LAND_DELEGATION: Contract = {
 				{
 					indexed: false,
 					internalType: 'address',
+					name: 'routerContract',
+					type: 'address',
+				},
+			],
+			name: 'RouterContractUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'uint256',
+					name: 'specialMaterialCost',
+					type: 'uint256',
+				},
+			],
+			name: 'SpecialMaterialCostUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'treasury',
+					type: 'address',
+				},
+			],
+			name: 'TreasuryUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
 					name: 'account',
 					type: 'address',
 				},
@@ -375,12 +389,12 @@ export const LAND_DELEGATION: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'MIGRATOR_ROLE',
+			name: 'MAX_PERCENTAGE',
 			outputs: [
 				{
-					internalType: 'bytes32',
+					internalType: 'uint256',
 					name: '',
-					type: 'bytes32',
+					type: 'uint256',
 				},
 			],
 			stateMutability: 'view',
@@ -389,76 +403,73 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256[]',
-					name: 'landIds',
-					type: 'uint256[]',
+					internalType: 'uint256',
+					name: 'axieId',
+					type: 'uint256',
+				},
+			],
+			name: 'completePartEvolution',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'axieId',
+					type: 'uint256',
+				},
+				{
+					internalType: 'enum AxieGenetics.BodyPart',
+					name: 'partId',
+					type: 'uint8',
+				},
+				{
+					internalType: 'bool',
+					name: 'boosted',
+					type: 'bool',
 				},
 				{
 					internalType: 'address[]',
-					name: 'owners',
+					name: 'path',
 					type: 'address[]',
 				},
 			],
-			name: 'batchMigrateLands',
+			name: 'evolvePart',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			inputs: [
+			inputs: [],
+			name: 'getAxieContract',
+			outputs: [
 				{
-					internalType: 'uint256',
-					name: '_landId',
-					type: 'uint256',
-				},
-				{
-					internalType: 'address',
-					name: '_assignee',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: '_duration',
-					type: 'uint256',
-				},
-			],
-			name: 'delegateLand',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256[]',
-					name: '_landIds',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'address',
-					name: '_assignee',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256[]',
-					name: '_durations',
-					type: 'uint256[]',
-				},
-			],
-			name: 'delegateLandBatch',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
+					internalType: 'contract IAxie',
 					name: '',
 					type: 'address',
 				},
 			],
-			name: 'delegationAmountsMap',
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getBoostCostMultiplier',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getEvolutionDuration',
 			outputs: [
 				{
 					internalType: 'uint256',
@@ -472,32 +483,70 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-				{
 					internalType: 'uint256',
-					name: '',
+					name: 'axieId',
 					type: 'uint256',
 				},
 			],
-			name: 'delegationMap',
+			name: 'getEvolutionInfo',
 			outputs: [
 				{
-					internalType: 'uint256',
-					name: 'expiryTimestamp',
-					type: 'uint256',
+					components: [
+						{
+							internalType: 'enum IPartEvolution.EvolutionStatus',
+							name: 'status',
+							type: 'uint8',
+						},
+						{
+							internalType: 'enum AxieGenetics.BodyPart',
+							name: 'partId',
+							type: 'uint8',
+						},
+						{
+							internalType: 'uint256',
+							name: 'finishTimestamp',
+							type: 'uint256',
+						},
+					],
+					internalType: 'struct IPartEvolution.EvolutionInfo',
+					name: '',
+					type: 'tuple',
 				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getMaterialCosts',
+			outputs: [
 				{
-					internalType: 'uint256',
-					name: 'assignedTimestamp',
-					type: 'uint256',
+					internalType: 'uint256[]',
+					name: 'costs',
+					type: 'uint256[]',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getPaymentConfigs',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
 				},
 				{
 					internalType: 'address',
-					name: 'assignee',
+					name: '',
 					type: 'address',
+				},
+				{
+					internalType: 'uint256[]',
+					name: '',
+					type: 'uint256[]',
 				},
 			],
 			stateMutability: 'view',
@@ -566,6 +615,45 @@ export const LAND_DELEGATION: Contract = {
 			type: 'function',
 		},
 		{
+			inputs: [],
+			name: 'getRouterContract',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getSpecialMaterialCost',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getTreasury',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
 			inputs: [
 				{
 					internalType: 'bytes32',
@@ -611,27 +699,52 @@ export const LAND_DELEGATION: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: '_owner',
+					name: 'admin',
 					type: 'address',
 				},
 				{
-					internalType: 'contract IERC721',
-					name: '_landContract',
+					internalType: 'contract IAxie',
+					name: 'axieContract',
 					type: 'address',
+				},
+				{
+					internalType: 'contract IMaterial',
+					name: 'materialContract',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'treasury',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256[]',
+					name: 'materialCosts',
+					type: 'uint256[]',
 				},
 				{
 					internalType: 'uint256',
-					name: '_revokeCooldownDuration',
+					name: 'costMultiplier',
 					type: 'uint256',
 				},
 				{
 					internalType: 'uint256',
-					name: '_minDelegateDuration',
+					name: 'evolutionDuration',
 					type: 'uint256',
 				},
 				{
+					internalType: 'address[3]',
+					name: 'paymentInfoAddr',
+					type: 'address[3]',
+				},
+				{
+					internalType: 'uint256[]',
+					name: 'evolutionFees',
+					type: 'uint256[]',
+				},
+				{
 					internalType: 'uint256',
-					name: '_maxDelegateDuration',
+					name: 'specialMaterialCost',
 					type: 'uint256',
 				},
 			],
@@ -643,38 +756,12 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'contract ILandStakingPool',
-					name: '_landStakingContract',
-					type: 'address',
+					internalType: 'uint256',
+					name: 'axieId',
+					type: 'uint256',
 				},
 			],
-			name: 'initializeV2',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'migrator',
-					type: 'address',
-				},
-			],
-			name: 'initializeV3',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: '_assignee',
-					type: 'address',
-				},
-			],
-			name: 'isSteward',
+			name: 'isReadyToComplete',
 			outputs: [
 				{
 					internalType: 'bool',
@@ -683,79 +770,6 @@ export const LAND_DELEGATION: Contract = {
 				},
 			],
 			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'landContract',
-			outputs: [
-				{
-					internalType: 'contract IERC721',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'maxDelegateDuration',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'minDelegateDuration',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-				{
-					internalType: 'bytes',
-					name: '',
-					type: 'bytes',
-				},
-			],
-			name: 'onERC721Received',
-			outputs: [
-				{
-					internalType: 'bytes4',
-					name: '',
-					type: 'bytes4',
-				},
-			],
-			stateMutability: 'pure',
 			type: 'function',
 		},
 		{
@@ -799,71 +813,6 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: '_landId',
-					type: 'uint256',
-				},
-			],
-			name: 'retrieveLand',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256[]',
-					name: '_landIds',
-					type: 'uint256[]',
-				},
-			],
-			name: 'retrieveLandBatch',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'revokeCooldownDuration',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: '_landId',
-					type: 'uint256',
-				},
-			],
-			name: 'revokeLand',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256[]',
-					name: '_landIds',
-					type: 'uint256[]',
-				},
-			],
-			name: 'revokeLandBatch',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'bytes32',
 					name: 'role',
 					type: 'bytes32',
@@ -880,19 +829,8 @@ export const LAND_DELEGATION: Contract = {
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: '_minDelegateDuration',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: '_maxDelegateDuration',
-					type: 'uint256',
-				},
-			],
-			name: 'setDelegateDurationRange',
+			inputs: [],
+			name: 'setAxieContract',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -900,12 +838,38 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'contract IERC721',
-					name: '_landContract',
+					internalType: 'uint256',
+					name: 'multiplier',
+					type: 'uint256',
+				},
+			],
+			name: 'setBoostCostMultiplier',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: 'duration',
+					type: 'uint256',
+				},
+			],
+			name: 'setEvolutionDuration',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'contract IMaterial',
+					name: 'addr',
 					type: 'address',
 				},
 			],
-			name: 'setLandContract',
+			name: 'setMaterialContract',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -913,25 +877,12 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'contract ILandStakingPool',
-					name: '_landStakingContract',
-					type: 'address',
+					internalType: 'uint256[]',
+					name: 'costs',
+					type: 'uint256[]',
 				},
 			],
-			name: 'setLandStakingContract',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: '_revokeCooldownDuration',
-					type: 'uint256',
-				},
-			],
-			name: 'setRevokeCooldownDuration',
+			name: 'setMaterialCosts',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -940,29 +891,62 @@ export const LAND_DELEGATION: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: '',
+					name: 'baseToken',
 					type: 'address',
-				},
-			],
-			name: 'stewardMap',
-			outputs: [
-				{
-					internalType: 'bool',
-					name: 'assigned',
-					type: 'bool',
 				},
 				{
 					internalType: 'address',
-					name: 'landOwner',
+					name: 'paymentToken',
 					type: 'address',
 				},
 				{
+					internalType: 'uint256[]',
+					name: 'evolutionFees',
+					type: 'uint256[]',
+				},
+			],
+			name: 'setPaymentConfigs',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'routerContract',
+					type: 'address',
+				},
+			],
+			name: 'setRouterContract',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
 					internalType: 'uint256',
-					name: 'furthestExpiryTimestamp',
+					name: 'cost',
 					type: 'uint256',
 				},
 			],
-			stateMutability: 'view',
+			name: 'setSpecialMaterialCost',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'treasury',
+					type: 'address',
+				},
+			],
+			name: 'setTreasury',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{

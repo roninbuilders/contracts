@@ -1,26 +1,10 @@
 import { Contract } from '@/contract'
-export const ERC20_RECEIPT: Contract = {
-	name: 'ERC20 Receipt',
-	address: '0xdf64b06366e06d2cc3cd89d778772473c5d90d71',
+export const APRS: Contract = {
+	name: 'Aprs',
+	address: '0x7a5a2b07b50dba55c03313f11b47cd518f0a6bca',
 	abi: [
 		{
-			inputs: [
-				{
-					internalType: 'string',
-					name: 'name_',
-					type: 'string',
-				},
-				{
-					internalType: 'string',
-					name: 'symbol_',
-					type: 'string',
-				},
-				{
-					internalType: 'address',
-					name: 'originalToken_',
-					type: 'address',
-				},
-			],
+			inputs: [],
 			stateMutability: 'nonpayable',
 			type: 'constructor',
 		},
@@ -91,6 +75,19 @@ export const ERC20_RECEIPT: Contract = {
 			anonymous: false,
 			inputs: [
 				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Paused',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
 					indexed: true,
 					internalType: 'address',
 					name: 'from',
@@ -110,6 +107,19 @@ export const ERC20_RECEIPT: Contract = {
 				},
 			],
 			name: 'Transfer',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Unpaused',
 			type: 'event',
 		},
 		{
@@ -182,14 +192,22 @@ export const ERC20_RECEIPT: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'address',
-					name: 'receiptFrom',
-					type: 'address',
-				},
-				{
 					internalType: 'uint256',
-					name: 'tokenId',
+					name: 'amount',
 					type: 'uint256',
+				},
+			],
+			name: 'burn',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
 				},
 				{
 					internalType: 'uint256',
@@ -197,9 +215,22 @@ export const ERC20_RECEIPT: Contract = {
 					type: 'uint256',
 				},
 			],
-			name: 'burnForReceipt',
+			name: 'burnFrom',
 			outputs: [],
 			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'cap',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -286,13 +317,8 @@ export const ERC20_RECEIPT: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'receiptTo',
+					name: 'to',
 					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: 'tokenId',
-					type: 'uint256',
 				},
 				{
 					internalType: 'uint256',
@@ -300,7 +326,7 @@ export const ERC20_RECEIPT: Contract = {
 					type: 'uint256',
 				},
 			],
-			name: 'mintForReceipt',
+			name: 'mint',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -320,7 +346,7 @@ export const ERC20_RECEIPT: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'originalToken',
+			name: 'owner',
 			outputs: [
 				{
 					internalType: 'address',
@@ -333,12 +359,19 @@ export const ERC20_RECEIPT: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'owner',
+			name: 'pause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'paused',
 			outputs: [
 				{
-					internalType: 'address',
+					internalType: 'bool',
 					name: '',
-					type: 'address',
+					type: 'bool',
 				},
 			],
 			stateMutability: 'view',
@@ -457,6 +490,13 @@ export const ERC20_RECEIPT: Contract = {
 				},
 			],
 			name: 'transferOwnership',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'unpause',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',

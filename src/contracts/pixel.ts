@@ -1,47 +1,28 @@
 import { Contract } from '@/contract'
-export const ERC20_RECEIPT: Contract = {
-	name: 'ERC20 Receipt',
-	address: '0xdf64b06366e06d2cc3cd89d778772473c5d90d71',
+export const PIXEL: Contract = {
+	name: 'PIXEL',
+	address: '0xdf18fd85ab57d7c1aae59729f2ef560be56867b0',
 	abi: [
 		{
 			inputs: [
 				{
-					internalType: 'string',
-					name: 'name_',
-					type: 'string',
-				},
-				{
-					internalType: 'string',
-					name: 'symbol_',
-					type: 'string',
+					internalType: 'address',
+					name: 'defaultAdmin',
+					type: 'address',
 				},
 				{
 					internalType: 'address',
-					name: 'originalToken_',
+					name: 'pauser',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'minter',
 					type: 'address',
 				},
 			],
 			stateMutability: 'nonpayable',
 			type: 'constructor',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'address',
-					name: '_admin',
-					type: 'address',
-				},
-				{
-					indexed: false,
-					internalType: 'bool',
-					name: '_enabled',
-					type: 'bool',
-				},
-			],
-			name: 'AdminAccessSet',
-			type: 'event',
 		},
 		{
 			anonymous: false,
@@ -72,19 +53,88 @@ export const ERC20_RECEIPT: Contract = {
 			anonymous: false,
 			inputs: [
 				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Paused',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'previousAdminRole',
+					type: 'bytes32',
+				},
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'newAdminRole',
+					type: 'bytes32',
+				},
+			],
+			name: 'RoleAdminChanged',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
 					indexed: true,
 					internalType: 'address',
-					name: 'previousOwner',
+					name: 'account',
 					type: 'address',
 				},
 				{
 					indexed: true,
 					internalType: 'address',
-					name: 'newOwner',
+					name: 'sender',
 					type: 'address',
 				},
 			],
-			name: 'OwnershipTransferred',
+			name: 'RoleGranted',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'sender',
+					type: 'address',
+				},
+			],
+			name: 'RoleRevoked',
 			type: 'event',
 		},
 		{
@@ -111,6 +161,58 @@ export const ERC20_RECEIPT: Contract = {
 			],
 			name: 'Transfer',
 			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Unpaused',
+			type: 'event',
+		},
+		{
+			inputs: [],
+			name: 'DEFAULT_ADMIN_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'MINTER_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'PAUSER_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
 		},
 		{
 			inputs: [
@@ -182,14 +284,22 @@ export const ERC20_RECEIPT: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'address',
-					name: 'receiptFrom',
-					type: 'address',
-				},
-				{
 					internalType: 'uint256',
-					name: 'tokenId',
+					name: 'amount',
 					type: 'uint256',
+				},
+			],
+			name: 'burn',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
 				},
 				{
 					internalType: 'uint256',
@@ -197,7 +307,7 @@ export const ERC20_RECEIPT: Contract = {
 					type: 'uint256',
 				},
 			],
-			name: 'burnForReceipt',
+			name: 'burnFrom',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -242,6 +352,67 @@ export const ERC20_RECEIPT: Contract = {
 		{
 			inputs: [
 				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+			],
+			name: 'getRoleAdmin',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'grantRole',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'hasRole',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
 					internalType: 'address',
 					name: 'spender',
 					type: 'address',
@@ -267,32 +438,8 @@ export const ERC20_RECEIPT: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'admin',
+					name: 'to',
 					type: 'address',
-				},
-			],
-			name: 'isAdmin',
-			outputs: [
-				{
-					internalType: 'bool',
-					name: '',
-					type: 'bool',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'receiptTo',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256',
-					name: 'tokenId',
-					type: 'uint256',
 				},
 				{
 					internalType: 'uint256',
@@ -300,7 +447,7 @@ export const ERC20_RECEIPT: Contract = {
 					type: 'uint256',
 				},
 			],
-			name: 'mintForReceipt',
+			name: 'mint',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -320,33 +467,38 @@ export const ERC20_RECEIPT: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'originalToken',
+			name: 'pause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'paused',
 			outputs: [
 				{
-					internalType: 'address',
+					internalType: 'bool',
 					name: '',
-					type: 'address',
+					type: 'bool',
 				},
 			],
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			inputs: [],
-			name: 'owner',
-			outputs: [
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
 				{
 					internalType: 'address',
-					name: '',
+					name: 'account',
 					type: 'address',
 				},
 			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'renounceOwnership',
+			name: 'renounceRole',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -354,19 +506,38 @@ export const ERC20_RECEIPT: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'address',
-					name: 'admin',
-					type: 'address',
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
 				},
 				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'revokeRole',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes4',
+					name: 'interfaceId',
+					type: 'bytes4',
+				},
+			],
+			name: 'supportsInterface',
+			outputs: [
+				{
 					internalType: 'bool',
-					name: 'enabled',
+					name: '',
 					type: 'bool',
 				},
 			],
-			name: 'setAdmin',
-			outputs: [],
-			stateMutability: 'nonpayable',
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -449,14 +620,8 @@ export const ERC20_RECEIPT: Contract = {
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'newOwner',
-					type: 'address',
-				},
-			],
-			name: 'transferOwnership',
+			inputs: [],
+			name: 'unpause',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',

@@ -1,7 +1,7 @@
 import { Contract } from '@/contract'
 export const EXPEDITION_STAKING_AND_KEYS: Contract = {
 	name: 'Expedition Staking And Keys',
-	address: '0x000bb9f07682f8ff4333bee4999e0d52e56058c6',
+	address: '0x9f4ac63dba1a1677a5e86937d4e6faf74a4bb2a9',
 	abi: [
 		{
 			inputs: [],

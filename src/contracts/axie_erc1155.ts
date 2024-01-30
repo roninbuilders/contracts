@@ -1,34 +1,12 @@
 import { Contract } from '@/contract'
-export const MATERIAL_ERC1155: Contract = {
-	name: 'Material ERC1155',
-	address: '0xb5b69e2f0c3af4fff77bcde7a1b532d9b2e465d8',
+export const AXIE_ERC1155: Contract = {
+	name: 'Axie ERC1155',
+	address: '0x7923fdde0c6762f60a2032c6e2ae4bafa743cc7b',
 	abi: [
 		{
 			inputs: [],
-			stateMutability: 'payable',
+			stateMutability: 'nonpayable',
 			type: 'constructor',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrLengthMismatch',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrUnauthorized',
-			type: 'error',
 		},
 		{
 			anonymous: false,
@@ -66,6 +44,19 @@ export const MATERIAL_ERC1155: Contract = {
 				},
 			],
 			name: 'Initialized',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Paused',
 			type: 'event',
 		},
 		{
@@ -237,6 +228,19 @@ export const MATERIAL_ERC1155: Contract = {
 			type: 'event',
 		},
 		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Unpaused',
+			type: 'event',
+		},
+		{
 			inputs: [],
 			name: 'DEFAULT_ADMIN_ROLE',
 			outputs: [
@@ -252,6 +256,19 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [],
 			name: 'MINTER_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'PAUSER_ROLE',
 			outputs: [
 				{
 					internalType: 'bytes32',
@@ -313,52 +330,6 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'address',
-					name: 'to',
-					type: 'address',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'amounts',
-					type: 'uint256[]',
-				},
-			],
-			name: 'batchMintMaterials',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
-					internalType: 'address[]',
-					name: 'tos',
-					type: 'address[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'amounts',
-					type: 'uint256[]',
-				},
-			],
-			name: 'bulkMintMaterial',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'address',
 					name: 'account',
 					type: 'address',
@@ -400,25 +371,6 @@ export const MATERIAL_ERC1155: Contract = {
 			name: 'burnBatch',
 			outputs: [],
 			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-			],
-			name: 'exists',
-			outputs: [
-				{
-					internalType: 'bool',
-					name: '',
-					type: 'bool',
-				},
-			],
-			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -528,19 +480,24 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [
 				{
+					internalType: 'string',
+					name: 'name_',
+					type: 'string',
+				},
+				{
+					internalType: 'string',
+					name: 'symbol_',
+					type: 'string',
+				},
+				{
 					internalType: 'address',
-					name: 'admin',
+					name: '_admin',
 					type: 'address',
 				},
 				{
 					internalType: 'address[]',
-					name: 'minters',
+					name: '_minters',
 					type: 'address[]',
-				},
-				{
-					internalType: 'string',
-					name: 'uri_',
-					type: 'string',
 				},
 			],
 			name: 'initialize',
@@ -575,22 +532,55 @@ export const MATERIAL_ERC1155: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-				{
 					internalType: 'address',
 					name: 'to',
 					type: 'address',
 				},
 				{
 					internalType: 'uint256',
+					name: 'id',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
 					name: 'amount',
 					type: 'uint256',
 				},
+				{
+					internalType: 'bytes',
+					name: 'data',
+					type: 'bytes',
+				},
 			],
-			name: 'mintMaterial',
+			name: 'mint',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: 'to',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256[]',
+					name: 'ids',
+					type: 'uint256[]',
+				},
+				{
+					internalType: 'uint256[]',
+					name: 'amounts',
+					type: 'uint256[]',
+				},
+				{
+					internalType: 'bytes',
+					name: 'data',
+					type: 'bytes',
+				},
+			],
+			name: 'mintBatch',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -605,7 +595,27 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'string',
 				},
 			],
-			stateMutability: 'pure',
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'pause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'paused',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -770,26 +780,14 @@ export const MATERIAL_ERC1155: Contract = {
 					type: 'string',
 				},
 			],
-			stateMutability: 'pure',
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-			],
-			name: 'totalSupply',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
+			inputs: [],
+			name: 'unpause',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
