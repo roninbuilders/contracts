@@ -10,12 +10,18 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment: prod # Specify the environment here
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0 # Fetches all history for all tags and branches
         token: ${{ secrets.MY_PERSONAL_TOKEN }} # Use the renamed PAT here
-
+        ssh-strict: true
+        persist-credentials: true
+        clean: true
+        lfs: false
+        submodules: false
+        set-safe-directory: true
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
