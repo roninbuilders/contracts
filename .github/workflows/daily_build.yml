@@ -1,15 +1,11 @@
 name: Daily Build and Publish
 
 on:
-  push:
-    branches:
-      - test-actions
-  # schedule:
-  #   - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+  schedule:
+    - cron: '0 0 * * *' # Runs at 00:00 UTC every day
 
 jobs:
   build-and-publish:
-    if: "!contains(github.event.head_commit.message, 'Automated update')"
     runs-on: ubuntu-latest
     environment: prod # Specify the environment here
     steps:
@@ -35,8 +31,8 @@ jobs:
     - name: Install Dependencies
       run: pnpm install
 
-    # - name: Update Contracts
-    #   run: pnpm update-contracts
+    - name: Update Contracts
+      run: pnpm update-contracts
 
     - name: Format
       run: pnpm format
@@ -47,14 +43,14 @@ jobs:
         git diff --quiet && git diff --staged --quiet || echo "::set-output name=changes_detected::true"
 
     - name: Increment package version
-      # if: steps.git-check.outputs.changes_detected == 'true'
+      if: steps.git-check.outputs.changes_detected == 'true'
       run: |
             npm version patch --no-git-tag-version
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
     - name: Commit and Push
-    #  if: steps.git-check.outputs.changes_detected == 'true'
+     if: steps.git-check.outputs.changes_detected == 'true'
       run: |
         git config --global user.name 'alexx855'
         git config --global user.email 'hello@alexpedersen.dev'
@@ -63,7 +59,7 @@ jobs:
         git push
 
     - name: Publish to npm
-      # if: steps.git-check.outputs.changes_detected == 'true'
+      if: steps.git-check.outputs.changes_detected == 'true'
       run: pnpm upload
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
