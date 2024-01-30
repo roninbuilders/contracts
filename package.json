@@ -17,7 +17,11 @@
     "clean": "rm -rf .turbo && rm -rf ./dist"
   },
   "type": "module",
-  "author": "Glitch-txs",
+  "author": [
+    "Ronin Builders <3",
+    "Glitch-txs",
+    "alexx855"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -46,10 +50,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.3.3",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.11.10",
+    "abitype": "^0.10.3",
     "ts-node": "^10.9.2",
     "tsup": "^6.7.0",
-    "typescript": "^5.3.3",
-    "abitype": "^0.10.3"
+    "typescript": "^5.3.3"
   }
 }
