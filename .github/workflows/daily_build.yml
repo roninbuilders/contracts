@@ -34,13 +34,26 @@ jobs:
     - name: Install Dependencies
       run: pnpm install
 
-    - name: Update Contracts
-      run: pnpm update-contracts
+    # - name: Update Contracts
+    #   run: pnpm update-contracts
 
     - name: Format
       run: pnpm format
 
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff --quiet && git diff --staged --quiet || echo "::set-output name=changes_detected::true"
+
+    - name: Increment package version
+      # if: steps.git-check.outputs.changes_detected == 'true'
+      run: |
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        npm version patch --no-git-tag-version
+
     - name: Commit and Push
+    #  if: steps.git-check.outputs.changes_detected == 'true'
       run: |
         git config --global user.name 'alexx855'
         git config --global user.email 'hello@alexpedersen.dev'
@@ -49,6 +62,7 @@ jobs:
         git push
 
     - name: Publish to npm
-      run: npm upload --dry-run
+      # if: steps.git-check.outputs.changes_detected == 'true'
+      run: pnpm upload
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
