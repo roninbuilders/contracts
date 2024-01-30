@@ -9,6 +9,7 @@ on:
 
 jobs:
   build-and-publish:
+    if: "!contains(github.event.head_commit.message, 'Automated update')"
     runs-on: ubuntu-latest
     environment: prod # Specify the environment here
     steps:
@@ -58,7 +59,7 @@ jobs:
         git config --global user.name 'alexx855'
         git config --global user.email 'hello@alexpedersen.dev'
         git add .
-        git commit -m "Automated build and update" -a || echo "No changes to commit"
+        git commit -m "Automated update" -a || echo "No changes to commit"
         git push
 
     - name: Publish to npm
