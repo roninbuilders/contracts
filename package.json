@@ -1,6 +1,6 @@
 {
   "name": "@roninbuilders/contracts",
-  "version": "0.1.34",
+  "version": "0.2.0",
   "description": "Ronin Network Contracts",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
     "build": "tsup",
     "update-contracts": "node --loader ts-node/esm ./src/update.ts",
     "format": "pnpm dlx @biomejs/biome format ./src --write",
-    "upload": "pnpm run build && pnpm publish",
+    "upload": "pnpm run build && npm publish --yes",
     "clean": "rm -rf .turbo && rm -rf ./dist"
   },
   "type": "module",
