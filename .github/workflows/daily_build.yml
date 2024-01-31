@@ -50,7 +50,7 @@ jobs:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
     - name: Commit and Push
-     if: steps.git-check.outputs.changes_detected == 'true'
+      if: steps.git-check.outputs.changes_detected == 'true'
       run: |
         git config --global user.name 'alexx855'
         git config --global user.email 'hello@alexpedersen.dev'
