@@ -1,18 +1,20 @@
-name: Daily Build and Publish
+name: Automated Weekly Update
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+  push:
+    branches:
+      - test-actions
+  # schedule:
+  #    - cron: '0 0 * * 1' # Runs at 00:00 UTC every Monday
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    environment: prod # Specify the environment here
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0 # Fetches all history for all tags and branches
-        token: ${{ secrets.MY_PERSONAL_TOKEN }} # Use the renamed PAT here
+        token: ${{ secrets.PAT }} # Use the renamed PAT here
         ssh-strict: true
         persist-credentials: true
         clean: true
@@ -32,6 +34,8 @@ jobs:
       run: pnpm install
 
     - name: Update Contracts
+      env:
+          RONIN_EXPLORER_API_URL: ${{ secrets.RONIN_EXPLORER_API_URL }}
       run: pnpm update-contracts
 
     - name: Format
@@ -49,14 +53,29 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-    - name: Commit and Push
-      if: steps.git-check.outputs.changes_detected == 'true'
-      run: |
-        git config --global user.name 'alexx855'
-        git config --global user.email 'hello@alexpedersen.dev'
-        git add .
-        git commit -m "Automated update" -a || echo "No changes to commit"
-        git push
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.PAT }}
+        title: '[Automated] Update package version'
+        commit-message: 'chore: update package version'
+        branch: weekly-update
+        delete-branch: true
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        body: This is an automated pull request to update the package version and publish to npm the latest contracts from the explorer.
+        labels: |
+          automated pr
+        assignees:  |
+          alexx855
+        reviewers:  |
+          alexx855
+     - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
 
     - name: Publish to npm
       if: steps.git-check.outputs.changes_detected == 'true'
