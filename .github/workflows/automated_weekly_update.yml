@@ -4,81 +4,69 @@ on:
   push:
     branches:
       - test-actions
+  # Automatic runs every Monday at 00:00 UTC
   # schedule:
-  #    - cron: '0 0 * * 1' # Runs at 00:00 UTC every Monday
+  #   - cron: '0 0 * * 1' 
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0 # Fetches all history for all tags and branches
-        token: ${{ secrets.PAT }} # Use the renamed PAT here
-        ssh-strict: true
-        persist-credentials: true
-        clean: true
-        lfs: false
-        submodules: false
-        set-safe-directory: true
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18' # Specify your Node.js version
-        registry-url: 'https://registry.npmjs.org/'
-    
-    - name: Install pnpm
-      run: npm install -g pnpm
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }} 
+          ssh-strict: true
+          persist-credentials: false
+          clean: true
+          lfs: false
+          submodules: false
+          set-safe-directory: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+          cache: 'pnpm'
+      
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Update Contracts
+        env:
+            RONIN_EXPLORER_API_URL: ${{ secrets.RONIN_EXPLORER_API_URL }}
+        run: pnpm run update-contracts
 
-    - name: Install Dependencies
-      run: pnpm install
+      - name: Format
+        run: pnpm format
 
-    - name: Update Contracts
-      env:
-          RONIN_EXPLORER_API_URL: ${{ secrets.RONIN_EXPLORER_API_URL }}
-      run: pnpm update-contracts
-
-    - name: Format
-      run: pnpm format
-
-    - name: Check for changes
-      id: git-check
-      run: |
-        git diff --quiet && git diff --staged --quiet || echo "::set-output name=changes_detected::true"
-
-    - name: Increment package version
-      if: steps.git-check.outputs.changes_detected == 'true'
-      run: |
-            npm version patch --no-git-tag-version
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-    - name: Create Pull Request
-      id: cpr
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.PAT }}
-        title: '[Automated] Update package version'
-        commit-message: 'chore: update package version'
-        branch: weekly-update
-        delete-branch: true
-        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-        signoff: false
-        body: This is an automated pull request to update the package version and publish to npm the latest contracts from the explorer.
-        labels: |
-          automated pr
-        assignees:  |
-          alexx855
-        reviewers:  |
-          alexx855
-     - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Check for changes
+        id: git-check
         run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          git diff --quiet && git diff --staged --quiet || echo "::set-output name=changes_detected::true"
 
-    - name: Publish to npm
-      if: steps.git-check.outputs.changes_detected == 'true'
-      run: pnpm upload
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Increment package version
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: |
+              pnpm version patch --no-git-tag-version
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changes_detected == 'true'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: 'chore: update package version'
+          branch: 'updates/${{ github.run_number }}'
+          delete-branch: true
+          title: 'Automated Package Version Update'
+          body: 'This is an automated PR to update package version.'
+          labels: 'automated pr'
+          assignees: 'alexx855'
+          reviewers: 'alexx855'
+
+      - name: Publish to npm
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: pnpm upload
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
