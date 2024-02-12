@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_BADGE_PROXY: Contract = {
+const AXIE_BADGE_PROXY: Contract = {
 	name: 'Axie Badge Proxy',
 	address: '0x1cdb9c49ffc178356cffc0db31a94fb41168a734',
+	is_deprecated: false,
+	updated_at: 1707575178,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const AXIE_BADGE_PROXY: Contract = {
 		},
 	],
 }
+export default AXIE_BADGE_PROXY

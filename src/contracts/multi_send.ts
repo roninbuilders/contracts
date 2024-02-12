@@ -1,25 +1,104 @@
 import { Contract } from '@/contract'
-export const MULTI_SEND: Contract = {
+const MULTI_SEND: Contract = {
 	name: 'Multi Send',
-	address: '0xa238cbeb142c10ef7ad8442c6d1f9e89e07e7761',
+	address: '0x263eebee6ced9ff47fc9208cd461114e79a03f27',
+	is_deprecated: false,
+	updated_at: 1707575151,
 	abi: [
 		{
 			inputs: [],
-			stateMutability: 'nonpayable',
+			stateMutability: 'payable',
 			type: 'constructor',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'oldOwner',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'newOwner',
+					type: 'address',
+				},
+			],
+			name: 'OwnerSet',
+			type: 'event',
 		},
 		{
 			inputs: [
 				{
-					internalType: 'bytes',
-					name: 'transactions',
-					type: 'bytes',
+					internalType: 'address',
+					name: 'newOwner',
+					type: 'address',
 				},
 			],
-			name: 'multiSend',
+			name: 'changeOwner',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'charge',
+			outputs: [],
+			stateMutability: 'payable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address[]',
+					name: 'recipients',
+					type: 'address[]',
+				},
+			],
+			name: 'getBatchBalance',
+			outputs: [
+				{
+					internalType: 'uint256[]',
+					name: '',
+					type: 'uint256[]',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'getOwner',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address payable[]',
+					name: 'addrs',
+					type: 'address[]',
+				},
+				{
+					internalType: 'uint256[]',
+					name: 'amnts',
+					type: 'uint256[]',
+				},
+			],
+			name: 'withdrawls',
 			outputs: [],
 			stateMutability: 'payable',
 			type: 'function',
 		},
 	],
 }
+export default MULTI_SEND

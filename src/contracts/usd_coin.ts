@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const USD_COIN: Contract = {
+const USD_COIN: Contract = {
 	name: 'USD Coin',
 	address: '0x0b7007c13325c48911f73a2dad5fa5dcbf808adc',
+	is_deprecated: false,
+	updated_at: 1707575165,
 	abi: [
 		{
 			anonymous: false,
@@ -732,3 +734,4 @@ export const USD_COIN: Contract = {
 		},
 	],
 }
+export default USD_COIN

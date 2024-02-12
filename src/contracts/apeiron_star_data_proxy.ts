@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_STAR_DATA_PROXY: Contract = {
+const APEIRON_STAR_DATA_PROXY: Contract = {
 	name: 'Apeiron Star Data Proxy',
 	address: '0xa939f431f6319516364f329533b371a06a6084d6',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const APEIRON_STAR_DATA_PROXY: Contract = {
 		},
 	],
 }
+export default APEIRON_STAR_DATA_PROXY

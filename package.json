@@ -1,6 +1,6 @@
 {
   "name": "@roninbuilders/contracts",
-  "version": "0.1.4",
+  "version": "0.2.2",
   "description": "Ronin Network Contracts",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
@@ -11,16 +11,20 @@
   "scripts": {
     "watch": "tsup --watch; tsc -w",
     "build": "tsup",
-    "update-contracts": "ts-node --esm src/update-contracts.ts",
-    "format": "pnpm dlx @biomejs/biome format src --write",
-    "upload": "pnpm run build && pnpm publish",
-    "clean": "rm -rf .turbo && rm -rf dist"
+    "update-contracts": "node --loader ts-node/esm ./src/update.ts",
+    "format": "pnpm dlx @biomejs/biome format ./src --write",
+    "upload": "pnpm run build && npm publish --yes",
+    "clean": "rm -rf .turbo && rm -rf ./dist"
   },
   "type": "module",
-  "author": "Glitch-txs",
+  "author": [
+    "Ronin Builders <3",
+    "Glitch-txs",
+    "alexx855"
+  ],
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "peerDependencies": {
     "typescript": ">=5"
@@ -39,17 +43,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/roninbuilders/contracts"
+    "url": "git+https://github.com/roninbuilders/contracts.git"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@biomejs/biome": "1.3.3",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.11.10",
+    "abitype": "^0.10.3",
     "ts-node": "^10.9.2",
     "tsup": "^6.7.0",
-    "typescript": "^5.3.3",
-    "abitype": "^0.10.3"
-  }
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@8.5.1"
 }

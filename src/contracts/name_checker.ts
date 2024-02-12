@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const NAME_CHECKER: Contract = {
+const NAME_CHECKER: Contract = {
 	name: 'Name Checker',
-	address: '0xdb8eabf4f27baa9c5ebad23fee1cb12037b58065',
+	address: '0x5ada2a3e8a56c43f3d7e306a606ec5561bf0b2fc',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -569,3 +571,4 @@ export const NAME_CHECKER: Contract = {
 		},
 	],
 }
+export default NAME_CHECKER

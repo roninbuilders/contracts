@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PUBLIC_RESOLVER_PROXY: Contract = {
+const PUBLIC_RESOLVER_PROXY: Contract = {
 	name: 'Public Resolver Proxy',
 	address: '0xadb077d236d9e81fb24b96ae9cb8089ab9942d48',
+	is_deprecated: false,
+	updated_at: 1707575151,
 	abi: [
 		{
 			inputs: [
@@ -79,3 +81,4 @@ export const PUBLIC_RESOLVER_PROXY: Contract = {
 		},
 	],
 }
+export default PUBLIC_RESOLVER_PROXY

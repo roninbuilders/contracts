@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SUPERFINE_REWARD_DISTRIBUTION_V1: Contract = {
+const SUPERFINE_REWARD_DISTRIBUTION_V1: Contract = {
 	name: 'Superfine Reward Distribution V1',
 	address: '0x94c3974c3890ed4767810ec420d0b35165c355a0',
+	is_deprecated: false,
+	updated_at: 1707575157,
 	abi: [
 		{
 			inputs: [],
@@ -408,3 +410,4 @@ export const SUPERFINE_REWARD_DISTRIBUTION_V1: Contract = {
 		},
 	],
 }
+export default SUPERFINE_REWARD_DISTRIBUTION_V1

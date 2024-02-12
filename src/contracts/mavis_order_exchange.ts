@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MAVIS_ORDER_EXCHANGE: Contract = {
+const MAVIS_ORDER_EXCHANGE: Contract = {
 	name: 'Mavis Order Exchange',
-	address: '0xb24592970973a80014fa80feb895873094909b3c',
+	address: '0x635a20fac4682a27e5bbd2800cd41c6d46e135b8',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -827,3 +829,4 @@ export const MAVIS_ORDER_EXCHANGE: Contract = {
 		},
 	],
 }
+export default MAVIS_ORDER_EXCHANGE

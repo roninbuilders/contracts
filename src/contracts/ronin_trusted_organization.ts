@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_TRUSTED_ORGANIZATION: Contract = {
+const RONIN_TRUSTED_ORGANIZATION: Contract = {
 	name: 'Ronin Trusted Organization',
 	address: '0x98d0230884448b3e2f09a177433d60fb1e19c090',
+	is_deprecated: false,
+	updated_at: 1707575120,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_TRUSTED_ORGANIZATION: Contract = {
 		},
 	],
 }
+export default RONIN_TRUSTED_ORGANIZATION

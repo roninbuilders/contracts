@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ORDER_EXCHANGE_LOGIC: Contract = {
+const ORDER_EXCHANGE_LOGIC: Contract = {
 	name: 'Order Exchange Logic',
 	address: '0xa74f8af1bcb92f3037e6235f26cfc55898a550a8',
+	is_deprecated: false,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [],
@@ -992,3 +994,4 @@ export const ORDER_EXCHANGE_LOGIC: Contract = {
 		},
 	],
 }
+export default ORDER_EXCHANGE_LOGIC

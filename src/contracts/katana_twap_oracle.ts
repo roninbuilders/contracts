@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const KATANA_TWAP_ORACLE: Contract = {
+const KATANA_TWAP_ORACLE: Contract = {
 	name: 'Katana TWAP Oracle',
 	address: '0x3ea08443db91f3cbf1fbcad2b2d1ca3f4c582fbf',
+	is_deprecated: false,
+	updated_at: 1707575159,
 	abi: [
 		{
 			inputs: [
@@ -163,3 +165,4 @@ export const KATANA_TWAP_ORACLE: Contract = {
 		},
 	],
 }
+export default KATANA_TWAP_ORACLE

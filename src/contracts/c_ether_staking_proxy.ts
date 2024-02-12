@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const C_ETHER_STAKING_PROXY: Contract = {
+const C_ETHER_STAKING_PROXY: Contract = {
 	name: 'C Ether Staking Proxy',
 	address: '0x6db7bd2fa4b1b89c56c08b553d7c04df0301e885',
+	is_deprecated: false,
+	updated_at: 1707575180,
 	abi: [
 		{
 			inputs: [
@@ -216,3 +218,4 @@ export const C_ETHER_STAKING_PROXY: Contract = {
 		},
 	],
 }
+export default C_ETHER_STAKING_PROXY

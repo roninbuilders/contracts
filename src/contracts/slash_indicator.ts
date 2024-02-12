@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SLASH_INDICATOR: Contract = {
+const SLASH_INDICATOR: Contract = {
 	name: 'Slash Indicator',
-	address: '0x440baf1c4b008ee4d617a83401f06aa80f5163e9',
+	address: '0x056500e6028048db7fca81ac307008a9042605f3',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -15,127 +17,26 @@ export const SLASH_INDICATOR: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'ErrCallerMustBeJailedInTheCurrentPeriod',
+			name: 'ErrCallerMustBeGovernanceAdminContract',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrCannotSlashAValidatorTwiceOrSlashMoreThanOneValidatorInOneBlock',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-			],
-			name: 'ErrContractTypeNotFound',
+			name: 'ErrCallerMustBeMaintenanceContract',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrEvidenceAlreadySubmitted',
+			name: 'ErrCallerMustBeRoninTrustedOrgContract',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrInsufficientCreditScoreToBailOut',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrInvalidArguments',
+			name: 'ErrCallerMustBeValidatorContract',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrInvalidCreditScoreConfig',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidCutOffPercentageConfig',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidRatios',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidSlash',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-			],
-			name: 'ErrInvalidThreshold',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-				{
-					internalType: 'enum RoleAccess',
-					name: 'expectedRole',
-					type: 'uint8',
-				},
-			],
-			name: 'ErrUnauthorized',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-				{
-					internalType: 'enum ContractType',
-					name: 'expectedContractType',
-					type: 'uint8',
-				},
-				{
-					internalType: 'address',
-					name: 'actual',
-					type: 'address',
-				},
-			],
-			name: 'ErrUnexpectedInternalCall',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrValidatorHasBailedOutPreviously',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
 			name: 'ErrZeroCodeContract',
 			type: 'error',
 		},
@@ -218,25 +119,6 @@ export const SLASH_INDICATOR: Contract = {
 			anonymous: false,
 			inputs: [
 				{
-					indexed: true,
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
-			name: 'ContractUpdated',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
 					indexed: false,
 					internalType: 'uint256',
 					name: 'gainCreditScore',
@@ -313,18 +195,12 @@ export const SLASH_INDICATOR: Contract = {
 			inputs: [
 				{
 					indexed: false,
-					internalType: 'uint256',
-					name: 'slashFastFinalityAmount',
-					type: 'uint256',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'fastFinalityJailUntilBlock',
-					type: 'uint256',
+					internalType: 'uint8',
+					name: 'version',
+					type: 'uint8',
 				},
 			],
-			name: 'FastFinalitySlashingConfigsUpdated',
+			name: 'Initialized',
 			type: 'event',
 		},
 		{
@@ -332,12 +208,38 @@ export const SLASH_INDICATOR: Contract = {
 			inputs: [
 				{
 					indexed: false,
-					internalType: 'uint8',
-					name: 'version',
-					type: 'uint8',
+					internalType: 'address',
+					name: '',
+					type: 'address',
 				},
 			],
-			name: 'Initialized',
+			name: 'MaintenanceContractUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			name: 'RoninGovernanceAdminContractUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			name: 'RoninTrustedOrganizationContractUpdated',
 			type: 'event',
 		},
 		{
@@ -394,6 +296,19 @@ export const SLASH_INDICATOR: Contract = {
 				},
 			],
 			name: 'UnavailabilitySlashingConfigsUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			name: 'ValidatorContractUpdated',
 			type: 'event',
 		},
 		{
@@ -537,25 +452,6 @@ export const SLASH_INDICATOR: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-			],
-			name: 'getContract',
-			outputs: [
-				{
-					internalType: 'address',
-					name: 'contract_',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'address',
 					name: '_validator',
 					type: 'address',
@@ -617,24 +513,6 @@ export const SLASH_INDICATOR: Contract = {
 				{
 					internalType: 'uint256',
 					name: 'doubleSigningOffsetLimitBlock_',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'getFastFinalitySlashingConfigs',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: 'slashFastFinalityAmount_',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: 'fastFinalityJailUntilBlock_',
 					type: 'uint256',
 				},
 			],
@@ -766,32 +644,6 @@ export const SLASH_INDICATOR: Contract = {
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'roninGovernanceAdminContract',
-					type: 'address',
-				},
-			],
-			name: 'initializeV2',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'profileContract',
-					type: 'address',
-				},
-			],
-			name: 'initializeV3',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
 			inputs: [],
 			name: 'lastUnavailabilitySlashedBlock',
 			outputs: [
@@ -799,6 +651,19 @@ export const SLASH_INDICATOR: Contract = {
 					internalType: 'uint256',
 					name: '',
 					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'maintenanceContract',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
 				},
 			],
 			stateMutability: 'view',
@@ -819,7 +684,20 @@ export const SLASH_INDICATOR: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'precompileValidateFastFinalityAddress',
+			name: 'roninGovernanceAdminContract',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'roninTrustedOrganizationContract',
 			outputs: [
 				{
 					internalType: 'address',
@@ -879,24 +757,6 @@ export const SLASH_INDICATOR: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-				{
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
-			name: 'setContract',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'uint256',
 					name: '_gainScore',
 					type: 'uint256',
@@ -948,17 +808,38 @@ export const SLASH_INDICATOR: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: 'slashAmount',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: 'jailUntilBlock',
-					type: 'uint256',
+					internalType: 'address',
+					name: '_addr',
+					type: 'address',
 				},
 			],
-			name: 'setFastFinalitySlashingConfigs',
+			name: 'setMaintenanceContract',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_addr',
+					type: 'address',
+				},
+			],
+			name: 'setRoninGovernanceAdminContract',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_addr',
+					type: 'address',
+				},
+			],
+			name: 'setRoninTrustedOrganizationContract',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -987,6 +868,19 @@ export const SLASH_INDICATOR: Contract = {
 				},
 			],
 			name: 'setUnavailabilitySlashingConfigs',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_addr',
+					type: 'address',
+				},
+			],
+			name: 'setValidatorContract',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -1031,44 +925,6 @@ export const SLASH_INDICATOR: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'consensusAddr',
-					type: 'address',
-				},
-				{
-					internalType: 'bytes',
-					name: 'voterPublicKey',
-					type: 'bytes',
-				},
-				{
-					internalType: 'uint256',
-					name: 'targetBlockNumber',
-					type: 'uint256',
-				},
-				{
-					internalType: 'bytes32[2]',
-					name: 'targetBlockHash',
-					type: 'bytes32[2]',
-				},
-				{
-					internalType: 'bytes[][2]',
-					name: 'listOfPublicKey',
-					type: 'bytes[][2]',
-				},
-				{
-					internalType: 'bytes[2]',
-					name: 'aggregatedSignature',
-					type: 'bytes[2]',
-				},
-			],
-			name: 'slashFastFinality',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
 					name: '_validatorAddr',
 					type: 'address',
 				},
@@ -1096,5 +952,19 @@ export const SLASH_INDICATOR: Contract = {
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
+		{
+			inputs: [],
+			name: 'validatorContract',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
 	],
 }
+export default SLASH_INDICATOR

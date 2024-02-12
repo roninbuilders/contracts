@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LAND_DELEGATION: Contract = {
+const LAND_DELEGATION: Contract = {
 	name: 'Land Delegation',
-	address: '0x86685142b864806debda0f8f9ad0a973d633040c',
+	address: '0x0f514dbc18345e1109370d14c0562c92193f4281',
+	is_deprecated: false,
+	updated_at: 1705561070,
 	abi: [
 		{
 			inputs: [],
@@ -11,6 +13,11 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [],
 			name: 'ErrAlreadySteward',
+			type: 'error',
+		},
+		{
+			inputs: [],
+			name: 'ErrAssigneeNonZeroBalance',
 			type: 'error',
 		},
 		{
@@ -110,6 +117,11 @@ export const LAND_DELEGATION: Contract = {
 			type: 'error',
 		},
 		{
+			inputs: [],
+			name: 'ErrSelfDelegation',
+			type: 'error',
+		},
+		{
 			anonymous: false,
 			inputs: [
 				{
@@ -183,6 +195,32 @@ export const LAND_DELEGATION: Contract = {
 				},
 			],
 			name: 'LandContractChanged',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'contract ILandStakingPool',
+					name: 'newLandStaking',
+					type: 'address',
+				},
+			],
+			name: 'LandStakingContractChanged',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Paused',
 			type: 'event',
 		},
 		{
@@ -312,6 +350,19 @@ export const LAND_DELEGATION: Contract = {
 			type: 'event',
 		},
 		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'Unpaused',
+			type: 'event',
+		},
+		{
 			inputs: [],
 			name: 'DEFAULT_ADMIN_ROLE',
 			outputs: [
@@ -355,9 +406,9 @@ export const LAND_DELEGATION: Contract = {
 					type: 'uint256[]',
 				},
 				{
-					internalType: 'address[]',
-					name: '_assignees',
-					type: 'address[]',
+					internalType: 'address',
+					name: '_assignee',
+					type: 'address',
 				},
 				{
 					internalType: 'uint256[]',
@@ -368,6 +419,25 @@ export const LAND_DELEGATION: Contract = {
 			name: 'delegateLandBatch',
 			outputs: [],
 			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			name: 'delegationAmountsMap',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -544,6 +614,19 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
+					internalType: 'contract ILandStakingPool',
+					name: '_landStakingContract',
+					type: 'address',
+				},
+			],
+			name: 'initializeV2',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
 					internalType: 'address',
 					name: '_assignee',
 					type: 'address',
@@ -631,6 +714,26 @@ export const LAND_DELEGATION: Contract = {
 				},
 			],
 			stateMutability: 'pure',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'pause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [],
+			name: 'paused',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -768,6 +871,19 @@ export const LAND_DELEGATION: Contract = {
 		{
 			inputs: [
 				{
+					internalType: 'contract ILandStakingPool',
+					name: '_landStakingContract',
+					type: 'address',
+				},
+			],
+			name: 'setLandStakingContract',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
 					internalType: 'uint256',
 					name: '_revokeCooldownDuration',
 					type: 'uint256',
@@ -826,5 +942,13 @@ export const LAND_DELEGATION: Contract = {
 			stateMutability: 'view',
 			type: 'function',
 		},
+		{
+			inputs: [],
+			name: 'unpause',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
 	],
 }
+export default LAND_DELEGATION

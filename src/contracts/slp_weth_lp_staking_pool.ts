@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SLP_WETH_LP_STAKING_POOL: Contract = {
+const SLP_WETH_LP_STAKING_POOL: Contract = {
 	name: 'SLP-WETH LP Staking Pool',
 	address: '0xd4640c26c1a31cd632d8ae1a96fe5ac135d1eb52',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -262,3 +264,4 @@ export const SLP_WETH_LP_STAKING_POOL: Contract = {
 		},
 	],
 }
+export default SLP_WETH_LP_STAKING_POOL

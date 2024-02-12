@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MARKETPLACE_GATEWAY_V2: Contract = {
+const MARKETPLACE_GATEWAY_V2: Contract = {
 	name: 'Marketplace Gateway V2',
 	address: '0xfff9ce5f71ca6178d3beecedb61e7eff1602950e',
+	is_deprecated: false,
+	updated_at: 1707575153,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MARKETPLACE_GATEWAY_V2: Contract = {
 		},
 	],
 }
+export default MARKETPLACE_GATEWAY_V2

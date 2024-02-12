@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WILD_FOREST_MEDAL: Contract = {
+const WILD_FOREST_MEDAL: Contract = {
 	name: 'Wild Forest Medal',
 	address: '0x9d758a29834c77c84b92a645f6bbc2139854ba92',
+	is_deprecated: false,
+	updated_at: 1703259511,
 	abi: [
 		{
 			inputs: [
@@ -544,3 +546,4 @@ export const WILD_FOREST_MEDAL: Contract = {
 		},
 	],
 }
+export default WILD_FOREST_MEDAL

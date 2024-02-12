@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_STAKING: Contract = {
+const RONIN_STAKING: Contract = {
 	name: 'Ronin Staking',
 	address: '0x545edb750eb8769c868429be9586f5857a768758',
+	is_deprecated: false,
+	updated_at: 1707575181,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_STAKING: Contract = {
 		},
 	],
 }
+export default RONIN_STAKING

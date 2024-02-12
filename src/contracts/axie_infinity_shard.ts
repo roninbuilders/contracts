@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_INFINITY_SHARD: Contract = {
+const AXIE_INFINITY_SHARD: Contract = {
 	name: 'Axie Infinity Shard',
 	address: '0x97a9107c1793bc407d6f527b77e7fff4d812bece',
+	is_deprecated: false,
+	updated_at: 1707575165,
 	abi: [
 		{
 			inputs: [],
@@ -651,3 +653,4 @@ export const AXIE_INFINITY_SHARD: Contract = {
 		},
 	],
 }
+export default AXIE_INFINITY_SHARD

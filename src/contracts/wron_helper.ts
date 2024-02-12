@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WRON_HELPER: Contract = {
+const WRON_HELPER: Contract = {
 	name: 'WRON Helper',
 	address: '0xcaf3e62b27a3df0766721d1959d22b066e1a57f1',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [
@@ -68,3 +70,4 @@ export const WRON_HELPER: Contract = {
 		},
 	],
 }
+export default WRON_HELPER

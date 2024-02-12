@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ERC721_RECEIPT: Contract = {
+const ERC721_RECEIPT: Contract = {
 	name: 'ERC721 Receipt',
-	address: '0xb01a23d8788d1ffe45430a55fef1a489f6cf04dc',
+	address: '0xa05663bc294d824c7610d58d1019b7beb6d167ea',
+	is_deprecated: false,
+	updated_at: 1707575174,
 	abi: [
 		{
 			inputs: [
@@ -536,3 +538,4 @@ export const ERC721_RECEIPT: Contract = {
 		},
 	],
 }
+export default ERC721_RECEIPT

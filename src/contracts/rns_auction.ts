@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RNS_AUCTION: Contract = {
+const RNS_AUCTION: Contract = {
 	name: 'RNS Auction',
-	address: '0x7b663d7252a8dcd213bbf8f812f3691b78ab62fb',
+	address: '0x20143137cb90c8663e575bf509d8f370cd711cb8',
+	is_deprecated: false,
+	updated_at: 1702283293,
 	abi: [
 		{
 			inputs: [],
@@ -9,13 +11,7 @@ export const RNS_AUCTION: Contract = {
 			type: 'constructor',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'id',
-					type: 'uint256',
-				},
-			],
+			inputs: [],
 			name: 'AlreadyBidding',
 			type: 'error',
 		},
@@ -379,35 +375,6 @@ export const RNS_AUCTION: Contract = {
 					internalType: 'uint256[]',
 					name: 'claimedAts',
 					type: 'uint256[]',
-				},
-			],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address[]',
-					name: 'tos',
-					type: 'address[]',
-				},
-				{
-					internalType: 'uint256[]',
-					name: 'ids',
-					type: 'uint256[]',
-				},
-				{
-					internalType: 'bool',
-					name: 'allowFailure',
-					type: 'bool',
-				},
-			],
-			name: 'bulkClaimUnbiddedNames',
-			outputs: [
-				{
-					internalType: 'bool[]',
-					name: 'claimeds',
-					type: 'bool[]',
 				},
 			],
 			stateMutability: 'nonpayable',
@@ -901,3 +868,4 @@ export const RNS_AUCTION: Contract = {
 		},
 	],
 }
+export default RNS_AUCTION

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LUNA_N_SOLAR_BURNER_PROXY: Contract = {
+const LUNA_N_SOLAR_BURNER_PROXY: Contract = {
 	name: 'Luna N Solar Burner Proxy',
 	address: '0x4520b9562aab89dae009a840bc0b2f6c755d634c',
+	is_deprecated: false,
+	updated_at: 1707575156,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const LUNA_N_SOLAR_BURNER_PROXY: Contract = {
 		},
 	],
 }
+export default LUNA_N_SOLAR_BURNER_PROXY

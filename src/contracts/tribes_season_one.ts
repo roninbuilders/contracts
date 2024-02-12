@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const TRIBES_SEASON_ONE: Contract = {
+const TRIBES_SEASON_ONE: Contract = {
 	name: 'Tribes Season One',
-	address: '0xf725413164a9f5479940fdc17fe5906cd463a55c',
+	address: '0x9a8f3e2e814e3d5d7cff9d4c5ba4f8b046eac5bb',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [
@@ -1168,3 +1170,4 @@ export const TRIBES_SEASON_ONE: Contract = {
 		},
 	],
 }
+export default TRIBES_SEASON_ONE

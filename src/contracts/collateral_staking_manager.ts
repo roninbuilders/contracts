@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const COLLATERAL_STAKING_MANAGER: Contract = {
+const COLLATERAL_STAKING_MANAGER: Contract = {
 	name: 'Collateral Staking Manager',
-	address: '0xa330c96daa39009c18d55d5546a28457731953eb',
+	address: '0x8ccd796547fcdcc96a9f464dfc02a20d3189c75a',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			anonymous: false,
@@ -33,25 +35,6 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 				},
 			],
 			name: 'NewAdmin',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'newCEtherStakingMarket',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'previousCEtherStakingMarket',
-					type: 'address',
-				},
-			],
-			name: 'NewCEtherStakingMarket',
 			type: 'event',
 		},
 		{
@@ -321,21 +304,6 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 		{
 			constant: true,
 			inputs: [],
-			name: 'cEtherStakingMarket',
-			outputs: [
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			constant: true,
-			inputs: [],
 			name: 'collateralStakingMediatorImplementation',
 			outputs: [
 				{
@@ -448,21 +416,6 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 			],
 			payable: false,
 			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			constant: true,
-			inputs: [],
-			name: 'getSupportedValidatorsList',
-			outputs: [
-				{
-					internalType: 'address[]',
-					name: '',
-					type: 'address[]',
-				},
-			],
-			payable: false,
-			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -960,24 +913,14 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 			constant: false,
 			inputs: [
 				{
-					internalType: 'address',
-					name: 'newCEtherStakingMarket',
-					type: 'address',
-				},
-			],
-			name: 'supportCEtherStakingMarket',
-			outputs: [],
-			payable: false,
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			constant: false,
-			inputs: [
-				{
 					internalType: 'address[]',
 					name: 'validators',
 					type: 'address[]',
+				},
+				{
+					internalType: 'bool[]',
+					name: 'supported',
+					type: 'bool[]',
 				},
 			],
 			name: 'supportValidators',
@@ -1001,27 +944,6 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 					internalType: 'bool',
 					name: '',
 					type: 'bool',
-				},
-			],
-			payable: false,
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			constant: true,
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			name: 'supportedValidatorsList',
-			outputs: [
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
 				},
 			],
 			payable: false,
@@ -1090,3 +1012,4 @@ export const COLLATERAL_STAKING_MANAGER: Contract = {
 		},
 	],
 }
+export default COLLATERAL_STAKING_MANAGER

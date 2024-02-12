@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RON_SLP_LP: Contract = {
+const RON_SLP_LP: Contract = {
 	name: 'RON-SLP LP',
 	address: '0x8f1c5eda143fa3d1bea8b4e92f33562014d30e0d',
+	is_deprecated: false,
+	updated_at: 1707575178,
 	abi: [
 		{
 			inputs: [],
@@ -769,3 +771,4 @@ export const RON_SLP_LP: Contract = {
 		},
 	],
 }
+export default RON_SLP_LP

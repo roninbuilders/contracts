@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SLP_WETH_LP: Contract = {
+const SLP_WETH_LP: Contract = {
 	name: 'SLP-WETH LP',
 	address: '0x306a28279d04a47468ed83d55088d0dcd1369294',
+	is_deprecated: false,
+	updated_at: 1707575182,
 	abi: [
 		{
 			inputs: [],
@@ -769,3 +771,4 @@ export const SLP_WETH_LP: Contract = {
 		},
 	],
 }
+export default SLP_WETH_LP

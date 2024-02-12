@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MARKET_GATEWAY_PROXY: Contract = {
+const MARKET_GATEWAY_PROXY: Contract = {
 	name: 'Market Gateway Proxy',
 	address: '0x3b3adf1422f84254b7fbb0e7ca62bd0865133fe3',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MARKET_GATEWAY_PROXY: Contract = {
 		},
 	],
 }
+export default MARKET_GATEWAY_PROXY

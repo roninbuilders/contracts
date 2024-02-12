@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const USDC_WETH_LP: Contract = {
+const USDC_WETH_LP: Contract = {
 	name: 'USDC-WETH LP',
 	address: '0xa7964991f339668107e2b6a6f6b8e8b74aa9d017',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [],
@@ -769,3 +771,4 @@ export const USDC_WETH_LP: Contract = {
 		},
 	],
 }
+export default USDC_WETH_LP

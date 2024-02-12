@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ERC721_BATCH_TRANSFER: Contract = {
+const ERC721_BATCH_TRANSFER: Contract = {
 	name: 'ERC721 Batch Transfer',
 	address: '0x2368dfed532842db89b470fde9fd584d48d4f644',
+	is_deprecated: false,
+	updated_at: 1707575152,
 	abi: [
 		{
 			inputs: [
@@ -51,3 +53,4 @@ export const ERC721_BATCH_TRANSFER: Contract = {
 		},
 	],
 }
+export default ERC721_BATCH_TRANSFER

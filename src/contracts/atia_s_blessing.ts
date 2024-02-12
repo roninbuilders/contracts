@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ATIA_S_BLESSING: Contract = {
+const ATIA_S_BLESSING: Contract = {
 	name: "Atia's Blessing",
 	address: '0x9d3936dbd9a794ee31ef9f13814233d435bd806c',
+	is_deprecated: false,
+	updated_at: 1707575164,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const ATIA_S_BLESSING: Contract = {
 		},
 	],
 }
+export default ATIA_S_BLESSING

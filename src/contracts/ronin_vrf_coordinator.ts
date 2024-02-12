@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_VRF_COORDINATOR: Contract = {
+const RONIN_VRF_COORDINATOR: Contract = {
 	name: 'Ronin VRF Coordinator',
 	address: '0xf9f93977d8289f1f7c88a1ca4274f79c46ee9cfb',
+	is_deprecated: false,
+	updated_at: 1702977292,
 	abi: [
 		{
 			inputs: [],
@@ -909,3 +911,4 @@ export const RONIN_VRF_COORDINATOR: Contract = {
 		},
 	],
 }
+export default RONIN_VRF_COORDINATOR

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WRAPPED_ETHER: Contract = {
+const WRAPPED_ETHER: Contract = {
 	name: 'Wrapped Ether',
 	address: '0xc99a6a985ed2cac1ef41640596c5a5f9f4e19ef5',
+	is_deprecated: false,
+	updated_at: 1707575176,
 	abi: [
 		{
 			inputs: [],
@@ -606,3 +608,4 @@ export const WRAPPED_ETHER: Contract = {
 		},
 	],
 }
+export default WRAPPED_ETHER

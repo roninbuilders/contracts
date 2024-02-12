@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_VRF_COORDINATOR_PROXY: Contract = {
+const RONIN_VRF_COORDINATOR_PROXY: Contract = {
 	name: 'Ronin VRF Coordinator Proxy',
-	address: '0x84f2690c61678de787c2641ac453ebc3d9fb4014',
+	address: '0x16a62a921e7fec5bf867ff5c805b662db757b778',
+	is_deprecated: false,
+	updated_at: 1707575182,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const RONIN_VRF_COORDINATOR_PROXY: Contract = {
 		},
 	],
 }
+export default RONIN_VRF_COORDINATOR_PROXY

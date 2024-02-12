@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const STAKING_MANAGER: Contract = {
+const STAKING_MANAGER: Contract = {
 	name: 'Staking Manager',
 	address: '0x8bd81a19420bad681b7bfc20e703ebd8e253782d',
+	is_deprecated: false,
+	updated_at: 1707575157,
 	abi: [
 		{
 			inputs: [
@@ -343,3 +345,4 @@ export const STAKING_MANAGER: Contract = {
 		},
 	],
 }
+export default STAKING_MANAGER

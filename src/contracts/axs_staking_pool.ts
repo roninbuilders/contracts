@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXS_STAKING_POOL: Contract = {
+const AXS_STAKING_POOL: Contract = {
 	name: 'AXS Staking Pool',
 	address: '0x05b0bb3c1c320b280501b86706c3551995bc8571',
+	is_deprecated: false,
+	updated_at: 1707575168,
 	abi: [
 		{
 			inputs: [
@@ -262,3 +264,4 @@ export const AXS_STAKING_POOL: Contract = {
 		},
 	],
 }
+export default AXS_STAKING_POOL

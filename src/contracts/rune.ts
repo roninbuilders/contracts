@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RUNE: Contract = {
+const RUNE: Contract = {
 	name: 'Rune',
 	address: '0xc25970724f032af21d801978c73653c440cf787c',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const RUNE: Contract = {
 		},
 	],
 }
+export default RUNE

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RNS_OPERATION: Contract = {
+const RNS_OPERATION: Contract = {
 	name: 'RNS Operation',
 	address: '0xd9b3cc879113c7abaa7694d25801bffd8fae0f27',
+	is_deprecated: false,
+	updated_at: 1707575170,
 	abi: [
 		{
 			inputs: [
@@ -236,3 +238,4 @@ export const RNS_OPERATION: Contract = {
 		},
 	],
 }
+export default RNS_OPERATION

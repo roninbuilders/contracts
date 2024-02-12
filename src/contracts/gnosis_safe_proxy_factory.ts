@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const GNOSIS_SAFE_PROXY_FACTORY: Contract = {
+const GNOSIS_SAFE_PROXY_FACTORY: Contract = {
 	name: 'Gnosis Safe Proxy Factory',
 	address: '0xa6b71e26c5e0845f74c812102ca7114b6a896ab2',
+	is_deprecated: false,
+	updated_at: 1707575177,
 	abi: [
 		{
 			anonymous: false,
@@ -166,3 +168,4 @@ export const GNOSIS_SAFE_PROXY_FACTORY: Contract = {
 		},
 	],
 }
+export default GNOSIS_SAFE_PROXY_FACTORY

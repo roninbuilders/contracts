@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MARKET_COMMISSION_PROXY: Contract = {
+const MARKET_COMMISSION_PROXY: Contract = {
 	name: 'Market Commission Proxy',
 	address: '0x35d30aefe3d3620b644336229d1f3a2bffbf4917',
+	is_deprecated: false,
+	updated_at: 1707575159,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MARKET_COMMISSION_PROXY: Contract = {
 		},
 	],
 }
+export default MARKET_COMMISSION_PROXY

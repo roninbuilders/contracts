@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SKY_MAVIS: Contract = {
+const SKY_MAVIS: Contract = {
 	name: 'Sky Mavis',
 	address: '0x41d8cf42236ae15cc7b0c0df619a95822d7ad423',
+	is_deprecated: false,
+	updated_at: 1707575165,
 	abi: [
 		{
 			inputs: [
@@ -20,3 +22,4 @@ export const SKY_MAVIS: Contract = {
 		},
 	],
 }
+export default SKY_MAVIS

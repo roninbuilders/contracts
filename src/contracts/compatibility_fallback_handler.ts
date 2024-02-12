@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const COMPATIBILITY_FALLBACK_HANDLER: Contract = {
+const COMPATIBILITY_FALLBACK_HANDLER: Contract = {
 	name: 'Compatibility Fallback Handler',
 	address: '0xf48f2b2d2a534e402487b3ee7c18c33aec0fe5e4',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -328,3 +330,4 @@ export const COMPATIBILITY_FALLBACK_HANDLER: Contract = {
 		},
 	],
 }
+export default COMPATIBILITY_FALLBACK_HANDLER

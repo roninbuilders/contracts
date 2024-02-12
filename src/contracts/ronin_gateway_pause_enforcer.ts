@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_GATEWAY_PAUSE_ENFORCER: Contract = {
+const RONIN_GATEWAY_PAUSE_ENFORCER: Contract = {
 	name: 'Ronin Gateway Pause Enforcer',
 	address: '0x09e575648220783fc30e8d78919037e7dc99e83e',
+	is_deprecated: false,
+	updated_at: 1707575155,
 	abi: [
 		{
 			inputs: [
@@ -411,3 +413,4 @@ export const RONIN_GATEWAY_PAUSE_ENFORCER: Contract = {
 		},
 	],
 }
+export default RONIN_GATEWAY_PAUSE_ENFORCER

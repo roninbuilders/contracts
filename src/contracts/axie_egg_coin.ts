@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_EGG_COIN: Contract = {
+const AXIE_EGG_COIN: Contract = {
 	name: 'Axie Egg Coin',
 	address: '0x173a2d4fa585a63acd02c107d57f932be0a71bcc',
+	is_deprecated: false,
+	updated_at: 1707575158,
 	abi: [
 		{
 			inputs: [],
@@ -591,3 +593,4 @@ export const AXIE_EGG_COIN: Contract = {
 		},
 	],
 }
+export default AXIE_EGG_COIN

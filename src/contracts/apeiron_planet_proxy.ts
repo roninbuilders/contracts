@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_PLANET_PROXY: Contract = {
+const APEIRON_PLANET_PROXY: Contract = {
 	name: 'Apeiron Planet Proxy',
 	address: '0x3672f99418ac1dfd71147dbd7c05d4a7aab7aae4',
+	is_deprecated: false,
+	updated_at: 1707575156,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const APEIRON_PLANET_PROXY: Contract = {
 		},
 	],
 }
+export default APEIRON_PLANET_PROXY

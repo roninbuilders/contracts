@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const CORE_ATTESTOR: Contract = {
+const CORE_ATTESTOR: Contract = {
 	name: 'Core Attestor',
 	address: '0x065e959ffd4c76ae2e0d31cfcf91c0c9834472ec',
+	is_deprecated: false,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [
@@ -716,3 +718,4 @@ export const CORE_ATTESTOR: Contract = {
 		},
 	],
 }
+export default CORE_ATTESTOR

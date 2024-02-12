@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RESTRICTION_CONTROL: Contract = {
+const RESTRICTION_CONTROL: Contract = {
 	name: 'Restriction Control',
 	address: '0x0a2ccb496a78cb855673c679d14c42a9d8b0dfe0',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [
@@ -240,3 +242,4 @@ export const RESTRICTION_CONTROL: Contract = {
 		},
 	],
 }
+export default RESTRICTION_CONTROL

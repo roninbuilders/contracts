@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RON_USDC_LP_STAKING_POOL: Contract = {
+const RON_USDC_LP_STAKING_POOL: Contract = {
 	name: 'RON-USDC LP Staking Pool',
 	address: '0xba1c32baff8f23252259a641fd5ca0bd211d4f65',
+	is_deprecated: false,
+	updated_at: 1707575161,
 	abi: [
 		{
 			inputs: [
@@ -262,3 +264,4 @@ export const RON_USDC_LP_STAKING_POOL: Contract = {
 		},
 	],
 }
+export default RON_USDC_LP_STAKING_POOL

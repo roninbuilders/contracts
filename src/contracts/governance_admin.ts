@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const GOVERNANCE_ADMIN: Contract = {
+const GOVERNANCE_ADMIN: Contract = {
 	name: 'Governance Admin',
 	address: '0x84390b8cf3e612e8c80d9ea2e92bcd029151404a',
+	is_deprecated: true,
+	updated_at: 1707575150,
 	abi: [
 		{
 			anonymous: false,
@@ -532,3 +534,4 @@ export const GOVERNANCE_ADMIN: Contract = {
 		},
 	],
 }
+export default GOVERNANCE_ADMIN

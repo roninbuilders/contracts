@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const DEFAULT_CALLBACK_HANDLER: Contract = {
+const DEFAULT_CALLBACK_HANDLER: Contract = {
 	name: 'Default Callback Handler',
 	address: '0x1ac114c2099afaf5261731655dc6c306bfcd4dbd',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -200,3 +202,4 @@ export const DEFAULT_CALLBACK_HANDLER: Contract = {
 		},
 	],
 }
+export default DEFAULT_CALLBACK_HANDLER

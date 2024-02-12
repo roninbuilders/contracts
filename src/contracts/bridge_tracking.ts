@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BRIDGE_TRACKING: Contract = {
+const BRIDGE_TRACKING: Contract = {
 	name: 'Bridge Tracking',
 	address: '0xfca143fe2751a992e8cff2eb5d64eda809049295',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -279,3 +281,4 @@ export const BRIDGE_TRACKING: Contract = {
 		},
 	],
 }
+export default BRIDGE_TRACKING

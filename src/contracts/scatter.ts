@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SCATTER: Contract = {
+const SCATTER: Contract = {
 	name: 'Scatter',
 	address: '0x5d518933351a0bc14b24b329b33b813565608769',
+	is_deprecated: false,
+	updated_at: 1707575164,
 	abi: [
 		{
 			inputs: [
@@ -69,3 +71,4 @@ export const SCATTER: Contract = {
 		},
 	],
 }
+export default SCATTER

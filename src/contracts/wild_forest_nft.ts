@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WILD_FOREST_NFT: Contract = {
+const WILD_FOREST_NFT: Contract = {
 	name: 'Wild Forest Nft',
-	address: '0xf6c5f9a72e6d46f30c7223a4cff854f94c7e95aa',
+	address: '0xf13dfd9c4ad78a94fc8e0f46b10f947f593efc61',
+	is_deprecated: false,
+	updated_at: 1703258483,
 	abi: [
 		{
 			inputs: [
@@ -876,3 +878,4 @@ export const WILD_FOREST_NFT: Contract = {
 		},
 	],
 }
+export default WILD_FOREST_NFT

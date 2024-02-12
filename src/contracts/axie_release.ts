@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_RELEASE: Contract = {
+const AXIE_RELEASE: Contract = {
 	name: 'Axie Release',
 	address: '0x144697847f4bf184534af5945abe0fb5f1b14fba',
+	is_deprecated: false,
+	updated_at: 1707575162,
 	abi: [
 		{
 			inputs: [
@@ -809,3 +811,4 @@ export const AXIE_RELEASE: Contract = {
 		},
 	],
 }
+export default AXIE_RELEASE

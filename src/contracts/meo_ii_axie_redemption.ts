@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MEO_II_AXIE_REDEMPTION: Contract = {
+const MEO_II_AXIE_REDEMPTION: Contract = {
 	name: 'Meo II Axie Redemption',
 	address: '0xbcba374d3ae40a19e41c00331b66642945a773f2',
+	is_deprecated: false,
+	updated_at: 1707575181,
 	abi: [
 		{
 			inputs: [
@@ -383,3 +385,4 @@ export const MEO_II_AXIE_REDEMPTION: Contract = {
 		},
 	],
 }
+export default MEO_II_AXIE_REDEMPTION

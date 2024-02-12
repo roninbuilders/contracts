@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BRIDGE_REWARD_PROXY: Contract = {
+const BRIDGE_REWARD_PROXY: Contract = {
 	name: 'Bridge Reward Proxy',
 	address: '0x796a163a21e9a659fc9773166e0afdc1eb01aad1',
+	is_deprecated: false,
+	updated_at: 1707575175,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const BRIDGE_REWARD_PROXY: Contract = {
 		},
 	],
 }
+export default BRIDGE_REWARD_PROXY

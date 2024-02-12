@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ATIA_SHRINE: Contract = {
+const ATIA_SHRINE: Contract = {
 	name: 'Atia Shrine',
-	address: '0xe9ca29871ba8f6a41bdea19f87d0f4725f87d4f8',
+	address: '0xd3f45dde71bea79ff3fc11aeba7aa9ecec567bfd',
+	is_deprecated: true,
+	updated_at: 1707575177,
 	abi: [
 		{
 			inputs: [],
@@ -21,11 +23,6 @@ export const ATIA_SHRINE: Contract = {
 		{
 			inputs: [],
 			name: 'ErrInvalidActiveStreakLifeTime',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidResetDuration',
 			type: 'error',
 		},
 		{
@@ -52,19 +49,6 @@ export const ATIA_SHRINE: Contract = {
 				},
 			],
 			name: 'Initialized',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'newResetDuration',
-					type: 'uint256',
-				},
-			],
-			name: 'ResetDurationUpdated',
 			type: 'event',
 		},
 		{
@@ -373,24 +357,6 @@ export const ATIA_SHRINE: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: '_streakLifeTime',
-					type: 'uint256',
-				},
-				{
-					internalType: 'uint256',
-					name: '_resetTime',
-					type: 'uint256',
-				},
-			],
-			name: 'initializeV2',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'bytes32',
 					name: 'role',
 					type: 'bytes32',
@@ -407,19 +373,6 @@ export const ATIA_SHRINE: Contract = {
 			type: 'function',
 		},
 		{
-			inputs: [],
-			name: 'resetDuration',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
 			inputs: [
 				{
 					internalType: 'bytes32',
@@ -433,19 +386,6 @@ export const ATIA_SHRINE: Contract = {
 				},
 			],
 			name: 'revokeRole',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'uint256',
-					name: 'newResetDuration',
-					type: 'uint256',
-				},
-			],
-			name: 'setResetDuration',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -484,3 +424,4 @@ export const ATIA_SHRINE: Contract = {
 		},
 	],
 }
+export default ATIA_SHRINE

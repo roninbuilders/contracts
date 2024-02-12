@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const IAP: Contract = {
+const IAP: Contract = {
 	name: 'IAP',
 	address: '0xcaef47717e49c82deec1a2eebde6d1f5bebfd3ba',
+	is_deprecated: false,
+	updated_at: 1707575175,
 	abi: [
 		{
 			inputs: [
@@ -278,3 +280,4 @@ export const IAP: Contract = {
 		},
 	],
 }
+export default IAP

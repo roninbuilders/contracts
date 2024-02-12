@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const EXCHANGE_PROXY: Contract = {
+const EXCHANGE_PROXY: Contract = {
 	name: 'Exchange Proxy',
 	address: '0x2da06d60bd413bcbb6586430857433bd9d3a4be4',
+	is_deprecated: true,
+	updated_at: 1707575176,
 	abi: [
 		{
 			inputs: [
@@ -636,3 +638,4 @@ export const EXCHANGE_PROXY: Contract = {
 		},
 	],
 }
+export default EXCHANGE_PROXY

@@ -1,11 +1,12 @@
 import { Contract } from '@/contract'
-export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
-	name: 'Axie Pre-Execution Logic',
-	address: '0xfd9d0aa8411e4dbdd44114c54dd85a1fc9f1b72d',
+const AXIE_PRE_EXECUTION_LOGIC: Contract = {
+	name: 'Axie Pre Execution Logic',
+	address: '0x26101408945caf2e2fde23cc3c1e12982d7a3368',
+	is_deprecated: false,
+	updated_at: 1701254319,
 	abi: [
 		{
 			inputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'constructor',
 		},
@@ -338,12 +339,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			type: 'event',
 		},
 		{
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'fallback',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address[]',
@@ -353,12 +352,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'addMinters',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address[]',
@@ -368,12 +365,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'addSeeders',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'admin',
 			outputs: [
@@ -383,12 +378,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -403,12 +396,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'approve',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -461,12 +452,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint16',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'axieBreedLimit',
 			outputs: [
@@ -476,12 +465,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint8',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -526,12 +513,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'tuple',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -547,12 +532,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'baseTokenURI',
 			outputs: [
@@ -562,12 +545,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'string',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -582,12 +563,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'breedAxies',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'breedingFee',
 			outputs: [
@@ -597,12 +576,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'breedingFeeToken',
 			outputs: [
@@ -612,12 +589,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'breedingPotion',
 			outputs: [
@@ -627,12 +602,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -642,12 +615,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'changeAdmin',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'currentAxieId',
 			outputs: [
@@ -657,12 +628,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'geneBrewerContract',
 			outputs: [
@@ -672,12 +641,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -693,12 +660,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -714,12 +679,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -735,12 +698,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -761,12 +722,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -792,12 +751,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -823,12 +780,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -844,12 +799,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -875,12 +828,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -901,12 +852,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -927,12 +876,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -948,12 +895,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -969,12 +914,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'name',
 			outputs: [
@@ -984,12 +927,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'string',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1005,12 +946,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1026,12 +965,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1057,12 +994,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1078,21 +1013,17 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [],
 			name: 'pause',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'paused',
 			outputs: [
@@ -1102,12 +1033,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'preExecutionLogicContract',
 			outputs: [
@@ -1117,21 +1046,17 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [],
 			name: 'removeAdmin',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address[]',
@@ -1141,12 +1066,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'removeMinters',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address[]',
@@ -1156,12 +1079,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'removeSeeders',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1181,12 +1102,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'safeTransferFrom',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1211,12 +1130,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'safeTransferFrom',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1232,12 +1149,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1253,12 +1168,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1268,12 +1181,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setAdultDuration',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1288,12 +1199,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setAllPermissionFor',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1308,12 +1217,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setApprovalForAll',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint8',
@@ -1323,12 +1230,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setAxieBreedLimit',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'string',
@@ -1338,12 +1243,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setBaseTokenURI',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1353,12 +1256,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setBreedingFee',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'contract IERC20',
@@ -1368,12 +1269,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setBreedingFeeToken',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'contract IERC20Burnable',
@@ -1383,12 +1282,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setBreedingPotionContract',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1398,12 +1295,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setCurrentAxieId',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1428,12 +1323,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setFunctionOperatorForToken',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'contract IAxieGeneBrewer',
@@ -1443,12 +1336,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setGeneBrewerContract',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256[]',
@@ -1458,12 +1349,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setNeededPotionForBreeding',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1483,12 +1372,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setPermissionFor',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1498,12 +1385,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setPreExecutionLogicContract',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1523,12 +1408,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setTokenOperator',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1538,12 +1421,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'setTokenReceiver',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'bytes4',
@@ -1559,12 +1440,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'symbol',
 			outputs: [
@@ -1574,12 +1453,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'string',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'toAdultDuration',
 			outputs: [
@@ -1589,12 +1466,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1610,12 +1485,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1636,12 +1509,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1667,12 +1538,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1698,12 +1567,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bytes4',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'tokenReceiver',
 			outputs: [
@@ -1713,12 +1580,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'address',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'uint256',
@@ -1734,12 +1599,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'string',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [],
 			name: 'totalSupply',
 			outputs: [
@@ -1749,12 +1612,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1774,21 +1635,17 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'transferFrom',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [],
 			name: 'unpause',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1798,12 +1655,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'unwhitelist',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: false,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1813,12 +1668,10 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 			],
 			name: 'whitelist',
 			outputs: [],
-			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
-			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
@@ -1834,9 +1687,9 @@ export const AXIE_PRE_EXECUTION_LOGIC: Contract = {
 					type: 'bool',
 				},
 			],
-			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 	],
 }
+export default AXIE_PRE_EXECUTION_LOGIC

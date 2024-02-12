@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_MEMENTO: Contract = {
+const AXIE_MEMENTO: Contract = {
 	name: 'Axie Memento',
-	address: '0xf9e025454e19c96aeca4fde98363c8b912533c49',
+	address: '0xe4e58717e891e6c3625ca76fa96ac0f427fee800',
+	is_deprecated: false,
+	updated_at: 1707575161,
 	abi: [
 		{
 			inputs: [
@@ -1151,3 +1153,4 @@ export const AXIE_MEMENTO: Contract = {
 		},
 	],
 }
+export default AXIE_MEMENTO

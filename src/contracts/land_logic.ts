@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LAND_LOGIC: Contract = {
+const LAND_LOGIC: Contract = {
 	name: 'Land Logic',
 	address: '0xaa63d92eb0cb7dd6663a494afb5431739d23a19d',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -1003,3 +1005,4 @@ export const LAND_LOGIC: Contract = {
 		},
 	],
 }
+export default LAND_LOGIC

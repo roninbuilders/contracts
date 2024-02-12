@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BREEDING_EVENT_2022: Contract = {
+const BREEDING_EVENT_2022: Contract = {
 	name: 'Breeding Event 2022',
 	address: '0xa67bf2b8453a696d1cddfc62c8174b47713a060d',
+	is_deprecated: false,
+	updated_at: 1707575117,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const BREEDING_EVENT_2022: Contract = {
 		},
 	],
 }
+export default BREEDING_EVENT_2022

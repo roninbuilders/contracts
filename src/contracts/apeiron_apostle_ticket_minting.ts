@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
+const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 	name: 'Apeiron Apostle Ticket Minting',
-	address: '0xdacd2941d4c567ef91fc7684b56bad3192655a0f',
+	address: '0xbc0aa2f6ddef4e2f8b87d2a829bb60a153b7ed5e',
+	is_deprecated: false,
+	updated_at: 1704959998,
 	abi: [
 		{
 			inputs: [],
@@ -821,3 +823,4 @@ export const APEIRON_APOSTLE_TICKET_MINTING: Contract = {
 		},
 	],
 }
+export default APEIRON_APOSTLE_TICKET_MINTING

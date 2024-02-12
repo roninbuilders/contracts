@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const KATANA_FACTORY: Contract = {
+const KATANA_FACTORY: Contract = {
 	name: 'Katana Factory',
 	address: '0xb255d6a720bb7c39fee173ce22113397119cb930',
+	is_deprecated: false,
+	updated_at: 1707575159,
 	abi: [
 		{
 			inputs: [
@@ -336,3 +338,4 @@ export const KATANA_FACTORY: Contract = {
 		},
 	],
 }
+export default KATANA_FACTORY

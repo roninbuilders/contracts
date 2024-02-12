@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PLANET_ATTRIBUTE_MANAGER_PROXY: Contract = {
+const PLANET_ATTRIBUTE_MANAGER_PROXY: Contract = {
 	name: 'Planet Attribute Manager Proxy',
 	address: '0xd0e2bc89b3d8e3d8244d4f221fd7aa4785a8708f',
+	is_deprecated: false,
+	updated_at: 1707575173,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const PLANET_ATTRIBUTE_MANAGER_PROXY: Contract = {
 		},
 	],
 }
+export default PLANET_ATTRIBUTE_MANAGER_PROXY

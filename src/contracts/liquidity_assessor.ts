@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LIQUIDITY_ASSESSOR: Contract = {
+const LIQUIDITY_ASSESSOR: Contract = {
 	name: 'Liquidity Assessor',
 	address: '0x9e97f0a5b8582a336123667338992d8a8499cdf3',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [],
@@ -639,3 +641,4 @@ export const LIQUIDITY_ASSESSOR: Contract = {
 		},
 	],
 }
+export default LIQUIDITY_ASSESSOR

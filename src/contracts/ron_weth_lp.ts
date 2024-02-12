@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RON_WETH_LP: Contract = {
+const RON_WETH_LP: Contract = {
 	name: 'RON-WETH LP',
 	address: '0x2ecb08f87f075b5769fe543d0e52e40140575ea7',
+	is_deprecated: false,
+	updated_at: 1707575181,
 	abi: [
 		{
 			inputs: [],
@@ -769,3 +771,4 @@ export const RON_WETH_LP: Contract = {
 		},
 	],
 }
+export default RON_WETH_LP

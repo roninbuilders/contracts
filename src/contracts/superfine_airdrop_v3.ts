@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SUPERFINE_AIRDROP_V3: Contract = {
+const SUPERFINE_AIRDROP_V3: Contract = {
 	name: 'Superfine Airdrop V3',
 	address: '0x27013d274aa60c6e6883aa2130e8b01249eb11d4',
+	is_deprecated: false,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [
@@ -484,3 +486,4 @@ export const SUPERFINE_AIRDROP_V3: Contract = {
 		},
 	],
 }
+export default SUPERFINE_AIRDROP_V3

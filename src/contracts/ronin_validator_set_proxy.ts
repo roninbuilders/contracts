@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_VALIDATOR_SET_PROXY: Contract = {
+const RONIN_VALIDATOR_SET_PROXY: Contract = {
 	name: 'Ronin Validator Set Proxy',
 	address: '0x617c5d73662282ea7ffd231e020eca6d2b0d552f',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_VALIDATOR_SET_PROXY: Contract = {
 		},
 	],
 }
+export default RONIN_VALIDATOR_SET_PROXY

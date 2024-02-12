@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LUNACIAN_EXPRESS: Contract = {
+const LUNACIAN_EXPRESS: Contract = {
 	name: 'Lunacian Express',
 	address: '0x20dad05af3f2663c652495f3e581b3fed926f39c',
+	is_deprecated: false,
+	updated_at: 1707575150,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const LUNACIAN_EXPRESS: Contract = {
 		},
 	],
 }
+export default LUNACIAN_EXPRESS

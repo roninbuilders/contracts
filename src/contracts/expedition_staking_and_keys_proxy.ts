@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const EXPEDITION_STAKING_AND_KEYS_PROXY: Contract = {
+const EXPEDITION_STAKING_AND_KEYS_PROXY: Contract = {
 	name: 'Expedition Staking And Keys Proxy',
-	address: '0xe5f29655b54b155c9b8ad08eedd3f862d72ac97e',
+	address: '0x19fac10f3aa6e24a2e3488549c39c5679bd3e528',
+	is_deprecated: false,
+	updated_at: 1707575155,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const EXPEDITION_STAKING_AND_KEYS_PROXY: Contract = {
 		},
 	],
 }
+export default EXPEDITION_STAKING_AND_KEYS_PROXY

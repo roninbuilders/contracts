@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_BRIDGE_MANAGER: Contract = {
+const RONIN_BRIDGE_MANAGER: Contract = {
 	name: 'Ronin Bridge Manager',
 	address: '0x5fa49e6ca54a9daa8eca4f403adbde5ee075d84a',
+	is_deprecated: false,
+	updated_at: 1707575169,
 	abi: [
 		{
 			inputs: [
@@ -2009,3 +2011,4 @@ export const RONIN_BRIDGE_MANAGER: Contract = {
 		},
 	],
 }
+export default RONIN_BRIDGE_MANAGER

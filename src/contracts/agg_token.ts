@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AGG_TOKEN: Contract = {
+const AGG_TOKEN: Contract = {
 	name: 'AGG Token',
 	address: '0x294311a8c37f0744f99eb152c419d4d3d6fec1c7',
+	is_deprecated: false,
+	updated_at: 1707575181,
 	abi: [
 		{
 			inputs: [
@@ -618,3 +620,4 @@ export const AGG_TOKEN: Contract = {
 		},
 	],
 }
+export default AGG_TOKEN

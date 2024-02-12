@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MULTICALL_3: Contract = {
+const MULTICALL_3: Contract = {
 	name: 'Multicall 3',
 	address: '0xca11bde05977b3631167028862be2a173976ca11',
+	is_deprecated: false,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [
@@ -443,3 +445,4 @@ export const MULTICALL_3: Contract = {
 		},
 	],
 }
+export default MULTICALL_3

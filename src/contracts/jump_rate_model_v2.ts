@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const JUMP_RATE_MODEL_V2: Contract = {
+const JUMP_RATE_MODEL_V2: Contract = {
 	name: 'Jump Rate Model V2',
 	address: '0xcbb6dcdd897a3c1917100c651b1e5715f8beba5d',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
@@ -316,3 +318,4 @@ export const JUMP_RATE_MODEL_V2: Contract = {
 		},
 	],
 }
+export default JUMP_RATE_MODEL_V2

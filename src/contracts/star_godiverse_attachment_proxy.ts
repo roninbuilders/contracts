@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const STAR_GODIVERSE_ATTACHMENT_PROXY: Contract = {
+const STAR_GODIVERSE_ATTACHMENT_PROXY: Contract = {
 	name: 'Star Godiverse Attachment Proxy',
 	address: '0x1e1258d072c88c4c65123ae3917024fbedc2aea2',
+	is_deprecated: false,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const STAR_GODIVERSE_ATTACHMENT_PROXY: Contract = {
 		},
 	],
 }
+export default STAR_GODIVERSE_ATTACHMENT_PROXY

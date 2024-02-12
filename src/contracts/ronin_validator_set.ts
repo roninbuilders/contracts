@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_VALIDATOR_SET: Contract = {
+const RONIN_VALIDATOR_SET: Contract = {
 	name: 'Ronin Validator Set',
 	address: '0xab2985fa821caae0524f6c5657ae40dabdf2eae0',
+	is_deprecated: true,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -2358,3 +2360,4 @@ export const RONIN_VALIDATOR_SET: Contract = {
 		},
 	],
 }
+export default RONIN_VALIDATOR_SET

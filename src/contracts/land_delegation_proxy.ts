@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LAND_DELEGATION_PROXY: Contract = {
+const LAND_DELEGATION_PROXY: Contract = {
 	name: 'Land Delegation Proxy',
 	address: '0x4ec37b7f8fce7cd2a96839b3c97f3d034ffb52c2',
+	is_deprecated: true,
+	updated_at: 1707575158,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const LAND_DELEGATION_PROXY: Contract = {
 		},
 	],
 }
+export default LAND_DELEGATION_PROXY

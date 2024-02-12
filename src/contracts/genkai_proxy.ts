@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const GENKAI_PROXY: Contract = {
+const GENKAI_PROXY: Contract = {
 	name: 'Genkai Proxy',
 	address: '0x1f7c16fce4fc894143afb5545bf04f676bf7dcf3',
+	is_deprecated: false,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -79,3 +81,4 @@ export const GENKAI_PROXY: Contract = {
 		},
 	],
 }
+export default GENKAI_PROXY

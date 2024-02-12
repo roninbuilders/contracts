@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const METALEND_PREMIUM_USER: Contract = {
+const METALEND_PREMIUM_USER: Contract = {
 	name: 'Metalend Premium User',
 	address: '0xb562695af9c95f4da31cca8be72f1cbed327d54a',
+	is_deprecated: false,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -879,3 +881,4 @@ export const METALEND_PREMIUM_USER: Contract = {
 		},
 	],
 }
+export default METALEND_PREMIUM_USER

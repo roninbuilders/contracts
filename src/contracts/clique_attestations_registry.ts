@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const CLIQUE_ATTESTATIONS_REGISTRY: Contract = {
+const CLIQUE_ATTESTATIONS_REGISTRY: Contract = {
 	name: 'Clique Attestations Registry',
 	address: '0x3803856585a7fbc6a3bca94a0b9c49a48af90dd3',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const CLIQUE_ATTESTATIONS_REGISTRY: Contract = {
 		},
 	],
 }
+export default CLIQUE_ATTESTATIONS_REGISTRY

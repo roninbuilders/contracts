@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const DISPERSE: Contract = {
+const DISPERSE: Contract = {
 	name: 'Disperse',
 	address: '0x14978681c5f8ce2f6b66d1f1551b0ec67405574c',
+	is_deprecated: true,
+	updated_at: 1707575167,
 	abi: [
 		{
 			constant: false,
@@ -67,3 +69,4 @@ export const DISPERSE: Contract = {
 		},
 	],
 }
+export default DISPERSE

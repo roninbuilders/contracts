@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PIXELS_GAME_TRACKER: Contract = {
+const PIXELS_GAME_TRACKER: Contract = {
 	name: 'Pixels Game Tracker',
 	address: '0x02790f32ad7e7eaaecfb0ad21950829932f1a2ee',
+	is_deprecated: false,
+	updated_at: 1707575180,
 	abi: [
 		{
 			inputs: [],
@@ -105,3 +107,4 @@ export const PIXELS_GAME_TRACKER: Contract = {
 		},
 	],
 }
+export default PIXELS_GAME_TRACKER

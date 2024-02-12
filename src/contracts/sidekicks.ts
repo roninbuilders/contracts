@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SIDEKICKS: Contract = {
+const SIDEKICKS: Contract = {
 	name: 'Sidekicks',
 	address: '0x97797358f0d12aee117209c15d964ee0022bf1aa',
+	is_deprecated: false,
+	updated_at: 1707575174,
 	abi: [
 		{
 			inputs: [
@@ -1441,3 +1443,4 @@ export const SIDEKICKS: Contract = {
 		},
 	],
 }
+export default SIDEKICKS

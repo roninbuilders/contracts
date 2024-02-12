@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const REWARD_SPLITTER: Contract = {
+const REWARD_SPLITTER: Contract = {
 	name: 'Reward Splitter',
 	address: '0x13b17ae62ec87775222789d1c544fe1c1b3dccb3',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -298,3 +300,4 @@ export const REWARD_SPLITTER: Contract = {
 		},
 	],
 }
+export default REWARD_SPLITTER

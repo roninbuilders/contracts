@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const C_ERC721_MAINCHAIN_PROXY: Contract = {
+const C_ERC721_MAINCHAIN_PROXY: Contract = {
 	name: 'C Erc721 Mainchain Proxy',
 	address: '0x4642720767a068e41fb7734db39c00fb0b66a7ee',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -218,3 +220,4 @@ export const C_ERC721_MAINCHAIN_PROXY: Contract = {
 		},
 	],
 }
+export default C_ERC721_MAINCHAIN_PROXY

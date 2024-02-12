@@ -1,55 +1,54 @@
 import { Contract } from '@/contract'
-export const REWARD_DISTRIBUTOR: Contract = {
+const REWARD_DISTRIBUTOR: Contract = {
 	name: 'Reward Distributor',
-	address: '0x41a6b90c7a9b861b28fd6b7e614a490b5b7ae6d7',
+	address: '0x1a35e7ed2a2476129a32612644c8426bf8e8730c',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'user',
+					name: '_operator',
 					type: 'address',
 				},
 				{
-					internalType: 'uint256',
-					name: 'totalClaimed',
-					type: 'uint256',
+					internalType: 'uint256[]',
+					name: '_rewardIds',
+					type: 'uint256[]',
 				},
 				{
-					internalType: 'uint256',
-					name: 'requested',
-					type: 'uint256',
+					internalType: 'contract IERC20[]',
+					name: '_tokenAddresses',
+					type: 'address[]',
+				},
+				{
+					internalType: 'uint256[]',
+					name: '_conversionRates',
+					type: 'uint256[]',
 				},
 			],
-			name: 'ErrAlreadyClaimed',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrClaimBeforeValidTime',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidNonce',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidSigner',
-			type: 'error',
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'constructor',
 		},
 		{
 			anonymous: false,
 			inputs: [
 				{
-					indexed: false,
-					internalType: 'uint8',
-					name: 'version',
-					type: 'uint8',
+					indexed: true,
+					internalType: 'address',
+					name: '_oldAdmin',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: '_newAdmin',
+					type: 'address',
 				},
 			],
-			name: 'Initialized',
+			name: 'AdminChanged',
 			type: 'event',
 		},
 		{
@@ -58,29 +57,42 @@ export const REWARD_DISTRIBUTOR: Contract = {
 				{
 					indexed: true,
 					internalType: 'address',
-					name: 'operator',
+					name: '_oldAdmin',
 					type: 'address',
 				},
-				{
-					indexed: true,
-					internalType: 'uint256',
-					name: 'nonce',
-					type: 'uint256',
-				},
 			],
-			name: 'NonceUpdated',
+			name: 'AdminRemoved',
 			type: 'event',
 		},
 		{
 			anonymous: false,
 			inputs: [
 				{
-					indexed: false,
+					indexed: true,
 					internalType: 'address',
-					name: 'account',
+					name: '_operator',
 					type: 'address',
 				},
 			],
+			name: 'OperatorAdded',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'address',
+					name: '_operator',
+					type: 'address',
+				},
+			],
+			name: 'OperatorRemoved',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [],
 			name: 'Paused',
 			type: 'event',
 		},
@@ -90,43 +102,19 @@ export const REWARD_DISTRIBUTOR: Contract = {
 				{
 					indexed: true,
 					internalType: 'address',
-					name: 'recipient',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'token',
+					name: '_owner',
 					type: 'address',
 				},
 				{
 					indexed: true,
 					internalType: 'uint256',
-					name: 'nonce',
+					name: '_rewardId',
 					type: 'uint256',
 				},
 				{
-					indexed: false,
+					indexed: true,
 					internalType: 'uint256',
-					name: 'validFrom',
-					type: 'uint256',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'previousTotalAmount',
-					type: 'uint256',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'claimedAmount',
-					type: 'uint256',
-				},
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'currentTotalAmount',
+					name: '_total',
 					type: 'uint256',
 				},
 			],
@@ -135,338 +123,156 @@ export const REWARD_DISTRIBUTOR: Contract = {
 		},
 		{
 			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					indexed: true,
-					internalType: 'bytes32',
-					name: 'previousAdminRole',
-					type: 'bytes32',
-				},
-				{
-					indexed: true,
-					internalType: 'bytes32',
-					name: 'newAdminRole',
-					type: 'bytes32',
-				},
-			],
-			name: 'RoleAdminChanged',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'sender',
-					type: 'address',
-				},
-			],
-			name: 'RoleGranted',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'sender',
-					type: 'address',
-				},
-			],
-			name: 'RoleRevoked',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-			],
+			inputs: [],
 			name: 'Unpaused',
 			type: 'event',
 		},
 		{
-			anonymous: false,
+			constant: false,
 			inputs: [
 				{
-					indexed: true,
-					internalType: 'address',
-					name: 'token',
-					type: 'address',
+					internalType: 'address[]',
+					name: '_addedOperators',
+					type: 'address[]',
 				},
+			],
+			name: 'addOperators',
+			outputs: [],
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			constant: false,
+			inputs: [
 				{
-					indexed: true,
-					internalType: 'address',
-					name: 'to',
-					type: 'address',
-				},
-				{
-					indexed: false,
 					internalType: 'uint256',
-					name: 'amount',
+					name: '_rewardId',
+					type: 'uint256',
+				},
+				{
+					internalType: 'contract IERC20',
+					name: '_tokenAddress',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: '_conversionRate',
 					type: 'uint256',
 				},
 			],
-			name: 'Withdrawal',
-			type: 'event',
+			name: 'addRewardToken',
+			outputs: [],
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [],
-			name: 'DEFAULT_ADMIN_ROLE',
+			name: 'admin',
 			outputs: [
 				{
-					internalType: 'bytes32',
+					internalType: 'address',
 					name: '',
-					type: 'bytes32',
+					type: 'address',
 				},
 			],
+			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			inputs: [],
-			name: 'DOMAIN_SEPARATOR',
-			outputs: [
-				{
-					internalType: 'bytes32',
-					name: '',
-					type: 'bytes32',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'OPERATOR_ROLE',
-			outputs: [
-				{
-					internalType: 'bytes32',
-					name: '',
-					type: 'bytes32',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
+			constant: false,
 			inputs: [
 				{
-					components: [
-						{
-							internalType: 'address',
-							name: 'recipient',
-							type: 'address',
-						},
-						{
-							internalType: 'address',
-							name: 'token',
-							type: 'address',
-						},
-						{
-							internalType: 'uint256',
-							name: 'totalAmount',
-							type: 'uint256',
-						},
-						{
-							internalType: 'uint256',
-							name: 'validFrom',
-							type: 'uint256',
-						},
-						{
-							internalType: 'uint256',
-							name: 'nonce',
-							type: 'uint256',
-						},
-					],
-					internalType: 'struct IRewardDistributor.Reward',
-					name: 'reward',
-					type: 'tuple',
+					internalType: 'address',
+					name: '_newAdmin',
+					type: 'address',
+				},
+			],
+			name: 'changeAdmin',
+			outputs: [],
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			constant: false,
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_owner',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: '_rewardId',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
+					name: '_amount',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
+					name: '_createdAt',
+					type: 'uint256',
 				},
 				{
 					internalType: 'bytes',
-					name: 'signature',
+					name: '_signature',
 					type: 'bytes',
 				},
 			],
-			name: 'claimReward',
+			name: 'claim',
 			outputs: [],
+			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'operator',
+					name: '_owner',
 					type: 'address',
-				},
-			],
-			name: 'getOperatorNonce',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-			],
-			name: 'getRoleAdmin',
-			outputs: [
-				{
-					internalType: 'bytes32',
-					name: '',
-					type: 'bytes32',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
 				},
 				{
 					internalType: 'uint256',
-					name: 'index',
+					name: '_rewardId',
 					type: 'uint256',
 				},
 			],
-			name: 'getRoleMember',
-			outputs: [
-				{
-					internalType: 'address',
-					name: '',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-			],
-			name: 'getRoleMemberCount',
+			name: 'getClaimed',
 			outputs: [
 				{
 					internalType: 'uint256',
-					name: '',
+					name: '_amount',
 					type: 'uint256',
 				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'user',
-					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: 'token',
-					type: 'address',
-				},
-			],
-			name: 'getTotalClaimed',
-			outputs: [
 				{
 					internalType: 'uint256',
-					name: '',
+					name: '_createdAt',
 					type: 'uint256',
 				},
 			],
+			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [
 				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
 					internalType: 'address',
-					name: 'account',
+					name: '',
 					type: 'address',
 				},
 			],
-			name: 'grantRole',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-			],
-			name: 'hasRole',
+			name: 'operator',
 			outputs: [
 				{
 					internalType: 'bool',
@@ -474,48 +280,42 @@ export const REWARD_DISTRIBUTOR: Contract = {
 					type: 'bool',
 				},
 			],
+			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [
 				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			name: 'operators',
+			outputs: [
+				{
 					internalType: 'address',
-					name: 'operator',
+					name: '',
 					type: 'address',
 				},
 			],
-			name: 'increaseOperatorNonce',
-			outputs: [],
-			stateMutability: 'nonpayable',
+			payable: false,
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'admin',
-					type: 'address',
-				},
-				{
-					internalType: 'address[]',
-					name: 'operators',
-					type: 'address[]',
-				},
-			],
-			name: 'initialize',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
+			constant: false,
 			inputs: [],
 			name: 'pause',
 			outputs: [],
+			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [],
 			name: 'paused',
 			outputs: [
@@ -525,93 +325,93 @@ export const REWARD_DISTRIBUTOR: Contract = {
 					type: 'bool',
 				},
 			],
+			payable: false,
 			stateMutability: 'view',
 			type: 'function',
 		},
 		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
-				},
-			],
-			name: 'renounceRole',
+			constant: false,
+			inputs: [],
+			name: 'removeAdmin',
 			outputs: [],
+			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
+			constant: false,
 			inputs: [
 				{
-					internalType: 'bytes32',
-					name: 'role',
-					type: 'bytes32',
-				},
-				{
-					internalType: 'address',
-					name: 'account',
-					type: 'address',
+					internalType: 'address[]',
+					name: '_removedOperators',
+					type: 'address[]',
 				},
 			],
-			name: 'revokeRole',
+			name: 'removeOperators',
 			outputs: [],
+			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
+			constant: true,
 			inputs: [
 				{
-					internalType: 'bytes4',
-					name: 'interfaceId',
-					type: 'bytes4',
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
 				},
 			],
-			name: 'supportsInterface',
+			name: 'rewardMap',
 			outputs: [
 				{
-					internalType: 'bool',
-					name: '',
-					type: 'bool',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'unpause',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'token',
-					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: 'to',
+					internalType: 'contract IERC20',
+					name: 'tokenAddress',
 					type: 'address',
 				},
 				{
 					internalType: 'uint256',
-					name: 'amount',
+					name: 'conversionRate',
 					type: 'uint256',
 				},
 			],
-			name: 'withdraw',
+			payable: false,
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			constant: false,
+			inputs: [],
+			name: 'unpause',
 			outputs: [],
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			constant: false,
+			inputs: [],
+			name: 'withdrawEther',
+			outputs: [],
+			payable: false,
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			constant: false,
+			inputs: [
+				{
+					internalType: 'contract IERC20',
+					name: '_token',
+					type: 'address',
+				},
+			],
+			name: 'withdrawToken',
+			outputs: [],
+			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 	],
 }
+export default REWARD_DISTRIBUTOR

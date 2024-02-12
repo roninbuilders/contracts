@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_BRIDGE_MINTER: Contract = {
+const APEIRON_BRIDGE_MINTER: Contract = {
 	name: 'Apeiron Bridge Minter',
-	address: '0xdbe5da6b540c5f60d0c447494b4e859c8a9fefd3',
+	address: '0xb85a5d588e88bba273b47704e3ce5ff0c8a36ab3',
+	is_deprecated: false,
+	updated_at: 1702606738,
 	abi: [
 		{
 			inputs: [],
@@ -681,3 +683,4 @@ export const APEIRON_BRIDGE_MINTER: Contract = {
 		},
 	],
 }
+export default APEIRON_BRIDGE_MINTER

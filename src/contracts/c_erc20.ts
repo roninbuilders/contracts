@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const C_ERC20: Contract = {
+const C_ERC20: Contract = {
 	name: 'C Erc20',
-	address: '0xff06a60e55af8fb26cf4e9677903a2426fa2ba35',
+	address: '0x098ca51010455f89f03ba2ebd94783b4e7c181bb',
+	is_deprecated: false,
+	updated_at: 1703629643,
 	abi: [
 		{
 			anonymous: false,
@@ -512,21 +514,6 @@ export const C_ERC20: Contract = {
 					type: 'uint256',
 				},
 			],
-			payable: false,
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			constant: false,
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'compLikeDelegatee',
-					type: 'address',
-				},
-			],
-			name: '_delegateCompLikeTo',
-			outputs: [],
 			payable: false,
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -1885,5 +1872,21 @@ export const C_ERC20: Contract = {
 			stateMutability: 'view',
 			type: 'function',
 		},
+		{
+			constant: true,
+			inputs: [],
+			name: 'underlyingBalance',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			payable: false,
+			stateMutability: 'view',
+			type: 'function',
+		},
 	],
 }
+export default C_ERC20

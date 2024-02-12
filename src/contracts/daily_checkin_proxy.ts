@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const DAILY_CHECKIN_PROXY: Contract = {
+const DAILY_CHECKIN_PROXY: Contract = {
 	name: 'Daily Checkin Proxy',
 	address: '0x58ad3594758b0f74478dbc07168812ddf460a07f',
+	is_deprecated: false,
+	updated_at: 1707575170,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const DAILY_CHECKIN_PROXY: Contract = {
 		},
 	],
 }
+export default DAILY_CHECKIN_PROXY

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const EXPEDITION_PRIZES_PROXY: Contract = {
+const EXPEDITION_PRIZES_PROXY: Contract = {
 	name: 'Expedition Prizes Proxy',
 	address: '0x4bf924e85828464bfa65104b7633ad0e0881a45d',
+	is_deprecated: false,
+	updated_at: 1707575177,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const EXPEDITION_PRIZES_PROXY: Contract = {
 		},
 	],
 }
+export default EXPEDITION_PRIZES_PROXY

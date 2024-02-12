@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const REGISTRY: Contract = {
+const REGISTRY: Contract = {
 	name: 'Registry',
 	address: '0x3a860626b0467809d50c58bef89b8ac6247fd62a',
+	is_deprecated: true,
+	updated_at: 1707575182,
 	abi: [
 		{
 			anonymous: false,
@@ -443,3 +445,4 @@ export const REGISTRY: Contract = {
 		},
 	],
 }
+export default REGISTRY

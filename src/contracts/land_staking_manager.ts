@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LAND_STAKING_MANAGER: Contract = {
+const LAND_STAKING_MANAGER: Contract = {
 	name: 'Land Staking Manager',
 	address: '0x7f27e35170472e7f107d3e55c2b9bcd44aa01dd5',
+	is_deprecated: false,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const LAND_STAKING_MANAGER: Contract = {
 		},
 	],
 }
+export default LAND_STAKING_MANAGER

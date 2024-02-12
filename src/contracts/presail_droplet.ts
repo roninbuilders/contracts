@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PRESAIL_DROPLET: Contract = {
+const PRESAIL_DROPLET: Contract = {
 	name: 'Presail Droplet',
 	address: '0x4745e6b8d030b1b65964242b0005ed63c52bf333',
+	is_deprecated: false,
+	updated_at: 1707575173,
 	abi: [
 		{
 			inputs: [
@@ -69,3 +71,4 @@ export const PRESAIL_DROPLET: Contract = {
 		},
 	],
 }
+export default PRESAIL_DROPLET

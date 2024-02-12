@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_WETH_GATEWAY: Contract = {
+const RONIN_WETH_GATEWAY: Contract = {
 	name: 'Ronin WETH Gateway',
 	address: '0x6abc078a2392abed76c23ade45883227b46f305d',
+	is_deprecated: false,
+	updated_at: 1707575167,
 	abi: [
 		{
 			inputs: [
@@ -317,3 +319,4 @@ export const RONIN_WETH_GATEWAY: Contract = {
 		},
 	],
 }
+export default RONIN_WETH_GATEWAY

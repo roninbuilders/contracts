@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BRIDGE_SLASH_PROXY: Contract = {
+const BRIDGE_SLASH_PROXY: Contract = {
 	name: 'Bridge Slash Proxy',
-	address: '0x323092ab0900281efd0ef5954b0a612ce7755f9c',
+	address: '0x273cda3afe17eb7bcb028b058382a9010ae82b24',
+	is_deprecated: false,
+	updated_at: 1707575122,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const BRIDGE_SLASH_PROXY: Contract = {
 		},
 	],
 }
+export default BRIDGE_SLASH_PROXY

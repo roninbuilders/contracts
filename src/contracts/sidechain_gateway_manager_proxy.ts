@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SIDECHAIN_GATEWAY_MANAGER_PROXY: Contract = {
+const SIDECHAIN_GATEWAY_MANAGER_PROXY: Contract = {
 	name: 'Sidechain Gateway Manager Proxy',
 	address: '0xe35d62ebe18413d96ca2a2f7cf215bb21a406b4b',
+	is_deprecated: true,
+	updated_at: 1707575172,
 	abi: [
 		{
 			inputs: [
@@ -528,3 +530,4 @@ export const SIDECHAIN_GATEWAY_MANAGER_PROXY: Contract = {
 		},
 	],
 }
+export default SIDECHAIN_GATEWAY_MANAGER_PROXY

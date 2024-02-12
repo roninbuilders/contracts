@@ -60,7 +60,7 @@ npm i @roninbuilders/contracts ethers@6.9.0
 ```
 
 ```typescript
-import { AXIE, USD_COIN, WRAPPED_ETHER } from "@roninbuilders/contracts"
+import { AXIE_PROXY, USD_COIN, WRAPPED_ETHER } from "@roninbuilders/contracts"
 
 // get RON balance
 const balance = await hre.ethers.provider.getBalance(address)
@@ -84,4 +84,12 @@ const usdcBalance = await usdcContract.balanceOf(address)
 const usdcBalanceFormated = hre.ethers.formatUnits(usdcBalance, 6) // 6 decimals
 console.log(`USDC balance: ${usdcBalanceFormated}`)
 
+```
+
+
+#### Build and publish
+
+```bash
+pnpm format
+pnpm upload
 ```

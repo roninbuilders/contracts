@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BLACKLIST_PROXY: Contract = {
+const BLACKLIST_PROXY: Contract = {
 	name: 'Blacklist Proxy',
 	address: '0xe584474bd181a58587e0e5a2fac927352048a2f7',
+	is_deprecated: false,
+	updated_at: 1707575122,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const BLACKLIST_PROXY: Contract = {
 		},
 	],
 }
+export default BLACKLIST_PROXY

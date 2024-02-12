@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MONTHLY_TOKEN_DISTRIBUTOR: Contract = {
+const MONTHLY_TOKEN_DISTRIBUTOR: Contract = {
 	name: 'Monthly Token Distributor',
 	address: '0x8b5d69ac8c7dcaf87c0d13e33459f470f6399cf0',
+	is_deprecated: true,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -382,3 +384,4 @@ export const MONTHLY_TOKEN_DISTRIBUTOR: Contract = {
 		},
 	],
 }
+export default MONTHLY_TOKEN_DISTRIBUTOR

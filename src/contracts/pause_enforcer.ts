@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PAUSE_ENFORCER: Contract = {
+const PAUSE_ENFORCER: Contract = {
 	name: 'Pause Enforcer',
 	address: '0x2367cd5468c2b3cd18aa74adb7e14e43426af837',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -404,3 +406,4 @@ export const PAUSE_ENFORCER: Contract = {
 		},
 	],
 }
+export default PAUSE_ENFORCER

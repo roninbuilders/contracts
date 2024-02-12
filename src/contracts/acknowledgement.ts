@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ACKNOWLEDGEMENT: Contract = {
+const ACKNOWLEDGEMENT: Contract = {
 	name: 'Acknowledgement',
 	address: '0x0000000000000000000000000000000000000022',
+	is_deprecated: true,
+	updated_at: 1707575159,
 	abi: [
 		{
 			inputs: [
@@ -524,3 +526,4 @@ export const ACKNOWLEDGEMENT: Contract = {
 		},
 	],
 }
+export default ACKNOWLEDGEMENT

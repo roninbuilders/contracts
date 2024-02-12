@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PROXY_ADMIN: Contract = {
+const PROXY_ADMIN: Contract = {
 	name: 'Proxy Admin',
 	address: '0xa3e7d085e65cb0b916f6717da876b7be5cc92f03',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			anonymous: false,
@@ -154,3 +156,4 @@ export const PROXY_ADMIN: Contract = {
 		},
 	],
 }
+export default PROXY_ADMIN

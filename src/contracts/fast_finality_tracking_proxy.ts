@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const FAST_FINALITY_TRACKING_PROXY: Contract = {
+const FAST_FINALITY_TRACKING_PROXY: Contract = {
 	name: 'Fast Finality Tracking Proxy',
 	address: '0xa30b2932cd8b8a89e34551cdfa13810af38da576',
+	is_deprecated: false,
+	updated_at: 1707575178,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const FAST_FINALITY_TRACKING_PROXY: Contract = {
 		},
 	],
 }
+export default FAST_FINALITY_TRACKING_PROXY

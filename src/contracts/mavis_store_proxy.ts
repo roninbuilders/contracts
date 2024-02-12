@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MAVIS_STORE_PROXY: Contract = {
+const MAVIS_STORE_PROXY: Contract = {
 	name: 'Mavis Store Proxy',
 	address: '0x8a28c188a067dfa6aaec36e2b67b34d2c3042df9',
+	is_deprecated: false,
+	updated_at: 1707575165,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MAVIS_STORE_PROXY: Contract = {
 		},
 	],
 }
+export default MAVIS_STORE_PROXY

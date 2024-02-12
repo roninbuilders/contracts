@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY: Contract = {
+const APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY: Contract = {
 	name: 'Apeiron Star Orbital Track Data Proxy',
 	address: '0x079eafbc1b4808163fbd55fb4e460cc8fe556230',
+	is_deprecated: false,
+	updated_at: 1707575176,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY: Contract = {
 		},
 	],
 }
+export default APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY

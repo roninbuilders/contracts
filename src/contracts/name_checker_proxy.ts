@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const NAME_CHECKER_PROXY: Contract = {
+const NAME_CHECKER_PROXY: Contract = {
 	name: 'Name Checker Proxy',
 	address: '0x486334ab27ffdc989fd6cbaf44e711ffa80a7bc2',
+	is_deprecated: false,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -79,3 +81,4 @@ export const NAME_CHECKER_PROXY: Contract = {
 		},
 	],
 }
+export default NAME_CHECKER_PROXY

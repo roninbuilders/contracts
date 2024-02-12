@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APPRAISAL_ORACLE: Contract = {
+const APPRAISAL_ORACLE: Contract = {
 	name: 'Appraisal Oracle',
 	address: '0x4f6da48bf7b065634995c5d177e6beb162a5602f',
+	is_deprecated: false,
+	updated_at: 1707575156,
 	abi: [
 		{
 			inputs: [],
@@ -156,3 +158,4 @@ export const APPRAISAL_ORACLE: Contract = {
 		},
 	],
 }
+export default APPRAISAL_ORACLE

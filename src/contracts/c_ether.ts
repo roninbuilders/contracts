@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const C_ETHER: Contract = {
+const C_ETHER: Contract = {
 	name: 'C Ether',
 	address: '0x82e5030a8f1c08ffe8fd14a09cbffdb5ce26e388',
+	is_deprecated: false,
+	updated_at: 1703629772,
 	abi: [
 		{
 			anonymous: false,
@@ -1758,3 +1760,4 @@ export const C_ETHER: Contract = {
 		},
 	],
 }
+export default C_ETHER

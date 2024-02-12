@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const SIDECHAIN_VALIDATOR: Contract = {
+const SIDECHAIN_VALIDATOR: Contract = {
 	name: 'Sidechain Validator',
 	address: '0x0000000000000000000000000000000000000011',
+	is_deprecated: true,
+	updated_at: 1707575177,
 	abi: [
 		{
 			inputs: [
@@ -310,3 +312,4 @@ export const SIDECHAIN_VALIDATOR: Contract = {
 		},
 	],
 }
+export default SIDECHAIN_VALIDATOR

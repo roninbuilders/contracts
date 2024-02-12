@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AFFILIATE_ROUTER: Contract = {
+const AFFILIATE_ROUTER: Contract = {
 	name: 'Affiliate Router',
 	address: '0x7c645c35ab772be52a474b1e08414d55e8ea56d5',
+	is_deprecated: false,
+	updated_at: 1707575159,
 	abi: [
 		{
 			inputs: [
@@ -631,3 +633,4 @@ export const AFFILIATE_ROUTER: Contract = {
 		},
 	],
 }
+export default AFFILIATE_ROUTER

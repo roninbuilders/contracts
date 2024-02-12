@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const STAKING: Contract = {
+const STAKING: Contract = {
 	name: 'Staking',
-	address: '0xe84c84c1e6c488a7947d21027cdd6674821348a1',
+	address: '0x9b0e61e629eb44875cff534de0c176078cac502f',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -152,6 +154,25 @@ export const STAKING: Contract = {
 				{
 					indexed: false,
 					internalType: 'uint256',
+					name: 'minRate',
+					type: 'uint256',
+				},
+				{
+					indexed: false,
+					internalType: 'uint256',
+					name: 'maxRate',
+					type: 'uint256',
+				},
+			],
+			name: 'CommissionRateRangeUpdated',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'uint256',
 					name: 'minSecs',
 					type: 'uint256',
 				},
@@ -195,19 +216,6 @@ export const STAKING: Contract = {
 				},
 			],
 			name: 'Initialized',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'uint256',
-					name: 'maxRate',
-					type: 'uint256',
-				},
-			],
-			name: 'MaxCommissionRateUpdated',
 			type: 'event',
 		},
 		{
@@ -772,6 +780,24 @@ export const STAKING: Contract = {
 			type: 'function',
 		},
 		{
+			inputs: [],
+			name: 'getCommissionRateRange',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
 			inputs: [
 				{
 					internalType: 'address[]',
@@ -1026,19 +1052,6 @@ export const STAKING: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'maxCommissionRate',
-			outputs: [
-				{
-					internalType: 'uint256',
-					name: '',
-					type: 'uint256',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [],
 			name: 'minValidatorStakingAmount',
 			outputs: [
 				{
@@ -1126,11 +1139,16 @@ export const STAKING: Contract = {
 			inputs: [
 				{
 					internalType: 'uint256',
-					name: '_cooldownSecs',
+					name: '_minRate',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
+					name: '_maxRate',
 					type: 'uint256',
 				},
 			],
-			name: 'setCooldownSecsToUndelegate',
+			name: 'setCommissionRateRange',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -1139,11 +1157,11 @@ export const STAKING: Contract = {
 			inputs: [
 				{
 					internalType: 'uint256',
-					name: '_maxRate',
+					name: '_cooldownSecs',
 					type: 'uint256',
 				},
 			],
-			name: 'setMaxCommissionRate',
+			name: 'setCooldownSecsToUndelegate',
 			outputs: [],
 			stateMutability: 'nonpayable',
 			type: 'function',
@@ -1268,3 +1286,4 @@ export const STAKING: Contract = {
 		},
 	],
 }
+export default STAKING

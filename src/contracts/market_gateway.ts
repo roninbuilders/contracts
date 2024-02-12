@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MARKET_GATEWAY: Contract = {
+const MARKET_GATEWAY: Contract = {
 	name: 'Market Gateway',
-	address: '0x53a11a02195d284c78b79801056ea893a2e6ea09',
+	address: '0x1875a752d3cc9227d94f0d106ed073af81e78163',
+	is_deprecated: false,
+	updated_at: 1700718239,
 	abi: [
 		{
 			inputs: [],
@@ -290,7 +292,7 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'address',
-					name: 'token',
+					name: '_token',
 					type: 'address',
 				},
 			],
@@ -309,7 +311,7 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'string',
-					name: 'interfaceName',
+					name: '_interface',
 					type: 'string',
 				},
 			],
@@ -330,17 +332,17 @@ export const MARKET_GATEWAY: Contract = {
 			outputs: [
 				{
 					internalType: 'bool',
-					name: 'referralFeature',
+					name: 'referralFeature_',
 					type: 'bool',
 				},
 				{
 					internalType: 'contract IMarketCommission',
-					name: 'marketCommission',
+					name: 'marketCommission_',
 					type: 'address',
 				},
 				{
 					internalType: 'bool',
-					name: 'autoTransferReferralReward',
+					name: 'autoTransferReferralReward_',
 					type: 'bool',
 				},
 			],
@@ -455,47 +457,47 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'contract IWRON',
-					name: 'wronContract',
+					name: '_wronContract',
 					type: 'address',
 				},
 				{
 					internalType: 'contract IWRONHelper',
-					name: 'wronHelper',
+					name: '_wronHelper',
 					type: 'address',
 				},
 				{
 					internalType: 'bool',
-					name: 'allowedAllPaymentTokens',
+					name: '_allowedAllPaymentTokens',
 					type: 'bool',
 				},
 				{
 					internalType: 'bool',
-					name: 'referralFeature',
+					name: '_referralFeature',
 					type: 'bool',
 				},
 				{
 					internalType: 'contract IMarketCommission',
-					name: 'marketCommission',
+					name: '_marketCommission',
 					type: 'address',
 				},
 				{
 					internalType: 'bool',
-					name: 'autoTransferReferralReward',
+					name: '_autoTransferReferralReward',
 					type: 'bool',
 				},
 				{
 					internalType: 'address[]',
-					name: 'paymentTokens',
+					name: '_paymentTokens',
 					type: 'address[]',
 				},
 				{
 					internalType: 'string[]',
-					name: 'interfaces',
+					name: '_interfaces',
 					type: 'string[]',
 				},
 				{
 					internalType: 'address[][2]',
-					name: 'addresses',
+					name: '_addresses',
 					type: 'address[][2]',
 				},
 			],
@@ -508,12 +510,12 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'string',
-					name: 'interfaceName',
+					name: '_interface',
 					type: 'string',
 				},
 				{
 					internalType: 'bytes',
-					name: 'data',
+					name: '_data',
 					type: 'bytes',
 				},
 			],
@@ -562,7 +564,7 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'bool',
-					name: 'flag',
+					name: '_flag',
 					type: 'bool',
 				},
 			],
@@ -575,12 +577,12 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'string[]',
-					name: 'interfaces',
+					name: '_interfaces',
 					type: 'string[]',
 				},
 				{
 					internalType: 'address[]',
-					name: 'addresses',
+					name: '_addresses',
 					type: 'address[]',
 				},
 			],
@@ -593,7 +595,7 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'contract IKatanaRouter',
-					name: 'routerContract',
+					name: '_routerContract',
 					type: 'address',
 				},
 			],
@@ -606,17 +608,17 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'bool',
-					name: 'referralFeature',
+					name: 'referralFeature_',
 					type: 'bool',
 				},
 				{
 					internalType: 'contract IMarketCommission',
-					name: 'marketCommission',
+					name: 'marketCommission_',
 					type: 'address',
 				},
 				{
 					internalType: 'bool',
-					name: 'autoTransferReferralReward',
+					name: 'autoTransferReferralReward_',
 					type: 'bool',
 				},
 			],
@@ -629,12 +631,12 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'address[]',
-					name: 'tokens',
+					name: '_tokens',
 					type: 'address[]',
 				},
 				{
 					internalType: 'bool',
-					name: 'allowed',
+					name: '_allowed',
 					type: 'bool',
 				},
 			],
@@ -647,12 +649,12 @@ export const MARKET_GATEWAY: Contract = {
 			inputs: [
 				{
 					internalType: 'contract IWRON',
-					name: 'wronAddr',
+					name: '_wronAddr',
 					type: 'address',
 				},
 				{
 					internalType: 'contract IWRONHelper',
-					name: 'wronHelperAddr',
+					name: '_wronHelper',
 					type: 'address',
 				},
 			],
@@ -699,3 +701,4 @@ export const MARKET_GATEWAY: Contract = {
 		},
 	],
 }
+export default MARKET_GATEWAY

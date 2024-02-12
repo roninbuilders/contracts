@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const GACHA_MACHINE: Contract = {
+const GACHA_MACHINE: Contract = {
 	name: 'Gacha Machine',
 	address: '0x2399f330325e5912c1678a087b9aee0ecab7226f',
+	is_deprecated: false,
+	updated_at: 1704278968,
 	abi: [
 		{
 			inputs: [],
@@ -1491,3 +1493,4 @@ export const GACHA_MACHINE: Contract = {
 		},
 	],
 }
+export default GACHA_MACHINE

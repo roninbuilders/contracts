@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WILD_FOREST_TOKEN: Contract = {
+const WILD_FOREST_TOKEN: Contract = {
 	name: 'Wild Forest Token',
 	address: '0x363c3b97152e161cea85e0e5dc52dfdca01a2db1',
+	is_deprecated: false,
+	updated_at: 1707575171,
 	abi: [
 		{
 			inputs: [
@@ -301,3 +303,4 @@ export const WILD_FOREST_TOKEN: Contract = {
 		},
 	],
 }
+export default WILD_FOREST_TOKEN

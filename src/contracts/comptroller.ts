@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const COMPTROLLER: Contract = {
+const COMPTROLLER: Contract = {
 	name: 'Comptroller',
 	address: '0x946ad76fd64b9a926128dfb27b189925d6f806b2',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -2054,3 +2056,4 @@ export const COMPTROLLER: Contract = {
 		},
 	],
 }
+export default COMPTROLLER

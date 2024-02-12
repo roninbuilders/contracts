@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const CARV_EVENTS_PROXY: Contract = {
+const CARV_EVENTS_PROXY: Contract = {
 	name: 'Carv Events Proxy',
 	address: '0x7d119ca651d7ea07a8f78a1dc3f0805be05d1e7e',
+	is_deprecated: false,
+	updated_at: 1707575151,
 	abi: [
 		{
 			inputs: [
@@ -82,3 +84,4 @@ export const CARV_EVENTS_PROXY: Contract = {
 		},
 	],
 }
+export default CARV_EVENTS_PROXY

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const REWARD_DISTRIBUTOR_PROXY: Contract = {
+const REWARD_DISTRIBUTOR_PROXY: Contract = {
 	name: 'Reward Distributor Proxy',
 	address: '0x193e04a8944d9aaa57abd2586b0c5c8044d21804',
+	is_deprecated: false,
+	updated_at: 1707575169,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const REWARD_DISTRIBUTOR_PROXY: Contract = {
 		},
 	],
 }
+export default REWARD_DISTRIBUTOR_PROXY

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_APOSTLE_SEASON_MINTING_PROXY: Contract = {
+const APEIRON_APOSTLE_SEASON_MINTING_PROXY: Contract = {
 	name: 'Apeiron Apostle Season Minting Proxy',
 	address: '0x19acb6cd971359865cf0358b29c389ecc968fb6f',
+	is_deprecated: false,
+	updated_at: 1707575178,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const APEIRON_APOSTLE_SEASON_MINTING_PROXY: Contract = {
 		},
 	],
 }
+export default APEIRON_APOSTLE_SEASON_MINTING_PROXY

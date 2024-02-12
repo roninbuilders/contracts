@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const AXIE_CHAT_PREMIUM_2023: Contract = {
+const AXIE_CHAT_PREMIUM_2023: Contract = {
 	name: 'Axie Chat Premium 2023',
 	address: '0x793bf8e05ebf5082baf944f20b1ae8fa14ab677f',
+	is_deprecated: false,
+	updated_at: 1707575153,
 	abi: [
 		{
 			inputs: [
@@ -856,3 +858,4 @@ export const AXIE_CHAT_PREMIUM_2023: Contract = {
 		},
 	],
 }
+export default AXIE_CHAT_PREMIUM_2023

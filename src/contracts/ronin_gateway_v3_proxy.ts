@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_GATEWAY_V3_PROXY: Contract = {
+const RONIN_GATEWAY_V3_PROXY: Contract = {
 	name: 'Ronin Gateway V3 Proxy',
 	address: '0x0cf8ff40a508bdbc39fbe1bb679dcba64e65c7df',
+	is_deprecated: false,
+	updated_at: 1707575183,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_GATEWAY_V3_PROXY: Contract = {
 		},
 	],
 }
+export default RONIN_GATEWAY_V3_PROXY

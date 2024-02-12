@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const EXCHANGE: Contract = {
+const EXCHANGE: Contract = {
 	name: 'Exchange',
 	address: '0xd873aca0c666a306e452baf090837d786515ec3f',
+	is_deprecated: true,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -863,3 +865,4 @@ export const EXCHANGE: Contract = {
 		},
 	],
 }
+export default EXCHANGE

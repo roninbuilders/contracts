@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const PROFILE_PROXY: Contract = {
+const PROFILE_PROXY: Contract = {
 	name: 'Profile Proxy',
 	address: '0x840ebf1ca767cb690029e91856a357a43b85d035',
+	is_deprecated: false,
+	updated_at: 1707575167,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const PROFILE_PROXY: Contract = {
 		},
 	],
 }
+export default PROFILE_PROXY

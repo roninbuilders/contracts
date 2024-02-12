@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const STAR_ORBITAL_TRACK_LOGIC_PROXY: Contract = {
+const STAR_ORBITAL_TRACK_LOGIC_PROXY: Contract = {
 	name: 'Star Orbital Track Logic Proxy',
 	address: '0x550168ec56b3348b91c62d29aae7eba8c88ffee4',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const STAR_ORBITAL_TRACK_LOGIC_PROXY: Contract = {
 		},
 	],
 }
+export default STAR_ORBITAL_TRACK_LOGIC_PROXY

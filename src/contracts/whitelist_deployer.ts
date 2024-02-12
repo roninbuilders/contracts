@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const WHITELIST_DEPLOYER: Contract = {
+const WHITELIST_DEPLOYER: Contract = {
 	name: 'Whitelist Deployer',
 	address: '0x0000000000000000000000000000000000000033',
+	is_deprecated: false,
+	updated_at: 1707575176,
 	abi: [
 		{
 			inputs: [],
@@ -206,3 +208,4 @@ export const WHITELIST_DEPLOYER: Contract = {
 		},
 	],
 }
+export default WHITELIST_DEPLOYER

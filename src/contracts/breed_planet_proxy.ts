@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BREED_PLANET_PROXY: Contract = {
+const BREED_PLANET_PROXY: Contract = {
 	name: 'Breed Planet Proxy',
 	address: '0x41c39a7741946715e307b918d87c7fd52ed9ca64',
+	is_deprecated: false,
+	updated_at: 1707575151,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const BREED_PLANET_PROXY: Contract = {
 		},
 	],
 }
+export default BREED_PLANET_PROXY

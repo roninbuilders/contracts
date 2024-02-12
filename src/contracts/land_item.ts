@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const LAND_ITEM: Contract = {
+const LAND_ITEM: Contract = {
 	name: 'Land Item',
 	address: '0xa96660f0e4a3e9bc7388925d245a6d4d79e21259',
+	is_deprecated: false,
+	updated_at: 1707575160,
 	abi: [
 		{
 			inputs: [
@@ -913,3 +915,4 @@ export const LAND_ITEM: Contract = {
 		},
 	],
 }
+export default LAND_ITEM

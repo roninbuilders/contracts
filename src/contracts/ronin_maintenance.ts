@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_MAINTENANCE: Contract = {
+const RONIN_MAINTENANCE: Contract = {
 	name: 'Ronin Maintenance',
 	address: '0x6f45c1f8d84849d497c6c0ac4c3842dc82f49894',
+	is_deprecated: false,
+	updated_at: 1707575171,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_MAINTENANCE: Contract = {
 		},
 	],
 }
+export default RONIN_MAINTENANCE

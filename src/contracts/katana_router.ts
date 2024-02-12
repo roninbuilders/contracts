@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const KATANA_ROUTER: Contract = {
+const KATANA_ROUTER: Contract = {
 	name: 'Katana Router',
 	address: '0x7d0556d55ca1a92708681e2e231733ebd922597d',
+	is_deprecated: false,
+	updated_at: 1707575162,
 	abi: [
 		{
 			inputs: [
@@ -1026,3 +1028,4 @@ export const KATANA_ROUTER: Contract = {
 		},
 	],
 }
+export default KATANA_ROUTER

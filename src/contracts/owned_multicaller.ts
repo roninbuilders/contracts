@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const OWNED_MULTICALLER: Contract = {
+const OWNED_MULTICALLER: Contract = {
 	name: 'Owned Multicaller',
 	address: '0x8975923d01132beb6c412f827f63d44712726e13',
+	is_deprecated: false,
+	updated_at: 1707575156,
 	abi: [
 		{
 			inputs: [
@@ -147,3 +149,4 @@ export const OWNED_MULTICALLER: Contract = {
 		},
 	],
 }
+export default OWNED_MULTICALLER

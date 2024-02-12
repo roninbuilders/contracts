@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MAXIMILLION: Contract = {
+const MAXIMILLION: Contract = {
 	name: 'Maximillion',
 	address: '0x8ec33467a63ff3c660369d60dcba3b98ebd3642d',
+	is_deprecated: false,
+	updated_at: 1707575157,
 	abi: [
 		{
 			inputs: [
@@ -67,3 +69,4 @@ export const MAXIMILLION: Contract = {
 		},
 	],
 }
+export default MAXIMILLION

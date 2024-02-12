@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BORN_PLANET_PROXY: Contract = {
+const BORN_PLANET_PROXY: Contract = {
 	name: 'Born Planet Proxy',
 	address: '0x953b381ab16522d0311c75d9cd164e2a14ebe143',
+	is_deprecated: false,
+	updated_at: 1707575164,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const BORN_PLANET_PROXY: Contract = {
 		},
 	],
 }
+export default BORN_PLANET_PROXY

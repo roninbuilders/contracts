@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MATERIAL_ERC1155_PROXY: Contract = {
+const MATERIAL_ERC1155_PROXY: Contract = {
 	name: 'Material ERC1155 Proxy',
 	address: '0x12b707c3d2786570cfdc3a998a085b62acdba4b3',
+	is_deprecated: false,
+	updated_at: 1707575154,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MATERIAL_ERC1155_PROXY: Contract = {
 		},
 	],
 }
+export default MATERIAL_ERC1155_PROXY

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BRIDGE_TRACKING_PROXY: Contract = {
+const BRIDGE_TRACKING_PROXY: Contract = {
 	name: 'Bridge Tracking Proxy',
 	address: '0x232974a8f8357027056b0a87f90fb5115baf0573',
+	is_deprecated: true,
+	updated_at: 1707575122,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const BRIDGE_TRACKING_PROXY: Contract = {
 		},
 	],
 }
+export default BRIDGE_TRACKING_PROXY

@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const BREED_PLANET: Contract = {
+const BREED_PLANET: Contract = {
 	name: 'Breed Planet',
-	address: '0xfa4e2a7320fc4fc483eecf16c33d99d3ffd7f0bc',
+	address: '0xe862af84683aac9572e0780b0e6eb44f9cf3bb76',
+	is_deprecated: false,
+	updated_at: 1702972187,
 	abi: [
 		{
 			inputs: [],
@@ -190,24 +192,6 @@ export const BREED_PLANET: Contract = {
 				},
 			],
 			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes32',
-					name: '_reqHash',
-					type: 'bytes32',
-				},
-				{
-					internalType: 'uint256',
-					name: '_randomSeed',
-					type: 'uint256',
-				},
-			],
-			name: 'adminFulfillRandomSeed',
-			outputs: [],
-			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
@@ -986,3 +970,4 @@ export const BREED_PLANET: Contract = {
 		},
 	],
 }
+export default BREED_PLANET

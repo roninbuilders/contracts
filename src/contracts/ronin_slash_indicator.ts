@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const RONIN_SLASH_INDICATOR: Contract = {
+const RONIN_SLASH_INDICATOR: Contract = {
 	name: 'Ronin Slash Indicator',
 	address: '0xebfff2b32fa0df9c5c8c5d5aaa7e8b51d5207ba3',
+	is_deprecated: false,
+	updated_at: 1707575182,
 	abi: [
 		{
 			inputs: [
@@ -162,3 +164,4 @@ export const RONIN_SLASH_INDICATOR: Contract = {
 		},
 	],
 }
+export default RONIN_SLASH_INDICATOR

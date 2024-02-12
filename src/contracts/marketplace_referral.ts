@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MARKETPLACE_REFERRAL: Contract = {
+const MARKETPLACE_REFERRAL: Contract = {
 	name: 'Marketplace Referral',
 	address: '0xb977383f1c797051ac5361f7ba75db0c46cb6372',
+	is_deprecated: false,
+	updated_at: 1707575155,
 	abi: [
 		{
 			inputs: [
@@ -149,3 +151,4 @@ export const MARKETPLACE_REFERRAL: Contract = {
 		},
 	],
 }
+export default MARKETPLACE_REFERRAL

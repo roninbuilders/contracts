@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const ERC20_FEE_PROXY: Contract = {
+const ERC20_FEE_PROXY: Contract = {
 	name: 'ERC20 Fee Proxy',
 	address: '0xae23992483feda6e718a808ce824f6864f13b64b',
+	is_deprecated: false,
+	updated_at: 1707575178,
 	abi: [
 		{
 			anonymous: false,
@@ -90,3 +92,4 @@ export const ERC20_FEE_PROXY: Contract = {
 		},
 	],
 }
+export default ERC20_FEE_PROXY

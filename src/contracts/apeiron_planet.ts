@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_PLANET: Contract = {
+const APEIRON_PLANET: Contract = {
 	name: 'Apeiron Planet',
-	address: '0xbaab8289e96ced54570d72f30de9d7df6c4ad3e7',
+	address: '0xb1b4e5a675371aff0303ffb9945cf5560d3ae212',
+	is_deprecated: false,
+	updated_at: 1702646430,
 	abi: [
 		{
 			inputs: [],
@@ -894,3 +896,4 @@ export const APEIRON_PLANET: Contract = {
 		},
 	],
 }
+export default APEIRON_PLANET

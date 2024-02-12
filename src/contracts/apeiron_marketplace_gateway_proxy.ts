@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const APEIRON_MARKETPLACE_GATEWAY_PROXY: Contract = {
+const APEIRON_MARKETPLACE_GATEWAY_PROXY: Contract = {
 	name: 'Apeiron Marketplace Gateway Proxy',
 	address: '0xe98650347c5ae0fc803716a676dc7c5b3d445f46',
+	is_deprecated: false,
+	updated_at: 1707575170,
 	abi: [
 		{
 			inputs: [
@@ -74,3 +76,4 @@ export const APEIRON_MARKETPLACE_GATEWAY_PROXY: Contract = {
 		},
 	],
 }
+export default APEIRON_MARKETPLACE_GATEWAY_PROXY

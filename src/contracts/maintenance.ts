@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MAINTENANCE: Contract = {
+const MAINTENANCE: Contract = {
 	name: 'Maintenance',
-	address: '0xca9f10769292f26850333264d618c1b5e91f394d',
+	address: '0xb6a13e481f060c6a9130238eeb84a3c98a0a5fea',
+	is_deprecated: false,
+	updated_at: 0,
 	abi: [
 		{
 			inputs: [],
@@ -10,110 +12,13 @@ export const MAINTENANCE: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'ErrAlreadyOnMaintenance',
+			name: 'ErrCallerMustBeValidatorContract',
 			type: 'error',
 		},
 		{
 			inputs: [],
-			name: 'ErrAlreadyScheduled',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-			],
-			name: 'ErrContractTypeNotFound',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrCooldownTimeNotYetEnded',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrEndBlockOutOfRange',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidMaintenanceDuration',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidMaintenanceDurationConfig',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrInvalidOffsetToStartScheduleConfigs',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrStartBlockOutOfRange',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrTotalOfSchedulesExceeded',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'bytes4',
-					name: 'msgSig',
-					type: 'bytes4',
-				},
-				{
-					internalType: 'enum RoleAccess',
-					name: 'expectedRole',
-					type: 'uint8',
-				},
-			],
-			name: 'ErrUnauthorized',
-			type: 'error',
-		},
-		{
-			inputs: [],
-			name: 'ErrUnexistedSchedule',
-			type: 'error',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
 			name: 'ErrZeroCodeContract',
 			type: 'error',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
-			name: 'ContractUpdated',
-			type: 'event',
 		},
 		{
 			anonymous: false,
@@ -226,6 +131,19 @@ export const MAINTENANCE: Contract = {
 			type: 'event',
 		},
 		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: false,
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			name: 'ValidatorContractUpdated',
+			type: 'event',
+		},
+		{
 			inputs: [
 				{
 					internalType: 'address',
@@ -246,7 +164,7 @@ export const MAINTENANCE: Contract = {
 					type: 'address',
 				},
 			],
-			name: 'checkCooldownEnded',
+			name: 'checkCooldownEnds',
 			outputs: [
 				{
 					internalType: 'bool',
@@ -398,25 +316,6 @@ export const MAINTENANCE: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-			],
-			name: 'getContract',
-			outputs: [
-				{
-					internalType: 'address',
-					name: 'contract_',
-					type: 'address',
-				},
-			],
-			stateMutability: 'view',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'address',
 					name: '_consensusAddr',
 					type: 'address',
@@ -500,13 +399,6 @@ export const MAINTENANCE: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'initializeV2',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [],
 			name: 'maxMaintenanceDurationInBlock',
 			outputs: [
 				{
@@ -533,7 +425,7 @@ export const MAINTENANCE: Contract = {
 		},
 		{
 			inputs: [],
-			name: 'maxSchedule',
+			name: 'maxSchedules',
 			outputs: [
 				{
 					internalType: 'uint256',
@@ -596,24 +488,6 @@ export const MAINTENANCE: Contract = {
 		{
 			inputs: [
 				{
-					internalType: 'enum ContractType',
-					name: 'contractType',
-					type: 'uint8',
-				},
-				{
-					internalType: 'address',
-					name: 'addr',
-					type: 'address',
-				},
-			],
-			name: 'setContract',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
 					internalType: 'uint256',
 					name: '_minMaintenanceDurationInBlock',
 					type: 'uint256',
@@ -650,8 +524,21 @@ export const MAINTENANCE: Contract = {
 			type: 'function',
 		},
 		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_addr',
+					type: 'address',
+				},
+			],
+			name: 'setValidatorContract',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
 			inputs: [],
-			name: 'totalSchedule',
+			name: 'totalSchedules',
 			outputs: [
 				{
 					internalType: 'uint256',
@@ -662,5 +549,19 @@ export const MAINTENANCE: Contract = {
 			stateMutability: 'view',
 			type: 'function',
 		},
+		{
+			inputs: [],
+			name: 'validatorContract',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
 	],
 }
+export default MAINTENANCE

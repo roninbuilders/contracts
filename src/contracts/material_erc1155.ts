@@ -1,7 +1,9 @@
 import { Contract } from '@/contract'
-export const MATERIAL_ERC1155: Contract = {
+const MATERIAL_ERC1155: Contract = {
 	name: 'Material ERC1155',
 	address: '0x3dc7450004eaee078d4d2b7409f9668b1a1fd50c',
+	is_deprecated: false,
+	updated_at: 1704869104,
 	abi: [
 		{
 			inputs: [],
@@ -756,3 +758,4 @@ export const MATERIAL_ERC1155: Contract = {
 		},
 	],
 }
+export default MATERIAL_ERC1155
