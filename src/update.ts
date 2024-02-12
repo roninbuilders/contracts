@@ -2,6 +2,7 @@ import { Contract } from './contract'
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
+import { Abi } from 'abitype'
 
 const RONIN_EXPLORER_API_URL = process.env.RONIN_EXPLORER_API_URL
 
@@ -61,7 +62,7 @@ interface ItemsResult extends BaseResult {
 
 interface OutputResult extends BaseResult {
 	output: {
-		abi: Contract['abi']
+		abi: readonly unknown[]
 	}
 }
 
@@ -76,12 +77,10 @@ const fetchContracts = async () => {
 	})
 
 	const data = (await response.json()) as Response<ItemsResult>
-	console.log(`Total number of contracts: ${data.result.total}`)
 	return data.result.items
 }
 
 const fetchAbi = async (contractAddress: string) => {
-	console.log('Fetching ABI for', contractAddress)
 	const url = `${RONIN_EXPLORER_API_URL}contract/${contractAddress}/abi`
 
 	// Wait to avoid rate limit
@@ -98,8 +97,6 @@ const fetchAbi = async (contractAddress: string) => {
 	const response = data.result.output?.abi || false
 
 	if (!response) {
-		console.log('No ABI found for', contractAddress)
-		console.log(data)
 	}
 
 	return response
@@ -120,7 +117,7 @@ function transformString(input: string): string {
 const writeAbiToFile = async (
 	address: `0x${string}`,
 	name: string,
-	abi: Contract['abi'],
+	abi: Abi | readonly unknown[],
 	is_deprecated: boolean,
 	updated_at: number,
 ) => {
@@ -138,19 +135,16 @@ const writeAbiToFile = async (
 
 		// Check if the file already exists
 		try {
-			console.log('Checking if file exists', filePath)
 			await fs.promises.access(filePath)
 
 			// Check if we should overwrite the file, based on the updated_at timestamp
 			try {
-				const EXISTING_CONTRACT = (await import(filePath)).default as Contract
+				const EXISTING_CONTRACT = (await import(filePath)).default as Contract<Abi | readonly unknown[]>
 				if (
 					updated_at > EXISTING_CONTRACT.updated_at &&
 					JSON.stringify(abi) !== JSON.stringify(EXISTING_CONTRACT.abi)
 				) {
-					console.log(`Contract ${name} was updated, overwriting file ${filePath}`)
 				} else {
-					console.log(`Contract was not updated, skipping ${name}`)
 					return
 				}
 			} catch (importError) {
@@ -158,29 +152,17 @@ const writeAbiToFile = async (
 			}
 		} catch {
 			// File doesn't exist, do nothing
-			console.log(`File ${filePath} doesn't exist, creating it`)
-		}
-
-		// Write the data to the file
-		const contract: Contract = {
-			name,
-			address,
-			is_deprecated,
-			updated_at,
-			abi,
 		}
 
 		// Write the data to the file
 		await fs.promises.writeFile(
 			filePath,
-			`import { Contract } from "@/contract";\nconst ${filename.toUpperCase()}:Contract = ${JSON.stringify(
-				contract,
+			`import { Contract } from "@/contract";\n const abi = ${JSON.stringify(
+				abi,
 				null,
 				2,
-			)};\nexport default ${filename.toUpperCase()};\n`,
+			)} as const;\nconst ${filename.toUpperCase()}:Contract<typeof abi> = { name: '${name}', address: '${address}', is_deprecated: ${is_deprecated}, updated_at: ${updated_at}, abi: abi};\nexport default ${filename.toUpperCase()};\n`,
 		)
-
-		console.log(`Contract ${name} written to file ${filePath}`)
 	} catch (error) {
 		console.error(`Failed to write ABI to file: ${error}`)
 	}
@@ -209,15 +191,18 @@ const saveLocalFile = async (
 	}
 }
 
+const cleanNameString = (name: string) => {
+	// remove any non-alphanumeric characters
+	return name.replace(/[^a-zA-Z0-9\s]/g, '')
+}
+
 const processContract = async (apiContractItem: Item) => {
 	const contractAddress = apiContractItem.address
-	const contractName = apiContractItem.display_name || apiContractItem.contract_name
+	const contractName = cleanNameString(apiContractItem.display_name || apiContractItem.contract_name)
 	if (!contractName.length) {
 		// skip if the contract doesn't have a name yet
-		console.log('Skipping contract without a name', contractAddress)
 		return false
 	}
-	console.log('Processing contract', contractName, contractAddress)
 
 	try {
 		await saveLocalFile(contractAddress, contractName, apiContractItem.is_deprecated, apiContractItem.updated_at)
@@ -227,7 +212,7 @@ const processContract = async (apiContractItem: Item) => {
 		const indexFileContent = files
 			.map((file) => {
 				const filename = file.replace('.ts', '')
-				return `import ${filename.toLocaleUpperCase()} from './contracts/${filename}';\nexport { ${filename.toLocaleUpperCase()} };`
+				return `export { default as ${filename.toLocaleUpperCase()} } from '@/contracts/${filename}';`
 			})
 			.join('\n')
 		await fs.promises.writeFile(indexFilePath, indexFileContent)
@@ -262,7 +247,6 @@ console.time('Update Abis time')
 updateAbis()
 	.then(() => {
 		console.timeEnd('Update Abis time')
-		console.log(`Total number of failed saveLocalFile operations: ${failedCount}`)
 		process.exit(0)
 	})
 	.catch((error) => {

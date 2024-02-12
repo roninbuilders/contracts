@@ -1,154 +1,155 @@
 import { Contract } from '@/contract'
-const RONIN_VRF_COORDINATOR_PROXY: Contract = {
+const abi = [
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_logic',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'admin_',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes',
+				name: '_data',
+				type: 'bytes',
+			},
+		],
+		stateMutability: 'payable',
+		type: 'constructor',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'previousAdmin',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'newAdmin',
+				type: 'address',
+			},
+		],
+		name: 'AdminChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'beacon',
+				type: 'address',
+			},
+		],
+		name: 'BeaconUpgraded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'Upgraded',
+		type: 'event',
+	},
+	{
+		stateMutability: 'payable',
+		type: 'fallback',
+	},
+	{
+		inputs: [],
+		name: 'admin',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'admin_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'newAdmin',
+				type: 'address',
+			},
+		],
+		name: 'changeAdmin',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'implementation',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'implementation_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'newImplementation',
+				type: 'address',
+			},
+		],
+		name: 'upgradeTo',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'newImplementation',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'upgradeToAndCall',
+		outputs: [],
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		stateMutability: 'payable',
+		type: 'receive',
+	},
+] as const
+const RONIN_VRF_COORDINATOR_PROXY: Contract<typeof abi> = {
 	name: 'Ronin VRF Coordinator Proxy',
-	address: '0x16a62a921e7fec5bf867ff5c805b662db757b778',
-	is_deprecated: false,
-	updated_at: 1707575182,
-	abi: [
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: '_logic',
-					type: 'address',
-				},
-				{
-					internalType: 'address',
-					name: 'admin_',
-					type: 'address',
-				},
-				{
-					internalType: 'bytes',
-					name: '_data',
-					type: 'bytes',
-				},
-			],
-			stateMutability: 'payable',
-			type: 'constructor',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: false,
-					internalType: 'address',
-					name: 'previousAdmin',
-					type: 'address',
-				},
-				{
-					indexed: false,
-					internalType: 'address',
-					name: 'newAdmin',
-					type: 'address',
-				},
-			],
-			name: 'AdminChanged',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'beacon',
-					type: 'address',
-				},
-			],
-			name: 'BeaconUpgraded',
-			type: 'event',
-		},
-		{
-			anonymous: false,
-			inputs: [
-				{
-					indexed: true,
-					internalType: 'address',
-					name: 'implementation',
-					type: 'address',
-				},
-			],
-			name: 'Upgraded',
-			type: 'event',
-		},
-		{
-			stateMutability: 'payable',
-			type: 'fallback',
-		},
-		{
-			inputs: [],
-			name: 'admin',
-			outputs: [
-				{
-					internalType: 'address',
-					name: 'admin_',
-					type: 'address',
-				},
-			],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'newAdmin',
-					type: 'address',
-				},
-			],
-			name: 'changeAdmin',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [],
-			name: 'implementation',
-			outputs: [
-				{
-					internalType: 'address',
-					name: 'implementation_',
-					type: 'address',
-				},
-			],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'newImplementation',
-					type: 'address',
-				},
-			],
-			name: 'upgradeTo',
-			outputs: [],
-			stateMutability: 'nonpayable',
-			type: 'function',
-		},
-		{
-			inputs: [
-				{
-					internalType: 'address',
-					name: 'newImplementation',
-					type: 'address',
-				},
-				{
-					internalType: 'bytes',
-					name: 'data',
-					type: 'bytes',
-				},
-			],
-			name: 'upgradeToAndCall',
-			outputs: [],
-			stateMutability: 'payable',
-			type: 'function',
-		},
-		{
-			stateMutability: 'payable',
-			type: 'receive',
-		},
-	],
+	address: '0x84f2690c61678de787c2641ac453ebc3d9fb4014',
+	is_deprecated: true,
+	updated_at: 1707758997,
+	abi: abi,
 }
 export default RONIN_VRF_COORDINATOR_PROXY
