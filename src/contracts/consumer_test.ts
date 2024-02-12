@@ -1,15 +1,20 @@
 import { Contract } from '@/contract'
 const CONSUMER_TEST: Contract = {
 	name: 'Consumer Test',
-	address: '0x35dc49cafab1e2e46723ad5e0a82e71cff73558e',
+	address: '0x2ab1afc50e63c0020cbb69662bcb9dc52424aa5e',
 	is_deprecated: false,
-	updated_at: 1707575179,
+	updated_at: 1707742599,
 	abi: [
 		{
 			inputs: [
 				{
 					internalType: 'address',
 					name: '_vrfCoordinator',
+					type: 'address',
+				},
+				{
+					internalType: 'address',
+					name: 'sentry',
 					type: 'address',
 				},
 			],
@@ -22,31 +27,91 @@ const CONSUMER_TEST: Contract = {
 			type: 'error',
 		},
 		{
+			anonymous: false,
 			inputs: [
 				{
-					internalType: 'uint256',
-					name: '_callbackGaslimit',
-					type: 'uint256',
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
 				},
 				{
-					internalType: 'uint256',
-					name: '_gasPrice',
-					type: 'uint256',
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'previousAdminRole',
+					type: 'bytes32',
 				},
 				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'newAdminRole',
+					type: 'bytes32',
+				},
+			],
+			name: 'RoleAdminChanged',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					indexed: true,
 					internalType: 'address',
-					name: '_refundAddr',
+					name: 'account',
 					type: 'address',
 				},
 				{
-					internalType: 'uint256[]',
-					name: '_tokenIds',
-					type: 'uint256[]',
+					indexed: true,
+					internalType: 'address',
+					name: 'sender',
+					type: 'address',
 				},
 			],
-			name: 'bulkTestRequestRandomness',
-			outputs: [],
-			stateMutability: 'payable',
+			name: 'RoleGranted',
+			type: 'event',
+		},
+		{
+			anonymous: false,
+			inputs: [
+				{
+					indexed: true,
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+				{
+					indexed: true,
+					internalType: 'address',
+					name: 'sender',
+					type: 'address',
+				},
+			],
+			name: 'RoleRevoked',
+			type: 'event',
+		},
+		{
+			inputs: [],
+			name: 'DEFAULT_ADMIN_ROLE',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
 			type: 'function',
 		},
 		{
@@ -82,6 +147,110 @@ const CONSUMER_TEST: Contract = {
 					internalType: 'uint256[]',
 					name: '_randomResults',
 					type: 'uint256[]',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+			],
+			name: 'getRoleAdmin',
+			outputs: [
+				{
+					internalType: 'bytes32',
+					name: '',
+					type: 'bytes32',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'uint256',
+					name: 'index',
+					type: 'uint256',
+				},
+			],
+			name: 'getRoleMember',
+			outputs: [
+				{
+					internalType: 'address',
+					name: '',
+					type: 'address',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+			],
+			name: 'getRoleMemberCount',
+			outputs: [
+				{
+					internalType: 'uint256',
+					name: '',
+					type: 'uint256',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'grantRole',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'hasRole',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
 				},
 			],
 			stateMutability: 'view',
@@ -160,6 +329,102 @@ const CONSUMER_TEST: Contract = {
 			name: 'rawFulfillRandomSeed',
 			outputs: [],
 			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'renounceRole',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'role',
+					type: 'bytes32',
+				},
+				{
+					internalType: 'address',
+					name: 'account',
+					type: 'address',
+				},
+			],
+			name: 'revokeRole',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'address',
+					name: '_vrfCoordinator',
+					type: 'address',
+				},
+			],
+			name: 'setVrfCoordinator',
+			outputs: [],
+			stateMutability: 'nonpayable',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes4',
+					name: 'interfaceId',
+					type: 'bytes4',
+				},
+			],
+			name: 'supportsInterface',
+			outputs: [
+				{
+					internalType: 'bool',
+					name: '',
+					type: 'bool',
+				},
+			],
+			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'uint256',
+					name: '_callbackGaslimit',
+					type: 'uint256',
+				},
+				{
+					internalType: 'uint256',
+					name: '_gasPrice',
+					type: 'uint256',
+				},
+				{
+					internalType: 'address',
+					name: '_refundAddr',
+					type: 'address',
+				},
+				{
+					internalType: 'uint256',
+					name: '_tokenId',
+					type: 'uint256',
+				},
+			],
+			name: 'testRequestRandomness',
+			outputs: [],
+			stateMutability: 'payable',
 			type: 'function',
 		},
 		{
