@@ -1,12 +1,8 @@
 name: Automated Weekly Update
 
 on:
-  push:
-    branches:
-      - test-actions
-  # schedule:
-  # - cron: '0 0 * * 1' # Un-commented to enable automatic runs every Monday at 00:00 UTC
-
+  schedule:
+  - cron: '0 0 * * 1' # Automatic runs every Monday at 00:00 UTC
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
