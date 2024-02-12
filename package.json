@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "peerDependencies": {
     "typescript": ">=5"
@@ -55,5 +55,6 @@
     "ts-node": "^10.9.2",
     "tsup": "^6.7.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "packageManager": "pnpm@8.5.1"
 }
