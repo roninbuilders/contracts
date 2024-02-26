@@ -145,11 +145,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x4ec37b7f8fce7cd2a96839b3c97f3d034ffb52c2',
-	is_deprecated: true,
-	updated_at: 1708909089,
+const WILD_FOREST_NFT_PROXY: Contract<typeof abi> = {
+	name: 'Wild Forest Nft Proxy',
+	address: '0xa1ce53b661be73bf9a5edd3f0087484f0e3e7363',
+	is_deprecated: false,
+	updated_at: 1708909093,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default WILD_FOREST_NFT_PROXY
