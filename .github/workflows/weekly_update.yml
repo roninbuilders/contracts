@@ -53,17 +53,10 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
-          commit-message: "chore: update package version"
+          commit-message: "Weekly update"
+          title: "Weekly update"
+          body: "Update the contents"
           branch: "updates/${{ github.run_number }}"
           delete-branch: true
-          title: "Automated Package Version Update"
-          body: "This is an automated PR to update package version."
           labels: "automated pr"
           assignees: "alexx855"
-          reviewers: "alexx855"
-
-      - name: Publish to npm
-        if: steps.git-check.outputs.changes_detected == 'true'
-        run: pnpm upload
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

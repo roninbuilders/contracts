@@ -1,0 +1,41 @@
+name: Publish to npm
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'automated pr')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ssh-strict: true
+          persist-credentials: false
+          clean: true
+          lfs: false
+          submodules: false
+          set-safe-directory: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to npm
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: pnpm upload
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
