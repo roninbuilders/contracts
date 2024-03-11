@@ -97,6 +97,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'bytes',
+				name: '_data',
+				type: 'bytes',
+			},
+		],
+		name: 'functionDelegateCall',
+		outputs: [],
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'implementation',
 		outputs: [
@@ -145,11 +158,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x4ec37b7f8fce7cd2a96839b3c97f3d034ffb52c2',
-	is_deprecated: true,
-	updated_at: 1710117544,
+const PROFILE_MAINNET_PROXY: Contract<typeof abi> = {
+	name: 'ProfileMainnet Proxy',
+	address: '0x840ebf1ca767cb690029e91856a357a43b85d035',
+	is_deprecated: false,
+	updated_at: 1710117482,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default PROFILE_MAINNET_PROXY

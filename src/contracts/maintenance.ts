@@ -7,13 +7,110 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeValidatorContract',
+		name: 'ErrAlreadyOnMaintenance',
 		type: 'error',
 	},
 	{
 		inputs: [],
+		name: 'ErrAlreadyScheduled',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrContractTypeNotFound',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrCooldownTimeNotYetEnded',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrEndBlockOutOfRange',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidMaintenanceDuration',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidMaintenanceDurationConfig',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidOffsetToStartScheduleConfigs',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrStartBlockOutOfRange',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrTotalOfSchedulesExceeded',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum RoleAccess',
+				name: 'expectedRole',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrUnauthorized',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrUnexistedSchedule',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'ContractUpdated',
+		type: 'event',
 	},
 	{
 		anonymous: false,
@@ -126,19 +223,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'ValidatorContractUpdated',
-		type: 'event',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -159,7 +243,7 @@ const abi = [
 				type: 'address',
 			},
 		],
-		name: 'checkCooldownEnds',
+		name: 'checkCooldownEnded',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -311,6 +395,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'getContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'contract_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: '_consensusAddr',
 				type: 'address',
@@ -394,6 +497,13 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'maxMaintenanceDurationInBlock',
 		outputs: [
 			{
@@ -420,7 +530,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'maxSchedules',
+		name: 'maxSchedule',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -483,6 +593,24 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'setContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256',
 				name: '_minMaintenanceDurationInBlock',
 				type: 'uint256',
@@ -519,21 +647,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setValidatorContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [],
-		name: 'totalSchedules',
+		name: 'totalSchedule',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -544,25 +659,12 @@ const abi = [
 		stateMutability: 'view',
 		type: 'function',
 	},
-	{
-		inputs: [],
-		name: 'validatorContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
 ] as const
 const MAINTENANCE: Contract<typeof abi> = {
 	name: 'Maintenance',
-	address: '0x44dcc40067233d3e45b93951184fb389c068466d',
+	address: '0xca9f10769292f26850333264d618c1b5e91f394d',
 	is_deprecated: false,
-	updated_at: 0,
+	updated_at: 1709796680,
 	abi: abi,
 }
 export default MAINTENANCE

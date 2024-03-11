@@ -12,26 +12,127 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeGovernanceAdminContract',
+		name: 'ErrCallerMustBeJailedInTheCurrentPeriod',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeMaintenanceContract',
+		name: 'ErrCannotSlashAValidatorTwiceOrSlashMoreThanOneValidatorInOneBlock',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrContractTypeNotFound',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeRoninTrustedOrgContract',
+		name: 'ErrEvidenceAlreadySubmitted',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeValidatorContract',
+		name: 'ErrInsufficientCreditScoreToBailOut',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
+		name: 'ErrInvalidArguments',
 		type: 'error',
 	},
 	{
 		inputs: [],
+		name: 'ErrInvalidCreditScoreConfig',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidCutOffPercentageConfig',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidRatios',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrInvalidSlash',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
+		name: 'ErrInvalidThreshold',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum RoleAccess',
+				name: 'expectedRole',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrUnauthorized',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum ContractType',
+				name: 'expectedContractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'actual',
+				type: 'address',
+			},
+		],
+		name: 'ErrUnexpectedInternalCall',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrValidatorHasBailedOutPreviously',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
 	},
@@ -114,6 +215,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'ContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'uint256',
 				name: 'gainCreditScore',
@@ -190,51 +310,31 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
+				internalType: 'uint256',
+				name: 'slashFastFinalityAmount',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'fastFinalityJailUntilBlock',
+				type: 'uint256',
+			},
+		],
+		name: 'FastFinalitySlashingConfigsUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
 				internalType: 'uint8',
 				name: 'version',
 				type: 'uint8',
 			},
 		],
 		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'MaintenanceContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'RoninGovernanceAdminContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'RoninTrustedOrganizationContractUpdated',
 		type: 'event',
 	},
 	{
@@ -291,19 +391,6 @@ const abi = [
 			},
 		],
 		name: 'UnavailabilitySlashingConfigsUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'ValidatorContractUpdated',
 		type: 'event',
 	},
 	{
@@ -447,6 +534,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'getContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'contract_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: '_validator',
 				type: 'address',
@@ -508,6 +614,24 @@ const abi = [
 			{
 				internalType: 'uint256',
 				name: 'doubleSigningOffsetLimitBlock_',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getFastFinalitySlashingConfigs',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'slashFastFinalityAmount_',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'fastFinalityJailUntilBlock_',
 				type: 'uint256',
 			},
 		],
@@ -639,6 +763,32 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'roninGovernanceAdminContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'profileContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV3',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'lastUnavailabilitySlashedBlock',
 		outputs: [
@@ -646,19 +796,6 @@ const abi = [
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'maintenanceContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -679,20 +816,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'roninGovernanceAdminContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'roninTrustedOrganizationContract',
+		name: 'precompileValidateFastFinalityAddress',
 		outputs: [
 			{
 				internalType: 'address',
@@ -752,6 +876,24 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'setContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256',
 				name: '_gainScore',
 				type: 'uint256',
@@ -803,38 +945,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'slashAmount',
+				type: 'uint256',
 			},
-		],
-		name: 'setMaintenanceContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'jailUntilBlock',
+				type: 'uint256',
 			},
 		],
-		name: 'setRoninGovernanceAdminContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setRoninTrustedOrganizationContract',
+		name: 'setFastFinalitySlashingConfigs',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -863,19 +984,6 @@ const abi = [
 			},
 		],
 		name: 'setUnavailabilitySlashingConfigs',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setValidatorContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -920,6 +1028,44 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes',
+				name: 'voterPublicKey',
+				type: 'bytes',
+			},
+			{
+				internalType: 'uint256',
+				name: 'targetBlockNumber',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes32[2]',
+				name: 'targetBlockHash',
+				type: 'bytes32[2]',
+			},
+			{
+				internalType: 'bytes[][2]',
+				name: 'listOfPublicKey',
+				type: 'bytes[][2]',
+			},
+			{
+				internalType: 'bytes[2]',
+				name: 'aggregatedSignature',
+				type: 'bytes[2]',
+			},
+		],
+		name: 'slashFastFinality',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: '_validatorAddr',
 				type: 'address',
 			},
@@ -947,25 +1093,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [],
-		name: 'validatorContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
 ] as const
 const SLASH_INDICATOR: Contract<typeof abi> = {
 	name: 'Slash Indicator',
-	address: '0x056500e6028048db7fca81ac307008a9042605f3',
+	address: '0x440baf1c4b008ee4d617a83401f06aa80f5163e9',
 	is_deprecated: false,
-	updated_at: 0,
+	updated_at: 1709796680,
 	abi: abi,
 }
 export default SLASH_INDICATOR
