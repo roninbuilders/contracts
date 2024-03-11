@@ -7,21 +7,108 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ErrCallerMustBeValidatorContract',
+		name: 'ErrBonusAlreadySent',
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrContractTypeNotFound',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'uint256',
+				name: 'currentBalance',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'sendAmount',
+				type: 'uint256',
+			},
+		],
 		name: 'ErrInsufficientBalance',
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
+		name: 'ErrInvalidArguments',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
 		name: 'ErrRecipientRevert',
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum RoleAccess',
+				name: 'expectedRole',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrUnauthorized',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum ContractType',
+				name: 'expectedContractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'actual',
+				type: 'address',
+			},
+		],
+		name: 'ErrUnexpectedInternalCall',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
 	},
@@ -123,13 +210,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
+				indexed: true,
+				internalType: 'enum ContractType',
+				name: 'contractType',
 				type: 'uint8',
 			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
 		],
-		name: 'Initialized',
+		name: 'ContractUpdated',
 		type: 'event',
 	},
 	{
@@ -137,12 +230,25 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'address',
+				internalType: 'uint256',
 				name: '',
-				type: 'address',
+				type: 'uint256',
 			},
 		],
-		name: 'ValidatorContractUpdated',
+		name: 'FastFinalityRewardPercentageUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -184,6 +290,38 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'fastFinalityRewardPercentage',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'getContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'contract_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -204,6 +342,26 @@ const abi = [
 		name: 'initialize',
 		outputs: [],
 		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'fastFinalityRewardPercent',
+				type: 'uint256',
+			},
+		],
+		name: 'initializeV3',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -230,12 +388,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bool',
-				name: '_forBlockProducer',
+				name: 'forBlockProducer',
 				type: 'bool',
 			},
 			{
 				internalType: 'bool',
-				name: '_forBridgeOperator',
+				name: 'forBridgeOperator',
 				type: 'bool',
 			},
 		],
@@ -243,17 +401,22 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool',
-				name: '_success',
+				name: 'success',
 				type: 'bool',
 			},
 			{
 				internalType: 'uint256',
-				name: '_blockProducerBonus',
+				name: 'blockProducerBonus',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_bridgeOperatorBonus',
+				name: 'bridgeOperatorBonus',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'fastFinalityRewardPercent',
 				type: 'uint256',
 			},
 		],
@@ -289,35 +452,40 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
 				internalType: 'address',
-				name: '_addr',
+				name: 'addr',
 				type: 'address',
 			},
 		],
-		name: 'setValidatorContract',
+		name: 'setContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'validatorContract',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'percent',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		name: 'setFastFinalityRewardPercentage',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 ] as const
 const STAKING_VESTING: Contract<typeof abi> = {
 	name: 'Staking Vesting',
-	address: '0xf07121671f929d89ea6caee8e3d26bd7ed63cfeb',
+	address: '0x7ccbb3cd1b19bc1f1d5b7048400d41b1b796abad',
 	is_deprecated: false,
-	updated_at: 0,
+	updated_at: 1709796680,
 	abi: abi,
 }
 export default STAKING_VESTING

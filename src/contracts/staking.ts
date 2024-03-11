@@ -17,11 +17,6 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
-		name: 'ErrCallerMustBeValidatorContract',
-		type: 'error',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -45,6 +40,28 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrContractTypeNotFound',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
+		name: 'ErrDuplicated',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'poolAddr',
 				type: 'address',
@@ -54,7 +71,23 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'uint256',
+				name: 'currentBalance',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'sendAmount',
+				type: 'uint256',
+			},
+		],
 		name: 'ErrInsufficientBalance',
 		type: 'error',
 	},
@@ -94,7 +127,13 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+		],
 		name: 'ErrRecipientRevert',
 		type: 'error',
 	},
@@ -109,8 +148,19 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
-		name: 'ErrThreeOperationAddrsNotDistinct',
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum RoleAccess',
+				name: 'expectedRole',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrUnauthorized',
 		type: 'error',
 	},
 	{
@@ -124,6 +174,27 @@ const abi = [
 		type: 'error',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum ContractType',
+				name: 'expectedContractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'actual',
+				type: 'address',
+			},
+		],
+		name: 'ErrUnexpectedInternalCall',
+		type: 'error',
+	},
+	{
 		inputs: [],
 		name: 'ErrUnstakeTooEarly',
 		type: 'error',
@@ -134,7 +205,13 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
 	},
@@ -142,6 +219,44 @@ const abi = [
 		inputs: [],
 		name: 'ErrZeroValue',
 		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'minRate',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'maxRate',
+				type: 'uint256',
+			},
+		],
+		name: 'CommissionRateRangeUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'ContractUpdated',
+		type: 'event',
 	},
 	{
 		anonymous: false,
@@ -192,19 +307,6 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'maxRate',
-				type: 'uint256',
-			},
-		],
-		name: 'MaxCommissionRateUpdated',
 		type: 'event',
 	},
 	{
@@ -532,19 +634,6 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'ValidatorContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
 				internalType: 'uint256',
 				name: 'secs',
 				type: 'uint256',
@@ -598,11 +687,6 @@ const abi = [
 			{
 				internalType: 'address payable',
 				name: '_treasuryAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_bridgeOperatorAddr',
 				type: 'address',
 			},
 			{
@@ -766,6 +850,43 @@ const abi = [
 		name: 'execRecordRewards',
 		outputs: [],
 		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getCommissionRateRange',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'getContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'contract_',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -1003,6 +1124,13 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -1016,19 +1144,6 @@ const abi = [
 				internalType: 'bool',
 				name: '',
 				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'maxCommissionRate',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -1123,6 +1238,42 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
+				name: '_minRate',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_maxRate',
+				type: 'uint256',
+			},
+		],
+		name: 'setCommissionRateRange',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
+		name: 'setContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
 				name: '_cooldownSecs',
 				type: 'uint256',
 			},
@@ -1136,37 +1287,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_maxRate',
-				type: 'uint256',
-			},
-		],
-		name: 'setMaxCommissionRate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
 				name: '_threshold',
 				type: 'uint256',
 			},
 		],
 		name: 'setMinValidatorStakingAmount',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setValidatorContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1195,6 +1320,34 @@ const abi = [
 		name: 'stake',
 		outputs: [],
 		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_candidateAdmin',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'address payable',
+				name: '_treasuryAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_commissionRate',
+				type: 'uint256',
+			},
+		],
+		name: 'tmp_re_applyValidatorCandidate',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1235,19 +1388,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'validatorContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'waitingSecsToRevoke',
 		outputs: [
 			{
@@ -1266,9 +1406,9 @@ const abi = [
 ] as const
 const STAKING: Contract<typeof abi> = {
 	name: 'Staking',
-	address: '0xe84c84c1e6c488a7947d21027cdd6674821348a1',
+	address: '0x8ae952d538e9c25120e9c75fba0718750f81313a',
 	is_deprecated: false,
-	updated_at: 0,
+	updated_at: 1710117540,
 	abi: abi,
 }
 export default STAKING

@@ -332,7 +332,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'migrateTestnet',
+		name: 'migrateMainnetV2',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -403,9 +403,9 @@ const abi = [
 ] as const
 const PROFILE: Contract<typeof abi> = {
 	name: 'Profile',
-	address: '0x84e66e2d8b634036c6b719a72ea49d3923cf5c4c',
+	address: '0x3ec92e7a835bb58832df64e7f8206467e07d54a3',
 	is_deprecated: false,
-	updated_at: 0,
+	updated_at: 1709796680,
 	abi: abi,
 }
 export default PROFILE

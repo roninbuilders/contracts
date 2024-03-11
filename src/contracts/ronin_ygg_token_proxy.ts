@@ -9,7 +9,7 @@ const abi = [
 			},
 			{
 				internalType: 'address',
-				name: 'admin_',
+				name: '_admin',
 				type: 'address',
 			},
 			{
@@ -18,7 +18,7 @@ const abi = [
 				type: 'bytes',
 			},
 		],
-		stateMutability: 'payable',
+		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
 	{
@@ -145,11 +145,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x4ec37b7f8fce7cd2a96839b3c97f3d034ffb52c2',
-	is_deprecated: true,
-	updated_at: 1710117544,
+const RONIN_YGG_TOKEN_PROXY: Contract<typeof abi> = {
+	name: 'Ronin YGG Token Proxy',
+	address: '0x1c306872bc82525d72bf3562e8f0aa3f8f26e857',
+	is_deprecated: false,
+	updated_at: 1710117481,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default RONIN_YGG_TOKEN_PROXY
