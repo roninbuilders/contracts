@@ -42,11 +42,15 @@ jobs:
         id: git-check
         run: |
           git diff --quiet && git diff --staged --quiet || echo "::set-output name=changes_detected::true"
-
+      
       - name: Increment package version
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
           pnpm version patch --no-git-tag-version
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json
+          git commit -m "Increment package version"
 
       - name: Create Pull Request
         if: steps.git-check.outputs.changes_detected == 'true'
