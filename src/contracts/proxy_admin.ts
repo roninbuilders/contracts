@@ -1,17 +1,6 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'initialOwner',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
 		anonymous: false,
 		inputs: [
 			{
@@ -163,9 +152,9 @@ const abi = [
 ] as const
 const PROXY_ADMIN: Contract<typeof abi> = {
 	name: 'Proxy Admin',
-	address: '0xe910c4bd13645f77dec31ffe535527250111d144',
+	address: '0xa3e7d085e65cb0b916f6717da876b7be5cc92f03',
 	is_deprecated: false,
-	updated_at: 1708011755,
+	updated_at: 1710722261,
 	abi: abi,
 }
 export default PROXY_ADMIN
