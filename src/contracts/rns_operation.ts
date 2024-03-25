@@ -107,24 +107,6 @@ const abi = [
 				type: 'string[]',
 			},
 			{
-				internalType: 'enum INSDomainPrice.Tier[]',
-				name: 'tiers',
-				type: 'uint8[]',
-			},
-		],
-		name: 'bulkOverrideTiers',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
 				internalType: 'bool',
 				name: 'shouldProtect',
 				type: 'bool',
@@ -252,9 +234,9 @@ const abi = [
 ] as const
 const RNS_OPERATION: Contract<typeof abi> = {
 	name: 'RNS Operation',
-	address: '0xcd245263eddee593a5a66f93f74c58c544957339',
+	address: '0xd9b3cc879113c7abaa7694d25801bffd8fae0f27',
 	is_deprecated: false,
-	updated_at: 1710722284,
+	updated_at: 1711327011,
 	abi: abi,
 }
 export default RNS_OPERATION
