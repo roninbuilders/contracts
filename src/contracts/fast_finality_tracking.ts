@@ -112,12 +112,36 @@ const abi = [
 				type: 'uint256',
 			},
 			{
-				internalType: 'address[]',
+				internalType: 'TConsensus[]',
 				name: 'addrs',
 				type: 'address[]',
 			},
 		],
 		name: 'getManyFinalityVoteCounts',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'voteCounts',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+		],
+		name: 'getManyFinalityVoteCountsById',
 		outputs: [
 			{
 				internalType: 'uint256[]',
@@ -144,7 +168,33 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
+				internalType: 'address',
+				name: 'profileContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'latestTrackingBlock',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus[]',
 				name: 'voters',
 				type: 'address[]',
 			},
@@ -175,9 +225,9 @@ const abi = [
 ] as const
 const FAST_FINALITY_TRACKING: Contract<typeof abi> = {
 	name: 'Fast Finality Tracking',
-	address: '0x241e507363d674c77a9930f31ea26bbc8857949c',
+	address: '0x9b33c37a63482d6841f471b07a1a5ce790861671',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	updated_at: 1711929564,
 	abi: abi,
 }
 export default FAST_FINALITY_TRACKING

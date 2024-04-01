@@ -4,12 +4,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_logic',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'admin_',
+				name: 'implementation',
 				type: 'address',
 			},
 			{
@@ -22,36 +17,36 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
+				name: 'target',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		name: 'AddressEmptyCode',
+		type: 'error',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
-		type: 'event',
+		name: 'ERC1967InvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -70,16 +65,12 @@ const abi = [
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x6e1c680981a101bf6dc794e1d3ba7fa496eea12e',
+const TMA_FAMILIAR_PROXY: Contract<typeof abi> = {
+	name: 'TMA Familiar Proxy',
+	address: '0xf82ab59b4a4fcf6332b43188c694eaf874200d62',
 	is_deprecated: false,
-	updated_at: 1711932088,
+	updated_at: 1711931929,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default TMA_FAMILIAR_PROXY

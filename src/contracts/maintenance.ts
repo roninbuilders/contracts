@@ -174,7 +174,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 		],
@@ -187,7 +187,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -225,8 +225,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -238,8 +238,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -257,13 +257,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_block',
+				name: 'atBlock',
 				type: 'uint256',
 			},
 		],
@@ -282,17 +282,41 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'candidateId',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_fromBlock',
+				name: 'atBlock',
+				type: 'uint256',
+			},
+		],
+		name: 'checkMaintainedById',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'fromBlock',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_toBlock',
+				name: 'toBlock',
 				type: 'uint256',
 			},
 		],
@@ -310,13 +334,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: '_addrList',
+				internalType: 'TConsensus[]',
+				name: 'addrList',
 				type: 'address[]',
 			},
 			{
 				internalType: 'uint256',
-				name: '_block',
+				name: 'atBlock',
 				type: 'uint256',
 			},
 		],
@@ -324,7 +348,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool[]',
-				name: '_resList',
+				name: '',
 				type: 'bool[]',
 			},
 		],
@@ -335,25 +359,20 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: '_addrList',
+				name: 'idList',
 				type: 'address[]',
 			},
 			{
 				internalType: 'uint256',
-				name: '_fromBlock',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_toBlock',
+				name: 'atBlock',
 				type: 'uint256',
 			},
 		],
-		name: 'checkManyMaintainedInBlockRange',
+		name: 'checkManyMaintainedById',
 		outputs: [
 			{
 				internalType: 'bool[]',
-				name: '_resList',
+				name: '',
 				type: 'bool[]',
 			},
 		],
@@ -363,8 +382,66 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus[]',
+				name: 'addrList',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256',
+				name: 'fromBlock',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'toBlock',
+				type: 'uint256',
+			},
+		],
+		name: 'checkManyMaintainedInBlockRange',
+		outputs: [
+			{
+				internalType: 'bool[]',
+				name: '',
+				type: 'bool[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'idList',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256',
+				name: 'fromBlock',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'toBlock',
+				type: 'uint256',
+			},
+		],
+		name: 'checkManyMaintainedInBlockRangeById',
+		outputs: [
+			{
+				internalType: 'bool[]',
+				name: '',
+				type: 'bool[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -414,8 +491,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -456,37 +533,37 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '__validatorContract',
+				name: 'validatorContract',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_minMaintenanceDurationInBlock',
+				name: 'minMaintenanceDurationInBlock_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxMaintenanceDurationInBlock',
+				name: 'maxMaintenanceDurationInBlock_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_minOffsetToStartSchedule',
+				name: 'minOffsetToStartSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxOffsetToStartSchedule',
+				name: 'maxOffsetToStartSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxSchedules',
+				name: 'maxSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_cooldownSecsToMaintain',
+				name: 'cooldownSecsToMaintain_',
 				type: 'uint256',
 			},
 		],
@@ -498,6 +575,19 @@ const abi = [
 	{
 		inputs: [],
 		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'profileContract_',
+				type: 'address',
+			},
+		],
+		name: 'initializeV3',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -570,18 +660,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_startedAtBlock',
+				name: 'startedAtBlock',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_endedAtBlock',
+				name: 'endedAtBlock',
 				type: 'uint256',
 			},
 		],
@@ -612,32 +702,32 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_minMaintenanceDurationInBlock',
+				name: 'minMaintenanceDurationInBlock_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxMaintenanceDurationInBlock',
+				name: 'maxMaintenanceDurationInBlock_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_minOffsetToStartSchedule',
+				name: 'minOffsetToStartSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxOffsetToStartSchedule',
+				name: 'maxOffsetToStartSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_maxSchedules',
+				name: 'maxSchedule_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_cooldownSecsToMaintain',
+				name: 'cooldownSecsToMaintain_',
 				type: 'uint256',
 			},
 		],
@@ -652,7 +742,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '_count',
+				name: 'count',
 				type: 'uint256',
 			},
 		],
@@ -662,9 +752,9 @@ const abi = [
 ] as const
 const MAINTENANCE: Contract<typeof abi> = {
 	name: 'Maintenance',
-	address: '0xca9f10769292f26850333264d618c1b5e91f394d',
+	address: '0xf827ffedbd0681f863a72aa43dedb1ca5beeb2da',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	updated_at: 1711929564,
 	abi: abi,
 }
 export default MAINTENANCE

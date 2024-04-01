@@ -75,11 +75,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x6e1c680981a101bf6dc794e1d3ba7fa496eea12e',
+const MAVIS_LAUNCHPAD_PROXY: Contract<typeof abi> = {
+	name: 'Mavis Launchpad Proxy',
+	address: '0xa8e9fdf57bbd991c3f494273198606632769db99',
 	is_deprecated: false,
-	updated_at: 1711932088,
+	updated_at: 1711931930,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default MAVIS_LAUNCHPAD_PROXY
