@@ -76,7 +76,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_candidateAdminAddr',
+				name: 'candidateAdminAddr',
 				type: 'address',
 			},
 		],
@@ -87,7 +87,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_treasuryAddr',
+				name: 'treasuryAddr',
 				type: 'address',
 			},
 		],
@@ -133,6 +133,28 @@ const abi = [
 	{
 		inputs: [],
 		name: 'ErrInvalidMinEffectiveDaysOnwards',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+		],
+		name: 'ErrLockedFundMightBeRecycled',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+		],
+		name: 'ErrLockedFundReleaseInfoNotFound',
 		type: 'error',
 	},
 	{
@@ -232,7 +254,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'consensusAddrs',
+				name: 'cids',
 				type: 'address[]',
 			},
 		],
@@ -245,7 +267,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'coinbaseAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -270,7 +292,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'coinbaseAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -295,7 +317,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -326,7 +348,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -388,7 +410,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -413,7 +435,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -432,7 +454,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -451,7 +473,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'consensusAddrs',
+				name: 'cids',
 				type: 'address[]',
 			},
 		],
@@ -464,7 +486,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -489,7 +511,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -584,7 +606,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -609,7 +631,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -640,7 +662,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -672,7 +694,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -697,7 +719,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -793,7 +815,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -818,7 +840,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -855,7 +877,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'consensusAddrs',
+				name: 'cids',
 				type: 'address[]',
 			},
 			{
@@ -880,7 +902,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'consensusAddrs',
+				name: 'cids',
 				type: 'address[]',
 			},
 			{
@@ -905,7 +927,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -954,7 +976,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'consensusAddrs',
+				name: 'cids',
 				type: 'address[]',
 			},
 		],
@@ -967,7 +989,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'validator',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -1038,8 +1060,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1057,13 +1079,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
+				internalType: 'TConsensus',
+				name: 'addr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_blockNum',
+				name: 'blockNum',
 				type: 'uint256',
 			},
 		],
@@ -1081,8 +1103,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: '_addrList',
+				internalType: 'TConsensus[]',
+				name: 'consensusList',
 				type: 'address[]',
 			},
 		],
@@ -1090,7 +1112,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool[]',
-				name: '_result',
+				name: '',
 				type: 'bool[]',
 			},
 		],
@@ -1100,8 +1122,27 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_blockProducer',
+				internalType: 'address[]',
+				name: 'candidateIds',
+				type: 'address[]',
+			},
+		],
+		name: 'checkManyJailedById',
+		outputs: [
+			{
+				internalType: 'bool[]',
+				name: '',
+				type: 'bool[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1109,7 +1150,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool',
-				name: '_result',
+				name: '',
 				type: 'bool',
 			},
 		],
@@ -1119,13 +1160,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_blockProducer',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
@@ -1133,7 +1174,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool',
-				name: '_result',
+				name: '',
 				type: 'bool',
 			},
 		],
@@ -1234,22 +1275,22 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_candidateAdmin',
+				name: 'candidateAdmin',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
 				internalType: 'address payable',
-				name: '_treasuryAddr',
+				name: 'treasuryAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_commissionRate',
+				name: 'commissionRate',
 				type: 'uint256',
 			},
 		],
@@ -1262,7 +1303,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'validatorAddr',
+				name: 'validatorId',
 				type: 'address',
 			},
 			{
@@ -1280,16 +1321,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
-				internalType: 'uint256',
-				name: '_secLeftToRevoke',
-				type: 'uint256',
+				internalType: 'address',
+				name: 'newAdmin',
+				type: 'address',
 			},
 		],
-		name: 'execEmergencyExit',
+		name: 'execChangeAdminAddr',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1298,12 +1339,48 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'cid',
+				type: 'address',
+			},
+			{
+				internalType: 'TConsensus',
+				name: 'newConsensusAddr',
+				type: 'address',
+			},
+		],
+		name: 'execChangeConsensusAddr',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
 				type: 'address',
 			},
 			{
 				internalType: 'address payable',
-				name: '_recipient',
+				name: 'newTreasury',
+				type: 'address',
+			},
+		],
+		name: 'execChangeTreasuryAddr',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+			{
+				internalType: 'address payable',
+				name: 'recipient',
 				type: 'address',
 			},
 		],
@@ -1316,12 +1393,30 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_secsLeft',
+				name: 'secLeftToRevoke',
+				type: 'uint256',
+			},
+		],
+		name: 'execRequestEmergencyExit',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'secsLeft',
 				type: 'uint256',
 			},
 		],
@@ -1334,17 +1429,17 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_consensusAddr',
+				name: 'cid',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_effectiveDaysOnwards',
+				name: 'effectiveDaysOnwards',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_commissionRate',
+				name: 'commissionRate',
 				type: 'uint256',
 			},
 		],
@@ -1357,7 +1452,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'validatorAddr',
+				name: 'validatorId',
 				type: 'address',
 			},
 			{
@@ -1383,11 +1478,24 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'getBlockProducers',
+		name: 'getBlockProducerIds',
 		outputs: [
 			{
 				internalType: 'address[]',
-				name: '_result',
+				name: 'cids',
+				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getBlockProducers',
+		outputs: [
+			{
+				internalType: 'TConsensus[]',
+				name: 'consensusList',
 				type: 'address[]',
 			},
 		],
@@ -1397,8 +1505,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_candidate',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1408,22 +1516,78 @@ const abi = [
 				components: [
 					{
 						internalType: 'address',
-						name: 'admin',
+						name: '__shadowedAdmin',
 						type: 'address',
 					},
 					{
-						internalType: 'address',
-						name: 'consensusAddr',
+						internalType: 'TConsensus',
+						name: '__shadowedConsensus',
 						type: 'address',
 					},
 					{
 						internalType: 'address payable',
-						name: 'treasuryAddr',
+						name: '__shadowedTreasury',
 						type: 'address',
 					},
 					{
 						internalType: 'address',
-						name: '______deprecatedbridgeOperatorAddr',
+						name: '____deprecatedBridgeOperatorAddr',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: 'commissionRate',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'revokingTimestamp',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'topupDeadline',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct ICandidateManager.ValidatorCandidate',
+				name: '',
+				type: 'tuple',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+		],
+		name: 'getCandidateInfoById',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'address',
+						name: '__shadowedAdmin',
+						type: 'address',
+					},
+					{
+						internalType: 'TConsensus',
+						name: '__shadowedConsensus',
+						type: 'address',
+					},
+					{
+						internalType: 'address payable',
+						name: '__shadowedTreasury',
+						type: 'address',
+					},
+					{
+						internalType: 'address',
+						name: '____deprecatedBridgeOperatorAddr',
 						type: 'address',
 					},
 					{
@@ -1458,22 +1622,22 @@ const abi = [
 				components: [
 					{
 						internalType: 'address',
-						name: 'admin',
+						name: '__shadowedAdmin',
 						type: 'address',
 					},
 					{
-						internalType: 'address',
-						name: 'consensusAddr',
+						internalType: 'TConsensus',
+						name: '__shadowedConsensus',
 						type: 'address',
 					},
 					{
 						internalType: 'address payable',
-						name: 'treasuryAddr',
+						name: '__shadowedTreasury',
 						type: 'address',
 					},
 					{
 						internalType: 'address',
-						name: '______deprecatedbridgeOperatorAddr',
+						name: '____deprecatedBridgeOperatorAddr',
 						type: 'address',
 					},
 					{
@@ -1493,7 +1657,7 @@ const abi = [
 					},
 				],
 				internalType: 'struct ICandidateManager.ValidatorCandidate[]',
-				name: '_list',
+				name: 'list',
 				type: 'tuple[]',
 			},
 		],
@@ -1503,8 +1667,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_candidate',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1553,8 +1717,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1584,8 +1748,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1613,8 +1777,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 			{
@@ -1659,7 +1823,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'getValidatorCandidates',
+		name: 'getValidatorCandidateIds',
 		outputs: [
 			{
 				internalType: 'address[]',
@@ -1672,11 +1836,37 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'getValidators',
+		name: 'getValidatorCandidates',
+		outputs: [
+			{
+				internalType: 'TConsensus[]',
+				name: '',
+				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getValidatorIds',
 		outputs: [
 			{
 				internalType: 'address[]',
-				name: '_validatorList',
+				name: 'cids',
+				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getValidators',
+		outputs: [
+			{
+				internalType: 'TConsensus[]',
+				name: 'consensusList',
 				type: 'address[]',
 			},
 		],
@@ -1775,7 +1965,20 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_addr',
+				name: 'profileContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV4',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -1794,16 +1997,59 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_candidate',
+				name: 'id',
+				type: 'address',
+			},
+		],
+		name: 'isBlockProducerById',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: '_admin',
+				name: 'admin',
 				type: 'address',
 			},
 		],
 		name: 'isCandidateAdmin',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'candidateId',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'admin',
+				type: 'address',
+			},
+		],
+		name: 'isCandidateAdminById',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -1830,8 +2076,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -1959,7 +2205,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_emergencyExitLockedAmount',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -1972,7 +2218,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_emergencyExpiryDuration',
+				name: 'duration',
 				type: 'uint256',
 			},
 		],
@@ -2046,7 +2292,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '_total',
+				name: 'total',
 				type: 'uint256',
 			},
 		],
@@ -2117,9 +2363,9 @@ const abi = [
 ] as const
 const RONIN_VALIDATOR_SET: Contract<typeof abi> = {
 	name: 'Ronin Validator Set',
-	address: '0x0c1dee1b435c464b4e94781f94f991cb90e3399d',
+	address: '0x475d6005d57d1b93cb4acf7866ddc16925097e88',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	updated_at: 1711929564,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_SET

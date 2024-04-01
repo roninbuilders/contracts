@@ -325,17 +325,17 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '__validatorContract',
+				name: 'validatorContract',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '__blockProducerBonusPerBlock',
+				name: 'blockProducerBonusPerBlock',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '__bridgeOperatorBonusPerBlock',
+				name: 'bridgeOperatorBonusPerBlock',
 				type: 'uint256',
 			},
 		],
@@ -427,7 +427,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_amount',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -440,7 +440,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_amount',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -483,9 +483,9 @@ const abi = [
 ] as const
 const STAKING_VESTING: Contract<typeof abi> = {
 	name: 'Staking Vesting',
-	address: '0x7ccbb3cd1b19bc1f1d5b7048400d41b1b796abad',
+	address: '0x5a254c12ddeb86e2f5626d59c490eb3db1974944',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	updated_at: 1711929564,
 	abi: abi,
 }
 export default STAKING_VESTING

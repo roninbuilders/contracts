@@ -75,11 +75,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x6e1c680981a101bf6dc794e1d3ba7fa496eea12e',
+const SWAP_FORWARDER_PROXY: Contract<typeof abi> = {
+	name: 'Swap Forwarder Proxy',
+	address: '0x133fa77dea36b311292201efddfc58cbe3a140b7',
 	is_deprecated: false,
-	updated_at: 1711932088,
+	updated_at: 1711932090,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default SWAP_FORWARDER_PROXY

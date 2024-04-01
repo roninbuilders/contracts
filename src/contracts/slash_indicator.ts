@@ -63,16 +63,6 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [],
-		name: 'ErrInvalidRatios',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrInvalidSlash',
-		type: 'error',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'bytes4',
@@ -122,6 +112,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrUnregisteredPublicKey',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrValidatorHasBailedOutPreviously',
 		type: 'error',
 	},
@@ -142,7 +137,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'validator',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -159,56 +154,6 @@ const abi = [
 			},
 		],
 		name: 'BailedOut',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'missingVotesRatioTier1',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'missingVotesRatioTier2',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'jailDurationForMissingVotesRatioTier2',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'skipBridgeOperatorSlashingThreshold',
-				type: 'uint256',
-			},
-		],
-		name: 'BridgeOperatorSlashingConfigsUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'bridgeVotingThreshold',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'bridgeVotingSlashAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'BridgeVotingSlashingConfigsUpdated',
 		type: 'event',
 	},
 	{
@@ -267,7 +212,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'validators',
+				name: 'cids',
 				type: 'address[]',
 			},
 			{
@@ -343,7 +288,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'validator',
+				name: 'cid',
 				type: 'address',
 			},
 			{
@@ -396,8 +341,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -409,13 +354,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_validator',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
@@ -433,8 +378,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_validator',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 		],
@@ -453,7 +398,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: '_validators',
+				name: 'validatorIds',
 				type: 'address[]',
 			},
 		],
@@ -465,70 +410,19 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
-				type: 'address',
+				internalType: 'address[]',
+				name: 'validatorIds',
+				type: 'address[]',
 			},
 			{
 				internalType: 'uint256',
-				name: '_tier',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
-		name: 'execSlashBridgeOperator',
+		name: 'execUpdateCreditScores',
 		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getBridgeOperatorSlashingConfigs',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'missingVotesRatioTier1_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'missingVotesRatioTier2_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'jailDurationForMissingVotesRatioTier2_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'skipBridgeOperatorSlashingThreshold_',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getBridgeVotingSlashingConfigs',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'bridgeVotingThreshold_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'bridgeVotingSlashAmount_',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -553,8 +447,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_validator',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -641,8 +535,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: '_validators',
+				internalType: 'TConsensus[]',
+				name: 'consensusAddrs',
 				type: 'address[]',
 			},
 		],
@@ -650,7 +544,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: '_resultList',
+				name: 'resultList',
 				type: 'uint256[]',
 			},
 		],
@@ -660,13 +554,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_validator',
+				internalType: 'TConsensus',
+				name: 'consensus',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
@@ -733,12 +627,12 @@ const abi = [
 			},
 			{
 				internalType: 'uint256[4]',
-				name: '_bridgeOperatorSlashingConfigs',
+				name: '',
 				type: 'uint256[4]',
 			},
 			{
 				internalType: 'uint256[2]',
-				name: '_bridgeVotingSlashingConfigs',
+				name: '',
 				type: 'uint256[2]',
 			},
 			{
@@ -825,52 +719,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_ratioTier1',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_ratioTier2',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_jailDurationTier2',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_skipSlashingThreshold',
-				type: 'uint256',
-			},
-		],
-		name: 'setBridgeOperatorSlashingConfigs',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_threshold',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_slashAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'setBridgeVotingSlashingConfigs',
-		outputs: [],
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -964,22 +812,22 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_tier1Threshold',
+				name: 'tier1Threshold',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_tier2Threshold',
+				name: 'tier2Threshold',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_slashAmountForTier2Threshold',
+				name: 'slashAmountForTier2',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_jailDurationForTier2Threshold',
+				name: 'jailDurationForTier2',
 				type: 'uint256',
 			},
 		],
@@ -991,31 +839,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_consensusAddr',
-				type: 'address',
-			},
-		],
-		name: 'slashBridgeVoting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_consensusAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'bytes',
-				name: '_header1',
+				name: 'header1',
 				type: 'bytes',
 			},
 			{
 				internalType: 'bytes',
-				name: '_header2',
+				name: 'header2',
 				type: 'bytes',
 			},
 		],
@@ -1027,7 +862,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
+				internalType: 'TConsensus',
 				name: 'consensusAddr',
 				type: 'address',
 			},
@@ -1065,8 +900,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_validatorAddr',
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
 				type: 'address',
 			},
 		],
@@ -1075,30 +910,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_validators',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_period',
-				type: 'uint256',
-			},
-		],
-		name: 'updateCreditScores',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
 ] as const
 const SLASH_INDICATOR: Contract<typeof abi> = {
 	name: 'Slash Indicator',
-	address: '0x440baf1c4b008ee4d617a83401f06aa80f5163e9',
+	address: '0xe50a177c5a80b32fee5222d2c45f476abfd3ddcf',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	updated_at: 1711929564,
 	abi: abi,
 }
 export default SLASH_INDICATOR
