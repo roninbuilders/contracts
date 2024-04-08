@@ -1,6 +1,32 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'admin',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'minter',
+				type: 'address',
+			},
+			{
+				internalType: 'string',
+				name: 'defaultBaseUrl',
+				type: 'string',
+			},
+			{
+				internalType: 'uint256',
+				name: 'maxMint',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'constructor',
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -54,19 +80,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'uint256',
 				name: '_tokenId',
@@ -86,19 +99,13 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
+				name: 'account',
 				type: 'address',
 			},
 		],
-		name: 'OwnershipTransferred',
+		name: 'Paused',
 		type: 'event',
 	},
 	{
@@ -106,18 +113,24 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
 			},
 			{
 				indexed: true,
-				internalType: 'address',
-				name: 'approvedContract',
-				type: 'address',
+				internalType: 'bytes32',
+				name: 'previousAdminRole',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'newAdminRole',
+				type: 'bytes32',
 			},
 		],
-		name: 'TokenLocked',
+		name: 'RoleAdminChanged',
 		type: 'event',
 	},
 	{
@@ -125,18 +138,49 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
 			},
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'approvedContract',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
 				type: 'address',
 			},
 		],
-		name: 'TokenUnlocked',
+		name: 'RoleGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleRevoked',
 		type: 'event',
 	},
 	{
@@ -165,13 +209,52 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'Unpaused',
+		type: 'event',
+	},
+	{
 		inputs: [],
-		name: 'MINT_ADDRESS',
+		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'bytes32',
 				name: '',
-				type: 'address',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'MINTER_ROLE',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'PAUSER_ROLE',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -191,26 +274,8 @@ const abi = [
 			},
 		],
 		name: 'approve',
+		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'approvedContract',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -233,45 +298,47 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'baseURI',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
+				internalType: 'address[]',
+				name: '_recipients',
+				type: 'address[]',
 			},
 		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'equipment',
+		name: 'bulkMint',
 		outputs: [
 			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
+				internalType: 'uint256[]',
+				name: '_tokenIds',
+				type: 'uint256[]',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_id',
+				name: 'tokenId',
 				type: 'uint256',
 			},
+		],
+		name: 'burn',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
-				internalType: 'address',
-				name: '_contract',
+				internalType: 'address payable',
+				name: 'destination',
 				type: 'address',
 			},
 		],
-		name: 'freeId',
+		name: 'claimBalance',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -297,18 +364,160 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'string',
-				name: '_name',
-				type: 'string',
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
 			},
 			{
-				internalType: 'string',
-				name: '_symbol',
-				type: 'string',
+				internalType: 'uint256',
+				name: 'limit',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'offset',
+				type: 'uint256',
 			},
 		],
-		name: 'initialize',
+		name: 'getCurrentNFTs',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getCurrentTokenId',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getMaxMint',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleAdmin',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'getRoleMember',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleMemberCount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'grantRole',
+		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'hasRole',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -338,134 +547,19 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '_id',
-				type: 'uint256',
-			},
-		],
-		name: 'isUnlocked',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'lockCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_id',
-				type: 'uint256',
-			},
-		],
-		name: 'lockId',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'lockMap',
-		outputs: [
-			{
 				internalType: 'address',
-				name: '',
+				name: 'to',
 				type: 'address',
 			},
 		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'lockMapIndex',
+		name: 'mint',
 		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'lockNonces',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
 			{
 				internalType: 'uint256',
 				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
-		name: 'mint',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -502,19 +596,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -535,7 +616,57 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'renounceOwnership',
+		name: 'pause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'paused',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'renounceRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'revokeRole',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -558,6 +689,7 @@ const abi = [
 			},
 		],
 		name: 'safeTransferFrom',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -580,11 +712,12 @@ const abi = [
 			},
 			{
 				internalType: 'bytes',
-				name: '_data',
+				name: 'data',
 				type: 'bytes',
 			},
 		],
 		name: 'safeTransferFrom',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -602,6 +735,33 @@ const abi = [
 			},
 		],
 		name: 'setApprovalForAll',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: 'baseTokenURI',
+				type: 'string',
+			},
+		],
+		name: 'setBaseURI',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'maxMint',
+				type: 'uint256',
+			},
+		],
+		name: 'setMaxMint',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -628,7 +788,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bytes4',
-				name: '_interfaceId',
+				name: 'interfaceId',
 				type: 'bytes4',
 			},
 		],
@@ -660,7 +820,50 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenByIndex',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenOfOwnerByIndex',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'itemId',
 				type: 'uint256',
 			},
 		],
@@ -670,6 +873,19 @@ const abi = [
 				internalType: 'string',
 				name: '',
 				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -694,6 +910,7 @@ const abi = [
 			},
 		],
 		name: 'transferFrom',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -706,68 +923,23 @@ const abi = [
 			},
 		],
 		name: 'transferOwnership',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_id',
-				type: 'uint256',
-			},
-		],
-		name: 'unlockId',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_contracts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: '_values',
-				type: 'bool[]',
-			},
-		],
-		name: 'updateApprovedContracts',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_equip',
-				type: 'address',
-			},
-		],
-		name: 'updateEquipment',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'newURI',
-				type: 'string',
-			},
-		],
-		name: 'updateURI',
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 ] as const
-const VX_RONIN: Contract<typeof abi> = {
-	name: 'VX Ronin',
-	address: '0x4760452d6796b456323254036d652e97d0583117',
-	is_deprecated: false,
-	updated_at: 1712248330,
+const SPARK_SUIT: Contract<typeof abi> = {
+	name: 'Spark Suit',
+	address: '0x067274f020c98ef7871d76af8d13b82e0e6f4477',
+	is_deprecated: true,
+	updated_at: 1712536791,
 	abi: abi,
 }
-export default VX_RONIN
+export default SPARK_SUIT
