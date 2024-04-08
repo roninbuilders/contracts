@@ -439,6 +439,31 @@ const abi = [
 				type: 'address[]',
 			},
 		],
+		name: 'AllowUsersAppended',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
 		name: 'AllowUsersUpdated',
 		type: 'event',
 	},
@@ -1243,6 +1268,29 @@ const abi = [
 				type: 'uint8',
 			},
 			{
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
+		name: 'appendAllowUsers',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
 				internalType: 'address',
 				name: 'minter',
 				type: 'address',
@@ -1554,12 +1602,12 @@ const abi = [
 				type: 'uint8',
 			},
 		],
-		name: 'getAllowList',
+		name: 'getAllowListLength',
 		outputs: [
 			{
-				internalType: 'address[]',
+				internalType: 'uint256',
 				name: '',
-				type: 'address[]',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -2253,9 +2301,9 @@ const abi = [
 ] as const
 const MAVIS_LAUNCHPAD: Contract<typeof abi> = {
 	name: 'Mavis Launchpad',
-	address: '0x862e8b133baa81c3f720428d8a939b68c146a14c',
-	is_deprecated: false,
-	updated_at: 1711623492,
+	address: '0x854e6150f0984a09bf5e6286a585eabe89edf0d7',
+	is_deprecated: true,
+	updated_at: 1712297546,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD

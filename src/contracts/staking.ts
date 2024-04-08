@@ -17,6 +17,22 @@ const abi = [
 		type: 'error',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+			{
+				internalType: 'string',
+				name: 'extraInfo',
+				type: 'string',
+			},
+		],
+		name: 'ErrCannotInitTransferRON',
+		type: 'error',
+	},
+	{
 		inputs: [],
 		name: 'ErrCannotTransferRON',
 		type: 'error',
@@ -46,13 +62,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
-				type: 'address',
-			},
-			{
 				internalType: 'address',
-				name: 'poolId',
+				name: 'poolAddr',
 				type: 'address',
 			},
 		],
@@ -91,17 +102,6 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidArguments',
-		type: 'error',
-	},
-	{
 		inputs: [],
 		name: 'ErrInvalidArrays',
 		type: 'error',
@@ -114,11 +114,6 @@ const abi = [
 	{
 		inputs: [],
 		name: 'ErrInvalidPoolShare',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrMigrateWasAdminAlreadyDone',
 		type: 'error',
 	},
 	{
@@ -288,7 +283,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'consensuAddr',
 				type: 'address',
 			},
 			{
@@ -316,18 +311,6 @@ const abi = [
 	},
 	{
 		anonymous: false,
-		inputs: [],
-		name: 'MigrateWasAdminDisabled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'MigrateWasAdminFinished',
-		type: 'event',
-	},
-	{
-		anonymous: false,
 		inputs: [
 			{
 				indexed: false,
@@ -345,7 +328,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'validator',
 				type: 'address',
 			},
 			{
@@ -370,7 +353,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'poolAddr',
 				type: 'address',
 			},
 			{
@@ -389,7 +372,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: 'validator',
 				type: 'address[]',
 			},
 		],
@@ -408,7 +391,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: 'poolAddrs',
 				type: 'address[]',
 			},
 		],
@@ -427,7 +410,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: 'poolAddrs',
 				type: 'address[]',
 			},
 			{
@@ -452,7 +435,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: 'poolAddrs',
 				type: 'address[]',
 			},
 			{
@@ -477,7 +460,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'poolAddr',
 				type: 'address',
 			},
 			{
@@ -501,83 +484,8 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
 				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'poolId',
+				name: 'consensuAddr',
 				type: 'address',
 			},
 			{
@@ -596,38 +504,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'StakeholderChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'poolId',
+				name: 'validator',
 				type: 'address',
 			},
 			{
@@ -658,7 +535,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'validator',
 				type: 'address',
 			},
 			{
@@ -695,7 +572,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'consensuAddr',
 				type: 'address',
 			},
 			{
@@ -714,7 +591,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'consensuAddr',
 				type: 'address',
 			},
 			{
@@ -733,7 +610,7 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'poolId',
+				name: 'poolAddr',
 				type: 'address',
 			},
 			{
@@ -784,32 +661,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MIGRATOR_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'PERIOD_DURATION',
 		outputs: [
 			{
@@ -825,33 +676,23 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'candidateAdmin',
+				name: '_candidateAdmin',
 				type: 'address',
 			},
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address payable',
-				name: 'treasuryAddr',
+				name: '_treasuryAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'commissionRate',
+				name: '_commissionRate',
 				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'pubkey',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes',
-				name: 'proofOfPossession',
-				type: 'bytes',
 			},
 		],
 		name: 'applyValidatorCandidate',
@@ -862,13 +703,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrs',
+				internalType: 'address[]',
+				name: '_consensusAddrs',
 				type: 'address[]',
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'amounts',
+				name: '_amounts',
 				type: 'uint256[]',
 			},
 		],
@@ -880,8 +721,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrList',
+				internalType: 'address[]',
+				name: '_consensusAddrList',
 				type: 'address[]',
 			},
 		],
@@ -889,7 +730,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -912,8 +753,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 		],
@@ -925,13 +766,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrList',
+				internalType: 'address[]',
+				name: '_consensusAddrList',
 				type: 'address[]',
 			},
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddrDst',
+				internalType: 'address',
+				name: '_consensusAddrDst',
 				type: 'address',
 			},
 		],
@@ -939,7 +780,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -947,45 +788,15 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'disableMigrateWasAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'poolId',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'currAdminAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'newAdminAddr',
-				type: 'address',
-			},
-		],
-		name: 'execChangeAdminAddr',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'poolId',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -993,7 +804,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'actualDeductingAmount_',
+				name: '_actualDeductingAmount',
 				type: 'uint256',
 			},
 		],
@@ -1004,12 +815,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: '_pools',
 				type: 'address[]',
 			},
 			{
 				internalType: 'uint256',
-				name: 'newPeriod',
+				name: '_newPeriod',
 				type: 'uint256',
 			},
 		],
@@ -1022,17 +833,17 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'poolIds',
+				name: '_consensusAddrs',
 				type: 'address[]',
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'rewards',
+				name: '_rewards',
 				type: 'uint256[]',
 			},
 			{
 				internalType: 'uint256',
-				name: 'period',
+				name: '_period',
 				type: 'uint256',
 			},
 		],
@@ -1081,8 +892,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrs',
+				internalType: 'address[]',
+				name: '_pools',
 				type: 'address[]',
 			},
 		],
@@ -1090,7 +901,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'selfStakings_',
+				name: '_selfStakings',
 				type: 'uint256[]',
 			},
 		],
@@ -1101,31 +912,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'poolIds',
-				type: 'address[]',
-			},
-		],
-		name: 'getManySelfStakingsById',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'selfStakings_',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrs',
+				name: '_poolAddrs',
 				type: 'address[]',
 			},
 			{
 				internalType: 'address[]',
-				name: 'userList',
+				name: '_userList',
 				type: 'address[]',
 			},
 		],
@@ -1133,7 +925,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'stakingAmounts',
+				name: '_stakingAmounts',
 				type: 'uint256[]',
 			},
 		],
@@ -1144,31 +936,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'poolIds',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'userList',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyStakingAmountsById',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'stakingAmounts',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrs',
+				name: '_poolList',
 				type: 'address[]',
 			},
 		],
@@ -1176,26 +944,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'stakingAmounts_',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'poolIds',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyStakingTotalsById',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'stakingAmounts_',
+				name: '_stakingAmounts',
 				type: 'uint256[]',
 			},
 		],
@@ -1206,7 +955,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: '_poolAdminAddr',
 				type: 'address',
 			},
 		],
@@ -1224,8 +973,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_poolAddr',
 				type: 'address',
 			},
 		],
@@ -1233,46 +982,17 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: '_admin',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'stakingAmount',
+				name: '_stakingAmount',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'stakingTotal',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'poolId',
-				type: 'address',
-			},
-		],
-		name: 'getPoolDetailById',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'stakingAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'stakingTotal',
+				name: '_stakingTotal',
 				type: 'uint256',
 			},
 		],
@@ -1282,13 +1002,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_poolAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'user',
+				name: '_user',
 				type: 'address',
 			},
 		],
@@ -1307,12 +1027,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'user',
+				name: '_user',
 				type: 'address',
 			},
 			{
-				internalType: 'TConsensus[]',
-				name: 'consensusAddrs',
+				internalType: 'address[]',
+				name: '_poolAddrList',
 				type: 'address[]',
 			},
 		],
@@ -1320,7 +1040,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'rewards_',
+				name: '_rewards',
 				type: 'uint256[]',
 			},
 		],
@@ -1330,75 +1050,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'getRoleMember',
-		outputs: [
-			{
 				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				name: '_poolAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'user',
+				name: '_user',
 				type: 'address',
 			},
 		],
@@ -1416,8 +1074,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_poolAddr',
 				type: 'address',
 			},
 		],
@@ -1427,48 +1085,6 @@ const abi = [
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -1518,38 +1134,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '__profileContract',
-				type: 'address',
-			},
-		],
-		name: 'initializeV3',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'migrator',
-				type: 'address',
-			},
-		],
-		name: 'initializeV4',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
+				name: '_poolAdminAddr',
 				type: 'address',
 			},
 		],
@@ -1562,29 +1147,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'poolIds',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'admins',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: 'flags',
-				type: 'bool[]',
-			},
-		],
-		name: 'migrateWasAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1603,18 +1165,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddrSrc',
+				internalType: 'address',
+				name: '_consensusAddrSrc',
 				type: 'address',
 			},
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddrDst',
+				internalType: 'address',
+				name: '_consensusAddrDst',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -1626,26 +1188,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
 				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 		],
@@ -1657,8 +1201,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 		],
@@ -1670,18 +1214,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'effectiveDaysOnwards',
+				name: '_effectiveDaysOnwards',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'commissionRate',
+				name: '_commissionRate',
 				type: 'uint256',
 			},
 		],
@@ -1693,31 +1237,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'uint256',
-				name: 'minRate',
+				name: '_minRate',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'maxRate',
+				name: '_maxRate',
 				type: 'uint256',
 			},
 		],
@@ -1748,7 +1274,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'cooldownSecs',
+				name: '_cooldownSecs',
 				type: 'uint256',
 			},
 		],
@@ -1761,7 +1287,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'threshold',
+				name: '_threshold',
 				type: 'uint256',
 			},
 		],
@@ -1774,7 +1300,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'secs',
+				name: '_secs',
 				type: 'uint256',
 			},
 		],
@@ -1786,8 +1312,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 		],
@@ -1799,32 +1325,41 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
+				internalType: 'address',
+				name: '_candidateAdmin',
+				type: 'address',
 			},
-		],
-		name: 'supportsInterface',
-		outputs: [
 			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
+				internalType: 'address',
+				name: '_consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'address payable',
+				name: '_treasuryAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_commissionRate',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		name: 'tmp_re_applyValidatorCandidate',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -1836,13 +1371,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'TConsensus',
-				name: 'consensusAddr',
+				internalType: 'address',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -1871,9 +1406,9 @@ const abi = [
 ] as const
 const STAKING: Contract<typeof abi> = {
 	name: 'Staking',
-	address: '0x214f8bad047f74f8e41f8932c1a3a8906974dc90',
+	address: '0x8ae952d538e9c25120e9c75fba0718750f81313a',
 	is_deprecated: false,
-	updated_at: 1711929564,
+	updated_at: 1712536785,
 	abi: abi,
 }
 export default STAKING

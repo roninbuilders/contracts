@@ -14,12 +14,17 @@ const abi = [
 			},
 			{
 				internalType: 'address',
+				name: '_bridgeContract',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
 				name: '_validatorContract',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_expiryDuration',
+				name: '_proposalExpiryDuration',
 				type: 'uint256',
 			},
 		],
@@ -27,221 +32,33 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-		],
-		name: 'ErrAlreadyVoted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrContractTypeNotFound',
+		inputs: [],
+		name: 'ErrCallerMustBeBridgeContract',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrCurrentProposalIsNotCompleted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInsufficientGas',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'actual',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expected',
-				type: 'uint256',
-			},
-		],
-		name: 'ErrInvalidChainId',
+		name: 'ErrCallerMustBeRoninTrustedOrgContract',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrInvalidExpiryTimestamp',
+		name: 'ErrCallerMustBeValidatorContract',
 		type: 'error',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'bytes4',
-				name: 'msgSig',
+				name: 'methodSignature',
 				type: 'bytes4',
 			},
 		],
-		name: 'ErrInvalidOrder',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'actual',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'expected',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInvalidProposal',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidProposalNonce',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidSignatures',
+		name: 'ErrProxyCallFailed',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'ErrInvalidVoteHash',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrLengthMismatch',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrOnlySelfCall',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForEmptyVote',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForExpiredVote',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForNonExistentVote',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum RoleAccess',
-				name: 'expectedRole',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrUnauthorized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum ContractType',
-				name: 'expectedContractType',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address',
-				name: 'actual',
-				type: 'address',
-			},
-		],
-		name: 'ErrUnexpectedInternalCall',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrUnsupportedVoteType',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrVoteIsFinalized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
 	},
@@ -249,19 +66,38 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				indexed: true,
+				indexed: false,
 				internalType: 'address',
-				name: 'addr',
+				name: '',
 				type: 'address',
 			},
 		],
-		name: 'ContractUpdated',
+		name: 'BridgeContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_period',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_epoch',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: '_operators',
+				type: 'address[]',
+			},
+		],
+		name: 'BridgeOperatorsApproved',
 		type: 'event',
 	},
 	{
@@ -270,7 +106,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'bytes32',
-				name: 'voteHash',
+				name: '_voteHash',
 				type: 'bytes32',
 			},
 		],
@@ -283,31 +119,31 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'bytes32',
-				name: 'voteHash',
+				name: '_voteHash',
 				type: 'bytes32',
 			},
 			{
 				indexed: false,
 				internalType: 'address',
-				name: 'validatorId',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				indexed: false,
 				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
+				name: '_recipientAfterUnlockedFund',
 				type: 'address',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'requestedAt',
+				name: '_requestedAt',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'expiredAt',
+				name: '_expiredAt',
 				type: 'uint256',
 			},
 		],
@@ -320,7 +156,7 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'bytes32',
-				name: 'voteHash',
+				name: '_voteHash',
 				type: 'bytes32',
 			},
 		],
@@ -332,18 +168,111 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
+				internalType: 'uint256',
+				name: 'round',
+				type: 'uint256',
 			},
 			{
 				indexed: true,
+				internalType: 'bytes32',
+				name: 'proposalHash',
+				type: 'bytes32',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'nonce',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'chainId',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expiryTimestamp',
+						type: 'uint256',
+					},
+					{
+						internalType: 'address[]',
+						name: 'targets',
+						type: 'address[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'values',
+						type: 'uint256[]',
+					},
+					{
+						internalType: 'bytes[]',
+						name: 'calldatas',
+						type: 'bytes[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'gasAmounts',
+						type: 'uint256[]',
+					},
+				],
+				indexed: false,
+				internalType: 'struct Proposal.ProposalDetail',
+				name: 'proposal',
+				type: 'tuple',
+			},
+			{
+				indexed: false,
+				internalType: 'bytes32',
+				name: 'globalProposalHash',
+				type: 'bytes32',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'nonce',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expiryTimestamp',
+						type: 'uint256',
+					},
+					{
+						internalType: 'enum GlobalProposal.TargetOption[]',
+						name: 'targetOptions',
+						type: 'uint8[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'values',
+						type: 'uint256[]',
+					},
+					{
+						internalType: 'bytes[]',
+						name: 'calldatas',
+						type: 'bytes[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'gasAmounts',
+						type: 'uint256[]',
+					},
+				],
+				indexed: false,
+				internalType: 'struct GlobalProposal.GlobalProposalDetail',
+				name: 'globalProposal',
+				type: 'tuple',
+			},
+			{
+				indexed: false,
 				internalType: 'address',
-				name: 'voter',
+				name: 'creator',
 				type: 'address',
 			},
 		],
-		name: 'EmergencyExitPollVoted',
+		name: 'GlobalProposalCreated',
 		type: 'event',
 	},
 	{
@@ -476,19 +405,6 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'uint256',
-				name: 'duration',
-				type: 'uint256',
-			},
-		],
-		name: 'ProposalExpiryDurationChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
 				internalType: 'bytes32',
 				name: 'proposalHash',
 				type: 'bytes32',
@@ -529,6 +445,32 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'RoninTrustedOrganizationContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'ValidatorContractUpdated',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		name: 'DOMAIN_SEPARATOR',
 		outputs: [
@@ -539,6 +481,120 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'bridgeContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_period',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_epoch',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_voter',
+				type: 'address',
+			},
+		],
+		name: 'bridgeOperatorsVoted',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'nonce',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expiryTimestamp',
+						type: 'uint256',
+					},
+					{
+						internalType: 'enum GlobalProposal.TargetOption[]',
+						name: 'targetOptions',
+						type: 'uint8[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'values',
+						type: 'uint256[]',
+					},
+					{
+						internalType: 'bytes[]',
+						name: 'calldatas',
+						type: 'bytes[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'gasAmounts',
+						type: 'uint256[]',
+					},
+				],
+				internalType: 'struct GlobalProposal.GlobalProposalDetail',
+				name: '_globalProposal',
+				type: 'tuple',
+			},
+			{
+				internalType: 'enum Ballot.VoteType[]',
+				name: '_supports',
+				type: 'uint8[]',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint8',
+						name: 'v',
+						type: 'uint8',
+					},
+					{
+						internalType: 'bytes32',
+						name: 'r',
+						type: 'bytes32',
+					},
+					{
+						internalType: 'bytes32',
+						name: 's',
+						type: 'bytes32',
+					},
+				],
+				internalType: 'struct SignatureConsumer.Signature[]',
+				name: '_signatures',
+				type: 'tuple[]',
+			},
+		],
+		name: 'castGlobalProposalBySignatures',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -695,22 +751,22 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'validatorId',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
+				name: '_recipientAfterUnlockedFund',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'requestedAt',
+				name: '_requestedAt',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'expiredAt',
+				name: '_expiredAt',
 				type: 'uint256',
 			},
 		],
@@ -764,17 +820,44 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
+				internalType: 'uint256',
+				name: '_period',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_epoch',
+				type: 'uint256',
 			},
 		],
-		name: 'getContract',
+		name: 'getBridgeOperatorVotingSignatures',
 		outputs: [
 			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
+				internalType: 'address[]',
+				name: '_voters',
+				type: 'address[]',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint8',
+						name: 'v',
+						type: 'uint8',
+					},
+					{
+						internalType: 'bytes32',
+						name: 'r',
+						type: 'bytes32',
+					},
+					{
+						internalType: 'bytes32',
+						name: 's',
+						type: 'bytes32',
+					},
+				],
+				internalType: 'struct SignatureConsumer.Signature[]',
+				name: '_signatures',
+				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
@@ -883,6 +966,55 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'lastSyncedBridgeOperatorSetInfo',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'period',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'epoch',
+						type: 'uint256',
+					},
+					{
+						internalType: 'address[]',
+						name: 'operators',
+						type: 'address[]',
+					},
+				],
+				internalType: 'struct BridgeOperatorsBallot.BridgeOperatorSet',
+				name: '',
+				type: 'tuple',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_bridgeVoter',
+				type: 'address',
+			},
+		],
+		name: 'lastVotedBlock',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -945,6 +1077,111 @@ const abi = [
 			},
 		],
 		name: 'propose',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_expiryTimestamp',
+				type: 'uint256',
+			},
+			{
+				internalType: 'enum GlobalProposal.TargetOption[]',
+				name: '_targetOptions',
+				type: 'uint8[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_values',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'bytes[]',
+				name: '_calldatas',
+				type: 'bytes[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_gasAmounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'proposeGlobal',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'nonce',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expiryTimestamp',
+						type: 'uint256',
+					},
+					{
+						internalType: 'enum GlobalProposal.TargetOption[]',
+						name: 'targetOptions',
+						type: 'uint8[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'values',
+						type: 'uint256[]',
+					},
+					{
+						internalType: 'bytes[]',
+						name: 'calldatas',
+						type: 'bytes[]',
+					},
+					{
+						internalType: 'uint256[]',
+						name: 'gasAmounts',
+						type: 'uint256[]',
+					},
+				],
+				internalType: 'struct GlobalProposal.GlobalProposalDetail',
+				name: '_globalProposal',
+				type: 'tuple',
+			},
+			{
+				internalType: 'enum Ballot.VoteType[]',
+				name: '_supports',
+				type: 'uint8[]',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint8',
+						name: 'v',
+						type: 'uint8',
+					},
+					{
+						internalType: 'bytes32',
+						name: 'r',
+						type: 'bytes32',
+					},
+					{
+						internalType: 'bytes32',
+						name: 's',
+						type: 'bytes32',
+					},
+				],
+				internalType: 'struct SignatureConsumer.Signature[]',
+				name: '_signatures',
+				type: 'tuple[]',
+			},
+		],
+		name: 'proposeGlobalProposalStructAndCastVotes',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1078,6 +1315,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'roninTrustedOrganizationContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1099,17 +1349,12 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
 				internalType: 'address',
-				name: 'addr',
+				name: '_addr',
 				type: 'address',
 			},
 		],
-		name: 'setContract',
+		name: 'setBridgeContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1125,6 +1370,45 @@ const abi = [
 		name: 'setProposalExpiryDuration',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
+				type: 'address',
+			},
+		],
+		name: 'setRoninTrustedOrganizationContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
+				type: 'address',
+			},
+		],
+		name: 'setValidatorContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'validatorContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -1174,28 +1458,80 @@ const abi = [
 	{
 		inputs: [
 			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'period',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'epoch',
+						type: 'uint256',
+					},
+					{
+						internalType: 'address[]',
+						name: 'operators',
+						type: 'address[]',
+					},
+				],
+				internalType: 'struct BridgeOperatorsBallot.BridgeOperatorSet',
+				name: '_ballot',
+				type: 'tuple',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint8',
+						name: 'v',
+						type: 'uint8',
+					},
+					{
+						internalType: 'bytes32',
+						name: 'r',
+						type: 'bytes32',
+					},
+					{
+						internalType: 'bytes32',
+						name: 's',
+						type: 'bytes32',
+					},
+				],
+				internalType: 'struct SignatureConsumer.Signature[]',
+				name: '_signatures',
+				type: 'tuple[]',
+			},
+		],
+		name: 'voteBridgeOperatorsBySignatures',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
-				name: 'voteHash',
+				name: '_voteHash',
 				type: 'bytes32',
 			},
 			{
 				internalType: 'address',
-				name: 'validatorId',
+				name: '_consensusAddr',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
+				name: '_recipientAfterUnlockedFund',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'requestedAt',
+				name: '_requestedAt',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'expiredAt',
+				name: '_expiredAt',
 				type: 'uint256',
 			},
 		],
@@ -1207,9 +1543,9 @@ const abi = [
 ] as const
 const RONIN_GOVERNANCE_ADMIN: Contract<typeof abi> = {
 	name: 'Ronin Governance Admin',
-	address: '0x70fd02049333337a534a9383149c9a99ddf65495',
+	address: '0x946397dedfd2f79b75a72b322944a21c3240c9c3',
 	is_deprecated: false,
-	updated_at: 1711932112,
+	updated_at: 1712536791,
 	abi: abi,
 }
 export default RONIN_GOVERNANCE_ADMIN

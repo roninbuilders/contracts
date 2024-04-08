@@ -640,6 +640,18 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_reg',
+				type: 'address',
+			},
+		],
+		name: 'updateEquipmentRegistry',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'vxArmory',
 		outputs: [
@@ -738,9 +750,9 @@ const abi = [
 ] as const
 const EQUIPMENT: Contract<typeof abi> = {
 	name: 'Equipment',
-	address: '0x8d5b8f6a024a487babc2a2bc399a575e564e9625',
+	address: '0x0ef6701d812099619a9bdd5d02417eacd72e7c70',
 	is_deprecated: false,
-	updated_at: 1711394369,
+	updated_at: 1712252792,
 	abi: abi,
 }
 export default EQUIPMENT

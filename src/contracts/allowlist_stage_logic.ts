@@ -444,7 +444,32 @@ const abi = [
 				type: 'address[]',
 			},
 		],
-		name: 'AllowUsersUpdated',
+		name: 'AllowUsersAdded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
+		name: 'AllowUsersRemoved',
 		type: 'event',
 	},
 	{
@@ -1373,9 +1398,9 @@ const abi = [
 ] as const
 const ALLOWLIST_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Allowlist Stage Logic',
-	address: '0x536af4feacd3983898819bb293744d610ec3bb47',
+	address: '0x1040e33db4bb6098e80c2668f47826b0c07e9546',
 	is_deprecated: false,
-	updated_at: 1711516492,
+	updated_at: 1712288276,
 	abi: abi,
 }
 export default ALLOWLIST_STAGE_LOGIC

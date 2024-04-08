@@ -444,7 +444,32 @@ const abi = [
 				type: 'address[]',
 			},
 		],
-		name: 'AllowUsersUpdated',
+		name: 'AllowUsersAdded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
+		name: 'AllowUsersRemoved',
 		type: 'event',
 	},
 	{
@@ -1383,9 +1408,9 @@ const abi = [
 ] as const
 const TOKEN_GATED_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Token Gated Stage Logic',
-	address: '0xd2d1bdfbc054b67e5b2c3b9750184276cb2ead17',
+	address: '0xfbf113d3a9d8675564e0be117bf98694ef9362e7',
 	is_deprecated: false,
-	updated_at: 1711516733,
+	updated_at: 1712288276,
 	abi: abi,
 }
 export default TOKEN_GATED_STAGE_LOGIC
