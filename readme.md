@@ -1,14 +1,18 @@
-# Ronin contracts addresses and ABI's
+# Ronin Contracts Addresses and ABI's
 
-This is a community list of contracts addresess and abi's that might be useful for developers. Let us know if something is not up to date or missing.
+This project provides a community-maintained list of contract addresses and ABI's for the Ronin Network. It is intended to be a useful resource for developers working with the Ronin Network.
 
-## Install
+## Installation
+
+To install the project, run the following command:
 
 ```bash
 npm i @roninbuilders/contracts
+
 ```
 
 ### Usage viem
+Here's an example of how to use this project to fetch balances of different tokens for a specific address using the viem package:
 
 ```bash
 npm i @roninbuilders/contracts viem
@@ -18,78 +22,78 @@ npm i @roninbuilders/contracts viem
 import { formatEther } from "viem";
 import { AXIE_PROXY, USD_COIN, WRAPPED_ETHER } from "@roninbuilders/contracts"
 
-// get RON balance
-const ronBalance = await viemClient.getBalance({
-    address,
-});
+// Initialize your viemClient here
+
+// Fetch RON balance
+const ronBalance = await viemClient.getBalance({ address });
 console.log(`RON: ${formatEther(ronBalance)}`);
 
-// get WRAPPED_ETHER balance
+// Fetch WRAPPED_ETHER balance
 const wethBalance = await viemClient.readContract({
-    address: WRAPPED_ETHER.address,
-    abi: WRAPPED_ETHER.abi,
-    functionName: 'balanceOf',
-    args: [address]
-}) as bigint
-console.log(`WETH: ${formatEther(wethBalance)}`)
+  address: WRAPPED_ETHER.address,
+  abi: WRAPPED_ETHER.abi,
+  functionName: 'balanceOf',
+  args: [address]
+});
+console.log(`WETH: ${formatEther(wethBalance)}`);
 
-// get axies balance 
+// Fetch Axies balance 
 const axiesBalance = await viemClient.readContract({
-    address: AXIE_PROXY.address,
-    abi: AXIE_PROXY.abi,
-    functionName: 'balanceOf',
-    args: [address]
-}) as bigint
-console.log(`Axies: ${axiesBalance.toString()}`)
+  address: AXIE_PROXY.address,
+  abi: AXIE_PROXY.abi,
+  functionName: 'balanceOf',
+  args: [address]
+});
+console.log(`Axies: ${axiesBalance.toString()}`);
 
-// get USDC balance
+// Fetch USDC balance
 const usdcBalance = await viemClient.readContract({
-    address: USD_COIN.address,
-    abi: USD_COIN.abi,
-    functionName: 'balanceOf',
-    args: [address]
-}) as bigint
-console.log(`USDC balance: ${formatEther(usdcBalance)}`)
+  address: USD_COIN.address,
+  abi: USD_COIN.abi,
+  functionName: 'balanceOf',
+  args: [address]
+});
+console.log(`USDC balance: ${formatEther(usdcBalance)}`);
 
 ```
 
-### Usage ethers
-
+### Usage with ethers
+First, install the necessary packages:
 ```bash
 npm i @roninbuilders/contracts ethers@6.9.0
 ```
-
+Then, you can use the following code to fetch balances of different tokens for a specific address:
 ```typescript
 import { AXIE_PROXY, USD_COIN, WRAPPED_ETHER } from "@roninbuilders/contracts"
 
-// get RON balance
-const balance = await hre.ethers.provider.getBalance(address)
-const balanceInEther = hre.ethers.formatEther(balance)
+// Initialize your ethers provider here
+
+// Fetch RON balance
+const balance = await ethers.provider.getBalance(address)
+const balanceInEther = ethers.utils.formatEther(balance)
 console.log(`RON: ${balanceInEther}`)
 
-// get eth balance
-const wethContract = new hre.ethers.Contract(WRAPPED_ETHER.address, WRAPPED_ETHER.abi, hre.ethers.provider)
+// Fetch WRAPPED_ETHER balance
+const wethContract = new ethers.Contract(WRAPPED_ETHER.address, WRAPPED_ETHER.abi, ethers.provider)
 const wethBalance = await wethContract.balanceOf(address)
-const wethBalanceInEther = hre.ethers.formatEther(wethBalance)
+const wethBalanceInEther = ethers.utils.formatEther(wethBalance)
 console.log(`WETH: ${wethBalanceInEther}`)
 
-// get axies balance 
-const axieContract = new hre.ethers.Contract(AXIE_PROXY.address, AXIE_PROXY.abi, hre.ethers.provider)
+// Fetch Axies balance 
+const axieContract = new ethers.Contract(AXIE_PROXY.address, AXIE_PROXY.abi, ethers.provider)
 const axiesBalance = await axieContract.balanceOf(address)
 console.log(`Axies: ${axiesBalance.toString()}`)
 
-// get USDC balance
-const usdcContract = new hre.ethers.Contract(USD_COIN.address, USD_COIN.abi, hre.ethers.provider)
+// Fetch USDC balance
+const usdcContract = new ethers.Contract(USD_COIN.address, USD_COIN.abi, ethers.provider)
 const usdcBalance = await usdcContract.balanceOf(address)
-const usdcBalanceFormated = hre.ethers.formatUnits(usdcBalance, 6) // 6 decimals
+const usdcBalanceFormated = ethers.utils.formatUnits(usdcBalance, 6) // 6 decimals
 console.log(`USDC balance: ${usdcBalanceFormated}`)
 
 ```
 
+### Contributing
 
-#### Build and publish
+We welcome contributions from the community. To get started, please fork this repository, make your changes, and open a pull request. We appreciate any contributions you can make, whether it's fixing bugs, improving documentation, or adding new features.
 
-```bash
-pnpm format
-pnpm upload
-```
+Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) guide for details on our code of conduct, and the process for submitting pull requests to us.
