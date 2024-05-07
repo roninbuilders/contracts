@@ -14,7 +14,8 @@
     "update-contracts": "node --loader ts-node/esm ./src/update.ts",
     "format": "pnpm dlx @biomejs/biome format ./src --write",
     "upload": "pnpm run build && npm publish --yes",
-    "clean": "rm -rf .turbo && rm -rf ./dist"
+    "clean": "rm -rf .turbo && rm -rf ./dist",
+    "most-frequent-words": "node --loader ts-node/esm ./src/keywords.ts"
   },
   "type": "module",
   "author": [
@@ -37,9 +38,27 @@
   "keywords": [
     "contracts",
     "ronin",
-    "defi",
-    "network",
-    "web3"
+    "addresses",
+    "abi",
+    "viem",
+    "ethers",
+    "web3",
+    "axie",
+    "proxy",
+    "staking",
+    "apeiron",
+    "lp",
+    "gateway",
+    "planet",
+    "pool",
+    "manager",
+    "land",
+    "bridge",
+    "token",
+    "rns",
+    "erc1155",
+    "erc20",
+    "erc721"
   ],
   "repository": {
     "type": "git",
