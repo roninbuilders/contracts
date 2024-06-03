@@ -4,12 +4,50 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'implementation_',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
 				name: 'initialOwner',
 				type: 'address',
 			},
 		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'BeaconInvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+		],
+		name: 'OwnableInvalidOwner',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'OwnableUnauthorizedAccount',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -31,51 +69,21 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
+				indexed: true,
 				internalType: 'address',
-				name: 'newAdmin',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'changeProxyAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
+		name: 'Upgraded',
+		type: 'event',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyAdmin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyImplementation',
+		inputs: [],
+		name: 'implementation',
 		outputs: [
 			{
 				internalType: 'address',
@@ -122,50 +130,22 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
 				internalType: 'address',
-				name: 'implementation',
+				name: 'newImplementation',
 				type: 'address',
 			},
 		],
-		name: 'upgrade',
+		name: 'upgradeTo',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
 ] as const
-const PROXY_ADMIN: Contract<typeof abi> = {
-	name: 'Proxy Admin',
-	address: '0x24063edeec9deb65c6872321009bc69e0204bea5',
+const ERC20_STAKING_PROXY: Contract<typeof abi> = {
+	name: 'ERC20 Staking Proxy',
+	address: '0xe870abf043c669c9e2a0c00712fc1e1742044a8b',
 	is_deprecated: false,
-	updated_at: 1715159700,
+	updated_at: 1717375095,
 	abi: abi,
 }
-export default PROXY_ADMIN
+export default ERC20_STAKING_PROXY
