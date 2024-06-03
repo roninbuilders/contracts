@@ -204,6 +204,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrInvalidTierId',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrInvalidTokenStandard',
 		type: 'error',
 	},
@@ -243,12 +248,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'maxSupply',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'remainSupply',
+				name: 'remainingSupply',
 				type: 'uint256',
 			},
 			{
@@ -320,6 +320,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrNotZeroSupplyForPublicStage',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrStageEnded',
 		type: 'error',
 	},
@@ -358,6 +363,11 @@ const abi = [
 	{
 		inputs: [],
 		name: 'ErrTooMuchConditionalStages',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrUnsupportedNFTInterface',
 		type: 'error',
 	},
 	{
@@ -551,6 +561,12 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -690,6 +706,12 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -770,6 +792,11 @@ const abi = [
 						name: 'stageIndex',
 						type: 'uint8',
 					},
+					{
+						internalType: 'bytes',
+						name: 'extraData',
+						type: 'bytes',
+					},
 				],
 				indexed: false,
 				internalType: 'struct ILaunchpadStructs.MintParam',
@@ -810,6 +837,12 @@ const abi = [
 				indexed: false,
 				internalType: 'uint256[]',
 				name: 'mintedIds',
+				type: 'uint256[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'mintedAmounts',
 				type: 'uint256[]',
 			},
 			{
@@ -888,6 +921,54 @@ const abi = [
 			},
 		],
 		name: 'NewStageInfoAdded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'tierId',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				indexed: false,
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'NewTierAdded',
 		type: 'event',
 	},
 	{
@@ -1057,6 +1138,85 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'tierId',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				indexed: false,
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'TierInfoUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8[]',
+				name: 'tierIds',
+				type: 'uint8[]',
+			},
+			{
+				indexed: false,
+				internalType: 'address[][]',
+				name: 'usersByTier',
+				type: 'address[][]',
+			},
+		],
+		name: 'UsersAssignedToTier',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'wron',
@@ -1113,6 +1273,11 @@ const abi = [
 						internalType: 'uint8',
 						name: 'stageIndex',
 						type: 'uint8',
+					},
+					{
+						internalType: 'bytes',
+						name: 'extraData',
+						type: 'bytes',
 					},
 				],
 				internalType: 'struct ILaunchpadStructs.MintParam',
@@ -1293,6 +1458,11 @@ const abi = [
 						name: 'stageIndex',
 						type: 'uint8',
 					},
+					{
+						internalType: 'bytes',
+						name: 'extraData',
+						type: 'bytes',
+					},
 				],
 				internalType: 'struct ILaunchpadStructs.MintParam',
 				name: 'param',
@@ -1398,9 +1568,9 @@ const abi = [
 ] as const
 const ALLOWLIST_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Allowlist Stage Logic',
-	address: '0x1040e33db4bb6098e80c2668f47826b0c07e9546',
+	address: '0x26c9f7799e876d3024286a20a8e799a0e093d38f',
 	is_deprecated: false,
-	updated_at: 1712288276,
+	updated_at: 1716444623,
 	abi: abi,
 }
 export default ALLOWLIST_STAGE_LOGIC

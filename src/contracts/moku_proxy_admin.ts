@@ -1,17 +1,6 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'initialOwner',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
 		anonymous: false,
 		inputs: [
 			{
@@ -33,7 +22,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
+				internalType: 'contract ITransparentUpgradeableProxy',
 				name: 'proxy',
 				type: 'address',
 			},
@@ -51,7 +40,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
+				internalType: 'contract ITransparentUpgradeableProxy',
 				name: 'proxy',
 				type: 'address',
 			},
@@ -70,7 +59,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
+				internalType: 'contract ITransparentUpgradeableProxy',
 				name: 'proxy',
 				type: 'address',
 			},
@@ -122,7 +111,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
+				internalType: 'contract ITransparentUpgradeableProxy',
 				name: 'proxy',
 				type: 'address',
 			},
@@ -140,7 +129,7 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
+				internalType: 'contract ITransparentUpgradeableProxy',
 				name: 'proxy',
 				type: 'address',
 			},
@@ -161,11 +150,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const PROXY_ADMIN: Contract<typeof abi> = {
-	name: 'Proxy Admin',
-	address: '0x24063edeec9deb65c6872321009bc69e0204bea5',
+const MOKU_PROXY_ADMIN: Contract<typeof abi> = {
+	name: 'Moku Proxy Admin',
+	address: '0x405082ae22b3ca0113a7fb97820b7a53fd379dae',
 	is_deprecated: false,
-	updated_at: 1715159700,
+	updated_at: 1717375146,
 	abi: abi,
 }
-export default PROXY_ADMIN
+export default MOKU_PROXY_ADMIN

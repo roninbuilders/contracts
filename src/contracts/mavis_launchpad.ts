@@ -439,7 +439,7 @@ const abi = [
 				type: 'address[]',
 			},
 		],
-		name: 'AllowUsersAppended',
+		name: 'AllowUsersAdded',
 		type: 'event',
 	},
 	{
@@ -464,7 +464,7 @@ const abi = [
 				type: 'address[]',
 			},
 		],
-		name: 'AllowUsersUpdated',
+		name: 'AllowUsersRemoved',
 		type: 'event',
 	},
 	{
@@ -1114,6 +1114,29 @@ const abi = [
 				type: 'address',
 			},
 			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
+		name: 'addAllowUsers',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
 				internalType: 'enum ILaunchpadStructs.TokenStandard',
 				name: 'standard',
 				type: 'uint8',
@@ -1251,29 +1274,6 @@ const abi = [
 			},
 		],
 		name: 'addNewStageInfos',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: 'stageIndex',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address[]',
-				name: 'allowUsers',
-				type: 'address[]',
-			},
-		],
-		name: 'appendAllowUsers',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1584,30 +1584,6 @@ const abi = [
 				internalType: 'struct ILaunchpadStructs.TokenGatedStage[]',
 				name: '',
 				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: 'stageIndex',
-				type: 'uint8',
-			},
-		],
-		name: 'getAllowListLength',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -2052,6 +2028,29 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address[]',
+				name: 'allowUsers',
+				type: 'address[]',
+			},
+		],
+		name: 'removeAllowUsers',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -2187,29 +2186,6 @@ const abi = [
 				type: 'address',
 			},
 			{
-				internalType: 'uint8',
-				name: 'stageIndex',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address[]',
-				name: 'allowUsers',
-				type: 'address[]',
-			},
-		],
-		name: 'updateAllowUsers',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
 				internalType: 'enum ILaunchpadStructs.TokenStandard',
 				name: 'standard',
 				type: 'uint8',
@@ -2301,9 +2277,9 @@ const abi = [
 ] as const
 const MAVIS_LAUNCHPAD: Contract<typeof abi> = {
 	name: 'Mavis Launchpad',
-	address: '0x854e6150f0984a09bf5e6286a585eabe89edf0d7',
-	is_deprecated: true,
-	updated_at: 1712297546,
+	address: '0xa4d054948658debe73b262cae4e754dfbb37d0c7',
+	is_deprecated: false,
+	updated_at: 1716446893,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD

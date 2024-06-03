@@ -4,122 +4,17 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'affiliate',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
 				name: 'factory_',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'wron',
+				name: 'wron_',
 				type: 'address',
 			},
 		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'taker',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'FeeTaken',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'affiliate',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'feeRatio',
-				type: 'uint256',
-			},
-		],
-		name: 'NewAffiliateInfo',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_FEE_RATIO',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MAX_PERCENTAGE',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
 	},
 	{
 		inputs: [],
@@ -266,32 +161,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'feeFraction',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAffiliate',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -403,19 +272,6 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'contract IKatanaGovernance',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
 				name: '',
 				type: 'address',
 			},
@@ -807,31 +663,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'affiliate',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'feeRatio',
-				type: 'uint256',
-			},
-		],
-		name: 'setAffiliateInfo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1150,28 +981,15 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		stateMutability: 'payable',
 		type: 'receive',
 	},
 ] as const
-const AFFILIATE_ROUTER: Contract<typeof abi> = {
-	name: 'Affiliate Router',
-	address: '0x77f96cf7b98b963fb8a9b84787806d396d953b2b',
+const PERMISSIONED_ROUTER: Contract<typeof abi> = {
+	name: 'Permissioned Router',
+	address: '0xc05afc8c9353c1dd5f872eccfacd60fd5a2a9ac7',
 	is_deprecated: false,
-	updated_at: 1717375143,
+	updated_at: 1717375360,
 	abi: abi,
 }
-export default AFFILIATE_ROUTER
+export default PERMISSIONED_ROUTER

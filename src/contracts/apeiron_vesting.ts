@@ -231,6 +231,54 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address[]',
+				name: '_beneficiarys',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_initialUnlockPercentages',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_cliffs',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_starts',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_durations',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_releaseds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_totalAmounts',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'bool[]',
+				name: '_affectedByFDVs',
+				type: 'bool[]',
+			},
+		],
+		name: 'addMultiVestingAccount',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: '_beneficiary',
 				type: 'address',
@@ -660,9 +708,9 @@ const abi = [
 ] as const
 const APEIRON_VESTING: Contract<typeof abi> = {
 	name: 'Apeiron Vesting',
-	address: '0x7ba6220c4ab971bdfd47c5f96b656d611e75a4f6',
+	address: '0x755023679f7b23ec67c366d96783ac7dfc0d6e16',
 	is_deprecated: false,
-	updated_at: 1711423494,
+	updated_at: 1716884030,
 	abi: abi,
 }
 export default APEIRON_VESTING
