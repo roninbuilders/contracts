@@ -8,11 +8,6 @@ const abi = [
 				type: 'address',
 			},
 			{
-				internalType: 'address',
-				name: 'admin_',
-				type: 'address',
-			},
-			{
 				internalType: 'bytes',
 				name: '_data',
 				type: 'bytes',
@@ -75,11 +70,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
-	name: 'Land Delegation Proxy',
-	address: '0x6e1c680981a101bf6dc794e1d3ba7fa496eea12e',
+const EARN_ALLIANCE_BADGE_V9_PROXY: Contract<typeof abi> = {
+	name: 'Earn Alliance Badge V9 Proxy',
+	address: '0x9fcd21120fc5fdd2e69650714f58688517fed56b',
 	is_deprecated: false,
-	updated_at: 1718584803,
+	updated_at: 1718584792,
 	abi: abi,
 }
-export default LAND_DELEGATION_PROXY
+export default EARN_ALLIANCE_BADGE_V9_PROXY
