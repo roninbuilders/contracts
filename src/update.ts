@@ -3,9 +3,10 @@ import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
 import { Abi } from 'abitype'
+import { default as PQueue } from 'p-queue'
 
+const QUEUE_CONCURRENCY = 4
 const RONIN_EXPLORER_API_URL = process.env.RONIN_EXPLORER_API_URL
-
 if (!RONIN_EXPLORER_API_URL) {
 	throw new Error('RONIN_EXPLORER_API_URL is not set')
 }
@@ -67,7 +68,6 @@ interface OutputResult extends BaseResult {
 }
 
 const fetchContracts = async () => {
-	// const url = `${RONIN_EXPLORER_API_URL}address`
 	const url = `${RONIN_EXPLORER_API_URL}contracts?ps=1000&p=1`
 	const response = await fetch(url, {
 		headers: {
@@ -79,27 +79,41 @@ const fetchContracts = async () => {
 	const data = (await response.json()) as Response<ItemsResult>
 	return data.result.items
 }
-
-const fetchAbi = async (contractAddress: string) => {
+const fetchAbi = async (contractAddress: string, retryCount = 0): Promise<readonly unknown[] | Abi> => {
 	const url = `${RONIN_EXPLORER_API_URL}contract/${contractAddress}/abi`
 
-	// Wait to avoid rate limit
-	// await new Promise((resolve) => setTimeout(resolve, 1000))
+	try {
+		console.log(`Fetching ABI for contract ${contractAddress}...`)
 
-	// Fetch the ABI from the API
-	const contracts = await fetch(url, {
-		headers: {
-			accept: 'application/json',
-			'cache-control': 'no-cache',
-		},
-	})
-	const data = (await contracts.json()) as Response<OutputResult>
-	const response = data.result.output?.abi || false
+		const contracts = await fetch(url, {
+			headers: {
+				accept: 'application/json',
+				'cache-control': 'no-cache',
+			},
+		})
+		const data = (await contracts.json()) as Response<OutputResult>
+		const response = data.result.output?.abi || false
 
-	if (!response) {
+		if (!response && data.message === 'API rate limit exceeded') {
+			throw new Error('API rate limit exceeded')
+		}
+
+		console.log(`Successfully fetched ABI for contract ${contractAddress}`)
+
+		return response
+	} catch (error) {
+		if (retryCount >= 5) {
+			throw error
+		}
+
+		// Log the error and retry
+		console.error(`Error fetching ABI for contract ${contractAddress}: ${(error as any).message}`)
+		console.log('Retrying in 2 seconds...')
+
+		// Wait for 2 seconds and try again
+		await new Promise((resolve) => setTimeout(resolve, 2000))
+		return await fetchAbi(contractAddress, retryCount + 1)
 	}
-
-	return response
 }
 
 function transformString(input: string): string {
@@ -185,7 +199,7 @@ const saveLocalFile = async (
 		await writeAbiToFile(contractAddress, contractName, abi, is_deprecated, updated_at)
 	} catch (err) {
 		console.error(err)
-		// failedCount++;
+		failedCount++
 	} finally {
 		return
 	}
@@ -231,18 +245,23 @@ const updateAbis = async () => {
 			throw new Error('No contracts found')
 		}
 
-		// Create an array of promises
-		const contractPromises = contracts.map((contract) => {
-			return processContract(contract)
+		// Create a queue with a concurrency limit
+		const queue = new PQueue({ concurrency: QUEUE_CONCURRENCY })
+
+		// Add tasks to the queue
+		contracts.forEach((contract) => {
+			queue.add(() => processContract(contract))
 		})
-		// Wait for all promises to resolve
-		await Promise.all(contractPromises)
+
+		// Wait for all tasks in the queue to finish
+		await queue.onIdle()
 	} catch (error) {
 		// Handle error
 		console.error('Failed to update ABIs')
 		console.error(error)
 	}
 }
+
 console.time('Update Abis time')
 updateAbis()
 	.then(() => {

@@ -72,6 +72,7 @@
     "@types/node": "^20.11.10",
     "@wagmi/cli": "^2.1.8",
     "abitype": "^0.10.3",
+    "p-queue": "^8.0.1",
     "ts-node": "^10.9.2",
     "tsup": "^6.7.0",
     "typescript": "^5.4.2"
