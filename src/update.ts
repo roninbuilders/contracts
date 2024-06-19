@@ -133,7 +133,7 @@ const writeAbiToFile = async (
 	name: string,
 	abi: Abi | readonly unknown[],
 	is_deprecated: boolean,
-	updated_at: number,
+	created_at: number,
 ) => {
 	try {
 		const filename = transformString(name.replace(/[\s.'-]/g, '_'))
@@ -151,14 +151,13 @@ const writeAbiToFile = async (
 		try {
 			await fs.promises.access(filePath)
 
-			// Check if we should overwrite the file, based on the updated_at timestamp
+			// Import the existing contract and compare it with the new one
 			try {
-				const EXISTING_CONTRACT = (await import(filePath)).default as Contract<Abi | readonly unknown[]>
-				if (
-					updated_at > EXISTING_CONTRACT.updated_at &&
-					JSON.stringify(abi) !== JSON.stringify(EXISTING_CONTRACT.abi)
-				) {
-				} else {
+				const existingContract = (await import(filePath)).default as Contract<Abi | readonly unknown[]>
+				const isUpdated = created_at > existingContract.created_at
+
+				// If the contract is not updated or the ABI is not changed, return early
+				if (!isUpdated) {
 					return
 				}
 			} catch (importError) {
@@ -175,7 +174,7 @@ const writeAbiToFile = async (
 				abi,
 				null,
 				2,
-			)} as const;\nconst ${filename.toUpperCase()}:Contract<typeof abi> = { name: '${name}', address: '${address}', is_deprecated: ${is_deprecated}, updated_at: ${updated_at}, abi: abi};\nexport default ${filename.toUpperCase()};\n`,
+			)} as const;\nconst ${filename.toUpperCase()}:Contract<typeof abi> = { name: '${name}', address: '${address}', is_deprecated: ${is_deprecated}, created_at: ${created_at}, abi: abi};\nexport default ${filename.toUpperCase()};\n`,
 		)
 	} catch (error) {
 		console.error(`Failed to write ABI to file: ${error}`)
@@ -187,7 +186,7 @@ const saveLocalFile = async (
 	contractAddress: `0x${string}`,
 	contractName: string,
 	is_deprecated: boolean,
-	updated_at: number,
+	created_at: number,
 ) => {
 	try {
 		// Get the ABI from the API
@@ -196,7 +195,7 @@ const saveLocalFile = async (
 			failedCount++
 			return // skip if the contract doesn't have an ABI yet
 		}
-		await writeAbiToFile(contractAddress, contractName, abi, is_deprecated, updated_at)
+		await writeAbiToFile(contractAddress, contractName, abi, is_deprecated, created_at)
 	} catch (err) {
 		console.error(err)
 		failedCount++
@@ -219,7 +218,7 @@ const processContract = async (apiContractItem: Item) => {
 	}
 
 	try {
-		await saveLocalFile(contractAddress, contractName, apiContractItem.is_deprecated, apiContractItem.updated_at)
+		await saveLocalFile(contractAddress, contractName, apiContractItem.is_deprecated, apiContractItem.created_at)
 		const dirPath = path.join(__dirname, 'contracts')
 		const files = await fs.promises.readdir(dirPath)
 		const indexFilePath = path.join(__dirname, 'index.ts')
