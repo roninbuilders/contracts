@@ -216,7 +216,7 @@ const C_ETHER_STAKING_PROXY: Contract<typeof abi> = {
 	name: 'C Ether Staking Proxy',
 	address: '0x6db7bd2fa4b1b89c56c08b553d7c04df0301e885',
 	is_deprecated: false,
-	updated_at: 1707758992,
+	created_at: 1692116130,
 	abi: abi,
 }
 export default C_ETHER_STAKING_PROXY

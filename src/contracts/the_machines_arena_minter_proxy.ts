@@ -70,7 +70,7 @@ const THE_MACHINES_ARENA_MINTER_PROXY: Contract<typeof abi> = {
 	name: 'The Machines Arena Minter Proxy',
 	address: '0xacda2b4ef48e2078e251155b3cb807026daba8b2',
 	is_deprecated: false,
-	updated_at: 1710117522,
+	created_at: 1709089415,
 	abi: abi,
 }
 export default THE_MACHINES_ARENA_MINTER_PROXY

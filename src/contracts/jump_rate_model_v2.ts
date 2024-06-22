@@ -316,7 +316,7 @@ const JUMP_RATE_MODEL_V2: Contract<typeof abi> = {
 	name: 'Jump Rate Model V2',
 	address: '0xcbb6dcdd897a3c1917100c651b1e5715f8beba5d',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1672169469,
 	abi: abi,
 }
 export default JUMP_RATE_MODEL_V2

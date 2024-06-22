@@ -149,7 +149,7 @@ const AXIE_BADGE_PROXY: Contract<typeof abi> = {
 	name: 'Axie Badge Proxy',
 	address: '0x1cdb9c49ffc178356cffc0db31a94fb41168a734',
 	is_deprecated: false,
-	updated_at: 1707758807,
+	created_at: 1692609747,
 	abi: abi,
 }
 export default AXIE_BADGE_PROXY

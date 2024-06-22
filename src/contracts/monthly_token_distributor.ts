@@ -382,7 +382,7 @@ const MONTHLY_TOKEN_DISTRIBUTOR: Contract<typeof abi> = {
 	name: 'Monthly Token Distributor',
 	address: '0x8b5d69ac8c7dcaf87c0d13e33459f470f6399cf0',
 	is_deprecated: true,
-	updated_at: 1707758987,
+	created_at: 1633062723,
 	abi: abi,
 }
 export default MONTHLY_TOKEN_DISTRIBUTOR

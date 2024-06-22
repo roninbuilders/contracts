@@ -828,7 +828,7 @@ const COMP_COMPTROLLER: Contract<typeof abi> = {
 	name: 'Comp Comptroller',
 	address: '0xa7c5a879a1c6241eb74aef98445a1ffda4894db0',
 	is_deprecated: false,
-	updated_at: 1707758987,
+	created_at: 1672169547,
 	abi: abi,
 }
 export default COMP_COMPTROLLER

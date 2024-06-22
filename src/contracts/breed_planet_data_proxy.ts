@@ -74,7 +74,7 @@ const BREED_PLANET_DATA_PROXY: Contract<typeof abi> = {
 	name: 'Breed Planet Data Proxy',
 	address: '0x69f8b531d8a4005c8308329654c2464880723f56',
 	is_deprecated: false,
-	updated_at: 1707759005,
+	created_at: 1702615125,
 	abi: abi,
 }
 export default BREED_PLANET_DATA_PROXY

@@ -716,7 +716,7 @@ const CORE_ATTESTOR: Contract<typeof abi> = {
 	name: 'Core Attestor',
 	address: '0x065e959ffd4c76ae2e0d31cfcf91c0c9834472ec',
 	is_deprecated: false,
-	updated_at: 1707759002,
+	created_at: 1692001638,
 	abi: abi,
 }
 export default CORE_ATTESTOR

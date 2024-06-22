@@ -1024,7 +1024,7 @@ const RNS_DOMAIN_PRICE: Contract<typeof abi> = {
 	name: 'RNS Domain Price',
 	address: '0x2f8c5e6bbe526d0c88979269f2b249271491717c',
 	is_deprecated: false,
-	updated_at: 1710307239,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_DOMAIN_PRICE

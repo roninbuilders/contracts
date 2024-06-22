@@ -70,7 +70,7 @@ const TMA_FAMILIAR_PROXY: Contract<typeof abi> = {
 	name: 'TMA Familiar Proxy',
 	address: '0xf82ab59b4a4fcf6332b43188c694eaf874200d62',
 	is_deprecated: false,
-	updated_at: 1711931929,
+	created_at: 1711931929,
 	abi: abi,
 }
 export default TMA_FAMILIAR_PROXY

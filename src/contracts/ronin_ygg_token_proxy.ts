@@ -149,7 +149,7 @@ const RONIN_YGG_TOKEN_PROXY: Contract<typeof abi> = {
 	name: 'Ronin YGG Token Proxy',
 	address: '0x1c306872bc82525d72bf3562e8f0aa3f8f26e857',
 	is_deprecated: false,
-	updated_at: 1710117481,
+	created_at: 1708527300,
 	abi: abi,
 }
 export default RONIN_YGG_TOKEN_PROXY

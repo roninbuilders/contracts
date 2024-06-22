@@ -673,7 +673,7 @@ const KONG_CONSUMABLE: Contract<typeof abi> = {
 	name: 'Kong Consumable',
 	address: '0xee91b66175e95ee06c8c8eca196f6d807c03551c',
 	is_deprecated: false,
-	updated_at: 1711048205,
+	created_at: 1710932363,
 	abi: abi,
 }
 export default KONG_CONSUMABLE

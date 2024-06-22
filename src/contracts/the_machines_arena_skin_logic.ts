@@ -1343,7 +1343,7 @@ const THE_MACHINES_ARENA_SKIN_LOGIC: Contract<typeof abi> = {
 	name: 'The Machines Arena Skin Logic',
 	address: '0x0021701fd61e2d28838f020610c18b8e60139965',
 	is_deprecated: false,
-	updated_at: 1712132430,
+	created_at: 1709089455,
 	abi: abi,
 }
 export default THE_MACHINES_ARENA_SKIN_LOGIC

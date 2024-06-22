@@ -105,7 +105,7 @@ const PIXELS_GAME_TRACKER: Contract<typeof abi> = {
 	name: 'Pixels Game Tracker',
 	address: '0x02790f32ad7e7eaaecfb0ad21950829932f1a2ee',
 	is_deprecated: false,
-	updated_at: 1707758983,
+	created_at: 1698084336,
 	abi: abi,
 }
 export default PIXELS_GAME_TRACKER

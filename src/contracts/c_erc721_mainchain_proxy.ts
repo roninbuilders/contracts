@@ -218,7 +218,7 @@ const C_ERC721_MAINCHAIN_PROXY: Contract<typeof abi> = {
 	name: 'C Erc721 Mainchain Proxy',
 	address: '0x4642720767a068e41fb7734db39c00fb0b66a7ee',
 	is_deprecated: false,
-	updated_at: 1707758990,
+	created_at: 1672169628,
 	abi: abi,
 }
 export default C_ERC721_MAINCHAIN_PROXY

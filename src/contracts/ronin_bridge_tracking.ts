@@ -162,7 +162,7 @@ const RONIN_BRIDGE_TRACKING: Contract<typeof abi> = {
 	name: 'Ronin Bridge Tracking',
 	address: '0x3fb325b251ee80945d3fc8c7692f5affca1b8bc2',
 	is_deprecated: false,
-	updated_at: 1707758578,
+	created_at: 1679636606,
 	abi: abi,
 }
 export default RONIN_BRIDGE_TRACKING

@@ -279,7 +279,7 @@ const BRIDGE_TRACKING: Contract<typeof abi> = {
 	name: 'Bridge Tracking',
 	address: '0xfca143fe2751a992e8cff2eb5d64eda809049295',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1679636483,
 	abi: abi,
 }
 export default BRIDGE_TRACKING

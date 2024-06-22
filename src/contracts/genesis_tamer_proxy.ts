@@ -148,7 +148,7 @@ const GENESIS_TAMER_PROXY: Contract<typeof abi> = {
 	name: 'Genesis Tamer Proxy',
 	address: '0x6dcafe91533bdd733152ea30d029ec29280d7e4b',
 	is_deprecated: false,
-	updated_at: 1717375145,
+	created_at: 1715785418,
 	abi: abi,
 }
 export default GENESIS_TAMER_PROXY

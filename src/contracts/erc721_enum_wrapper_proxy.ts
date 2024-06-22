@@ -81,7 +81,7 @@ const ERC721_ENUM_WRAPPER_PROXY: Contract<typeof abi> = {
 	name: 'ERC721 Enum Wrapper Proxy',
 	address: '0xa26fd5db691f4f40d819d4ce86c19ac144315be1',
 	is_deprecated: false,
-	updated_at: 1711327158,
+	created_at: 1711306895,
 	abi: abi,
 }
 export default ERC721_ENUM_WRAPPER_PROXY

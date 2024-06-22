@@ -767,7 +767,7 @@ const VX_RONIN: Contract<typeof abi> = {
 	name: 'VX Ronin',
 	address: '0x4760452d6796b456323254036d652e97d0583117',
 	is_deprecated: false,
-	updated_at: 1712248330,
+	created_at: 1711393629,
 	abi: abi,
 }
 export default VX_RONIN

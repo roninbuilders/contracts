@@ -825,9 +825,9 @@ const abi = [
 ] as const
 const MAVIS_ORDER_EXCHANGE: Contract<typeof abi> = {
 	name: 'Mavis Order Exchange',
-	address: '0x635a20fac4682a27e5bbd2800cd41c6d46e135b8',
+	address: '0xb24592970973a80014fa80feb895873094909b3c',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1700553615,
 	abi: abi,
 }
 export default MAVIS_ORDER_EXCHANGE

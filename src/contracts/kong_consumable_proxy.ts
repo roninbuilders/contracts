@@ -81,7 +81,7 @@ const KONG_CONSUMABLE_PROXY: Contract<typeof abi> = {
 	name: 'Kong Consumable Proxy',
 	address: '0x9467ed740f52437ba7eaf65e29354ef0f7a8855d',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1710932369,
 	abi: abi,
 }
 export default KONG_CONSUMABLE_PROXY

@@ -1580,7 +1580,7 @@ const TOKEN_GATED_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Token Gated Stage Logic',
 	address: '0xbacf867b9cf2668757b74b48c59f8f25b124aa70',
 	is_deprecated: false,
-	updated_at: 1716445731,
+	created_at: 1716444531,
 	abi: abi,
 }
 export default TOKEN_GATED_STAGE_LOGIC

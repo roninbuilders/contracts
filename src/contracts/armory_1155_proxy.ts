@@ -81,7 +81,7 @@ const ARMORY_1155_PROXY: Contract<typeof abi> = {
 	name: 'Armory 1155 Proxy',
 	address: '0x02286d77425ae3287335ff28b264109225ed6991',
 	is_deprecated: false,
-	updated_at: 1711327158,
+	created_at: 1710932381,
 	abi: abi,
 }
 export default ARMORY_1155_PROXY

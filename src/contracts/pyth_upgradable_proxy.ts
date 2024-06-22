@@ -74,7 +74,7 @@ const PYTH_UPGRADABLE_PROXY: Contract<typeof abi> = {
 	name: 'Pyth Upgradable Proxy',
 	address: '0x2880ab155794e7179c9ee2e38200202908c17b43',
 	is_deprecated: false,
-	updated_at: 1707758983,
+	created_at: 1692987312,
 	abi: abi,
 }
 export default PYTH_UPGRADABLE_PROXY

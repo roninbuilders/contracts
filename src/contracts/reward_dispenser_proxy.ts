@@ -149,7 +149,7 @@ const REWARD_DISPENSER_PROXY: Contract<typeof abi> = {
 	name: 'Reward Dispenser Proxy',
 	address: '0x919a03764c1099ecb77e1532468d55e5baac8aff',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1664011277,
 	abi: abi,
 }
 export default REWARD_DISPENSER_PROXY

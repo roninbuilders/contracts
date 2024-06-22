@@ -696,7 +696,7 @@ const PAYMENT_CODE: Contract<typeof abi> = {
 	name: 'Payment Code',
 	address: '0xc613daccbf2c707c2b302381cb5fb233e19a5ae1',
 	is_deprecated: false,
-	updated_at: 1711327016,
+	created_at: 1710881612,
 	abi: abi,
 }
 export default PAYMENT_CODE

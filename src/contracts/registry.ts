@@ -443,7 +443,7 @@ const REGISTRY: Contract<typeof abi> = {
 	name: 'Registry',
 	address: '0x3a860626b0467809d50c58bef89b8ac6247fd62a',
 	is_deprecated: true,
-	updated_at: 1707758808,
+	created_at: 1611574096,
 	abi: abi,
 }
 export default REGISTRY

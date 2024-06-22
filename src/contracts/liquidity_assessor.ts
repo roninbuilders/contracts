@@ -639,7 +639,7 @@ const LIQUIDITY_ASSESSOR: Contract<typeof abi> = {
 	name: 'Liquidity Assessor',
 	address: '0x9e97f0a5b8582a336123667338992d8a8499cdf3',
 	is_deprecated: false,
-	updated_at: 1707759004,
+	created_at: 1684958665,
 	abi: abi,
 }
 export default LIQUIDITY_ASSESSOR

@@ -788,7 +788,7 @@ const WILD_FOREST_DEFINED_TOKEN_URI_NFT: Contract<typeof abi> = {
 	name: 'Wild Forest Defined Token Uri Nft',
 	address: '0xdd645c1093be18c9667e1e79957a89b62cc3cba6',
 	is_deprecated: false,
-	updated_at: 1703258708,
+	created_at: 1703258656,
 	abi: abi,
 }
 export default WILD_FOREST_DEFINED_TOKEN_URI_NFT

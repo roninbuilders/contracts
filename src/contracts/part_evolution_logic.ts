@@ -972,7 +972,7 @@ const PART_EVOLUTION_LOGIC: Contract<typeof abi> = {
 	name: 'PartEvolutionLogic',
 	address: '0x0e321b8dbf80a541375e7cee5124f80b93665083',
 	is_deprecated: false,
-	updated_at: 1704872370,
+	created_at: 1702269527,
 	abi: abi,
 }
 export default PART_EVOLUTION_LOGIC

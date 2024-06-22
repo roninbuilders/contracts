@@ -99,7 +99,7 @@ const MULTI_SEND: Contract<typeof abi> = {
 	name: 'Multi Send',
 	address: '0x263eebee6ced9ff47fc9208cd461114e79a03f27',
 	is_deprecated: false,
-	updated_at: 1707758999,
+	created_at: 1698084111,
 	abi: abi,
 }
 export default MULTI_SEND

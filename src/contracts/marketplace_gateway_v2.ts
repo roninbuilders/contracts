@@ -149,7 +149,7 @@ const MARKETPLACE_GATEWAY_V2: Contract<typeof abi> = {
 	name: 'Marketplace Gateway V2',
 	address: '0xfff9ce5f71ca6178d3beecedb61e7eff1602950e',
 	is_deprecated: false,
-	updated_at: 1707758986,
+	created_at: 1659687134,
 	abi: abi,
 }
 export default MARKETPLACE_GATEWAY_V2

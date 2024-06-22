@@ -1,28 +1,7 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: '_name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: '_symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'uri_',
-				type: 'string',
-			},
-			{
-				internalType: 'address',
-				name: '_ownerAddress',
-				type: 'address',
-			},
-		],
+		inputs: [],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
@@ -49,6 +28,19 @@ const abi = [
 			},
 		],
 		name: 'ApprovalForAll',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -253,6 +245,34 @@ const abi = [
 			},
 		],
 		name: 'burnBatch',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: '_name',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: '_symbol',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'uri_',
+				type: 'string',
+			},
+			{
+				internalType: 'address',
+				name: '_ownerAddress',
+				type: 'address',
+			},
+		],
+		name: 'initialize',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -542,9 +562,9 @@ const abi = [
 ] as const
 const WILD_FOREST_MEDAL: Contract<typeof abi> = {
 	name: 'Wild Forest Medal',
-	address: '0x9d758a29834c77c84b92a645f6bbc2139854ba92',
+	address: '0xbe596fee6e493554f4868c6eb8feb8be7c013060',
 	is_deprecated: false,
-	updated_at: 1703259511,
+	created_at: 1708013930,
 	abi: abi,
 }
 export default WILD_FOREST_MEDAL

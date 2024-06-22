@@ -176,7 +176,7 @@ const SUPERFINE_CLAIM_V2: Contract<typeof abi> = {
 	name: 'Superfine Claim V2',
 	address: '0x32a5712b9a68b970c4a01172be95c4479f3290e8',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1685614312,
 	abi: abi,
 }
 export default SUPERFINE_CLAIM_V2

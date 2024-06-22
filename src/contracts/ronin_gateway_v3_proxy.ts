@@ -162,7 +162,7 @@ const RONIN_GATEWAY_V3_PROXY: Contract<typeof abi> = {
 	name: 'Ronin Gateway V3 Proxy',
 	address: '0x0cf8ff40a508bdbc39fbe1bb679dcba64e65c7df',
 	is_deprecated: false,
-	updated_at: 1707758800,
+	created_at: 1655882578,
 	abi: abi,
 }
 export default RONIN_GATEWAY_V3_PROXY

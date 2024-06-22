@@ -64,7 +64,7 @@ const ERC1967_PROXY_FACTORY: Contract<typeof abi> = {
 	name: 'ERC1967 Proxy Factory',
 	address: '0x6d3aef8815e89e9117179d36673bf7584825db7d',
 	is_deprecated: false,
-	updated_at: 1717654401,
+	created_at: 1717479951,
 	abi: abi,
 }
 export default ERC1967_PROXY_FACTORY

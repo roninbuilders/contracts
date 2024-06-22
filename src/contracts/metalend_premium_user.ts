@@ -879,7 +879,7 @@ const METALEND_PREMIUM_USER: Contract<typeof abi> = {
 	name: 'Metalend Premium User',
 	address: '0xb562695af9c95f4da31cca8be72f1cbed327d54a',
 	is_deprecated: false,
-	updated_at: 1707758814,
+	created_at: 1689973179,
 	abi: abi,
 }
 export default METALEND_PREMIUM_USER

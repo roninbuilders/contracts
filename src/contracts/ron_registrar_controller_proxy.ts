@@ -79,7 +79,7 @@ const RON_REGISTRAR_CONTROLLER_PROXY: Contract<typeof abi> = {
 	name: 'RON Registrar Controller Proxy',
 	address: '0x662852853614cbbb5d04bf2e29955b97e3c50b69',
 	is_deprecated: false,
-	updated_at: 1707759001,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RON_REGISTRAR_CONTROLLER_PROXY

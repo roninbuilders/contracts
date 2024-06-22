@@ -149,7 +149,7 @@ const PART_EVOLUTION_PROXY: Contract<typeof abi> = {
 	name: 'PartEvolutionProxy',
 	address: '0x6e8699915b5328363855af28543d4bdb7439db71',
 	is_deprecated: false,
-	updated_at: 1707758994,
+	created_at: 1702269527,
 	abi: abi,
 }
 export default PART_EVOLUTION_PROXY

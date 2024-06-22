@@ -82,7 +82,7 @@ const CARV_ACHIEVEMENTS_PROXY: Contract<typeof abi> = {
 	name: 'Carv Achievements Proxy',
 	address: '0x3aa2b3b5ae6fa41a4ea9d9eecb3a130661d4e7d4',
 	is_deprecated: false,
-	updated_at: 1707758813,
+	created_at: 1700637512,
 	abi: abi,
 }
 export default CARV_ACHIEVEMENTS_PROXY

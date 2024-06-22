@@ -907,9 +907,9 @@ const abi = [
 ] as const
 const RONIN_VRF_COORDINATOR: Contract<typeof abi> = {
 	name: 'Ronin VRF Coordinator',
-	address: '0xf9f93977d8289f1f7c88a1ca4274f79c46ee9cfb',
+	address: '0x35cf2b791976458219f1dce80eccb156781d9e59',
 	is_deprecated: false,
-	updated_at: 1702977292,
+	created_at: 1702973515,
 	abi: abi,
 }
 export default RONIN_VRF_COORDINATOR

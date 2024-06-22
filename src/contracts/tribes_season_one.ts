@@ -1166,9 +1166,9 @@ const abi = [
 ] as const
 const TRIBES_SEASON_ONE: Contract<typeof abi> = {
 	name: 'Tribes Season One',
-	address: '0xf725413164a9f5479940fdc17fe5906cd463a55c',
+	address: '0x6724ecb684b4f5a8b6cc7106b16e7922b4914b5f',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1699976898,
 	abi: abi,
 }
 export default TRIBES_SEASON_ONE

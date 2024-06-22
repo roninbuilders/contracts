@@ -206,7 +206,7 @@ const WHITELIST_DEPLOYER: Contract<typeof abi> = {
 	name: 'Whitelist Deployer',
 	address: '0x0000000000000000000000000000000000000033',
 	is_deprecated: false,
-	updated_at: 1707758798,
+	created_at: 1718826045,
 	abi: abi,
 }
 export default WHITELIST_DEPLOYER

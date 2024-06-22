@@ -809,7 +809,7 @@ const AXIE_RELEASE: Contract<typeof abi> = {
 	name: 'Axie Release',
 	address: '0x144697847f4bf184534af5945abe0fb5f1b14fba',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1642472990,
 	abi: abi,
 }
 export default AXIE_RELEASE

@@ -340,7 +340,7 @@ const MULTICALL_2: Contract<typeof abi> = {
 	name: 'Multicall 2',
 	address: '0xc76d0d0d3aa608190f78db02bf2f5aef374fc0b9',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635557898,
 	abi: abi,
 }
 export default MULTICALL_2

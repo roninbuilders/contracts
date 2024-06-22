@@ -1683,9 +1683,9 @@ const abi = [
 ] as const
 const JUNGLE_ADVENTURE_V2: Contract<typeof abi> = {
 	name: 'Jungle Adventure V2',
-	address: '0x74ff4d86208bc354f41aea2b9827592f007c95c2',
+	address: '0xb07564803eb28884467cd3c98a054e7c9477092f',
 	is_deprecated: false,
-	updated_at: 1711379169,
+	created_at: 1711379178,
 	abi: abi,
 }
 export default JUNGLE_ADVENTURE_V2

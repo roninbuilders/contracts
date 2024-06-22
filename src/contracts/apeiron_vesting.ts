@@ -710,7 +710,7 @@ const APEIRON_VESTING: Contract<typeof abi> = {
 	name: 'Apeiron Vesting',
 	address: '0x755023679f7b23ec67c366d96783ac7dfc0d6e16',
 	is_deprecated: false,
-	updated_at: 1716884030,
+	created_at: 1711423376,
 	abi: abi,
 }
 export default APEIRON_VESTING

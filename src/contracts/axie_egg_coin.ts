@@ -591,7 +591,7 @@ const AXIE_EGG_COIN: Contract<typeof abi> = {
 	name: 'Axie Egg Coin',
 	address: '0x173a2d4fa585a63acd02c107d57f932be0a71bcc',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1622180492,
 	abi: abi,
 }
 export default AXIE_EGG_COIN

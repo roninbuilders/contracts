@@ -74,7 +74,7 @@ const APEIRON_APOSTLE_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Apostle Proxy',
 	address: '0xcedb8e5c29dc498b8d805852b531849af91dfae3',
 	is_deprecated: false,
-	updated_at: 1707758980,
+	created_at: 1701710706,
 	abi: abi,
 }
 export default APEIRON_APOSTLE_PROXY

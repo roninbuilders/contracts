@@ -192,6 +192,24 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes32',
+				name: '_reqHash',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: '_randomSeed',
+				type: 'uint256',
+			},
+		],
+		name: 'adminFulfillRandomSeed',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
@@ -277,8 +295,19 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'aprsPrice',
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'aprsPrices',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -534,7 +563,55 @@ const abi = [
 				type: 'uint256',
 			},
 		],
+		name: 'primevalAnimaPrices',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
 		name: 'primevalApeironGodiverseCollectionNumbers',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'primevalAprsPrices',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -695,14 +772,19 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '_aprsPrice',
-				type: 'uint256',
+				internalType: 'uint256[][]',
+				name: '_aprsPrices',
+				type: 'uint256[][]',
 			},
 			{
 				internalType: 'uint256[][]',
 				name: '_animaPrices',
 				type: 'uint256[][]',
+			},
+			{
+				internalType: 'bool',
+				name: '_isPrimeval',
+				type: 'bool',
 			},
 		],
 		name: 'setAprsAndAnimaPrices',
@@ -966,9 +1048,9 @@ const abi = [
 ] as const
 const BREED_PLANET: Contract<typeof abi> = {
 	name: 'Breed Planet',
-	address: '0xe862af84683aac9572e0780b0e6eb44f9cf3bb76',
+	address: '0x6c832ab32f6b3e791cc00325878fc5d148ce87d7',
 	is_deprecated: false,
-	updated_at: 1702972187,
+	created_at: 1711267502,
 	abi: abi,
 }
 export default BREED_PLANET

@@ -779,7 +779,7 @@ const GIFTS: Contract<typeof abi> = {
 	name: 'Gifts',
 	address: '0xc1f6fbc6da4234239f44becce0438545f8cdbf5e',
 	is_deprecated: false,
-	updated_at: 1707758983,
+	created_at: 1696867423,
 	abi: abi,
 }
 export default GIFTS

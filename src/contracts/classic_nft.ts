@@ -897,7 +897,7 @@ const CLASSIC_NFT: Contract<typeof abi> = {
 	name: 'Classic NFT',
 	address: '0x64c1cd70330199e7693c14262f75463ef24e90cf',
 	is_deprecated: false,
-	updated_at: 1717375149,
+	created_at: 1714829790,
 	abi: abi,
 }
 export default CLASSIC_NFT

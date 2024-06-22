@@ -149,7 +149,7 @@ const ZKMESBT_UPGRADEABLE_PROXY: Contract<typeof abi> = {
 	name: 'ZKMESBT Upgradeable Proxy',
 	address: '0x5c2bfcf9c17cd53d55033769727196736cd188b3',
 	is_deprecated: false,
-	updated_at: 1717375145,
+	created_at: 1716794872,
 	abi: abi,
 }
 export default ZKMESBT_UPGRADEABLE_PROXY

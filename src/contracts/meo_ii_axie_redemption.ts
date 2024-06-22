@@ -383,7 +383,7 @@ const MEO_II_AXIE_REDEMPTION: Contract<typeof abi> = {
 	name: 'Meo II Axie Redemption',
 	address: '0xbcba374d3ae40a19e41c00331b66642945a773f2',
 	is_deprecated: false,
-	updated_at: 1707758992,
+	created_at: 1622180510,
 	abi: abi,
 }
 export default MEO_II_AXIE_REDEMPTION

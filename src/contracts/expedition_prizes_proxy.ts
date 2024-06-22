@@ -72,9 +72,9 @@ const abi = [
 ] as const
 const EXPEDITION_PRIZES_PROXY: Contract<typeof abi> = {
 	name: 'Expedition Prizes Proxy',
-	address: '0x4bf924e85828464bfa65104b7633ad0e0881a45d',
+	address: '0xf767c2a449778d4bed3a930c20ecb7e84e3f108b',
 	is_deprecated: false,
-	updated_at: 1707758988,
+	created_at: 1704968036,
 	abi: abi,
 }
 export default EXPEDITION_PRIZES_PROXY

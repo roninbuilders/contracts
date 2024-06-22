@@ -254,9 +254,9 @@ const abi = [
 ] as const
 const VX_SLICE_DISPENSER: Contract<typeof abi> = {
 	name: 'VX Slice Dispenser',
-	address: '0xd4e3998aaba7a24cc50490e381ed715662435da2',
+	address: '0xa29f42b93303b1dd666dc0dc82f2acf7ce7e2cbf',
 	is_deprecated: false,
-	updated_at: 1711385771,
+	created_at: 1711385862,
 	abi: abi,
 }
 export default VX_SLICE_DISPENSER

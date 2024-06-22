@@ -213,7 +213,7 @@ const PYTH_ORACLE: Contract<typeof abi> = {
 	name: 'Pyth Oracle',
 	address: '0x41b3805bafc04c498de063888445783139aa9f6d',
 	is_deprecated: false,
-	updated_at: 1710117525,
+	created_at: 1706644418,
 	abi: abi,
 }
 export default PYTH_ORACLE

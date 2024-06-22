@@ -703,7 +703,7 @@ const ANIMA: Contract<typeof abi> = {
 	name: 'Anima',
 	address: '0xf80132fc0a86add011bffce3aedd60a86e3d704d',
 	is_deprecated: false,
-	updated_at: 1709724538,
+	created_at: 1709724139,
 	abi: abi,
 }
 export default ANIMA

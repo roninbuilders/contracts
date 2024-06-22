@@ -500,7 +500,7 @@ const WILD_FOREST_CLAIM_NFT: Contract<typeof abi> = {
 	name: 'Wild Forest Claim Nft',
 	address: '0x580e8f220f89d2417ce017dcd6f6bc5de82399b7',
 	is_deprecated: false,
-	updated_at: 1717767490,
+	created_at: 1715159266,
 	abi: abi,
 }
 export default WILD_FOREST_CLAIM_NFT

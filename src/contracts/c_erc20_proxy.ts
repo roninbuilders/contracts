@@ -334,9 +334,9 @@ const abi = [
 ] as const
 const C_ERC20_PROXY: Contract<typeof abi> = {
 	name: 'C Erc20 Proxy',
-	address: '0x446450d57b4f26691b6cfac92badba5c8d875a4e',
+	address: '0x3ebc36b9545b4b858b1f233d8f2d933c0858f5f4',
 	is_deprecated: false,
-	updated_at: 1707758814,
+	created_at: 1684958689,
 	abi: abi,
 }
 export default C_ERC20_PROXY

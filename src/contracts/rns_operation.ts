@@ -254,7 +254,7 @@ const RNS_OPERATION: Contract<typeof abi> = {
 	name: 'RNS Operation',
 	address: '0xcd245263eddee593a5a66f93f74c58c544957339',
 	is_deprecated: false,
-	updated_at: 1717375145,
+	created_at: 1710307789,
 	abi: abi,
 }
 export default RNS_OPERATION

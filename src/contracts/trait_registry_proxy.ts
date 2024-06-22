@@ -81,7 +81,7 @@ const TRAIT_REGISTRY_PROXY: Contract<typeof abi> = {
 	name: 'Trait Registry Proxy',
 	address: '0x66d017f2d6719b494ae6e86dd46c1b300c233310',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1710943466,
 	abi: abi,
 }
 export default TRAIT_REGISTRY_PROXY

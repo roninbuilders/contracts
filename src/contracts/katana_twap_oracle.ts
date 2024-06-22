@@ -163,7 +163,7 @@ const KATANA_TWAP_ORACLE: Contract<typeof abi> = {
 	name: 'Katana TWAP Oracle',
 	address: '0x3ea08443db91f3cbf1fbcad2b2d1ca3f4c582fbf',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1684958659,
 	abi: abi,
 }
 export default KATANA_TWAP_ORACLE

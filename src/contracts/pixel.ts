@@ -17,6 +17,11 @@ const abi = [
 				name: 'minter',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: 'cappedSupply_',
+				type: 'uint256',
+			},
 		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
@@ -40,6 +45,22 @@ const abi = [
 			},
 		],
 		name: 'AccessControlUnauthorizedAccount',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'increasedSupply',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'cap',
+				type: 'uint256',
+			},
+		],
+		name: 'ERC20ExceededCap',
 		type: 'error',
 	},
 	{
@@ -93,6 +114,17 @@ const abi = [
 			},
 		],
 		name: 'ERC20InvalidApprover',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'cap',
+				type: 'uint256',
+			},
+		],
+		name: 'ERC20InvalidCap',
 		type: 'error',
 	},
 	{
@@ -428,6 +460,19 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'cap',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'decimals',
 		outputs: [
 			{
@@ -695,9 +740,9 @@ const abi = [
 ] as const
 const PIXEL: Contract<typeof abi> = {
 	name: 'PIXEL',
-	address: '0x8b50c162494567b3c8b7f00f6031341861c8deed',
+	address: '0x8d6e0c799e1ca0d5c524f05ae67174417a3f297f',
 	is_deprecated: true,
-	updated_at: 1707758828,
+	created_at: 1706113899,
 	abi: abi,
 }
 export default PIXEL

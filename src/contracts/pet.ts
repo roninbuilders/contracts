@@ -964,7 +964,7 @@ const PET: Contract<typeof abi> = {
 	name: 'PET',
 	address: '0xb806028b6ebc35926442770a8a8a7aeab6e2ce5c',
 	is_deprecated: false,
-	updated_at: 1707758989,
+	created_at: 1698083886,
 	abi: abi,
 }
 export default PET

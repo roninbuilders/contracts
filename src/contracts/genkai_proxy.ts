@@ -79,7 +79,7 @@ const GENKAI_PROXY: Contract<typeof abi> = {
 	name: 'Genkai Proxy',
 	address: '0x1f7c16fce4fc894143afb5545bf04f676bf7dcf3',
 	is_deprecated: false,
-	updated_at: 1707758994,
+	created_at: 1690391469,
 	abi: abi,
 }
 export default GENKAI_PROXY

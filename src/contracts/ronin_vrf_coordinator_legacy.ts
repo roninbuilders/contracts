@@ -945,7 +945,7 @@ const RONIN_VRF_COORDINATOR_LEGACY: Contract<typeof abi> = {
 	name: 'Ronin VRF Coordinator Legacy',
 	address: '0x309971c1bb60dea6d1d85f2424773fc4e2c92e93',
 	is_deprecated: false,
-	updated_at: 1711349472,
+	created_at: 1711104211,
 	abi: abi,
 }
 export default RONIN_VRF_COORDINATOR_LEGACY

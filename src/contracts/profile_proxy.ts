@@ -162,7 +162,7 @@ const PROFILE_PROXY: Contract<typeof abi> = {
 	name: 'Profile Proxy',
 	address: '0x840ebf1ca767cb690029e91856a357a43b85d035',
 	is_deprecated: false,
-	updated_at: 1707758993,
+	created_at: 1707758993,
 	abi: abi,
 }
 export default PROFILE_PROXY

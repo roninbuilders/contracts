@@ -569,7 +569,7 @@ const NAME_CHECKER: Contract<typeof abi> = {
 	name: 'Name Checker',
 	address: '0x5ada2a3e8a56c43f3d7e306a606ec5561bf0b2fc',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default NAME_CHECKER

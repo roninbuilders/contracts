@@ -301,7 +301,7 @@ const WILD_FOREST_TOKEN: Contract<typeof abi> = {
 	name: 'Wild Forest Token',
 	address: '0x363c3b97152e161cea85e0e5dc52dfdca01a2db1',
 	is_deprecated: false,
-	updated_at: 1707758982,
+	created_at: 1699365352,
 	abi: abi,
 }
 export default WILD_FOREST_TOKEN

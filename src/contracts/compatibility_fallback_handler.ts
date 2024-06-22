@@ -328,7 +328,7 @@ const COMPATIBILITY_FALLBACK_HANDLER: Contract<typeof abi> = {
 	name: 'Compatibility Fallback Handler',
 	address: '0xf48f2b2d2a534e402487b3ee7c18c33aec0fe5e4',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635392419,
 	abi: abi,
 }
 export default COMPATIBILITY_FALLBACK_HANDLER

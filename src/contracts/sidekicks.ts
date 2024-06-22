@@ -1441,7 +1441,7 @@ const SIDEKICKS: Contract<typeof abi> = {
 	name: 'Sidekicks',
 	address: '0x97797358f0d12aee117209c15d964ee0022bf1aa',
 	is_deprecated: false,
-	updated_at: 1707758826,
+	created_at: 1684211894,
 	abi: abi,
 }
 export default SIDEKICKS

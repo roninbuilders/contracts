@@ -74,7 +74,7 @@ const AAP_REWARD_PROXY: Contract<typeof abi> = {
 	name: 'AAP Reward Proxy',
 	address: '0xa5cb85d2910e7b384afa3121e7d0a6f623b05da3',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1701768142,
 	abi: abi,
 }
 export default AAP_REWARD_PROXY

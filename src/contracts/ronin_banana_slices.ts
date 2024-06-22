@@ -553,7 +553,7 @@ const RONIN_BANANA_SLICES: Contract<typeof abi> = {
 	name: 'Ronin Banana Slices',
 	address: '0xa2c2a77af812480358a392acc52044b6f0d30ea4',
 	is_deprecated: false,
-	updated_at: 1711220400,
+	created_at: 1711197701,
 	abi: abi,
 }
 export default RONIN_BANANA_SLICES

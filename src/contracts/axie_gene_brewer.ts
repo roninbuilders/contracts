@@ -437,7 +437,7 @@ const AXIE_GENE_BREWER: Contract<typeof abi> = {
 	name: 'Axie Gene Brewer',
 	address: '0x54e91daf9362900f94d32bd084beff4bdb73ea62',
 	is_deprecated: false,
-	updated_at: 1707758808,
+	created_at: 1619683208,
 	abi: abi,
 }
 export default AXIE_GENE_BREWER

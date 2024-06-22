@@ -67,7 +67,7 @@ const DISPERSE: Contract<typeof abi> = {
 	name: 'Disperse',
 	address: '0x14978681c5f8ce2f6b66d1f1551b0ec67405574c',
 	is_deprecated: true,
-	updated_at: 1707758981,
+	created_at: 1620737178,
 	abi: abi,
 }
 export default DISPERSE

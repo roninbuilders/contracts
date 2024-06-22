@@ -149,7 +149,7 @@ const WHITELIST_DEPLOYER_V2_PROXY: Contract<typeof abi> = {
 	name: 'Whitelist Deployer V2 Proxy',
 	address: '0xc1876d5c4bfaf0ee325e4226b2bdf216d9896ae1',
 	is_deprecated: false,
-	updated_at: 1707758818,
+	created_at: 1696401911,
 	abi: abi,
 }
 export default WHITELIST_DEPLOYER_V2_PROXY

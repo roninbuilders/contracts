@@ -2620,7 +2620,7 @@ const AXIE_LOGIC: Contract<typeof abi> = {
 	name: 'Axie Logic',
 	address: '0x05e891caa33fffe8614d6418ac136fa8614bd29e',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1638422021,
 	abi: abi,
 }
 export default AXIE_LOGIC

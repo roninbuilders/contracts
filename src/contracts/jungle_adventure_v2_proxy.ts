@@ -81,7 +81,7 @@ const JUNGLE_ADVENTURE_V2_PROXY: Contract<typeof abi> = {
 	name: 'Jungle Adventure V2 Proxy',
 	address: '0x0a9e7795ab1d691986b8f944f99560a7ed9e0708',
 	is_deprecated: false,
-	updated_at: 1711327158,
+	created_at: 1711311665,
 	abi: abi,
 }
 export default JUNGLE_ADVENTURE_V2_PROXY

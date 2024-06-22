@@ -79,7 +79,7 @@ const LAND_DELEGATION_PROXY: Contract<typeof abi> = {
 	name: 'Land Delegation Proxy',
 	address: '0x6e1c680981a101bf6dc794e1d3ba7fa496eea12e',
 	is_deprecated: false,
-	updated_at: 1718584803,
+	created_at: 1705558633,
 	abi: abi,
 }
 export default LAND_DELEGATION_PROXY

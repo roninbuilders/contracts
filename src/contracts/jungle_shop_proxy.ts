@@ -81,7 +81,7 @@ const JUNGLE_SHOP_PROXY: Contract<typeof abi> = {
 	name: 'Jungle Shop Proxy',
 	address: '0xe206b322fe38eda3df95558e80d877a9e98bdc1a',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1710943490,
 	abi: abi,
 }
 export default JUNGLE_SHOP_PROXY

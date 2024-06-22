@@ -756,7 +756,7 @@ const MATERIAL_ERC1155: Contract<typeof abi> = {
 	name: 'Material ERC1155',
 	address: '0x3dc7450004eaee078d4d2b7409f9668b1a1fd50c',
 	is_deprecated: false,
-	updated_at: 1704869104,
+	created_at: 1701241466,
 	abi: abi,
 }
 export default MATERIAL_ERC1155

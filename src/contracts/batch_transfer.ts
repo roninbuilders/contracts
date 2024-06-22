@@ -84,7 +84,7 @@ const BATCH_TRANSFER: Contract<typeof abi> = {
 	name: 'Batch Transfer',
 	address: '0xd51dc8f3885d48736da2759fa91ffcc85801dc6f',
 	is_deprecated: false,
-	updated_at: 1708386985,
+	created_at: 1707441496,
 	abi: abi,
 }
 export default BATCH_TRANSFER

@@ -404,7 +404,7 @@ const PAUSE_ENFORCER: Contract<typeof abi> = {
 	name: 'Pause Enforcer',
 	address: '0x2367cd5468c2b3cd18aa74adb7e14e43426af837',
 	is_deprecated: false,
-	updated_at: 1707758989,
+	created_at: 1684208936,
 	abi: abi,
 }
 export default PAUSE_ENFORCER

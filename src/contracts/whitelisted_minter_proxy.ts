@@ -148,7 +148,7 @@ const WHITELISTED_MINTER_PROXY: Contract<typeof abi> = {
 	name: 'Whitelisted Minter Proxy',
 	address: '0xd3a7de6a7e82f8d4b0fe7486cc828f4b1a1f4df8',
 	is_deprecated: false,
-	updated_at: 1717375140,
+	created_at: 1716974181,
 	abi: abi,
 }
 export default WHITELISTED_MINTER_PROXY

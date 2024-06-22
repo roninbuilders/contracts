@@ -79,7 +79,7 @@ const KATANA_GOVERNANCE_PROXY: Contract<typeof abi> = {
 	name: 'Katana Governance Proxy',
 	address: '0x2c1726346d83cbf848bd3c2b208ec70d32a9e44a',
 	is_deprecated: false,
-	updated_at: 1717375161,
+	created_at: 1716205744,
 	abi: abi,
 }
 export default KATANA_GOVERNANCE_PROXY

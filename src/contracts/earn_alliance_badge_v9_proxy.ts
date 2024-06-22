@@ -74,7 +74,7 @@ const EARN_ALLIANCE_BADGE_V9_PROXY: Contract<typeof abi> = {
 	name: 'Earn Alliance Badge V9 Proxy',
 	address: '0x9fcd21120fc5fdd2e69650714f58688517fed56b',
 	is_deprecated: false,
-	updated_at: 1718584792,
+	created_at: 1718505641,
 	abi: abi,
 }
 export default EARN_ALLIANCE_BADGE_V9_PROXY

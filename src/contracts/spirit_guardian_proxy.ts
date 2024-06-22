@@ -149,7 +149,7 @@ const SPIRIT_GUARDIAN_PROXY: Contract<typeof abi> = {
 	name: 'Spirit Guardian Proxy',
 	address: '0x512a731f1ac0cc2992bc0399d157ad4a409602fd',
 	is_deprecated: false,
-	updated_at: 1718584783,
+	created_at: 1718059585,
 	abi: abi,
 }
 export default SPIRIT_GUARDIAN_PROXY

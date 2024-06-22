@@ -81,7 +81,7 @@ const VX_SLICE_DISPENSER_PROXY: Contract<typeof abi> = {
 	name: 'VX Slice Dispenser Proxy',
 	address: '0xd9696466ca9c3211643e4f150917776d940e7faf',
 	is_deprecated: false,
-	updated_at: 1711327158,
+	created_at: 1711200662,
 	abi: abi,
 }
 export default VX_SLICE_DISPENSER_PROXY

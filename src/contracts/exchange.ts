@@ -863,7 +863,7 @@ const EXCHANGE: Contract<typeof abi> = {
 	name: 'Exchange',
 	address: '0xd873aca0c666a306e452baf090837d786515ec3f',
 	is_deprecated: true,
-	updated_at: 0,
+	created_at: 1638422036,
 	abi: abi,
 }
 export default EXCHANGE

@@ -1758,7 +1758,7 @@ const C_ETHER: Contract<typeof abi> = {
 	name: 'C Ether',
 	address: '0x82e5030a8f1c08ffe8fd14a09cbffdb5ce26e388',
 	is_deprecated: false,
-	updated_at: 1703629772,
+	created_at: 1681170010,
 	abi: abi,
 }
 export default C_ETHER

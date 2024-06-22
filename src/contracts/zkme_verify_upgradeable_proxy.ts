@@ -149,7 +149,7 @@ const ZKME_VERIFY_UPGRADEABLE_PROXY: Contract<typeof abi> = {
 	name: 'ZKME Verify Upgradeable Proxy',
 	address: '0x3919bdce285e82cdc6585979cfd71636b33a5582',
 	is_deprecated: false,
-	updated_at: 1717375168,
+	created_at: 1716794923,
 	abi: abi,
 }
 export default ZKME_VERIFY_UPGRADEABLE_PROXY

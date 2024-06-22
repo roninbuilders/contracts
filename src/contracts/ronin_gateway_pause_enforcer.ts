@@ -411,7 +411,7 @@ const RONIN_GATEWAY_PAUSE_ENFORCER: Contract<typeof abi> = {
 	name: 'Ronin Gateway Pause Enforcer',
 	address: '0x09e575648220783fc30e8d78919037e7dc99e83e',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1680751659,
 	abi: abi,
 }
 export default RONIN_GATEWAY_PAUSE_ENFORCER

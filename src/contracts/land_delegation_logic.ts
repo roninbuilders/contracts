@@ -1778,7 +1778,7 @@ const LAND_DELEGATION_LOGIC: Contract<typeof abi> = {
 	name: 'Land Delegation Logic',
 	address: '0x8d34da00d712a5aa5444f7619ac6390abfb6e9e4',
 	is_deprecated: false,
-	updated_at: 1706686797,
+	created_at: 1705558627,
 	abi: abi,
 }
 export default LAND_DELEGATION_LOGIC

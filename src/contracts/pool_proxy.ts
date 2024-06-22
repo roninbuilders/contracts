@@ -112,7 +112,7 @@ const POOL_PROXY: Contract<typeof abi> = {
 	name: 'Pool Proxy',
 	address: '0x083f0011d20e3fe11e4cb37ec60e23e534150f95',
 	is_deprecated: false,
-	updated_at: 1718584728,
+	created_at: 1717481274,
 	abi: abi,
 }
 export default POOL_PROXY

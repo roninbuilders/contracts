@@ -682,9 +682,9 @@ const abi = [
 ] as const
 const NYANG_KIT: Contract<typeof abi> = {
 	name: 'Nyang Kit',
-	address: '0xbdf83ebc264b7692f0a3c17459660212eea08d53',
+	address: '0xb49c4fb258ae733c22b16fea699db46c7844bbba',
 	is_deprecated: false,
-	updated_at: 1716518621,
+	created_at: 1716285875,
 	abi: abi,
 }
 export default NYANG_KIT

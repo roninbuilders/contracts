@@ -20,7 +20,7 @@ const ECOSYSTEM_FUND: Contract<typeof abi> = {
 	name: 'Ecosystem Fund',
 	address: '0x1e7d74b6279e66f3dc6c0e50e69fb8da13432ba5',
 	is_deprecated: false,
-	updated_at: 1707758992,
+	created_at: 1660893825,
 	abi: abi,
 }
 export default ECOSYSTEM_FUND

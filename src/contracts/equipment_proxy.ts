@@ -81,7 +81,7 @@ const EQUIPMENT_PROXY: Contract<typeof abi> = {
 	name: 'Equipment Proxy',
 	address: '0x7bc7e63e55e5a174efc70296a37629ddc72311dd',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1711312661,
 	abi: abi,
 }
 export default EQUIPMENT_PROXY

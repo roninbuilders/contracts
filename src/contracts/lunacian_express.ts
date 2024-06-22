@@ -149,7 +149,7 @@ const LUNACIAN_EXPRESS: Contract<typeof abi> = {
 	name: 'Lunacian Express',
 	address: '0x20dad05af3f2663c652495f3e581b3fed926f39c',
 	is_deprecated: false,
-	updated_at: 1707758984,
+	created_at: 1668593188,
 	abi: abi,
 }
 export default LUNACIAN_EXPRESS

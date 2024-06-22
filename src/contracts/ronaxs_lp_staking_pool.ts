@@ -262,7 +262,7 @@ const RONAXS_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'RONAXS LP Staking Pool',
 	address: '0x14327fa6a4027d8f08c0a1b7feddd178156e9527',
 	is_deprecated: false,
-	updated_at: 1707758814,
+	created_at: 1675138513,
 	abi: abi,
 }
 export default RONAXS_LP_STAKING_POOL

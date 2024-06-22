@@ -892,9 +892,9 @@ const abi = [
 ] as const
 const APEIRON_PLANET: Contract<typeof abi> = {
 	name: 'Apeiron Planet',
-	address: '0x74d42ba94de31134dcff19b45e16093531b5ca13',
+	address: '0xb1b4e5a675371aff0303ffb9945cf5560d3ae212',
 	is_deprecated: false,
-	updated_at: 1702637477,
+	created_at: 1702643248,
 	abi: abi,
 }
 export default APEIRON_PLANET

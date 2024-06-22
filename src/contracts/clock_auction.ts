@@ -886,7 +886,7 @@ const CLOCK_AUCTION: Contract<typeof abi> = {
 	name: 'Clock Auction',
 	address: '0x004965ea925a7cc0dfa9c080bba9249aef5e9d54',
 	is_deprecated: true,
-	updated_at: 0,
+	created_at: 1632220760,
 	abi: abi,
 }
 export default CLOCK_AUCTION

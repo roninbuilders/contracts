@@ -262,7 +262,7 @@ const AXSWETH_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'AXSWETH LP Staking Pool',
 	address: '0x487671acdea3745b6dac3ae8d1757b44a04bfe8a',
 	is_deprecated: false,
-	updated_at: 1707759004,
+	created_at: 1635157104,
 	abi: abi,
 }
 export default AXSWETH_LP_STAKING_POOL

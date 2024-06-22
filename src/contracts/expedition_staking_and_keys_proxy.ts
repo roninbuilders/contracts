@@ -74,7 +74,7 @@ const EXPEDITION_STAKING_AND_KEYS_PROXY: Contract<typeof abi> = {
 	name: 'Expedition Staking And Keys Proxy',
 	address: '0x19fac10f3aa6e24a2e3488549c39c5679bd3e528',
 	is_deprecated: false,
-	updated_at: 1707758982,
+	created_at: 1704968000,
 	abi: abi,
 }
 export default EXPEDITION_STAKING_AND_KEYS_PROXY

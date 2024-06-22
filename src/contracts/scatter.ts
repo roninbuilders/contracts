@@ -69,7 +69,7 @@ const SCATTER: Contract<typeof abi> = {
 	name: 'Scatter',
 	address: '0x5d518933351a0bc14b24b329b33b813565608769',
 	is_deprecated: false,
-	updated_at: 1707758833,
+	created_at: 1677829119,
 	abi: abi,
 }
 export default SCATTER

@@ -343,7 +343,7 @@ const STAKING_MANAGER: Contract<typeof abi> = {
 	name: 'Staking Manager',
 	address: '0x8bd81a19420bad681b7bfc20e703ebd8e253782d',
 	is_deprecated: false,
-	updated_at: 1707758989,
+	created_at: 1632969648,
 	abi: abi,
 }
 export default STAKING_MANAGER

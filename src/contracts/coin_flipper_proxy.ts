@@ -79,7 +79,7 @@ const COIN_FLIPPER_PROXY: Contract<typeof abi> = {
 	name: 'Coin Flipper Proxy',
 	address: '0xf8bc646ec90c6dbc36e2419f9976737e652cf9c1',
 	is_deprecated: false,
-	updated_at: 1717375358,
+	created_at: 1715902755,
 	abi: abi,
 }
 export default COIN_FLIPPER_PROXY

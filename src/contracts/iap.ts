@@ -278,7 +278,7 @@ const IAP: Contract<typeof abi> = {
 	name: 'IAP',
 	address: '0xcaef47717e49c82deec1a2eebde6d1f5bebfd3ba',
 	is_deprecated: false,
-	updated_at: 1707758981,
+	created_at: 1688028591,
 	abi: abi,
 }
 export default IAP

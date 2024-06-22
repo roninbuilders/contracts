@@ -317,7 +317,7 @@ const RONIN_WETH_GATEWAY: Contract<typeof abi> = {
 	name: 'Ronin WETH Gateway',
 	address: '0x6abc078a2392abed76c23ade45883227b46f305d',
 	is_deprecated: false,
-	updated_at: 1707759004,
+	created_at: 1612339763,
 	abi: abi,
 }
 export default RONIN_WETH_GATEWAY

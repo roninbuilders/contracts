@@ -213,7 +213,7 @@ const COLLATERAL_STAKING_MANAGER_PROXY: Contract<typeof abi> = {
 	name: 'Collateral Staking Manager Proxy',
 	address: '0xc52b45fa1c7d5e9837737b5dfea00440d6875deb',
 	is_deprecated: false,
-	updated_at: 1707758807,
+	created_at: 1673981460,
 	abi: abi,
 }
 export default COLLATERAL_STAKING_MANAGER_PROXY

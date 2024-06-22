@@ -914,7 +914,7 @@ const GUILD_MEMBERSHIPS: Contract<typeof abi> = {
 	name: 'Guild Memberships',
 	address: '0x7ac8de4b2d37ac6136be285ee7060e8676c9644f',
 	is_deprecated: false,
-	updated_at: 1710117535,
+	created_at: 1709648251,
 	abi: abi,
 }
 export default GUILD_MEMBERSHIPS

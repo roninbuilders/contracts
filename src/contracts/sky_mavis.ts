@@ -20,7 +20,7 @@ const SKY_MAVIS: Contract<typeof abi> = {
 	name: 'Sky Mavis',
 	address: '0x41d8cf42236ae15cc7b0c0df619a95822d7ad423',
 	is_deprecated: false,
-	updated_at: 1707758991,
+	created_at: 1660732269,
 	abi: abi,
 }
 export default SKY_MAVIS

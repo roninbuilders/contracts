@@ -81,7 +81,7 @@ const JUNGLE_LOTTERY_PROXY: Contract<typeof abi> = {
 	name: 'Jungle Lottery Proxy',
 	address: '0x083a79beeafc368a8c97df63726ed54cdb26556a',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1711312190,
 	abi: abi,
 }
 export default JUNGLE_LOTTERY_PROXY

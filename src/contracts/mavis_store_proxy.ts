@@ -149,7 +149,7 @@ const MAVIS_STORE_PROXY: Contract<typeof abi> = {
 	name: 'Mavis Store Proxy',
 	address: '0x8a28c188a067dfa6aaec36e2b67b34d2c3042df9',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1701069325,
 	abi: abi,
 }
 export default MAVIS_STORE_PROXY

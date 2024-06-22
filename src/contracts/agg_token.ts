@@ -618,7 +618,7 @@ const AGG_TOKEN: Contract<typeof abi> = {
 	name: 'AGG Token',
 	address: '0x294311a8c37f0744f99eb152c419d4d3d6fec1c7',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1702606905,
 	abi: abi,
 }
 export default AGG_TOKEN

@@ -147,9 +147,9 @@ const abi = [
 ] as const
 const WILD_FOREST_NFT_PROXY: Contract<typeof abi> = {
 	name: 'Wild Forest Nft Proxy',
-	address: '0xa899849929e113315200609be208e6a0858f645c',
+	address: '0xa1ce53b661be73bf9a5edd3f0087484f0e3e7363',
 	is_deprecated: false,
-	updated_at: 1710117525,
+	created_at: 1708012009,
 	abi: abi,
 }
 export default WILD_FOREST_NFT_PROXY

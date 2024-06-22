@@ -79,7 +79,7 @@ const ERC20_STAKING_PROXY_FACTORY_PROXY: Contract<typeof abi> = {
 	name: 'ERC20 Staking Proxy Factory Proxy',
 	address: '0xae1e5cd7360bb7d66e8a01febef8441902aeefea',
 	is_deprecated: false,
-	updated_at: 1717375094,
+	created_at: 1716206167,
 	abi: abi,
 }
 export default ERC20_STAKING_PROXY_FACTORY_PROXY

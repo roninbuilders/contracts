@@ -328,7 +328,7 @@ const SABLIER: Contract<typeof abi> = {
 	name: 'Sablier',
 	address: '0xde9dcc27aa1552d591fc9b9c21881fee43bd8118',
 	is_deprecated: false,
-	updated_at: 1707758819,
+	created_at: 1658215141,
 	abi: abi,
 }
 export default SABLIER

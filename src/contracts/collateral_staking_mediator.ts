@@ -45,6 +45,27 @@ const abi = [
 		constant: true,
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'activeCollateralizedValidators',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'stakingManager',
 				type: 'address',
@@ -118,6 +139,47 @@ const abi = [
 		type: 'function',
 	},
 	{
+		constant: true,
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'collateralizedDelegatingAmountPerValidator',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'consensusAddrTarget',
+				type: 'address',
+			},
+		],
+		name: 'delegateCollateralizedRon',
+		outputs: [],
+		payable: true,
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
 		constant: false,
 		inputs: [
 			{
@@ -130,6 +192,21 @@ const abi = [
 		outputs: [],
 		payable: true,
 		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'getActiveCollateralizedValidators',
+		outputs: [
+			{
+				internalType: 'address[]',
+				name: '',
+				type: 'address[]',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -223,6 +300,26 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'consensusAddr',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'consensusAddrTarget',
+				type: 'address',
+			},
+		],
+		name: 'moveUncollateralizedRonToProtocol',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address',
 				name: '',
 				type: 'address',
 			},
@@ -283,6 +380,31 @@ const abi = [
 				name: 'consensusAddrList',
 				type: 'address[]',
 			},
+			{
+				internalType: 'uint256[]',
+				name: 'redeemTokens',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'address payable',
+				name: 'to',
+				type: 'address',
+			},
+		],
+		name: 'redeemCollateralizedRon',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'consensusAddrList',
+				type: 'address[]',
+			},
 		],
 		name: 'redelegateRewards',
 		outputs: [],
@@ -305,6 +427,26 @@ const abi = [
 			},
 		],
 		name: 'restakePendingRewards',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'consensusAddrSrc',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'consensusAddrDst',
+				type: 'address',
+			},
+		],
+		name: 'setValidatorTargetsForRestaking',
 		outputs: [],
 		payable: false,
 		stateMutability: 'nonpayable',
@@ -481,12 +623,54 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
+	{
+		constant: true,
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'validatorToRestakingTarget',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'validatorUsedForCollateral',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
 ] as const
 const COLLATERAL_STAKING_MEDIATOR: Contract<typeof abi> = {
 	name: 'Collateral Staking Mediator',
-	address: '0x34e6583ef114b84336a7343cae8c4d33a95dc631',
+	address: '0xec8adb923ac6637ac591cbb2a0d0b2d52d41494f',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1692116109,
 	abi: abi,
 }
 export default COLLATERAL_STAKING_MEDIATOR

@@ -769,7 +769,7 @@ const RONWETH_LP: Contract<typeof abi> = {
 	name: 'RONWETH LP',
 	address: '0x2ecb08f87f075b5769fe543d0e52e40140575ea7',
 	is_deprecated: false,
-	updated_at: 1707758998,
+	created_at: 1643278520,
 	abi: abi,
 }
 export default RONWETH_LP

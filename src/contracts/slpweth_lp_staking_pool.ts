@@ -262,7 +262,7 @@ const SLPWETH_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'SLPWETH LP Staking Pool',
 	address: '0xd4640c26c1a31cd632d8ae1a96fe5ac135d1eb52',
 	is_deprecated: false,
-	updated_at: 1707758830,
+	created_at: 1635157080,
 	abi: abi,
 }
 export default SLPWETH_LP_STAKING_POOL

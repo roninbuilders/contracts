@@ -148,7 +148,7 @@ const RAGMON_PROXY: Contract<typeof abi> = {
 	name: 'Ragmon Proxy',
 	address: '0x029bb759353f6547fbe387e97869057849ab4d23',
 	is_deprecated: false,
-	updated_at: 1717375164,
+	created_at: 1715785382,
 	abi: abi,
 }
 export default RAGMON_PROXY

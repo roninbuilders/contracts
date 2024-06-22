@@ -149,7 +149,7 @@ const CLIQUE_ATTESTATIONS_REGISTRY: Contract<typeof abi> = {
 	name: 'Clique Attestations Registry',
 	address: '0x3803856585a7fbc6a3bca94a0b9c49a48af90dd3',
 	is_deprecated: false,
-	updated_at: 1707758815,
+	created_at: 1692001212,
 	abi: abi,
 }
 export default CLIQUE_ATTESTATIONS_REGISTRY

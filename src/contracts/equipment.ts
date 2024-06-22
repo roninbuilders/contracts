@@ -752,7 +752,7 @@ const EQUIPMENT: Contract<typeof abi> = {
 	name: 'Equipment',
 	address: '0x0ef6701d812099619a9bdd5d02417eacd72e7c70',
 	is_deprecated: false,
-	updated_at: 1712252792,
+	created_at: 1711394652,
 	abi: abi,
 }
 export default EQUIPMENT

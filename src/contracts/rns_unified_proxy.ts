@@ -79,7 +79,7 @@ const RNS_UNIFIED_PROXY: Contract<typeof abi> = {
 	name: 'RNS Unified Proxy',
 	address: '0x67c409dab0ee741a1b1be874bd1333234cfdbf44',
 	is_deprecated: false,
-	updated_at: 1707758983,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_UNIFIED_PROXY

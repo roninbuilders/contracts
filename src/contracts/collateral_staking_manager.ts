@@ -1010,7 +1010,7 @@ const COLLATERAL_STAKING_MANAGER: Contract<typeof abi> = {
 	name: 'Collateral Staking Manager',
 	address: '0x8ccd796547fcdcc96a9f464dfc02a20d3189c75a',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1689704978,
 	abi: abi,
 }
 export default COLLATERAL_STAKING_MANAGER

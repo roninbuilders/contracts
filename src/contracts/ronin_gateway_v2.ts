@@ -1,6 +1,70 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
+		inputs: [],
+		name: 'ErrCallerMustBeBridgeTrackingContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrCallerMustBeRoninTrustedOrgContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrCallerMustBeValidatorContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrZeroCodeContract',
+		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'BridgeTrackingContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'bridgeOperator',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'id',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'chainId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'bytes32',
+				name: 'receiptHash',
+				type: 'bytes32',
+			},
+		],
+		name: 'DepositVoted',
+		type: 'event',
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -95,6 +159,19 @@ const abi = [
 			},
 		],
 		name: 'Deposited',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -305,6 +382,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'RoninTrustedOrganizationContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'uint256',
 				name: 'nonce',
@@ -373,6 +463,43 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'nonce',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'numerator',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'denominator',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'previousNumerator',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'previousDenominator',
+				type: 'uint256',
+			},
+		],
+		name: 'TrustedThresholdUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'account',
@@ -387,7 +514,7 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'contract IWeightedValidator',
+				internalType: 'address',
 				name: '',
 				type: 'address',
 			},
@@ -620,6 +747,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'bridgeTrackingContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				components: [
@@ -815,7 +955,7 @@ const abi = [
 		name: 'depositVote',
 		outputs: [
 			{
-				internalType: 'enum GatewayGovernance.VoteStatus',
+				internalType: 'enum VoteStatusConsumer.VoteStatus',
 				name: 'status',
 				type: 'uint8',
 			},
@@ -823,6 +963,16 @@ const abi = [
 				internalType: 'bytes32',
 				name: 'finalHash',
 				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'expiredAt',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'createdAt',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -852,6 +1002,19 @@ const abi = [
 				internalType: 'bool',
 				name: '',
 				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'emergencyPauser',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -961,12 +1124,30 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '',
+				name: 'num_',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '',
+				name: 'denom_',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getTrustedThreshold',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'trustedNum_',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'trustedDenom_',
 				type: 'uint256',
 			},
 		],
@@ -1047,11 +1228,6 @@ const abi = [
 				type: 'address',
 			},
 			{
-				internalType: 'contract IWeightedValidator',
-				name: '_validatorContract',
-				type: 'address',
-			},
-			{
 				internalType: 'uint256',
 				name: '_numerator',
 				type: 'uint256',
@@ -1059,6 +1235,16 @@ const abi = [
 			{
 				internalType: 'uint256',
 				name: '_denominator',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_trustedNumerator',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_trustedDenominator',
 				type: 'uint256',
 			},
 			{
@@ -1117,7 +1303,7 @@ const abi = [
 		name: 'mainchainWithdrewVote',
 		outputs: [
 			{
-				internalType: 'enum GatewayGovernance.VoteStatus',
+				internalType: 'enum VoteStatusConsumer.VoteStatus',
 				name: 'status',
 				type: 'uint8',
 			},
@@ -1125,6 +1311,40 @@ const abi = [
 				internalType: 'bytes32',
 				name: 'finalHash',
 				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'expiredAt',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'createdAt',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_withdrawalId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_voter',
+				type: 'address',
+			},
+		],
+		name: 'mainchainWithdrewVoted',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -1226,6 +1446,19 @@ const abi = [
 			},
 		],
 		name: 'minimumThreshold',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'minimumTrustedVoteWeight',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -1384,6 +1617,45 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'roninTrustedOrganizationContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
+				type: 'address',
+			},
+		],
+		name: 'setBridgeTrackingContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
+				type: 'address',
+			},
+		],
+		name: 'setEmergencyPauser',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -1397,6 +1669,19 @@ const abi = [
 			},
 		],
 		name: 'setMinimumThresholds',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
+				type: 'address',
+			},
+		],
+		name: 'setRoninTrustedOrganizationContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1433,8 +1718,37 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract IWeightedValidator',
-				name: '_validatorContract',
+				internalType: 'uint256',
+				name: '_trustedNumerator',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_trustedDenominator',
+				type: 'uint256',
+			},
+		],
+		name: 'setTrustedThreshold',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_addr',
 				type: 'address',
 			},
 		],
@@ -1590,7 +1904,7 @@ const abi = [
 		name: 'validatorContract',
 		outputs: [
 			{
-				internalType: 'contract IWeightedValidator',
+				internalType: 'address',
 				name: '',
 				type: 'address',
 			},
@@ -1715,15 +2029,49 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'withdrawalStatVote',
+		outputs: [
+			{
+				internalType: 'enum VoteStatusConsumer.VoteStatus',
+				name: 'status',
+				type: 'uint8',
+			},
+			{
+				internalType: 'bytes32',
+				name: 'finalHash',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'expiredAt',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'createdAt',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		stateMutability: 'payable',
 		type: 'receive',
 	},
 ] as const
 const RONIN_GATEWAY_V2: Contract<typeof abi> = {
 	name: 'Ronin Gateway V2',
-	address: '0x75d23c8830bf28e5b88340638efc0f36e026b8a0',
+	address: '0x3036eb56e7e28851a56b87f037101ab3630933ab',
 	is_deprecated: true,
-	updated_at: 0,
+	created_at: 1680588521,
 	abi: abi,
 }
 export default RONIN_GATEWAY_V2

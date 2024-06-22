@@ -79,7 +79,7 @@ const PUBLIC_RESOLVER_PROXY: Contract<typeof abi> = {
 	name: 'Public Resolver Proxy',
 	address: '0xadb077d236d9e81fb24b96ae9cb8089ab9942d48',
 	is_deprecated: false,
-	updated_at: 1707758814,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default PUBLIC_RESOLVER_PROXY

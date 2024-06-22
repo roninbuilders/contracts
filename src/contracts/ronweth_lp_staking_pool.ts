@@ -262,7 +262,7 @@ const RONWETH_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'RONWETH LP Staking Pool',
 	address: '0xb9072cec557528f81dd25dc474d4d69564956e1e',
 	is_deprecated: false,
-	updated_at: 1707758982,
+	created_at: 1643279576,
 	abi: abi,
 }
 export default RONWETH_LP_STAKING_POOL

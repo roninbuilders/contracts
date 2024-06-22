@@ -1171,7 +1171,7 @@ const AFFILIATE_ROUTER: Contract<typeof abi> = {
 	name: 'Affiliate Router',
 	address: '0x77f96cf7b98b963fb8a9b84787806d396d953b2b',
 	is_deprecated: false,
-	updated_at: 1717375143,
+	created_at: 1716265937,
 	abi: abi,
 }
 export default AFFILIATE_ROUTER

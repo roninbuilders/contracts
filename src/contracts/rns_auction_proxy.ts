@@ -79,7 +79,7 @@ const RNS_AUCTION_PROXY: Contract<typeof abi> = {
 	name: 'RNS Auction Proxy',
 	address: '0xd55e6d80aea1ff4650bc952c1653ab3cf1b940a9',
 	is_deprecated: false,
-	updated_at: 1707758994,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_AUCTION_PROXY

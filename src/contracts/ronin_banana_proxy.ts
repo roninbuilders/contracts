@@ -79,7 +79,7 @@ const RONIN_BANANA_PROXY: Contract<typeof abi> = {
 	name: 'Ronin Banana Proxy',
 	address: '0x1a89ecd466a23e98f07111b0510a2d6c1cd5e400',
 	is_deprecated: false,
-	updated_at: 1707758584,
+	created_at: 1707758584,
 	abi: abi,
 }
 export default RONIN_BANANA_PROXY

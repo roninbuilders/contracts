@@ -1920,7 +1920,7 @@ const AXIE_PROXY: Contract<typeof abi> = {
 	name: 'Axie Proxy',
 	address: '0x32950db2a7164ae833121501c797d79e7b79d74c',
 	is_deprecated: false,
-	updated_at: 1707759006,
+	created_at: 1619607551,
 	abi: abi,
 }
 export default AXIE_PROXY

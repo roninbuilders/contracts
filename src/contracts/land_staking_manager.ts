@@ -149,7 +149,7 @@ const LAND_STAKING_MANAGER: Contract<typeof abi> = {
 	name: 'Land Staking Manager',
 	address: '0x7f27e35170472e7f107d3e55c2b9bcd44aa01dd5',
 	is_deprecated: false,
-	updated_at: 1707758984,
+	created_at: 1656494799,
 	abi: abi,
 }
 export default LAND_STAKING_MANAGER

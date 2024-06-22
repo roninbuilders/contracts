@@ -74,7 +74,7 @@ const APEIRON_BRIDGE_MINTER_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Bridge Minter Proxy',
 	address: '0x5553054bf3ec1d02ad4d76d1a7617a0144d2a2b0',
 	is_deprecated: false,
-	updated_at: 1707758996,
+	created_at: 1702607187,
 	abi: abi,
 }
 export default APEIRON_BRIDGE_MINTER_PROXY

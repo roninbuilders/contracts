@@ -412,7 +412,7 @@ const REWARD_DISTRIBUTOR: Contract<typeof abi> = {
 	name: 'Reward Distributor',
 	address: '0x1a35e7ed2a2476129a32612644c8426bf8e8730c',
 	is_deprecated: false,
-	updated_at: 1707758992,
+	created_at: 1623663697,
 	abi: abi,
 }
 export default REWARD_DISTRIBUTOR

@@ -517,7 +517,7 @@ const JUNGLE_LOTTERY: Contract<typeof abi> = {
 	name: 'Jungle Lottery',
 	address: '0xe68854b64e2b8334291541763f90140cad0834b8',
 	is_deprecated: false,
-	updated_at: 1711363949,
+	created_at: 1711312184,
 	abi: abi,
 }
 export default JUNGLE_LOTTERY

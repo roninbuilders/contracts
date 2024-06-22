@@ -62,98 +62,124 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
 						components: [
 							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
+								internalType: 'address',
+								name: 'maker',
+								type: 'address',
+							},
+							{
+								internalType: 'enum OrderKind',
+								name: 'kind',
 								type: 'uint8',
 							},
 							{
+								components: [
+									{
+										internalType: 'enum TokenStandard',
+										name: 'erc',
+										type: 'uint8',
+									},
+									{
+										internalType: 'address',
+										name: 'addr',
+										type: 'address',
+									},
+									{
+										internalType: 'uint256',
+										name: 'id',
+										type: 'uint256',
+									},
+									{
+										internalType: 'uint256',
+										name: 'quantity',
+										type: 'uint256',
+									},
+								],
+								internalType: 'struct Asset[]',
+								name: 'assets',
+								type: 'tuple[]',
+							},
+							{
+								internalType: 'uint256',
+								name: 'expiredAt',
+								type: 'uint256',
+							},
+							{
 								internalType: 'address',
-								name: 'addr',
+								name: 'paymentToken',
 								type: 'address',
 							},
 							{
 								internalType: 'uint256',
-								name: 'id',
+								name: 'startedAt',
 								type: 'uint256',
 							},
 							{
 								internalType: 'uint256',
-								name: 'quantity',
+								name: 'baseUnitPrice',
 								type: 'uint256',
 							},
+							{
+								internalType: 'uint256',
+								name: 'endedAt',
+								type: 'uint256',
+							},
+							{
+								internalType: 'uint256',
+								name: 'endedUnitPrice',
+								type: 'uint256',
+							},
+							{
+								internalType: 'uint256',
+								name: 'expectedState',
+								type: 'uint256',
+							},
+							{
+								internalType: 'uint256',
+								name: 'nonce',
+								type: 'uint256',
+							},
+							{
+								internalType: 'bytes32',
+								name: 'hash',
+								type: 'bytes32',
+							},
+							{
+								internalType: 'bool',
+								name: 'verified',
+								type: 'bool',
+							},
 						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
+						internalType: 'struct GenericOrder',
+						name: 'info',
+						type: 'tuple',
 					},
 					{
 						internalType: 'uint256',
-						name: 'expiredAt',
+						name: 'realPrice',
 						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'extraData',
+						type: 'bytes',
 					},
 					{
 						internalType: 'address',
-						name: 'paymentToken',
+						name: 'recipient',
 						type: 'address',
 					},
 					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'refunder',
+						type: 'address',
 					},
 				],
 				indexed: false,
-				internalType: 'struct MarketOrder.Order',
+				internalType: 'struct GenericOrderExtended',
 				name: 'order',
 				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'orderHash',
-				type: 'bytes32',
 			},
 			{
 				indexed: false,
@@ -172,12 +198,6 @@ const abi = [
 				internalType: 'address',
 				name: 'matcher',
 				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'realPrice',
-				type: 'uint256',
 			},
 			{
 				indexed: false,
@@ -312,19 +332,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'INTERFACE_NAME',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'MARKET_OPERATOR',
 		outputs: [
 			{
@@ -339,93 +346,9 @@ const abi = [
 	{
 		inputs: [
 			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
-								type: 'uint8',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'id',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'quantity',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiredAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct MarketOrder.Order',
-				name: '_order',
-				type: 'tuple',
+				internalType: 'bytes',
+				name: 'orderData',
+				type: 'bytes',
 			},
 		],
 		name: 'cancelOrder',
@@ -500,7 +423,7 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'enum MarketAsset.TokenStandard',
+						internalType: 'enum TokenStandard',
 						name: 'erc',
 						type: 'uint8',
 					},
@@ -520,8 +443,8 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct MarketAsset.Asset[]',
-				name: '_assets',
+				internalType: 'struct Asset[]',
+				name: 'assets',
 				type: 'tuple[]',
 			},
 		],
@@ -586,10 +509,23 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'interfaceName',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_maker',
+				name: 'maker',
 				type: 'address',
 			},
 		],
@@ -608,7 +544,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bytes32',
-				name: '_hash',
+				name: 'hash',
 				type: 'bytes32',
 			},
 		],
@@ -627,97 +563,13 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bytes32',
-				name: '_hash',
+				name: 'hash',
 				type: 'bytes32',
 			},
 			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
-								type: 'uint8',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'id',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'quantity',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiredAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct MarketOrder.Order',
-				name: '_order',
-				type: 'tuple',
+				internalType: 'bytes',
+				name: 'orderData',
+				type: 'bytes',
 			},
 		],
 		name: 'orderValid',
@@ -772,71 +624,19 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
+						internalType: 'bytes',
+						name: 'orderData',
+						type: 'bytes',
 					},
 					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
-								type: 'uint8',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'id',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'quantity',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiredAt',
-						type: 'uint256',
+						internalType: 'bytes',
+						name: 'signature',
+						type: 'bytes',
 					},
 					{
 						internalType: 'address',
-						name: 'paymentToken',
+						name: 'referralAddr',
 						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
 					},
 					{
 						internalType: 'uint256',
@@ -844,38 +644,23 @@ const abi = [
 						type: 'uint256',
 					},
 					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'recipient',
+						type: 'address',
 					},
 					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'refunder',
+						type: 'address',
 					},
 				],
-				internalType: 'struct MarketOrder.Order',
-				name: '_order',
+				internalType: 'struct SettleParameter',
+				name: 'settleInfo',
 				type: 'tuple',
 			},
 			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-			{
 				internalType: 'uint256',
-				name: '_settlePrice',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_referralAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_expectedState',
+				name: 'settlePrice',
 				type: 'uint256',
 			},
 		],
@@ -908,71 +693,19 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
+						internalType: 'bytes',
+						name: 'orderData',
+						type: 'bytes',
 					},
 					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
-								type: 'uint8',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'id',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'quantity',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiredAt',
-						type: 'uint256',
+						internalType: 'bytes',
+						name: 'signature',
+						type: 'bytes',
 					},
 					{
 						internalType: 'address',
-						name: 'paymentToken',
+						name: 'referralAddr',
 						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
 					},
 					{
 						internalType: 'uint256',
@@ -980,43 +713,28 @@ const abi = [
 						type: 'uint256',
 					},
 					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'recipient',
+						type: 'address',
 					},
 					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'refunder',
+						type: 'address',
 					},
 				],
-				internalType: 'struct MarketOrder.Order',
-				name: '_order',
+				internalType: 'struct SettleParameter',
+				name: 'settleInfo',
 				type: 'tuple',
 			},
 			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-			{
-				internalType: 'address',
-				name: '_referralAddr',
-				type: 'address',
-			},
-			{
 				internalType: 'uint256',
-				name: '_expectedState',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_deadline',
+				name: 'deadline',
 				type: 'uint256',
 			},
 			{
 				internalType: 'address[]',
-				name: '_path',
+				name: 'path',
 				type: 'address[]',
 			},
 		],
@@ -1030,71 +748,19 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
+						internalType: 'bytes',
+						name: 'orderData',
+						type: 'bytes',
 					},
 					{
-						internalType: 'enum MarketOrder.OrderKind',
-						name: 'kind',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum MarketAsset.TokenStandard',
-								name: 'erc',
-								type: 'uint8',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'id',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'quantity',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct MarketAsset.Asset[]',
-						name: 'assets',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiredAt',
-						type: 'uint256',
+						internalType: 'bytes',
+						name: 'signature',
+						type: 'bytes',
 					},
 					{
 						internalType: 'address',
-						name: 'paymentToken',
+						name: 'referralAddr',
 						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'basePrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedPrice',
-						type: 'uint256',
 					},
 					{
 						internalType: 'uint256',
@@ -1102,48 +768,33 @@ const abi = [
 						type: 'uint256',
 					},
 					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'recipient',
+						type: 'address',
 					},
 					{
-						internalType: 'uint256',
-						name: 'marketFeePercentage',
-						type: 'uint256',
+						internalType: 'address',
+						name: 'refunder',
+						type: 'address',
 					},
 				],
-				internalType: 'struct MarketOrder.Order',
-				name: '_order',
+				internalType: 'struct SettleParameter',
+				name: 'settleInfo',
 				type: 'tuple',
 			},
 			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-			{
 				internalType: 'uint256',
-				name: '_settlePrice',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_referralAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_expectedState',
+				name: 'settlePrice',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: '_deadline',
+				name: 'deadline',
 				type: 'uint256',
 			},
 			{
 				internalType: 'address[]',
-				name: '_path',
+				name: 'path',
 				type: 'address[]',
 			},
 		],
@@ -1156,7 +807,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bytes32[]',
-				name: '_hashList',
+				name: 'hashList',
 				type: 'bytes32[]',
 			},
 		],
@@ -1164,7 +815,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool[]',
-				name: '_orderAlreadyFinalized',
+				name: 'orderAlreadyFinalized',
 				type: 'bool[]',
 			},
 		],
@@ -1174,9 +825,9 @@ const abi = [
 ] as const
 const APP_AXIE_ORDER_EXCHANGE: Contract<typeof abi> = {
 	name: 'App Axie Order Exchange',
-	address: '0x0d8562a81b14fbc950656e3a3a4cdad57ccc0376',
+	address: '0xe35cbc0a0f2025e3bd9ec8e1f30644df333c820f',
 	is_deprecated: false,
-	updated_at: 1707758994,
+	created_at: 1700712603,
 	abi: abi,
 }
 export default APP_AXIE_ORDER_EXCHANGE

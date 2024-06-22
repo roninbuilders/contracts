@@ -1025,8 +1025,8 @@ const abi = [
 const KATANA_ROUTER: Contract<typeof abi> = {
 	name: 'Katana Router',
 	address: '0x7d0556d55ca1a92708681e2e231733ebd922597d',
-	is_deprecated: false,
-	updated_at: 1707759003,
+	is_deprecated: true,
+	created_at: 1635154971,
 	abi: abi,
 }
 export default KATANA_ROUTER

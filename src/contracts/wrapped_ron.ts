@@ -461,7 +461,7 @@ const WRAPPED_RON: Contract<typeof abi> = {
 	name: 'Wrapped RON',
 	address: '0xe514d9deb7966c8be0ca922de8a064264ea6bcd4',
 	is_deprecated: false,
-	updated_at: 1707758810,
+	created_at: 1635154920,
 	abi: abi,
 }
 export default WRAPPED_RON

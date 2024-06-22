@@ -148,6 +148,31 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: true,
+				internalType: 'uint256',
+				name: '_level',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_timestamp',
+				type: 'uint256',
+			},
+		],
+		name: 'AxieLevelAscended',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: '_axieId',
+				type: 'uint256',
+			},
+			{
 				components: [
 					{
 						internalType: 'uint256',
@@ -384,6 +409,19 @@ const abi = [
 			},
 		],
 		name: 'AxieggSpawned',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -633,6 +671,51 @@ const abi = [
 		type: 'event',
 	},
 	{
+		constant: true,
+		inputs: [],
+		name: 'DOMAIN_SEPARATOR',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'DOMAIN_TYPEHASH',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'PERMIT_TYPEHASH',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		constant: false,
 		inputs: [
 			{
@@ -717,6 +800,71 @@ const abi = [
 				internalType: 'bool',
 				name: '',
 				type: 'bool',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_axieId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint16',
+				name: '_level',
+				type: 'uint16',
+			},
+			{
+				internalType: 'uint256',
+				name: '_deadline',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address[]',
+				name: '',
+				type: 'address[]',
+			},
+			{
+				internalType: 'bytes',
+				name: '_signature',
+				type: 'bytes',
+			},
+		],
+		name: 'ascendLevel',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'ascendLevelFee',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'ascendLevelFeeToken',
+		outputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '',
+				type: 'address',
 			},
 		],
 		payable: false,
@@ -861,6 +1009,21 @@ const abi = [
 				internalType: 'uint256',
 				name: '_balance',
 				type: 'uint256',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: true,
+		inputs: [],
+		name: 'baseToken',
+		outputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '',
+				type: 'address',
 			},
 		],
 		payable: false,
@@ -1308,6 +1471,41 @@ const abi = [
 		],
 		payable: false,
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_preExecutionLogicContract',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_routerContract',
+				type: 'address',
+			},
+			{
+				internalType: 'contract IERC20',
+				name: '_ascendLevelFeeToken',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_ascendLevelFee',
+				type: 'uint256',
+			},
+			{
+				internalType: 'contract IERC20',
+				name: '_baseToken',
+				type: 'address',
+			},
+		],
+		name: 'initialize',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1876,6 +2074,21 @@ const abi = [
 		type: 'function',
 	},
 	{
+		constant: true,
+		inputs: [],
+		name: 'routerContract',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		payable: false,
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		constant: false,
 		inputs: [
 			{
@@ -2022,6 +2235,31 @@ const abi = [
 			},
 		],
 		name: 'setApprovalForAll',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '_ascendLevelFeeToken',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_ascendLevelFee',
+				type: 'uint256',
+			},
+			{
+				internalType: 'contract IERC20',
+				name: '_baseToken',
+				type: 'address',
+			},
+		],
+		name: 'setAscendLevelFeeInfo',
 		outputs: [],
 		payable: false,
 		stateMutability: 'nonpayable',
@@ -2232,6 +2470,21 @@ const abi = [
 			},
 		],
 		name: 'setPreExecutionLogicContract',
+		outputs: [],
+		payable: false,
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		constant: false,
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_routerContract',
+				type: 'address',
+			},
+		],
+		name: 'setRouterContract',
 		outputs: [],
 		payable: false,
 		stateMutability: 'nonpayable',
@@ -2618,9 +2871,9 @@ const abi = [
 ] as const
 const AXIE: Contract<typeof abi> = {
 	name: 'Axie',
-	address: '0xb628acacd0eb58b09bf025d80c818166df1f5759',
+	address: '0x500c4df1a66893b7e0d1797b0460b87c46d4be1e',
 	is_deprecated: false,
-	updated_at: 1707759005,
+	created_at: 1689649892,
 	abi: abi,
 }
 export default AXIE

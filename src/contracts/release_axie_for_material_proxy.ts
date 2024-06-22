@@ -149,7 +149,7 @@ const RELEASE_AXIE_FOR_MATERIAL_PROXY: Contract<typeof abi> = {
 	name: 'ReleaseAxieForMaterialProxy',
 	address: '0x65e133756d621c0a0f5bb052ba7297b61efb66e9',
 	is_deprecated: false,
-	updated_at: 1707759004,
+	created_at: 1702268420,
 	abi: abi,
 }
 export default RELEASE_AXIE_FOR_MATERIAL_PROXY

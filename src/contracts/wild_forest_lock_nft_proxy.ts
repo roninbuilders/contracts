@@ -149,7 +149,7 @@ const WILD_FOREST_LOCK_NFT_PROXY: Contract<typeof abi> = {
 	name: 'Wild Forest Lock Nft Proxy',
 	address: '0xfb597d6fa6c08f5434e6ecf69114497343ae13dd',
 	is_deprecated: false,
-	updated_at: 1718584786,
+	created_at: 1717759006,
 	abi: abi,
 }
 export default WILD_FOREST_LOCK_NFT_PROXY

@@ -79,7 +79,7 @@ const RNS_REVERSE_REGISTRAR_PROXY: Contract<typeof abi> = {
 	name: 'RNS Reverse Registrar Proxy',
 	address: '0xb8618a73cc08d2c4097d5c0e0f32fa4af4547e2f',
 	is_deprecated: false,
-	updated_at: 1707758987,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_REVERSE_REGISTRAR_PROXY

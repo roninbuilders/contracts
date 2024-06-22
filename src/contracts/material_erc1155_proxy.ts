@@ -149,7 +149,7 @@ const MATERIAL_ERC1155_PROXY: Contract<typeof abi> = {
 	name: 'Material ERC1155 Proxy',
 	address: '0x12b707c3d2786570cfdc3a998a085b62acdba4b3',
 	is_deprecated: false,
-	updated_at: 1707758988,
+	created_at: 1701241466,
 	abi: abi,
 }
 export default MATERIAL_ERC1155_PROXY

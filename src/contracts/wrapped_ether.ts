@@ -606,7 +606,7 @@ const WRAPPED_ETHER: Contract<typeof abi> = {
 	name: 'Wrapped Ether',
 	address: '0xc99a6a985ed2cac1ef41640596c5a5f9f4e19ef5',
 	is_deprecated: false,
-	updated_at: 1707758805,
+	created_at: 1611574105,
 	abi: abi,
 }
 export default WRAPPED_ETHER

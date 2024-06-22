@@ -149,7 +149,7 @@ const ZKME_CONF_UPGRADEABLE_PROXY: Contract<typeof abi> = {
 	name: 'ZKME Conf Upgradeable Proxy',
 	address: '0x809f0ff56c0ff0c046869dee8a4c6a943a9c6a1f',
 	is_deprecated: false,
-	updated_at: 1717375145,
+	created_at: 1716794902,
 	abi: abi,
 }
 export default ZKME_CONF_UPGRADEABLE_PROXY

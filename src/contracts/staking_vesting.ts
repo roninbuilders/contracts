@@ -313,7 +313,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'address payable',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -483,9 +483,9 @@ const abi = [
 ] as const
 const STAKING_VESTING: Contract<typeof abi> = {
 	name: 'Staking Vesting',
-	address: '0x5a254c12ddeb86e2f5626d59c490eb3db1974944',
+	address: '0xb63cc4b6a8ad9690d7d50bbd937622932ca2e779',
 	is_deprecated: false,
-	updated_at: 1711929564,
+	created_at: 1718685432,
 	abi: abi,
 }
 export default STAKING_VESTING

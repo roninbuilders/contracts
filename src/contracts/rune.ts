@@ -149,7 +149,7 @@ const RUNE: Contract<typeof abi> = {
 	name: 'Rune',
 	address: '0xc25970724f032af21d801978c73653c440cf787c',
 	is_deprecated: false,
-	updated_at: 1707758989,
+	created_at: 1660119559,
 	abi: abi,
 }
 export default RUNE

@@ -149,7 +149,7 @@ const AXIE_CONSUMABLE_CONSUMER_PROXY: Contract<typeof abi> = {
 	name: 'AxieConsumableConsumerProxy',
 	address: '0xeaa3d9af9c9c218dae63922c97eeee6c3f770e15',
 	is_deprecated: false,
-	updated_at: 1707758996,
+	created_at: 1702268420,
 	abi: abi,
 }
 export default AXIE_CONSUMABLE_CONSUMER_PROXY

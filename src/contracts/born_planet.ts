@@ -522,9 +522,9 @@ const abi = [
 ] as const
 const BORN_PLANET: Contract<typeof abi> = {
 	name: 'Born Planet',
-	address: '0xcd95b8b78c1ec1e5e74c41ad1f6cf5e878ceac03',
+	address: '0xe40610630997676da6356c71655f092be75e8ee7',
 	is_deprecated: false,
-	updated_at: 1702973009,
+	created_at: 1709122076,
 	abi: abi,
 }
 export default BORN_PLANET

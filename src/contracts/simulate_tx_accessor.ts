@@ -54,7 +54,7 @@ const SIMULATE_TX_ACCESSOR: Contract<typeof abi> = {
 	name: 'Simulate Tx Accessor',
 	address: '0x59ad6735bcd8152b84860cb256dd9e96b85f69da',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635392386,
 	abi: abi,
 }
 export default SIMULATE_TX_ACCESSOR

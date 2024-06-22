@@ -149,7 +149,7 @@ const MARKET_GATEWAY_PROXY: Contract<typeof abi> = {
 	name: 'Market Gateway Proxy',
 	address: '0x3b3adf1422f84254b7fbb0e7ca62bd0865133fe3',
 	is_deprecated: false,
-	updated_at: 1707758987,
+	created_at: 1682579265,
 	abi: abi,
 }
 export default MARKET_GATEWAY_PROXY

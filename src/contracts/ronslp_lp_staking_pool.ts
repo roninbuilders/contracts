@@ -262,7 +262,7 @@ const RONSLP_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'RONSLP LP Staking Pool',
 	address: '0x4e2d6466a53444248272b913c105e9281ec266d8',
 	is_deprecated: false,
-	updated_at: 1710117534,
+	created_at: 1675138581,
 	abi: abi,
 }
 export default RONSLP_LP_STAKING_POOL

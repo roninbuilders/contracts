@@ -149,7 +149,7 @@ const REWARD_DISTRIBUTOR_PROXY_FOR_AXIE_QUEST: Contract<typeof abi> = {
 	name: 'Reward Distributor Proxy For Axie Quest',
 	address: '0x21d18ae443f86a755ba47d6241c49c5bcf070bbf',
 	is_deprecated: false,
-	updated_at: 1713150124,
+	created_at: 1712906463,
 	abi: abi,
 }
 export default REWARD_DISTRIBUTOR_PROXY_FOR_AXIE_QUEST

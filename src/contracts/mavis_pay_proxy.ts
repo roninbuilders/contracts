@@ -149,7 +149,7 @@ const MAVIS_PAY_PROXY: Contract<typeof abi> = {
 	name: 'Mavis Pay Proxy',
 	address: '0x6af384e0bf2ce190e7260f8aeaeed9116bba36e3',
 	is_deprecated: false,
-	updated_at: 1707758996,
+	created_at: 1691120485,
 	abi: abi,
 }
 export default MAVIS_PAY_PROXY

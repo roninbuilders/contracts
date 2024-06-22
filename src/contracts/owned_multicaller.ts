@@ -147,7 +147,7 @@ const OWNED_MULTICALLER: Contract<typeof abi> = {
 	name: 'Owned Multicaller',
 	address: '0x8975923d01132beb6c412f827f63d44712726e13',
 	is_deprecated: false,
-	updated_at: 1707758985,
+	created_at: 1699347565,
 	abi: abi,
 }
 export default OWNED_MULTICALLER

@@ -74,7 +74,7 @@ const STAR_GODIVERSE_ATTACHMENT_PROXY: Contract<typeof abi> = {
 	name: 'Star Godiverse Attachment Proxy',
 	address: '0x1e1258d072c88c4c65123ae3917024fbedc2aea2',
 	is_deprecated: false,
-	updated_at: 1707758984,
+	created_at: 1702561686,
 	abi: abi,
 }
 export default STAR_GODIVERSE_ATTACHMENT_PROXY

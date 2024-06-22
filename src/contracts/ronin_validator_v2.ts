@@ -162,7 +162,7 @@ const RONIN_VALIDATOR_V2: Contract<typeof abi> = {
 	name: 'Ronin Validator V2',
 	address: '0x7f13232bdc3a010c3f749a1c25bf99f1c053ce70',
 	is_deprecated: false,
-	updated_at: 1707758580,
+	created_at: 1655882569,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_V2

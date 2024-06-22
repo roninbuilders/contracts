@@ -20,7 +20,7 @@ const REWARDS: Contract<typeof abi> = {
 	name: 'Rewards',
 	address: '0xd217ad3332335e5dca5ca566d35177f25d92059c',
 	is_deprecated: false,
-	updated_at: 1707758799,
+	created_at: 1660894269,
 	abi: abi,
 }
 export default REWARDS

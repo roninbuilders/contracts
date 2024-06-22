@@ -149,7 +149,7 @@ const AXIE_CONSUMABLE_ERC1155_PROXY: Contract<typeof abi> = {
 	name: 'AxieConsumableERC1155Proxy',
 	address: '0x737b80335a9396a8658405d7adcbc57343ff0558',
 	is_deprecated: false,
-	updated_at: 1707758998,
+	created_at: 1702268420,
 	abi: abi,
 }
 export default AXIE_CONSUMABLE_ERC1155_PROXY

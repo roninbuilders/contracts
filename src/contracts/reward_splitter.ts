@@ -298,7 +298,7 @@ const REWARD_SPLITTER: Contract<typeof abi> = {
 	name: 'Reward Splitter',
 	address: '0x13b17ae62ec87775222789d1c544fe1c1b3dccb3',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1646053158,
 	abi: abi,
 }
 export default REWARD_SPLITTER

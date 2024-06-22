@@ -156,7 +156,7 @@ const APPRAISAL_ORACLE: Contract<typeof abi> = {
 	name: 'Appraisal Oracle',
 	address: '0x4f6da48bf7b065634995c5d177e6beb162a5602f',
 	is_deprecated: false,
-	updated_at: 1707758820,
+	created_at: 1672169499,
 	abi: abi,
 }
 export default APPRAISAL_ORACLE

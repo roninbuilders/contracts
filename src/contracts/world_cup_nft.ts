@@ -897,7 +897,7 @@ const WORLD_CUP_NFT: Contract<typeof abi> = {
 	name: 'World Cup NFT',
 	address: '0xac8f02f3dbc9f77528f10bc675f483ebbbeb576f',
 	is_deprecated: false,
-	updated_at: 1717375148,
+	created_at: 1714835370,
 	abi: abi,
 }
 export default WORLD_CUP_NFT

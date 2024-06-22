@@ -821,7 +821,7 @@ const APEIRON_APOSTLE_TICKET_MINTING: Contract<typeof abi> = {
 	name: 'Apeiron Apostle Ticket Minting',
 	address: '0xbc0aa2f6ddef4e2f8b87d2a829bb60a153b7ed5e',
 	is_deprecated: false,
-	updated_at: 1704959998,
+	created_at: 1702972150,
 	abi: abi,
 }
 export default APEIRON_APOSTLE_TICKET_MINTING

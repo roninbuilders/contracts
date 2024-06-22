@@ -162,7 +162,7 @@ const RONIN_SLASH_INDICATOR: Contract<typeof abi> = {
 	name: 'Ronin Slash Indicator',
 	address: '0xebfff2b32fa0df9c5c8c5d5aaa7e8b51d5207ba3',
 	is_deprecated: false,
-	updated_at: 1707758993,
+	created_at: 1679636585,
 	abi: abi,
 }
 export default RONIN_SLASH_INDICATOR

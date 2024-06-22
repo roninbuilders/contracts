@@ -876,7 +876,7 @@ const SMOOTH_LOVE_POTION: Contract<typeof abi> = {
 	name: 'Smooth Love Potion',
 	address: '0xa8754b9fa15fc18bb59458815510e40a12cd2014',
 	is_deprecated: false,
-	updated_at: 1707759001,
+	created_at: 1619582048,
 	abi: abi,
 }
 export default SMOOTH_LOVE_POTION

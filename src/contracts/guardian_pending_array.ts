@@ -438,7 +438,7 @@ const GUARDIAN_PENDING_ARRAY: Contract<typeof abi> = {
 	name: 'Guardian Pending Array',
 	address: '0x64f58013256075ae41ac7c0a8936b7e758892a47',
 	is_deprecated: false,
-	updated_at: 1713150327,
+	created_at: 1712571299,
 	abi: abi,
 }
 export default GUARDIAN_PENDING_ARRAY

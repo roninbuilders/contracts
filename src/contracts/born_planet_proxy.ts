@@ -74,7 +74,7 @@ const BORN_PLANET_PROXY: Contract<typeof abi> = {
 	name: 'Born Planet Proxy',
 	address: '0x953b381ab16522d0311c75d9cd164e2a14ebe143',
 	is_deprecated: false,
-	updated_at: 1707758833,
+	created_at: 1702615170,
 	abi: abi,
 }
 export default BORN_PLANET_PROXY

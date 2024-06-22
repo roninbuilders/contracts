@@ -336,7 +336,7 @@ const KATANA_FACTORY: Contract<typeof abi> = {
 	name: 'Katana Factory',
 	address: '0xb255d6a720bb7c39fee173ce22113397119cb930',
 	is_deprecated: false,
-	updated_at: 1707759001,
+	created_at: 1635154968,
 	abi: abi,
 }
 export default KATANA_FACTORY

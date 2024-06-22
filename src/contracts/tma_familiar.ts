@@ -1343,7 +1343,7 @@ const TMA_FAMILIAR: Contract<typeof abi> = {
 	name: 'TMA Familiar',
 	address: '0x94498e19c5c120f30130bb2c51df42adfb66fdab',
 	is_deprecated: false,
-	updated_at: 1712132430,
+	created_at: 1711368276,
 	abi: abi,
 }
 export default TMA_FAMILIAR

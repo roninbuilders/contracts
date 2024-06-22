@@ -74,7 +74,7 @@ const CONTRACT_OPENABLE_PACK_721_PROXY: Contract<typeof abi> = {
 	name: 'Contract Openable Pack 721 Proxy',
 	address: '0x21b05d1c08503942b353a342e64dc91b57ddce10',
 	is_deprecated: false,
-	updated_at: 1718584799,
+	created_at: 1717481256,
 	abi: abi,
 }
 export default CONTRACT_OPENABLE_PACK_721_PROXY

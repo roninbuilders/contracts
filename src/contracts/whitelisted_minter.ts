@@ -549,7 +549,7 @@ const WHITELISTED_MINTER: Contract<typeof abi> = {
 	name: 'Whitelisted Minter',
 	address: '0x82660d6add698a171f3b7c195f5b3a485e08eea4',
 	is_deprecated: false,
-	updated_at: 1717376250,
+	created_at: 1716974172,
 	abi: abi,
 }
 export default WHITELISTED_MINTER

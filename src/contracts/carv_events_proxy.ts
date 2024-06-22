@@ -82,7 +82,7 @@ const CARV_EVENTS_PROXY: Contract<typeof abi> = {
 	name: 'Carv Events Proxy',
 	address: '0x7d119ca651d7ea07a8f78a1dc3f0805be05d1e7e',
 	is_deprecated: false,
-	updated_at: 1707758993,
+	created_at: 1700623262,
 	abi: abi,
 }
 export default CARV_EVENTS_PROXY

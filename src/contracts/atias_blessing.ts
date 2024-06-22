@@ -149,7 +149,7 @@ const ATIAS_BLESSING: Contract<typeof abi> = {
 	name: 'Atias Blessing',
 	address: '0x9d3936dbd9a794ee31ef9f13814233d435bd806c',
 	is_deprecated: false,
-	updated_at: 1707758985,
+	created_at: 1686041020,
 	abi: abi,
 }
 export default ATIAS_BLESSING

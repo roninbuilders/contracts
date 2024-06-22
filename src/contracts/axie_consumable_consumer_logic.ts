@@ -462,7 +462,7 @@ const AXIE_CONSUMABLE_CONSUMER_LOGIC: Contract<typeof abi> = {
 	name: 'AxieConsumableConsumerLogic',
 	address: '0x51e4438cf5b943db417c44b3b64855ad43b3a41a',
 	is_deprecated: false,
-	updated_at: 1712739178,
+	created_at: 1702268420,
 	abi: abi,
 }
 export default AXIE_CONSUMABLE_CONSUMER_LOGIC

@@ -264,7 +264,7 @@ const COMP_UNITROLLER: Contract<typeof abi> = {
 	name: 'Comp Unitroller',
 	address: '0x9d5a8a83dd2b66236d52790a091c58ab666d1d8b',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1672169541,
 	abi: abi,
 }
 export default COMP_UNITROLLER

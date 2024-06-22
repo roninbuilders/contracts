@@ -79,7 +79,7 @@ const SWAP_FORWARDER_PROXY: Contract<typeof abi> = {
 	name: 'Swap Forwarder Proxy',
 	address: '0x133fa77dea36b311292201efddfc58cbe3a140b7',
 	is_deprecated: false,
-	updated_at: 1711932090,
+	created_at: 1711516331,
 	abi: abi,
 }
 export default SWAP_FORWARDER_PROXY

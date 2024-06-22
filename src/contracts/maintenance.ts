@@ -53,6 +53,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrNotOnMaintenance',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrStartBlockOutOfRange',
 		type: 'error',
 	},
@@ -166,6 +171,19 @@ const abi = [
 			},
 		],
 		name: 'MaintenanceConfigUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+		],
+		name: 'MaintenanceExited',
 		type: 'event',
 	},
 	{
@@ -472,6 +490,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'TConsensus',
+				name: 'consensusAddr',
+				type: 'address',
+			},
+		],
+		name: 'exitMaintenance',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'enum ContractType',
 				name: 'contractType',
 				type: 'uint8',
@@ -480,7 +511,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'address payable',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -588,6 +619,13 @@ const abi = [
 			},
 		],
 		name: 'initializeV3',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'initializeV4',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -752,9 +790,9 @@ const abi = [
 ] as const
 const MAINTENANCE: Contract<typeof abi> = {
 	name: 'Maintenance',
-	address: '0xf827ffedbd0681f863a72aa43dedb1ca5beeb2da',
+	address: '0x3e07aeeef99a1f6ebc9b236b8b0051ac18560a48',
 	is_deprecated: false,
-	updated_at: 1711929564,
+	created_at: 1718685420,
 	abi: abi,
 }
 export default MAINTENANCE

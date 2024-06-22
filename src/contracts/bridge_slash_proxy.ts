@@ -160,9 +160,9 @@ const abi = [
 ] as const
 const BRIDGE_SLASH_PROXY: Contract<typeof abi> = {
 	name: 'Bridge Slash Proxy',
-	address: '0x323092ab0900281efd0ef5954b0a612ce7755f9c',
-	is_deprecated: true,
-	updated_at: 1707758584,
+	address: '0x273cda3afe17eb7bcb028b058382a9010ae82b24',
+	is_deprecated: false,
+	created_at: 1697614106,
 	abi: abi,
 }
 export default BRIDGE_SLASH_PROXY

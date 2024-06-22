@@ -437,7 +437,7 @@ const NFT_AIRDROP: Contract<typeof abi> = {
 	name: 'NFT Airdrop',
 	address: '0xcdaf3ca3d9ef8dfdd304f4823ec6861e0c132c04',
 	is_deprecated: false,
-	updated_at: 1717375176,
+	created_at: 1716210082,
 	abi: abi,
 }
 export default NFT_AIRDROP

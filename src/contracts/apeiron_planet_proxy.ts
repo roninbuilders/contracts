@@ -74,7 +74,7 @@ const APEIRON_PLANET_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Planet Proxy',
 	address: '0x3672f99418ac1dfd71147dbd7c05d4a7aab7aae4',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1702561152,
 	abi: abi,
 }
 export default APEIRON_PLANET_PROXY

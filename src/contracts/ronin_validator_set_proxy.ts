@@ -162,7 +162,7 @@ const RONIN_VALIDATOR_SET_PROXY: Contract<typeof abi> = {
 	name: 'Ronin Validator Set Proxy',
 	address: '0x617c5d73662282ea7ffd231e020eca6d2b0d552f',
 	is_deprecated: false,
-	updated_at: 1707758990,
+	created_at: 1679636600,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_SET_PROXY

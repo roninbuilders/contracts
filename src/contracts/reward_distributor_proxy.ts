@@ -147,9 +147,9 @@ const abi = [
 ] as const
 const REWARD_DISTRIBUTOR_PROXY: Contract<typeof abi> = {
 	name: 'Reward Distributor Proxy',
-	address: '0x193e04a8944d9aaa57abd2586b0c5c8044d21804',
+	address: '0x6530bf3d49351c4d76c18d49ac22814153ede589',
 	is_deprecated: false,
-	updated_at: 1707758985,
+	created_at: 1709786096,
 	abi: abi,
 }
 export default REWARD_DISTRIBUTOR_PROXY

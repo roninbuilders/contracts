@@ -1270,7 +1270,7 @@ const PORTAL: Contract<typeof abi> = {
 	name: 'Portal',
 	address: '0x5937874f2d7a26a0295d7c983a12c845f13c8d30',
 	is_deprecated: false,
-	updated_at: 1712536793,
+	created_at: 1669175872,
 	abi: abi,
 }
 export default PORTAL

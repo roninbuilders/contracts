@@ -79,7 +79,7 @@ const AXIE_VOTING_PROXY: Contract<typeof abi> = {
 	name: 'Axie Voting Proxy',
 	address: '0xe78ec1a0bc59cd412bf085d8662a2445af2e58e3',
 	is_deprecated: false,
-	updated_at: 1717375142,
+	created_at: 1715926788,
 	abi: abi,
 }
 export default AXIE_VOTING_PROXY

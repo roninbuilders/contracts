@@ -1209,7 +1209,7 @@ const RONIN_GOVERNANCE_ADMIN: Contract<typeof abi> = {
 	name: 'Ronin Governance Admin',
 	address: '0x70fd02049333337a534a9383149c9a99ddf65495',
 	is_deprecated: false,
-	updated_at: 1718584815,
+	created_at: 1709535721,
 	abi: abi,
 }
 export default RONIN_GOVERNANCE_ADMIN

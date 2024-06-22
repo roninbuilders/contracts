@@ -149,7 +149,7 @@ const LAND_STAKING_POOL: Contract<typeof abi> = {
 	name: 'Land Staking Pool',
 	address: '0xb2a5110f163ec592f8f0d4207253d8cbc327d9fb',
 	is_deprecated: false,
-	updated_at: 1707758821,
+	created_at: 1656494823,
 	abi: abi,
 }
 export default LAND_STAKING_POOL

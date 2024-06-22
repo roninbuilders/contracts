@@ -2279,7 +2279,7 @@ const MAVIS_LAUNCHPAD: Contract<typeof abi> = {
 	name: 'Mavis Launchpad',
 	address: '0xa4d054948658debe73b262cae4e754dfbb37d0c7',
 	is_deprecated: false,
-	updated_at: 1716446893,
+	created_at: 1712287800,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD

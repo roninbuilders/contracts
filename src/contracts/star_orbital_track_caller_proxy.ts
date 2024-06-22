@@ -74,7 +74,7 @@ const STAR_ORBITAL_TRACK_CALLER_PROXY: Contract<typeof abi> = {
 	name: 'Star Orbital Track Caller Proxy',
 	address: '0x8ec9f6eceb91ef9913220db6385f79896e836890',
 	is_deprecated: false,
-	updated_at: 1707758828,
+	created_at: 1702561758,
 	abi: abi,
 }
 export default STAR_ORBITAL_TRACK_CALLER_PROXY

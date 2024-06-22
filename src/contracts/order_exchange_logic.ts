@@ -992,7 +992,7 @@ const ORDER_EXCHANGE_LOGIC: Contract<typeof abi> = {
 	name: 'Order Exchange Logic',
 	address: '0xa74f8af1bcb92f3037e6235f26cfc55898a550a8',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1659687110,
 	abi: abi,
 }
 export default ORDER_EXCHANGE_LOGIC

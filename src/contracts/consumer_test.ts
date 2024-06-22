@@ -468,7 +468,7 @@ const CONSUMER_TEST: Contract<typeof abi> = {
 	name: 'Consumer Test',
 	address: '0x2ab1afc50e63c0020cbb69662bcb9dc52424aa5e',
 	is_deprecated: false,
-	updated_at: 1712536796,
+	created_at: 1692006864,
 	abi: abi,
 }
 export default CONSUMER_TEST

@@ -381,9 +381,9 @@ const abi = [
 ] as const
 const MARKET_GATEWAY_MULTI_SEND: Contract<typeof abi> = {
 	name: 'Market Gateway Multi Send',
-	address: '0x01120c9efae8a3d6828fa836e7e05db10cdf21b1',
+	address: '0x5404eba4bc27b49a66b7fadc62dd17359dce1de1',
 	is_deprecated: false,
-	updated_at: 1709724706,
+	created_at: 1709721654,
 	abi: abi,
 }
 export default MARKET_GATEWAY_MULTI_SEND

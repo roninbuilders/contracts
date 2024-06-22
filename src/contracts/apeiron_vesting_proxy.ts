@@ -72,9 +72,9 @@ const abi = [
 ] as const
 const APEIRON_VESTING_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Vesting Proxy',
-	address: '0x19f39b3ef15e5ebb43af4083c85ef58686fde6d9',
+	address: '0x2d9c6e76d366ae72f8a22d7b3ed30886856f2286',
 	is_deprecated: false,
-	updated_at: 1707758584,
+	created_at: 1711010060,
 	abi: abi,
 }
 export default APEIRON_VESTING_PROXY

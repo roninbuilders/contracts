@@ -681,7 +681,7 @@ const APEIRON_BRIDGE_MINTER: Contract<typeof abi> = {
 	name: 'Apeiron Bridge Minter',
 	address: '0xb85a5d588e88bba273b47704e3ce5ff0c8a36ab3',
 	is_deprecated: false,
-	updated_at: 1702606738,
+	created_at: 1702606635,
 	abi: abi,
 }
 export default APEIRON_BRIDGE_MINTER

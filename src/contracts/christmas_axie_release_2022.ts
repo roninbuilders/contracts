@@ -149,7 +149,7 @@ const CHRISTMAS_AXIE_RELEASE_2022: Contract<typeof abi> = {
 	name: 'Christmas Axie Release 2022',
 	address: '0x16f222b84f76a0941935949566da93e3147723bf',
 	is_deprecated: false,
-	updated_at: 1707758999,
+	created_at: 1671445671,
 	abi: abi,
 }
 export default CHRISTMAS_AXIE_RELEASE_2022

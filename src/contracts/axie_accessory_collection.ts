@@ -149,7 +149,7 @@ const AXIE_ACCESSORY_COLLECTION: Contract<typeof abi> = {
 	name: 'Axie Accessory Collection',
 	address: '0xbd1f28aabe799df4735d8da3841007580e509f08',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1671444433,
 	abi: abi,
 }
 export default AXIE_ACCESSORY_COLLECTION

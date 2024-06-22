@@ -644,7 +644,7 @@ const MARKETPLACE_REFERRAL_LOGIC: Contract<typeof abi> = {
 	name: 'Marketplace Referral Logic',
 	address: '0x7ce6123c6950b64cc69d8de163c0f3c44efb49d7',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1653288263,
 	abi: abi,
 }
 export default MARKETPLACE_REFERRAL_LOGIC

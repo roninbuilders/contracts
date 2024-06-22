@@ -262,7 +262,7 @@ const AXS_STAKING_POOL: Contract<typeof abi> = {
 	name: 'AXS Staking Pool',
 	address: '0x05b0bb3c1c320b280501b86706c3551995bc8571',
 	is_deprecated: false,
-	updated_at: 1707758816,
+	created_at: 1632969696,
 	abi: abi,
 }
 export default AXS_STAKING_POOL

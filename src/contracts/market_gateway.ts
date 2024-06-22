@@ -697,9 +697,9 @@ const abi = [
 ] as const
 const MARKET_GATEWAY: Contract<typeof abi> = {
 	name: 'Market Gateway',
-	address: '0x2a8ca722e599ef7571b79632e476ed114f4f815d',
+	address: '0x1875a752d3cc9227d94f0d106ed073af81e78163',
 	is_deprecated: false,
-	updated_at: 1700718780,
+	created_at: 1684224065,
 	abi: abi,
 }
 export default MARKET_GATEWAY

@@ -1635,7 +1635,7 @@ const DYNAMIC_SUPPLY_LIMIT_ERC1155: Contract<typeof abi> = {
 	name: 'Dynamic Supply Limit ERC1155',
 	address: '0x84c0151f4ecf1b36346c5eb4122dd5df9701aa3c',
 	is_deprecated: false,
-	updated_at: 1717654401,
+	created_at: 1717479960,
 	abi: abi,
 }
 export default DYNAMIC_SUPPLY_LIMIT_ERC1155

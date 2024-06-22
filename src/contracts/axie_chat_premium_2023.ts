@@ -856,7 +856,7 @@ const AXIE_CHAT_PREMIUM_2023: Contract<typeof abi> = {
 	name: 'Axie Chat Premium 2023',
 	address: '0x793bf8e05ebf5082baf944f20b1ae8fa14ab677f',
 	is_deprecated: false,
-	updated_at: 1707759002,
+	created_at: 1690172587,
 	abi: abi,
 }
 export default AXIE_CHAT_PREMIUM_2023

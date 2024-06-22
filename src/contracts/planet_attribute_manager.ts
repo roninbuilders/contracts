@@ -403,9 +403,9 @@ const abi = [
 ] as const
 const PLANET_ATTRIBUTE_MANAGER: Contract<typeof abi> = {
 	name: 'Planet Attribute Manager',
-	address: '0x35b27840848b1a0ac82165a19ee4e10877d66978',
+	address: '0x149aadcaaee54eef85255b0c4c72cb3f04fecd8b',
 	is_deprecated: false,
-	updated_at: 1711268360,
+	created_at: 1702615179,
 	abi: abi,
 }
 export default PLANET_ATTRIBUTE_MANAGER

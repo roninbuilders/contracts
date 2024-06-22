@@ -681,7 +681,7 @@ const ZKMESBT_UPGRADEABLE: Contract<typeof abi> = {
 	name: 'ZKMESBT Upgradeable',
 	address: '0xc550886f304f5c396b921873d9e2d6c4a2a2d909',
 	is_deprecated: false,
-	updated_at: 1717330018,
+	created_at: 1716794860,
 	abi: abi,
 }
 export default ZKMESBT_UPGRADEABLE

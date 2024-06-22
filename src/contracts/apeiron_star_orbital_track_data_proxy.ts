@@ -74,7 +74,7 @@ const APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Star Orbital Track Data Proxy',
 	address: '0x079eafbc1b4808163fbd55fb4e460cc8fe556230',
 	is_deprecated: false,
-	updated_at: 1707758833,
+	created_at: 1702561740,
 	abi: abi,
 }
 export default APEIRON_STAR_ORBITAL_TRACK_DATA_PROXY

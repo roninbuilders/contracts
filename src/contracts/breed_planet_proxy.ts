@@ -72,9 +72,9 @@ const abi = [
 ] as const
 const BREED_PLANET_PROXY: Contract<typeof abi> = {
 	name: 'Breed Planet Proxy',
-	address: '0x41c39a7741946715e307b918d87c7fd52ed9ca64',
+	address: '0x219cbb30f56dbee3341c0d3e617e4a98cf86c094',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1711267508,
 	abi: abi,
 }
 export default BREED_PLANET_PROXY

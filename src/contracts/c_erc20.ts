@@ -1887,7 +1887,7 @@ const C_ERC20: Contract<typeof abi> = {
 	name: 'C Erc20',
 	address: '0x098ca51010455f89f03ba2ebd94783b4e7c181bb',
 	is_deprecated: false,
-	updated_at: 1703629643,
+	created_at: 1684958683,
 	abi: abi,
 }
 export default C_ERC20

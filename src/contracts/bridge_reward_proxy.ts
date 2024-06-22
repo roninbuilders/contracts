@@ -162,7 +162,7 @@ const BRIDGE_REWARD_PROXY: Contract<typeof abi> = {
 	name: 'Bridge Reward Proxy',
 	address: '0x796a163a21e9a659fc9773166e0afdc1eb01aad1',
 	is_deprecated: false,
-	updated_at: 1707758829,
+	created_at: 1697614121,
 	abi: abi,
 }
 export default BRIDGE_REWARD_PROXY

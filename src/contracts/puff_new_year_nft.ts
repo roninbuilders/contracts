@@ -897,7 +897,7 @@ const PUFF_NEW_YEAR_NFT: Contract<typeof abi> = {
 	name: 'Puff New Year NFT',
 	address: '0x3e4296fe2989e6f62255af6c8e918aeda695819c',
 	is_deprecated: false,
-	updated_at: 1717375172,
+	created_at: 1714835340,
 	abi: abi,
 }
 export default PUFF_NEW_YEAR_NFT

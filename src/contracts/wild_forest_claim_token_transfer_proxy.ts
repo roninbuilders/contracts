@@ -149,7 +149,7 @@ const WILD_FOREST_CLAIM_TOKEN_TRANSFER_PROXY: Contract<typeof abi> = {
 	name: 'Wild Forest Claim Token Transfer Proxy',
 	address: '0x8b3156fb4504cbcf41c8e63aa9ef596383c6480e',
 	is_deprecated: false,
-	updated_at: 1717375094,
+	created_at: 1715158513,
 	abi: abi,
 }
 export default WILD_FOREST_CLAIM_TOKEN_TRANSFER_PROXY

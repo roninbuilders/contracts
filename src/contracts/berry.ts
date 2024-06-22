@@ -553,7 +553,7 @@ const BERRY: Contract<typeof abi> = {
 	name: 'BERRY',
 	address: '0x1b918543b518e34902e1e8dd76052bee43c762ff',
 	is_deprecated: false,
-	updated_at: 1707758998,
+	created_at: 1698083415,
 	abi: abi,
 }
 export default BERRY

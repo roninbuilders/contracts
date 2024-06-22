@@ -1141,7 +1141,7 @@ const GNOSIS_SAFE_L2: Contract<typeof abi> = {
 	name: 'Gnosis Safe L2',
 	address: '0x3e5c63644e683549055b9be8653de26e0b4cd36e',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635392467,
 	abi: abi,
 }
 export default GNOSIS_SAFE_L2

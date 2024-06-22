@@ -989,7 +989,7 @@ const PERMISSIONED_ROUTER: Contract<typeof abi> = {
 	name: 'Permissioned Router',
 	address: '0xc05afc8c9353c1dd5f872eccfacd60fd5a2a9ac7',
 	is_deprecated: false,
-	updated_at: 1717375360,
+	created_at: 1716265946,
 	abi: abi,
 }
 export default PERMISSIONED_ROUTER

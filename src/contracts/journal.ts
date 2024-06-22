@@ -976,7 +976,7 @@ const JOURNAL: Contract<typeof abi> = {
 	name: 'Journal',
 	address: '0xd78efaec85c1a4f42e6edb7209067702a2be8c90',
 	is_deprecated: false,
-	updated_at: 1710722264,
+	created_at: 1710305875,
 	abi: abi,
 }
 export default JOURNAL

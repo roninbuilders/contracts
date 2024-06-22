@@ -934,7 +934,7 @@ const GENERAL_NFT: Contract<typeof abi> = {
 	name: 'General NFT',
 	address: '0xd061161d99f252c5515dd13644765161ee226f67',
 	is_deprecated: false,
-	updated_at: 1717375164,
+	created_at: 1714835259,
 	abi: abi,
 }
 export default GENERAL_NFT

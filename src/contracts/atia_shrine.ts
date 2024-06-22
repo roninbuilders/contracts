@@ -21,6 +21,11 @@ const abi = [
 		type: 'error',
 	},
 	{
+		inputs: [],
+		name: 'ErrInvalidResetDuration',
+		type: 'error',
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -44,6 +49,19 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newResetDuration',
+				type: 'uint256',
+			},
+		],
+		name: 'ResetDurationUpdated',
 		type: 'event',
 	},
 	{
@@ -352,6 +370,24 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '_streakLifeTime',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_resetTime',
+				type: 'uint256',
+			},
+		],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -363,6 +399,37 @@ const abi = [
 			},
 		],
 		name: 'renounceRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'resetDuration',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'addresses',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'streaks',
+				type: 'uint256[]',
+			},
+		],
+		name: 'restoreStreak',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -381,6 +448,19 @@ const abi = [
 			},
 		],
 		name: 'revokeRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'newResetDuration',
+				type: 'uint256',
+			},
+		],
+		name: 'setResetDuration',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -420,9 +500,9 @@ const abi = [
 ] as const
 const ATIA_SHRINE: Contract<typeof abi> = {
 	name: 'Atia Shrine',
-	address: '0xd3f45dde71bea79ff3fc11aeba7aa9ecec567bfd',
-	is_deprecated: true,
-	updated_at: 1707758993,
+	address: '0x2b0a41dcd9d6c520774daff8f64afb5431707c10',
+	is_deprecated: false,
+	created_at: 1692185616,
 	abi: abi,
 }
 export default ATIA_SHRINE

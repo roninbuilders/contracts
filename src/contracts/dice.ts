@@ -531,9 +531,9 @@ const abi = [
 ] as const
 const DICE: Contract<typeof abi> = {
 	name: 'Dice',
-	address: '0x203fe364495e7c99bcd391494817320300eafdc5',
+	address: '0xba8e24a8ee724e55c0406ed8fd1a550b514ebd54',
 	is_deprecated: false,
-	updated_at: 1717580911,
+	created_at: 1718125170,
 	abi: abi,
 }
 export default DICE

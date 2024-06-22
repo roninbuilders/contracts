@@ -200,7 +200,7 @@ const DEFAULT_CALLBACK_HANDLER: Contract<typeof abi> = {
 	name: 'Default Callback Handler',
 	address: '0x1ac114c2099afaf5261731655dc6c306bfcd4dbd',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635392410,
 	abi: abi,
 }
 export default DEFAULT_CALLBACK_HANDLER

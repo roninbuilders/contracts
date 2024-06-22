@@ -149,7 +149,7 @@ const REWARD_DISTRIBUTOR_PROXY_FOR_ORIGINS: Contract<typeof abi> = {
 	name: 'Reward Distributor Proxy For Origins',
 	address: '0xd609ecedbd02858dda812621a27b68c52732cc01',
 	is_deprecated: false,
-	updated_at: 1713150128,
+	created_at: 1712649612,
 	abi: abi,
 }
 export default REWARD_DISTRIBUTOR_PROXY_FOR_ORIGINS

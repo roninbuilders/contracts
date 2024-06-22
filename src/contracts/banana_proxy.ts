@@ -79,7 +79,7 @@ const BANANA_PROXY: Contract<typeof abi> = {
 	name: 'Banana Proxy',
 	address: '0x1a89ecd466a23e98f07111b0510a2d6c1cd5e400',
 	is_deprecated: false,
-	updated_at: 1710117540,
+	created_at: 1706954639,
 	abi: abi,
 }
 export default BANANA_PROXY

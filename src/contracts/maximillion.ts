@@ -67,7 +67,7 @@ const MAXIMILLION: Contract<typeof abi> = {
 	name: 'Maximillion',
 	address: '0x8ec33467a63ff3c660369d60dcba3b98ebd3642d',
 	is_deprecated: false,
-	updated_at: 1707758982,
+	created_at: 1681170038,
 	abi: abi,
 }
 export default MAXIMILLION

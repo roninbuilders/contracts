@@ -408,7 +408,7 @@ const SUPERFINE_REWARD_DISTRIBUTION_V1: Contract<typeof abi> = {
 	name: 'Superfine Reward Distribution V1',
 	address: '0x94c3974c3890ed4767810ec420d0b35165c355a0',
 	is_deprecated: false,
-	updated_at: 1707758813,
+	created_at: 1686732686,
 	abi: abi,
 }
 export default SUPERFINE_REWARD_DISTRIBUTION_V1

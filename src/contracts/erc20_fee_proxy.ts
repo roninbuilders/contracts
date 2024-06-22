@@ -90,7 +90,7 @@ const ERC20_FEE_PROXY: Contract<typeof abi> = {
 	name: 'ERC20 Fee Proxy',
 	address: '0xae23992483feda6e718a808ce824f6864f13b64b',
 	is_deprecated: false,
-	updated_at: 1707758997,
+	created_at: 1665385411,
 	abi: abi,
 }
 export default ERC20_FEE_PROXY

@@ -769,7 +769,7 @@ const RONSLP_LP: Contract<typeof abi> = {
 	name: 'RONSLP LP',
 	address: '0x8f1c5eda143fa3d1bea8b4e92f33562014d30e0d',
 	is_deprecated: false,
-	updated_at: 1707759006,
+	created_at: 1673939232,
 	abi: abi,
 }
 export default RONSLP_LP

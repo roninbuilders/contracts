@@ -79,7 +79,7 @@ const RNS_DOMAIN_PRICE_PROXY: Contract<typeof abi> = {
 	name: 'RNS Domain Price Proxy',
 	address: '0x2bdc555a87db9207e5d175f0c12b237736181675',
 	is_deprecated: false,
-	updated_at: 1707758807,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_DOMAIN_PRICE_PROXY

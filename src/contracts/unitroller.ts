@@ -249,7 +249,7 @@ const UNITROLLER: Contract<typeof abi> = {
 	name: 'Unitroller',
 	address: '0x9e8fd99fc64cd2ff4b5846361a7ec457f2b3808e',
 	is_deprecated: false,
-	updated_at: 1707758809,
+	created_at: 1672169442,
 	abi: abi,
 }
 export default UNITROLLER

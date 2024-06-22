@@ -79,7 +79,7 @@ const VX_RONIN_PROXY: Contract<typeof abi> = {
 	name: 'VX Ronin Proxy',
 	address: '0x241a81fc0d6692707dad2b5025a3a7cf2cf25acf',
 	is_deprecated: false,
-	updated_at: 1707758584,
+	created_at: 1706954651,
 	abi: abi,
 }
 export default VX_RONIN_PROXY

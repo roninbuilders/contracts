@@ -162,7 +162,7 @@ const RONIN_STAKING: Contract<typeof abi> = {
 	name: 'Ronin Staking',
 	address: '0x545edb750eb8769c868429be9586f5857a768758',
 	is_deprecated: false,
-	updated_at: 1707758828,
+	created_at: 1679636594,
 	abi: abi,
 }
 export default RONIN_STAKING

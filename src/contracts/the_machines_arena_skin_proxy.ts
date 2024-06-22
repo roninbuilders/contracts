@@ -70,7 +70,7 @@ const THE_MACHINES_ARENA_SKIN_PROXY: Contract<typeof abi> = {
 	name: 'The Machines Arena Skin Proxy',
 	address: '0xb826bfe98d3a88c693c2382e223d162aad5b8f22',
 	is_deprecated: false,
-	updated_at: 1710117534,
+	created_at: 1709089473,
 	abi: abi,
 }
 export default THE_MACHINES_ARENA_SKIN_PROXY

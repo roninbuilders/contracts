@@ -236,7 +236,7 @@ const C_ERC20_STAKING_PROXY: Contract<typeof abi> = {
 	name: 'C Erc20 Staking Proxy',
 	address: '0xc737cca751142ac9b51cb8ef475042dfcea9287a',
 	is_deprecated: false,
-	updated_at: 1707758987,
+	created_at: 1678817469,
 	abi: abi,
 }
 export default C_ERC20_STAKING_PROXY

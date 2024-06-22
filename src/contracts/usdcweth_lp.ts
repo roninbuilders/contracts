@@ -769,7 +769,7 @@ const USDCWETH_LP: Contract<typeof abi> = {
 	name: 'USDCWETH LP',
 	address: '0xa7964991f339668107e2b6a6f6b8e8b74aa9d017',
 	is_deprecated: false,
-	updated_at: 1707758984,
+	created_at: 1635155040,
 	abi: abi,
 }
 export default USDCWETH_LP

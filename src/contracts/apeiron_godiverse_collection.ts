@@ -860,7 +860,7 @@ const APEIRON_GODIVERSE_COLLECTION: Contract<typeof abi> = {
 	name: 'Apeiron Godiverse Collection',
 	address: '0xf055f7d74b201ba042ec101ffa6e84c4d3f6f40e',
 	is_deprecated: false,
-	updated_at: 1707759003,
+	created_at: 1701751801,
 	abi: abi,
 }
 export default APEIRON_GODIVERSE_COLLECTION

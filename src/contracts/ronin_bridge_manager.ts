@@ -2009,7 +2009,7 @@ const RONIN_BRIDGE_MANAGER: Contract<typeof abi> = {
 	name: 'Ronin Bridge Manager',
 	address: '0x5fa49e6ca54a9daa8eca4f403adbde5ee075d84a',
 	is_deprecated: false,
-	updated_at: 1707758983,
+	created_at: 1697614133,
 	abi: abi,
 }
 export default RONIN_BRIDGE_MANAGER

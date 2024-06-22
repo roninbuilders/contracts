@@ -501,9 +501,9 @@ const abi = [
 ] as const
 const APRS: Contract<typeof abi> = {
 	name: 'Aprs',
-	address: '0x7a5a2b07b50dba55c03313f11b47cd518f0a6bca',
+	address: '0x9f871d16a328584a90df00f92f1d7cffb70e874a',
 	is_deprecated: false,
-	updated_at: 1705942364,
+	created_at: 1710492922,
 	abi: abi,
 }
 export default APRS

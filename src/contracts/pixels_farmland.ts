@@ -840,7 +840,7 @@ const PIXELS_FARMLAND: Contract<typeof abi> = {
 	name: 'Pixels Farmland',
 	address: '0xf083289535052e8449d69e6dc41c0ae064d8e3f6',
 	is_deprecated: false,
-	updated_at: 1704938281,
+	created_at: 1704937684,
 	abi: abi,
 }
 export default PIXELS_FARMLAND

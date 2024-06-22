@@ -149,7 +149,7 @@ const MARKET_COMMISSION_PROXY: Contract<typeof abi> = {
 	name: 'Market Commission Proxy',
 	address: '0x35d30aefe3d3620b644336229d1f3a2bffbf4917',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1682577966,
 	abi: abi,
 }
 export default MARKET_COMMISSION_PROXY

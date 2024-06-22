@@ -651,7 +651,7 @@ const AXIE_INFINITY_SHARD: Contract<typeof abi> = {
 	name: 'Axie Infinity Shard',
 	address: '0x97a9107c1793bc407d6f527b77e7fff4d812bece',
 	is_deprecated: false,
-	updated_at: 1707758982,
+	created_at: 1619582027,
 	abi: abi,
 }
 export default AXIE_INFINITY_SHARD

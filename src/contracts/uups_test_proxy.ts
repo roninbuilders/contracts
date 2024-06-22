@@ -70,7 +70,7 @@ const UUPS_TEST_PROXY: Contract<typeof abi> = {
 	name: 'UUPS Test Proxy',
 	address: '0x54692984db8805eb3351a64a3907f8827002f3b6',
 	is_deprecated: false,
-	updated_at: 1710117481,
+	created_at: 1709038833,
 	abi: abi,
 }
 export default UUPS_TEST_PROXY

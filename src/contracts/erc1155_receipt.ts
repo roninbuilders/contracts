@@ -544,7 +544,7 @@ const ERC1155_RECEIPT: Contract<typeof abi> = {
 	name: 'ERC1155 Receipt',
 	address: '0xb8a4526535d258fcaf1b6027a125b0b435eb1d85',
 	is_deprecated: false,
-	updated_at: 1707758981,
+	created_at: 1702572228,
 	abi: abi,
 }
 export default ERC1155_RECEIPT

@@ -96,9 +96,57 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'address payable',
 				name: 'contract_',
 				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
+				internalType: 'TConsensus[]',
+				name: 'consensuses',
+				type: 'address[]',
+			},
+		],
+		name: 'getManyFinalityScores',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'scores',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+		],
+		name: 'getManyFinalityScoresById',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'scores',
+				type: 'uint256[]',
 			},
 		],
 		stateMutability: 'view',
@@ -155,6 +203,49 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: 'cid',
+				type: 'address',
+			},
+		],
+		name: 'getNormalizedStake',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'normalizedStake',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+		],
+		name: 'getNormalizedSum',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'normalizedSum',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'validatorContract',
 				type: 'address',
@@ -174,6 +265,19 @@ const abi = [
 			},
 		],
 		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'stakingContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV3',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -225,9 +329,9 @@ const abi = [
 ] as const
 const FAST_FINALITY_TRACKING: Contract<typeof abi> = {
 	name: 'Fast Finality Tracking',
-	address: '0x9b33c37a63482d6841f471b07a1a5ce790861671',
+	address: '0xa5ac7555d34cb77585dab49ad6ae12827298fed0',
 	is_deprecated: false,
-	updated_at: 1711929564,
+	created_at: 1718685417,
 	abi: abi,
 }
 export default FAST_FINALITY_TRACKING

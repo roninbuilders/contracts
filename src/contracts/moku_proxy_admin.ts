@@ -154,7 +154,7 @@ const MOKU_PROXY_ADMIN: Contract<typeof abi> = {
 	name: 'Moku Proxy Admin',
 	address: '0x405082ae22b3ca0113a7fb97820b7a53fd379dae',
 	is_deprecated: false,
-	updated_at: 1717375146,
+	created_at: 1715902749,
 	abi: abi,
 }
 export default MOKU_PROXY_ADMIN

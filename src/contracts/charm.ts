@@ -149,7 +149,7 @@ const CHARM: Contract<typeof abi> = {
 	name: 'Charm',
 	address: '0x814a9c959a3ef6ca44b5e2349e3bba9845393947',
 	is_deprecated: false,
-	updated_at: 1707759001,
+	created_at: 1660119547,
 	abi: abi,
 }
 export default CHARM

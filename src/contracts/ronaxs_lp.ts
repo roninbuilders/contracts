@@ -769,7 +769,7 @@ const RONAXS_LP: Contract<typeof abi> = {
 	name: 'RONAXS LP',
 	address: '0x32d1dbb6a4275133cc49f1c61653be3998ada4ff',
 	is_deprecated: false,
-	updated_at: 1707758815,
+	created_at: 1673939064,
 	abi: abi,
 }
 export default RONAXS_LP

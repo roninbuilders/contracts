@@ -262,7 +262,7 @@ const RONUSDC_LP_STAKING_POOL: Contract<typeof abi> = {
 	name: 'RONUSDC LP Staking Pool',
 	address: '0xba1c32baff8f23252259a641fd5ca0bd211d4f65',
 	is_deprecated: false,
-	updated_at: 1707758998,
+	created_at: 1675138557,
 	abi: abi,
 }
 export default RONUSDC_LP_STAKING_POOL

@@ -81,7 +81,7 @@ const KONGZ_EXTRA_DATA_PROXY: Contract<typeof abi> = {
 	name: 'Kongz Extra Data Proxy',
 	address: '0x57cd000b215b0a93f01e6ac47dd992a8361d9ad9',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1710943454,
 	abi: abi,
 }
 export default KONGZ_EXTRA_DATA_PROXY

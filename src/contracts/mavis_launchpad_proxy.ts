@@ -79,7 +79,7 @@ const MAVIS_LAUNCHPAD_PROXY: Contract<typeof abi> = {
 	name: 'Mavis Launchpad Proxy',
 	address: '0xa8e9fdf57bbd991c3f494273198606632769db99',
 	is_deprecated: false,
-	updated_at: 1711931930,
+	created_at: 1711516331,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD_PROXY

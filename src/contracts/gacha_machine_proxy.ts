@@ -149,7 +149,7 @@ const GACHA_MACHINE_PROXY: Contract<typeof abi> = {
 	name: 'GachaMachineProxy',
 	address: '0x3e0674b1ddc84b0cfd9d773bb2ce23fe8f445de3',
 	is_deprecated: false,
-	updated_at: 1707758806,
+	created_at: 1702275155,
 	abi: abi,
 }
 export default GACHA_MACHINE_PROXY

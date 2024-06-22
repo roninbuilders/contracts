@@ -709,7 +709,7 @@ const MAVIS_PAY: Contract<typeof abi> = {
 	name: 'Mavis Pay',
 	address: '0xb9a0914da17b460ff382da8924d9d23f77db0e28',
 	is_deprecated: false,
-	updated_at: 1701687746,
+	created_at: 1691120479,
 	abi: abi,
 }
 export default MAVIS_PAY

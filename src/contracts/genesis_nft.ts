@@ -897,7 +897,7 @@ const GENESIS_NFT: Contract<typeof abi> = {
 	name: 'Genesis NFT',
 	address: '0xedc5ebeb8a3c04c3a35800bfbae76351012ec6dd',
 	is_deprecated: false,
-	updated_at: 1717375141,
+	created_at: 1714835283,
 	abi: abi,
 }
 export default GENESIS_NFT

@@ -32,11 +32,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ErrCallPrecompiled',
-		type: 'error',
-	},
-	{
-		inputs: [],
 		name: 'ErrCallerMustBeCoinbase',
 		type: 'error',
 	},
@@ -160,6 +155,33 @@ const abi = [
 	{
 		inputs: [],
 		name: 'ErrNonExistentCandidate',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'firstTrackedPeriod',
+				type: 'uint256',
+			},
+		],
+		name: 'ErrPeriodEndingBlockNotTracked',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+		],
+		name: 'ErrPeriodNotEndedYet',
 		type: 'error',
 	},
 	{
@@ -693,6 +715,31 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'fallbackCids',
+				type: 'address[]',
+			},
+		],
+		name: 'EmptyValidatorSet',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
 				internalType: 'address',
 				name: 'cid',
 				type: 'address',
@@ -763,37 +810,11 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'MaxPrioritizedValidatorNumberUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
 				name: 'threshold',
 				type: 'uint256',
 			},
 		],
 		name: 'MaxValidatorCandidateUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'MaxValidatorNumberUpdated',
 		type: 'event',
 	},
 	{
@@ -974,6 +995,12 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
 				indexed: false,
 				internalType: 'address[]',
 				name: 'cids',
@@ -1025,6 +1052,25 @@ const abi = [
 			},
 		],
 		name: 'WrappedUpEpoch',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'epoch',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+		],
+		name: 'ZeroSumFastFinalityScore',
 		type: 'event',
 	},
 	{
@@ -1706,7 +1752,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'address payable',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -1822,6 +1868,25 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+		],
+		name: 'getPeriodEndBlock',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'endedAtBlock',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'getValidatorCandidateIds',
 		outputs: [
@@ -1907,7 +1972,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: '__maxValidatorNumber',
+				name: '',
 				type: 'uint256',
 			},
 			{
@@ -1917,7 +1982,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: '__maxPrioritizedValidatorNumber',
+				name: '',
 				type: 'uint256',
 			},
 			{
@@ -2158,32 +2223,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'precompilePickValidatorSetAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'precompileSortValidatorsAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'enum ContractType',
@@ -2235,33 +2274,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'setMaxPrioritizedValidatorNumber',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_number',
-				type: 'uint256',
-			},
-		],
 		name: 'setMaxValidatorCandidate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_max',
-				type: 'uint256',
-			},
-		],
-		name: 'setMaxValidatorNumber',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -2363,9 +2376,9 @@ const abi = [
 ] as const
 const RONIN_VALIDATOR_SET: Contract<typeof abi> = {
 	name: 'Ronin Validator Set',
-	address: '0x475d6005d57d1b93cb4acf7866ddc16925097e88',
+	address: '0x02034357e0d8299fa98938ba18b618c91352b09a',
 	is_deprecated: false,
-	updated_at: 1711929564,
+	created_at: 1718685411,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_SET

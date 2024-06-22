@@ -79,7 +79,7 @@ const MYSTIC_GENE_VALIDATOR: Contract<typeof abi> = {
 	name: 'Mystic Gene Validator',
 	address: '0x03cbdc84a8352735133b7989199c1b4d06fe2a77',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1681181524,
 	abi: abi,
 }
 export default MYSTIC_GENE_VALIDATOR

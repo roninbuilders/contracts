@@ -732,7 +732,7 @@ const USD_COIN: Contract<typeof abi> = {
 	name: 'USD Coin',
 	address: '0x0b7007c13325c48911f73a2dad5fa5dcbf808adc',
 	is_deprecated: false,
-	updated_at: 1707758996,
+	created_at: 1634797706,
 	abi: abi,
 }
 export default USD_COIN

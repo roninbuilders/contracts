@@ -74,7 +74,7 @@ const TOKEN_RECEIPT_HANDLER_PROXY: Contract<typeof abi> = {
 	name: 'Token Receipt Handler Proxy',
 	address: '0x4bcc6ea44c86dbba033c1b5404033491b944a86e',
 	is_deprecated: false,
-	updated_at: 1707758828,
+	created_at: 1701749959,
 	abi: abi,
 }
 export default TOKEN_RECEIPT_HANDLER_PROXY

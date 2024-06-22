@@ -81,7 +81,7 @@ const MYSTERY_BOX_CLAIMER_PROXY: Contract<typeof abi> = {
 	name: 'Mystery Box Claimer Proxy',
 	address: '0xd6f9734c45f0bdffc6cca98fcbff13449f7b586a',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1711309373,
 	abi: abi,
 }
 export default MYSTERY_BOX_CLAIMER_PROXY

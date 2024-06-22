@@ -1570,7 +1570,7 @@ const ALLOWLIST_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Allowlist Stage Logic',
 	address: '0x26c9f7799e876d3024286a20a8e799a0e093d38f',
 	is_deprecated: false,
-	updated_at: 1716444623,
+	created_at: 1716444531,
 	abi: abi,
 }
 export default ALLOWLIST_STAGE_LOGIC

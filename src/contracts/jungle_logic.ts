@@ -1078,9 +1078,9 @@ const abi = [
 ] as const
 const JUNGLE_LOGIC: Contract<typeof abi> = {
 	name: 'Jungle Logic',
-	address: '0x2060ecb765d7658ad3d1aa6a44a07dfe7f073fe5',
+	address: '0x72b7387169562b9849c4586371bbfbd44085f188',
 	is_deprecated: false,
-	updated_at: 1711932096,
+	created_at: 1712395672,
 	abi: abi,
 }
 export default JUNGLE_LOGIC

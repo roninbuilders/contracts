@@ -866,7 +866,7 @@ const RNS_AUCTION: Contract<typeof abi> = {
 	name: 'RNS Auction',
 	address: '0x20143137cb90c8663e575bf509d8f370cd711cb8',
 	is_deprecated: false,
-	updated_at: 1702283293,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default RNS_AUCTION

@@ -1229,7 +1229,7 @@ const AXIE_MEMENTO_V2: Contract<typeof abi> = {
 	name: 'Axie Memento V2',
 	address: '0x7a702c6c3321051172987e614f95c2dc05b1e8f5',
 	is_deprecated: false,
-	updated_at: 1718584809,
+	created_at: 1718257457,
 	abi: abi,
 }
 export default AXIE_MEMENTO_V2

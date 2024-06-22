@@ -415,7 +415,7 @@ const UUPS_TEST: Contract<typeof abi> = {
 	name: 'UUPS Test',
 	address: '0x06cfa08276605a7709a463a74e676610c4b1a0d1',
 	is_deprecated: false,
-	updated_at: 1709089896,
+	created_at: 1709039448,
 	abi: abi,
 }
 export default UUPS_TEST

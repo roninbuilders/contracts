@@ -724,7 +724,7 @@ const EXPEDITION_STAKING_AND_KEYS: Contract<typeof abi> = {
 	name: 'Expedition Staking And Keys',
 	address: '0x9f4ac63dba1a1677a5e86937d4e6faf74a4bb2a9',
 	is_deprecated: false,
-	updated_at: 1715593535,
+	created_at: 1704967991,
 	abi: abi,
 }
 export default EXPEDITION_STAKING_AND_KEYS

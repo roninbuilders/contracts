@@ -769,7 +769,7 @@ const SLPWETH_LP: Contract<typeof abi> = {
 	name: 'SLPWETH LP',
 	address: '0x306a28279d04a47468ed83d55088d0dcd1369294',
 	is_deprecated: false,
-	updated_at: 1707758980,
+	created_at: 1635155016,
 	abi: abi,
 }
 export default SLPWETH_LP

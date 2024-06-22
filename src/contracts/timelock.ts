@@ -894,7 +894,7 @@ const TIMELOCK: Contract<typeof abi> = {
 	name: 'Timelock',
 	address: '0xd297a0cd328e299283e3e7dc5936b173a9ccf3ea',
 	is_deprecated: false,
-	updated_at: 1715762853,
+	created_at: 1715762644,
 	abi: abi,
 }
 export default TIMELOCK

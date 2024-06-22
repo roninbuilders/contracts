@@ -913,7 +913,7 @@ const LAND_ITEM: Contract<typeof abi> = {
 	name: 'Land Item',
 	address: '0xa96660f0e4a3e9bc7388925d245a6d4d79e21259',
 	is_deprecated: false,
-	updated_at: 1707758985,
+	created_at: 1612171369,
 	abi: abi,
 }
 export default LAND_ITEM

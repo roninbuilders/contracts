@@ -1149,9 +1149,9 @@ const abi = [
 ] as const
 const AXIE_MEMENTO: Contract<typeof abi> = {
 	name: 'Axie Memento',
-	address: '0xf9e025454e19c96aeca4fde98363c8b912533c49',
+	address: '0xb99bcb13c4a6a9946880253e5448eb9096cd970a',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1701056921,
 	abi: abi,
 }
 export default AXIE_MEMENTO

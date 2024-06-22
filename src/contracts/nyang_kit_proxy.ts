@@ -148,7 +148,7 @@ const NYANG_KIT_PROXY: Contract<typeof abi> = {
 	name: 'Nyang Kit Proxy',
 	address: '0x59cfa86b6820901ebeddd60f131c473c15eae130',
 	is_deprecated: false,
-	updated_at: 1717375153,
+	created_at: 1715785400,
 	abi: abi,
 }
 export default NYANG_KIT_PROXY

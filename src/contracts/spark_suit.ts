@@ -937,9 +937,9 @@ const abi = [
 ] as const
 const SPARK_SUIT: Contract<typeof abi> = {
 	name: 'Spark Suit',
-	address: '0x067274f020c98ef7871d76af8d13b82e0e6f4477',
-	is_deprecated: true,
-	updated_at: 1712536791,
+	address: '0x56d4e6ce96f850bdc1dfd086ac1c19a1e2d5b5c5',
+	is_deprecated: false,
+	created_at: 1712257605,
 	abi: abi,
 }
 export default SPARK_SUIT

@@ -74,7 +74,7 @@ const APEIRON_MARKETPLACE_GATEWAY_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Marketplace Gateway Proxy',
 	address: '0xe98650347c5ae0fc803716a676dc7c5b3d445f46',
 	is_deprecated: false,
-	updated_at: 1707758827,
+	created_at: 1701758455,
 	abi: abi,
 }
 export default APEIRON_MARKETPLACE_GATEWAY_PROXY

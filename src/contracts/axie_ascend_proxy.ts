@@ -149,7 +149,7 @@ const AXIE_ASCEND_PROXY: Contract<typeof abi> = {
 	name: 'AxieAscendProxy',
 	address: '0xdd1cf28ab12413501ea6750083dc027c5857f4d0',
 	is_deprecated: false,
-	updated_at: 1707758981,
+	created_at: 1701253653,
 	abi: abi,
 }
 export default AXIE_ASCEND_PROXY

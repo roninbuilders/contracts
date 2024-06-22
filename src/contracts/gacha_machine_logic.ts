@@ -1478,7 +1478,7 @@ const GACHA_MACHINE_LOGIC: Contract<typeof abi> = {
 	name: 'GachaMachineLogic',
 	address: '0xb35b25e24730af6313dbc5bc368e5d41feed90a7',
 	is_deprecated: true,
-	updated_at: 1702548335,
+	created_at: 1702269689,
 	abi: abi,
 }
 export default GACHA_MACHINE_LOGIC

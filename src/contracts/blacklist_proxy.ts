@@ -74,7 +74,7 @@ const BLACKLIST_PROXY: Contract<typeof abi> = {
 	name: 'Blacklist Proxy',
 	address: '0xe584474bd181a58587e0e5a2fac927352048a2f7',
 	is_deprecated: false,
-	updated_at: 1707758584,
+	created_at: 1701749986,
 	abi: abi,
 }
 export default BLACKLIST_PROXY

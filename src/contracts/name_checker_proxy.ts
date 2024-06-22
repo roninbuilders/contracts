@@ -79,7 +79,7 @@ const NAME_CHECKER_PROXY: Contract<typeof abi> = {
 	name: 'Name Checker Proxy',
 	address: '0x486334ab27ffdc989fd6cbaf44e711ffa80a7bc2',
 	is_deprecated: false,
-	updated_at: 1707758816,
+	created_at: 1699254612,
 	abi: abi,
 }
 export default NAME_CHECKER_PROXY

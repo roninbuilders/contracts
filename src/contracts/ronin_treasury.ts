@@ -20,7 +20,7 @@ const RONIN_TREASURY: Contract<typeof abi> = {
 	name: 'Ronin Treasury',
 	address: '0x22cefc91e9b7c0f3890ebf9527ea89053490694e',
 	is_deprecated: false,
-	updated_at: 1707758995,
+	created_at: 1660899702,
 	abi: abi,
 }
 export default RONIN_TREASURY

@@ -79,9 +79,9 @@ const abi = [
 ] as const
 const EQUIPMENT_REGISTRY_PROXY: Contract<typeof abi> = {
 	name: 'Equipment Registry Proxy',
-	address: '0x9263b6c5729322376616d2ee6865b6feb3cc4a2a',
+	address: '0x5d77181102f32f21d9f780e085852472b6dd4b44',
 	is_deprecated: false,
-	updated_at: 1711327157,
+	created_at: 1711197743,
 	abi: abi,
 }
 export default EQUIPMENT_REGISTRY_PROXY

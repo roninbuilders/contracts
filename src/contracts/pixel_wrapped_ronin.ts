@@ -769,7 +769,7 @@ const PIXEL_WRAPPED_RONIN: Contract<typeof abi> = {
 	name: 'PIXEL  Wrapped Ronin',
 	address: '0xb30b54b9a36188d33eeb34b29eaa38d12511e997',
 	is_deprecated: false,
-	updated_at: 1710117517,
+	created_at: 1708127482,
 	abi: abi,
 }
 export default PIXEL_WRAPPED_RONIN

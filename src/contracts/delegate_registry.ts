@@ -839,7 +839,7 @@ const DELEGATE_REGISTRY: Contract<typeof abi> = {
 	name: 'Delegate Registry',
 	address: '0x00000000000000447e69651d841bd8d104bed493',
 	is_deprecated: false,
-	updated_at: 1711327012,
+	created_at: 1710836780,
 	abi: abi,
 }
 export default DELEGATE_REGISTRY

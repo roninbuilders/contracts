@@ -510,7 +510,7 @@ const WILD_FOREST_CLAIM_TOKEN_TRANSFER: Contract<typeof abi> = {
 	name: 'Wild Forest Claim Token Transfer',
 	address: '0x9c0a53709b49e036a30f121242b7dc6e3a68ecb8',
 	is_deprecated: false,
-	updated_at: 1717767490,
+	created_at: 1715158504,
 	abi: abi,
 }
 export default WILD_FOREST_CLAIM_TOKEN_TRANSFER

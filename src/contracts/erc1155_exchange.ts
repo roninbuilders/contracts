@@ -861,7 +861,7 @@ const ERC1155_EXCHANGE: Contract<typeof abi> = {
 	name: 'ERC1155 Exchange',
 	address: '0xb36c9027ed4353fdd7a59d8c40e0df5221a3764f',
 	is_deprecated: false,
-	updated_at: 1700553697,
+	created_at: 1700553615,
 	abi: abi,
 }
 export default ERC1155_EXCHANGE

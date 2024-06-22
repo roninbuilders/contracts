@@ -149,7 +149,7 @@ const WILD_FOREST_CLAIM_NFT_PROXY: Contract<typeof abi> = {
 	name: 'Wild Forest Claim Nft Proxy',
 	address: '0xc42ca096e60d997b6f6e2b937253f5b69a6fa6aa',
 	is_deprecated: false,
-	updated_at: 1717375154,
+	created_at: 1715159275,
 	abi: abi,
 }
 export default WILD_FOREST_CLAIM_NFT_PROXY

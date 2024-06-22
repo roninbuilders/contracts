@@ -536,7 +536,7 @@ const CLOCK_AUCTION_PROXY: Contract<typeof abi> = {
 	name: 'Clock Auction Proxy',
 	address: '0x213073989821f738a7ba3520c3d31a1f9ad31bbd',
 	is_deprecated: true,
-	updated_at: 1707758822,
+	created_at: 1619438333,
 	abi: abi,
 }
 export default CLOCK_AUCTION_PROXY

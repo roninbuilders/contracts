@@ -240,7 +240,7 @@ const RESTRICTION_CONTROL: Contract<typeof abi> = {
 	name: 'Restriction Control',
 	address: '0x0a2ccb496a78cb855673c679d14c42a9d8b0dfe0',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1696867411,
 	abi: abi,
 }
 export default RESTRICTION_CONTROL

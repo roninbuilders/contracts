@@ -1003,7 +1003,7 @@ const LAND_LOGIC: Contract<typeof abi> = {
 	name: 'Land Logic',
 	address: '0xaa63d92eb0cb7dd6663a494afb5431739d23a19d',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1612169212,
 	abi: abi,
 }
 export default LAND_LOGIC

@@ -74,7 +74,7 @@ const PLANET_ATTRIBUTE_MANAGER_PROXY: Contract<typeof abi> = {
 	name: 'Planet Attribute Manager Proxy',
 	address: '0xd0e2bc89b3d8e3d8244d4f221fd7aa4785a8708f',
 	is_deprecated: false,
-	updated_at: 1707758990,
+	created_at: 1702615188,
 	abi: abi,
 }
 export default PLANET_ATTRIBUTE_MANAGER_PROXY

@@ -70,7 +70,7 @@ const THE_MACHINES_ARENA_VALIDATOR_PROXY: Contract<typeof abi> = {
 	name: 'The Machines Arena Validator Proxy',
 	address: '0x25b80d35f7749294c17dc28cbb10113c291936b3',
 	is_deprecated: false,
-	updated_at: 1710117478,
+	created_at: 1709089369,
 	abi: abi,
 }
 export default THE_MACHINES_ARENA_VALIDATOR_PROXY

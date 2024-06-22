@@ -1570,7 +1570,7 @@ const PUBLIC_STAGE_LOGIC: Contract<typeof abi> = {
 	name: 'Public Stage Logic',
 	address: '0x8c6b811dc467dbe2abeb4ed0576f5b64869dc0df',
 	is_deprecated: false,
-	updated_at: 1716444623,
+	created_at: 1716444531,
 	abi: abi,
 }
 export default PUBLIC_STAGE_LOGIC

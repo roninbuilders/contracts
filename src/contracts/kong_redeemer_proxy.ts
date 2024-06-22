@@ -81,7 +81,7 @@ const KONG_REDEEMER_PROXY: Contract<typeof abi> = {
 	name: 'Kong Redeemer Proxy',
 	address: '0x644a6d2aa3abeec944c874260d64805ed262eb4c',
 	is_deprecated: false,
-	updated_at: 1711327158,
+	created_at: 1711197731,
 	abi: abi,
 }
 export default KONG_REDEEMER_PROXY

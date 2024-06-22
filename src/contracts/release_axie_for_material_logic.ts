@@ -919,7 +919,7 @@ const RELEASE_AXIE_FOR_MATERIAL_LOGIC: Contract<typeof abi> = {
 	name: 'ReleaseAxieForMaterialLogic',
 	address: '0x9dcba64a0bf08b90d271f582e5dd84ccb79be977',
 	is_deprecated: true,
-	updated_at: 1702545380,
+	created_at: 1702268420,
 	abi: abi,
 }
 export default RELEASE_AXIE_FOR_MATERIAL_LOGIC

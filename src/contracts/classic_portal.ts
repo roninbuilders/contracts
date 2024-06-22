@@ -502,7 +502,7 @@ const CLASSIC_PORTAL: Contract<typeof abi> = {
 	name: 'Classic Portal',
 	address: '0x13bb571088984647ece620e595f4be4bcddab204',
 	is_deprecated: false,
-	updated_at: 1707758998,
+	created_at: 1704962479,
 	abi: abi,
 }
 export default CLASSIC_PORTAL

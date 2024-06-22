@@ -149,7 +149,7 @@ const WILD_FOREST_MEDAL_PROXY: Contract<typeof abi> = {
 	name: 'Wild Forest Medal Proxy',
 	address: '0x0328b534d094b097020b4538230f998027a54db0',
 	is_deprecated: false,
-	updated_at: 1710117532,
+	created_at: 1708013939,
 	abi: abi,
 }
 export default WILD_FOREST_MEDAL_PROXY

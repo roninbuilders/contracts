@@ -663,9 +663,9 @@ const abi = [
 ] as const
 const ARMORY_1155: Contract<typeof abi> = {
 	name: 'Armory 1155',
-	address: '0x3d269f24e6d85539fd0f5dfb3ae1c2fa8a50d76f',
+	address: '0xd1b327f392cceb73a54f42e15e2a0a043eeed002',
 	is_deprecated: false,
-	updated_at: 1711056250,
+	created_at: 1711056782,
 	abi: abi,
 }
 export default ARMORY_1155

@@ -532,7 +532,7 @@ const GOVERNANCE_ADMIN: Contract<typeof abi> = {
 	name: 'Governance Admin',
 	address: '0x84390b8cf3e612e8c80d9ea2e92bcd029151404a',
 	is_deprecated: true,
-	updated_at: 1707759002,
+	created_at: 1655882560,
 	abi: abi,
 }
 export default GOVERNANCE_ADMIN

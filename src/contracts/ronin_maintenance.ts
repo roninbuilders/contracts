@@ -162,7 +162,7 @@ const RONIN_MAINTENANCE: Contract<typeof abi> = {
 	name: 'Ronin Maintenance',
 	address: '0x6f45c1f8d84849d497c6c0ac4c3842dc82f49894',
 	is_deprecated: false,
-	updated_at: 1707758991,
+	created_at: 1679636570,
 	abi: abi,
 }
 export default RONIN_MAINTENANCE

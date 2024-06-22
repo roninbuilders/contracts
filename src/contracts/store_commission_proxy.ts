@@ -79,7 +79,7 @@ const STORE_COMMISSION_PROXY: Contract<typeof abi> = {
 	name: 'Store Commission Proxy',
 	address: '0x5c85819a6d8d08f7b746200a57406cfd2ecaea63',
 	is_deprecated: false,
-	updated_at: 1707758819,
+	created_at: 1706524699,
 	abi: abi,
 }
 export default STORE_COMMISSION_PROXY

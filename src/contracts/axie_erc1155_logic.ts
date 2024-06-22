@@ -798,7 +798,7 @@ const AXIE_ERC1155_LOGIC: Contract<typeof abi> = {
 	name: 'Axie ERC1155 Logic',
 	address: '0x31cf8adebe491a53c732c34506ea162c731e6c68',
 	is_deprecated: false,
-	updated_at: 1705489281,
+	created_at: 1660119394,
 	abi: abi,
 }
 export default AXIE_ERC1155_LOGIC

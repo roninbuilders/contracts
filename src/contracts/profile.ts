@@ -405,7 +405,7 @@ const PROFILE: Contract<typeof abi> = {
 	name: 'Profile',
 	address: '0x3ec92e7a835bb58832df64e7f8206467e07d54a3',
 	is_deprecated: false,
-	updated_at: 1709796680,
+	created_at: 1696245584,
 	abi: abi,
 }
 export default PROFILE

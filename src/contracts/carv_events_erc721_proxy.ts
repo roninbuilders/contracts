@@ -82,7 +82,7 @@ const CARV_EVENTS_ERC721_PROXY: Contract<typeof abi> = {
 	name: 'Carv Events ERC721 Proxy',
 	address: '0x9e8b5d57d3360073510011158b0b450cc516eca6',
 	is_deprecated: false,
-	updated_at: 1707758993,
+	created_at: 1700636693,
 	abi: abi,
 }
 export default CARV_EVENTS_ERC721_PROXY

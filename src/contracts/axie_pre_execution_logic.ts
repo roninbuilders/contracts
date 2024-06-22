@@ -1690,7 +1690,7 @@ const AXIE_PRE_EXECUTION_LOGIC: Contract<typeof abi> = {
 	name: 'Axie Pre Execution Logic',
 	address: '0x26101408945caf2e2fde23cc3c1e12982d7a3368',
 	is_deprecated: false,
-	updated_at: 1701254319,
+	created_at: 1701253656,
 	abi: abi,
 }
 export default AXIE_PRE_EXECUTION_LOGIC

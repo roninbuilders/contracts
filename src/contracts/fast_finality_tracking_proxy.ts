@@ -162,7 +162,7 @@ const FAST_FINALITY_TRACKING_PROXY: Contract<typeof abi> = {
 	name: 'Fast Finality Tracking Proxy',
 	address: '0xa30b2932cd8b8a89e34551cdfa13810af38da576',
 	is_deprecated: false,
-	updated_at: 1707758824,
+	created_at: 1696244591,
 	abi: abi,
 }
 export default FAST_FINALITY_TRACKING_PROXY

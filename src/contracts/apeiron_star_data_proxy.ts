@@ -74,7 +74,7 @@ const APEIRON_STAR_DATA_PROXY: Contract<typeof abi> = {
 	name: 'Apeiron Star Data Proxy',
 	address: '0xa939f431f6319516364f329533b371a06a6084d6',
 	is_deprecated: false,
-	updated_at: 1707758994,
+	created_at: 1702561668,
 	abi: abi,
 }
 export default APEIRON_STAR_DATA_PROXY

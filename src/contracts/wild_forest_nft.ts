@@ -1,28 +1,7 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'baseTokenURI',
-				type: 'string',
-			},
-			{
-				internalType: 'address',
-				name: 'ownerAddress',
-				type: 'address',
-			},
-		],
+		inputs: [],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
@@ -74,6 +53,19 @@ const abi = [
 			},
 		],
 		name: 'ApprovalForAll',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -486,6 +478,34 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'symbol',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'baseTokenURI',
+				type: 'string',
+			},
+			{
+				internalType: 'address',
+				name: 'ownerAddress',
+				type: 'address',
+			},
+		],
+		name: 'initialize',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'owner',
 				type: 'address',
@@ -874,9 +894,9 @@ const abi = [
 ] as const
 const WILD_FOREST_NFT: Contract<typeof abi> = {
 	name: 'Wild Forest Nft',
-	address: '0x2659681e1406ec5212a6751d9b180ad1719e1d99',
+	address: '0x19b1bcf881909f34ee5a7a29beb9da5dce821847',
 	is_deprecated: false,
-	updated_at: 1703259297,
+	created_at: 1708012000,
 	abi: abi,
 }
 export default WILD_FOREST_NFT

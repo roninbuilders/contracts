@@ -310,7 +310,7 @@ const SIDECHAIN_VALIDATOR: Contract<typeof abi> = {
 	name: 'Sidechain Validator',
 	address: '0x0000000000000000000000000000000000000011',
 	is_deprecated: true,
-	updated_at: 1707758993,
+	created_at: 1718826026,
 	abi: abi,
 }
 export default SIDECHAIN_VALIDATOR

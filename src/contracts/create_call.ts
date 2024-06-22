@@ -71,7 +71,7 @@ const CREATE_CALL: Contract<typeof abi> = {
 	name: 'Create Call',
 	address: '0x7cbb62eaa69f79e6873cd1ecb2392971036cfaa4',
 	is_deprecated: false,
-	updated_at: 0,
+	created_at: 1635392431,
 	abi: abi,
 }
 export default CREATE_CALL

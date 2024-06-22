@@ -69,7 +69,7 @@ const PRESAIL_DROPLET: Contract<typeof abi> = {
 	name: 'Presail Droplet',
 	address: '0x4745e6b8d030b1b65964242b0005ed63c52bf333',
 	is_deprecated: false,
-	updated_at: 1707758986,
+	created_at: 1699522829,
 	abi: abi,
 }
 export default PRESAIL_DROPLET

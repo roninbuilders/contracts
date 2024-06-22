@@ -1166,9 +1166,9 @@ const abi = [
 ] as const
 const TRIBESTERS: Contract<typeof abi> = {
 	name: 'Tribesters',
-	address: '0x0a64072f0392c74165eb8c34f8868432b7739c7e',
+	address: '0x88033c23fe2db1a9811b5c3a1c82535ad257102e',
 	is_deprecated: false,
-	updated_at: 1707759004,
+	created_at: 1699976985,
 	abi: abi,
 }
 export default TRIBESTERS
