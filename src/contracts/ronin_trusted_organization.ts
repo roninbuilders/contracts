@@ -575,7 +575,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'address payable',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -993,9 +993,9 @@ const abi = [
 ] as const
 const RONIN_TRUSTED_ORGANIZATION: Contract<typeof abi> = {
 	name: 'Ronin Trusted Organization',
-	address: '0x022a7feed15b5853d731eff6fa329afa0c35821d',
+	address: '0x83246543dfc871f078ed7cffca97095db85da08d',
 	is_deprecated: false,
-	created_at: 1709535655,
+	created_at: 1718685426,
 	abi: abi,
 }
 export default RONIN_TRUSTED_ORGANIZATION
