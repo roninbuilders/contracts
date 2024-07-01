@@ -2,9 +2,29 @@ import { Contract } from '@/contract'
 const abi = [
 	{
 		inputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'constructor',
+	},
+	{
+		inputs: [],
+		name: 'AccessControlBadConfirmation',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes32',
+				name: 'neededRole',
+				type: 'bytes32',
+			},
+		],
+		name: 'AccessControlUnauthorizedAccount',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -144,23 +164,17 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_level',
+				name: 'axieId',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '_timestamp',
+				name: 'level',
 				type: 'uint256',
 			},
 		],
-		name: 'AxieLevelAscended',
+		name: 'AxieLevelUpdated',
 		type: 'event',
 	},
 	{
@@ -536,6 +550,81 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'previousAdminRole',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'newAdminRole',
+				type: 'bytes32',
+			},
+		],
+		name: 'RoleAdminChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleRevoked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
 				internalType: 'address',
 				name: '_seeder',
 				type: 'address',
@@ -671,7 +760,45 @@ const abi = [
 		type: 'event',
 	},
 	{
-		constant: true,
+		inputs: [],
+		name: 'AXIE_LEVEL_SETTER',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'AXIE_PART_STAGE_SETTER',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'DEFAULT_ADMIN_ROLE',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'DOMAIN_SEPARATOR',
 		outputs: [
@@ -681,12 +808,10 @@ const abi = [
 				type: 'bytes32',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'DOMAIN_TYPEHASH',
 		outputs: [
@@ -696,27 +821,10 @@ const abi = [
 				type: 'bytes32',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
-		inputs: [],
-		name: 'PERMIT_TYPEHASH',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -726,12 +834,10 @@ const abi = [
 		],
 		name: 'addMinters',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -741,12 +847,10 @@ const abi = [
 		],
 		name: 'addSeeders',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'admin',
 		outputs: [
@@ -756,12 +860,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -776,12 +878,10 @@ const abi = [
 		],
 		name: 'approve',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -802,77 +902,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint16',
-				name: '_level',
-				type: 'uint16',
-			},
-			{
-				internalType: 'uint256',
-				name: '_deadline',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'ascendLevel',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'ascendLevelFee',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'ascendLevelFeeToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -925,12 +958,10 @@ const abi = [
 				type: 'uint16',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'axieBreedLimit',
 		outputs: [
@@ -940,12 +971,10 @@ const abi = [
 				type: 'uint8',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -990,12 +1019,10 @@ const abi = [
 				type: 'tuple',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1011,27 +1038,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
-		inputs: [],
-		name: 'baseToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
 		inputs: [],
 		name: 'baseTokenURI',
 		outputs: [
@@ -1041,12 +1051,10 @@ const abi = [
 				type: 'string',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256[]',
@@ -1061,12 +1069,10 @@ const abi = [
 		],
 		name: 'batchGrowAxieggsToAdults',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256[]',
@@ -1091,12 +1097,10 @@ const abi = [
 		],
 		name: 'batchMintAxieggs',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256[]',
@@ -1116,12 +1120,10 @@ const abi = [
 		],
 		name: 'batchMintAxies',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1142,12 +1144,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'breedingFee',
 		outputs: [
@@ -1157,12 +1157,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'breedingFeeToken',
 		outputs: [
@@ -1172,12 +1170,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'breedingPotion',
 		outputs: [
@@ -1187,12 +1183,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1202,12 +1196,10 @@ const abi = [
 		],
 		name: 'changeAdmin',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'currentAxieId',
 		outputs: [
@@ -1217,12 +1209,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1249,12 +1239,10 @@ const abi = [
 		],
 		name: 'evolveAxie',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'geneBrewerContract',
 		outputs: [
@@ -1264,12 +1252,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1285,12 +1271,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1350,12 +1334,10 @@ const abi = [
 				type: 'tuple',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1407,12 +1389,10 @@ const abi = [
 				type: 'tuple',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1428,12 +1408,90 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleAdmin',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'getRoleMember',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleMemberCount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'grantRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1448,12 +1506,34 @@ const abi = [
 		],
 		name: 'growAxieggToAdult',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'hasRole',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1469,47 +1549,41 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
 				name: '_preExecutionLogicContract',
 				type: 'address',
 			},
-			{
-				internalType: 'address',
-				name: '_routerContract',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IERC20',
-				name: '_ascendLevelFeeToken',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_ascendLevelFee',
-				type: 'uint256',
-			},
-			{
-				internalType: 'contract IERC20',
-				name: '_baseToken',
-				type: 'address',
-			},
 		],
 		name: 'initialize',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'axieAscendContract',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'preExecutionLogicContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV2',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -1530,12 +1604,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1561,12 +1633,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1592,12 +1662,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1613,12 +1681,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1644,12 +1710,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1670,12 +1734,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1696,12 +1758,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1766,12 +1826,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1840,12 +1898,10 @@ const abi = [
 		],
 		name: 'mintPromoAxie',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1861,12 +1917,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1882,12 +1936,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'name',
 		outputs: [
@@ -1897,12 +1949,10 @@ const abi = [
 				type: 'string',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1918,12 +1968,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1939,12 +1987,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -1970,12 +2016,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -1991,21 +2035,17 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [],
 		name: 'pause',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'paused',
 		outputs: [
@@ -2015,12 +2055,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'preExecutionLogicContract',
 		outputs: [
@@ -2030,21 +2068,17 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [],
 		name: 'removeAdmin',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -2054,12 +2088,10 @@ const abi = [
 		],
 		name: 'removeMinters',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -2069,27 +2101,46 @@ const abi = [
 		],
 		name: 'removeSeeders',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
-		inputs: [],
-		name: 'routerContract',
-		outputs: [
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
 			{
 				internalType: 'address',
-				name: '',
+				name: 'callerConfirmation',
 				type: 'address',
 			},
 		],
-		payable: false,
-		stateMutability: 'view',
+		name: 'renounceRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'revokeRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -2109,12 +2160,10 @@ const abi = [
 		],
 		name: 'safeTransferFrom',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2139,12 +2188,10 @@ const abi = [
 		],
 		name: 'safeTransferFrom',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2160,12 +2207,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2181,12 +2226,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2196,12 +2239,10 @@ const abi = [
 		],
 		name: 'setAdultDuration',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2216,12 +2257,10 @@ const abi = [
 		],
 		name: 'setAllPermissionFor',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2236,37 +2275,10 @@ const abi = [
 		],
 		name: 'setApprovalForAll',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_ascendLevelFeeToken',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_ascendLevelFee',
-				type: 'uint256',
-			},
-			{
-				internalType: 'contract IERC20',
-				name: '_baseToken',
-				type: 'address',
-			},
-		],
-		name: 'setAscendLevelFeeInfo',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint8',
@@ -2276,12 +2288,58 @@ const abi = [
 		],
 		name: 'setAxieBreedLimit',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'axieId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint16',
+				name: 'level',
+				type: 'uint16',
+			},
+		],
+		name: 'setAxieLevel',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'axieId',
+				type: 'uint256',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'x',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'y',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct AxieGenetics.Genes',
+				name: 'newGene',
+				type: 'tuple',
+			},
+		],
+		name: 'setAxiePartsStage',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'string',
@@ -2291,12 +2349,10 @@ const abi = [
 		],
 		name: 'setBaseTokenURI',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2306,12 +2362,10 @@ const abi = [
 		],
 		name: 'setBreedingFee',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'contract IERC20',
@@ -2321,12 +2375,10 @@ const abi = [
 		],
 		name: 'setBreedingFeeToken',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'contract IERC20Burnable',
@@ -2336,12 +2388,10 @@ const abi = [
 		],
 		name: 'setBreedingPotionContract',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2351,12 +2401,10 @@ const abi = [
 		],
 		name: 'setCurrentAxieId',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2381,12 +2429,10 @@ const abi = [
 		],
 		name: 'setFunctionOperatorForToken',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'contract IAxieGeneBrewer',
@@ -2396,12 +2442,10 @@ const abi = [
 		],
 		name: 'setGeneBrewerContract',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256[]',
@@ -2416,12 +2460,10 @@ const abi = [
 		],
 		name: 'setHoppingAxieIds',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256[]',
@@ -2431,12 +2473,10 @@ const abi = [
 		],
 		name: 'setNeededPotionForBreeding',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2456,12 +2496,10 @@ const abi = [
 		],
 		name: 'setPermissionFor',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2471,27 +2509,10 @@ const abi = [
 		],
 		name: 'setPreExecutionLogicContract',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_routerContract',
-				type: 'address',
-			},
-		],
-		name: 'setRouterContract',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2511,12 +2532,10 @@ const abi = [
 		],
 		name: 'setTokenOperator',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2526,12 +2545,10 @@ const abi = [
 		],
 		name: 'setTokenReceiver',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2547,12 +2564,10 @@ const abi = [
 				type: 'uint8',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2568,16 +2583,14 @@ const abi = [
 				type: 'bytes',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'bytes4',
-				name: '_interfaceId',
+				name: 'interfaceId',
 				type: 'bytes4',
 			},
 		],
@@ -2585,16 +2598,14 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'bool',
-				name: '_supported',
+				name: '',
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'symbol',
 		outputs: [
@@ -2604,12 +2615,10 @@ const abi = [
 				type: 'string',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'toAdultDuration',
 		outputs: [
@@ -2619,12 +2628,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2640,12 +2647,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2666,12 +2671,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2697,12 +2700,10 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2728,12 +2729,10 @@ const abi = [
 				type: 'bytes4',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'tokenReceiver',
 		outputs: [
@@ -2743,12 +2742,10 @@ const abi = [
 				type: 'address',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -2764,12 +2761,10 @@ const abi = [
 				type: 'string',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [],
 		name: 'totalSupply',
 		outputs: [
@@ -2779,12 +2774,10 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2804,21 +2797,17 @@ const abi = [
 		],
 		name: 'transferFrom',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [],
 		name: 'unpause',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2828,12 +2817,23 @@ const abi = [
 		],
 		name: 'unwhitelist',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: false,
+		inputs: [],
+		name: 'version',
+		outputs: [
+			{
+				internalType: 'uint8',
+				name: '',
+				type: 'uint8',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -2843,12 +2843,10 @@ const abi = [
 		],
 		name: 'whitelist',
 		outputs: [],
-		payable: false,
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		constant: true,
 		inputs: [
 			{
 				internalType: 'address',
@@ -2864,16 +2862,15 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		payable: false,
 		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
 const AXIE: Contract<typeof abi> = {
 	name: 'Axie',
-	address: '0x500c4df1a66893b7e0d1797b0460b87c46d4be1e',
+	address: '0x44492d3035eedb1bda8020da4a3a789da20449ae',
 	is_deprecated: false,
-	created_at: 1689649892,
+	created_at: 1719227468,
 	abi: abi,
 }
 export default AXIE

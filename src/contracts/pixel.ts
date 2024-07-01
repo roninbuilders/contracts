@@ -3,172 +3,23 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'defaultAdmin',
-				type: 'address',
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
 			},
 			{
-				internalType: 'address',
-				name: 'pauser',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'minter',
-				type: 'address',
+				internalType: 'string',
+				name: 'symbol',
+				type: 'string',
 			},
 			{
 				internalType: 'uint256',
-				name: 'cappedSupply_',
+				name: 'totalSupply_',
 				type: 'uint256',
 			},
 		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AccessControlBadConfirmation',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'neededRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'AccessControlUnauthorizedAccount',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'increasedSupply',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'cap',
-				type: 'uint256',
-			},
-		],
-		name: 'ERC20ExceededCap',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'allowance',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'needed',
-				type: 'uint256',
-			},
-		],
-		name: 'ERC20InsufficientAllowance',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'balance',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'needed',
-				type: 'uint256',
-			},
-		],
-		name: 'ERC20InsufficientBalance',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'approver',
-				type: 'address',
-			},
-		],
-		name: 'ERC20InvalidApprover',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'cap',
-				type: 'uint256',
-			},
-		],
-		name: 'ERC20InvalidCap',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-		],
-		name: 'ERC20InvalidReceiver',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'ERC20InvalidSender',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-		],
-		name: 'ERC20InvalidSpender',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'EnforcedPause',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ExpectedPause',
-		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -199,94 +50,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'address',
 				name: 'from',
@@ -307,58 +70,6 @@ const abi = [
 		],
 		name: 'Transfer',
 		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MINTER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'PAUSER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
 	},
 	{
 		inputs: [
@@ -393,7 +104,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: 'value',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -428,50 +139,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'burnFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'cap',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'decimals',
 		outputs: [
@@ -487,54 +154,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
 				internalType: 'address',
-				name: 'account',
+				name: 'spender',
 				type: 'address',
 			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'subtractedValue',
+				type: 'uint256',
 			},
 		],
-		name: 'hasRole',
+		name: 'decreaseAllowance',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -542,24 +172,30 @@ const abi = [
 				type: 'bool',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'to',
+				name: 'spender',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: 'addedValue',
 				type: 'uint256',
 			},
 		],
-		name: 'mint',
-		outputs: [],
+		name: 'increaseAllowance',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -571,81 +207,6 @@ const abi = [
 				internalType: 'string',
 				name: '',
 				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'callerConfirmation',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -686,7 +247,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: 'value',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -715,7 +276,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: 'value',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -730,19 +291,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
 ] as const
 const PIXEL: Contract<typeof abi> = {
 	name: 'PIXEL',
-	address: '0x8d6e0c799e1ca0d5c524f05ae67174417a3f297f',
+	address: '0x9d7fa79363940ac384372b42ca484ab294622f2c',
 	is_deprecated: true,
-	created_at: 1706113899,
+	created_at: 1706284031,
 	abi: abi,
 }
 export default PIXEL
