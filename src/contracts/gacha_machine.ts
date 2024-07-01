@@ -1489,9 +1489,9 @@ const abi = [
 ] as const
 const GACHA_MACHINE: Contract<typeof abi> = {
 	name: 'Gacha Machine',
-	address: '0x2399f330325e5912c1678a087b9aee0ecab7226f',
+	address: '0x44ac41de42f6f79f80b2f877762a84970132dafb',
 	is_deprecated: false,
-	created_at: 1702544913,
+	created_at: 1704271628,
 	abi: abi,
 }
 export default GACHA_MACHINE

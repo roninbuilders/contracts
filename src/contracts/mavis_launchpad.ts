@@ -215,6 +215,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrInvalidTierId',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrInvalidTokenStandard',
 		type: 'error',
 	},
@@ -254,12 +259,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'maxSupply',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'remainSupply',
+				name: 'remainingSupply',
 				type: 'uint256',
 			},
 			{
@@ -331,6 +331,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrNotZeroSupplyForPublicStage',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrStageEnded',
 		type: 'error',
 	},
@@ -369,6 +374,11 @@ const abi = [
 	{
 		inputs: [],
 		name: 'ErrTooMuchConditionalStages',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrUnsupportedNFTInterface',
 		type: 'error',
 	},
 	{
@@ -546,6 +556,12 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -685,6 +701,12 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -765,6 +787,11 @@ const abi = [
 						name: 'stageIndex',
 						type: 'uint8',
 					},
+					{
+						internalType: 'bytes',
+						name: 'extraData',
+						type: 'bytes',
+					},
 				],
 				indexed: false,
 				internalType: 'struct ILaunchpadStructs.MintParam',
@@ -805,6 +832,12 @@ const abi = [
 				indexed: false,
 				internalType: 'uint256[]',
 				name: 'mintedIds',
+				type: 'uint256[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'mintedAmounts',
 				type: 'uint256[]',
 			},
 			{
@@ -883,6 +916,54 @@ const abi = [
 			},
 		],
 		name: 'NewStageInfoAdded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'tierId',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				indexed: false,
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'NewTierAdded',
 		type: 'event',
 	},
 	{
@@ -1052,6 +1133,85 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'tierId',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				indexed: false,
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'TierInfoUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8[]',
+				name: 'tierIds',
+				type: 'uint8[]',
+			},
+			{
+				indexed: false,
+				internalType: 'address[][]',
+				name: 'usersByTier',
+				type: 'address[][]',
+			},
+		],
+		name: 'UsersAssignedToTier',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'wron',
@@ -1150,6 +1310,11 @@ const abi = [
 				internalType: 'uint256',
 				name: 'launchpadSupply',
 				type: 'uint256',
+			},
+			{
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
 			},
 			{
 				components: [
@@ -1274,6 +1439,80 @@ const abi = [
 			},
 		],
 		name: 'addNewStageInfos',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'addNewTierInfo',
+		outputs: [
+			{
+				internalType: 'uint8',
+				name: 'newTierId',
+				type: 'uint8',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				internalType: 'uint8[]',
+				name: 'tierIds',
+				type: 'uint8[]',
+			},
+			{
+				internalType: 'address[][]',
+				name: 'usersByTier',
+				type: 'address[][]',
+			},
+		],
+		name: 'assignUsersToTier',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1615,6 +1854,11 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -1818,6 +2062,57 @@ const abi = [
 				internalType: 'address[]',
 				name: 'logics',
 				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+		],
+		name: 'getTierOfUser',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: 'hasTier',
+				type: 'bool',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'tierInfo',
+				type: 'tuple',
 			},
 		],
 		stateMutability: 'view',
@@ -2201,6 +2496,11 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				internalType: 'bool',
+				name: 'allowCumulativeLimit',
+				type: 'bool',
+			},
+			{
 				components: [
 					{
 						internalType: 'address',
@@ -2274,12 +2574,57 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'nftContract',
+				type: 'address',
+			},
+			{
+				internalType: 'uint8',
+				name: 'stageIndex',
+				type: 'uint8',
+			},
+			{
+				internalType: 'uint8',
+				name: 'tierId',
+				type: 'uint8',
+			},
+			{
+				components: [
+					{
+						internalType: 'uint80',
+						name: 'mintPrice',
+						type: 'uint80',
+					},
+					{
+						internalType: 'uint32',
+						name: 'mintableLimit',
+						type: 'uint32',
+					},
+					{
+						internalType: 'uint144',
+						name: '_reserved',
+						type: 'uint144',
+					},
+				],
+				internalType: 'struct ILaunchpadStructs.UserTier',
+				name: 'userTier',
+				type: 'tuple',
+			},
+		],
+		name: 'updateTierInfo',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
 ] as const
 const MAVIS_LAUNCHPAD: Contract<typeof abi> = {
 	name: 'Mavis Launchpad',
-	address: '0xa4d054948658debe73b262cae4e754dfbb37d0c7',
+	address: '0xcc586c388ba7449e885848033ee8350dc8cdd4a3',
 	is_deprecated: false,
-	created_at: 1712287800,
+	created_at: 1719561138,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD

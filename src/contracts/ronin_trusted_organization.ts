@@ -993,9 +993,9 @@ const abi = [
 ] as const
 const RONIN_TRUSTED_ORGANIZATION: Contract<typeof abi> = {
 	name: 'Ronin Trusted Organization',
-	address: '0x022a7feed15b5853d731eff6fa329afa0c35821d',
+	address: '0xfebc8cfdfd13b69c08ac1b26e1df059260e5130f',
 	is_deprecated: false,
-	created_at: 1709535655,
+	created_at: 1711428461,
 	abi: abi,
 }
 export default RONIN_TRUSTED_ORGANIZATION

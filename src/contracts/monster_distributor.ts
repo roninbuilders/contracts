@@ -611,9 +611,9 @@ const abi = [
 ] as const
 const MONSTER_DISTRIBUTOR: Contract<typeof abi> = {
 	name: 'Monster Distributor',
-	address: '0xdc668544ba6debb7834dcb6ea9e461bbca67e4d5',
+	address: '0xd47ca849fc4d06003161c722623f904a4c6a3018',
 	is_deprecated: false,
-	created_at: 1718774104,
+	created_at: 1718776687,
 	abi: abi,
 }
 export default MONSTER_DISTRIBUTOR

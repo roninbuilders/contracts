@@ -131,6 +131,11 @@ const abi = [
 		type: 'error',
 	},
 	{
+		inputs: [],
+		name: 'ErrLengthMismatch',
+		type: 'error',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -739,6 +744,50 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'delegatingAmounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'FastFinalityRewardDelegatorsDistributed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'delegatingAmounts',
+				type: 'uint256[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'contractBalance',
+				type: 'uint256',
+			},
+		],
+		name: 'FastFinalityRewardDelegatorsDistributionFailed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'address',
 				name: 'cid',
@@ -834,6 +883,50 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'delegatingAmounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'MiningRewardDelegatorsDistributed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'cids',
+				type: 'address[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'delegatingAmounts',
+				type: 'uint256[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'contractBalance',
+				type: 'uint256',
+			},
+		],
+		name: 'MiningRewardDelegatorsDistributionFailed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'address',
 				name: 'cid',
@@ -884,62 +977,6 @@ const abi = [
 			},
 		],
 		name: 'MiningRewardDistributionFailed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'totalAmount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'cids',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'StakingRewardDistributed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'totalAmount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'cids',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'contractBalance',
-				type: 'uint256',
-			},
-		],
-		name: 'StakingRewardDistributionFailed',
 		type: 'event',
 	},
 	{
@@ -1941,107 +1978,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '__slashIndicatorContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '__stakingContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '__stakingVestingContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '__maintenanceContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '__roninTrustedOrganizationContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '__maxValidatorCandidate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '__minEffectiveDaysOnwards',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '__numberOfBlocksInEpoch',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[2]',
-				name: '__emergencyExitConfigs',
-				type: 'uint256[2]',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initializeV2',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'fastFinalityTrackingContract',
-				type: 'address',
-			},
-		],
-		name: 'initializeV3',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'profileContract',
-				type: 'address',
-			},
-		],
-		name: 'initializeV4',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'TConsensus',
 				name: 'consensusAddr',
 				type: 'address',
@@ -2376,9 +2312,9 @@ const abi = [
 ] as const
 const RONIN_VALIDATOR_SET: Contract<typeof abi> = {
 	name: 'Ronin Validator Set',
-	address: '0x02034357e0d8299fa98938ba18b618c91352b09a',
+	address: '0xfa8d5bc04514844d5b79b52e46f473c4eeb2f039',
 	is_deprecated: false,
-	created_at: 1718685411,
+	created_at: 1719390505,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_SET
