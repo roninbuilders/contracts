@@ -297,9 +297,9 @@ const abi = [
 ] as const
 const RONIN_VALIDATOR_SET_REP10_MIGRATOR: Contract<typeof abi> = {
 	name: 'Ronin Validator Set REP10 Migrator',
-	address: '0x1c327065568622bec442272c6d8c822575208ddc',
+	address: '0xc0d9f3fffe76020f9c62f435672112b0895a4f3b',
 	is_deprecated: false,
-	created_at: 1718685414,
+	created_at: 1719390508,
 	abi: abi,
 }
 export default RONIN_VALIDATOR_SET_REP10_MIGRATOR

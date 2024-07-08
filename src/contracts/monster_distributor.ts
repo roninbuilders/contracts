@@ -248,6 +248,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '_index',
+				type: 'uint256',
+			},
+		],
+		name: 'abandonMinting',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint16',
 				name: '_monsterType',
 				type: 'uint16',
@@ -611,9 +624,9 @@ const abi = [
 ] as const
 const MONSTER_DISTRIBUTOR: Contract<typeof abi> = {
 	name: 'Monster Distributor',
-	address: '0xd47ca849fc4d06003161c722623f904a4c6a3018',
+	address: '0x34e112570979c0bf5f99eb934299150784bc3526',
 	is_deprecated: false,
-	created_at: 1718776687,
+	created_at: 1719398443,
 	abi: abi,
 }
 export default MONSTER_DISTRIBUTOR
