@@ -288,6 +288,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'claimedAmount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -547,9 +566,9 @@ const abi = [
 ] as const
 const WHITELISTED_MINTER: Contract<typeof abi> = {
 	name: 'Whitelisted Minter',
-	address: '0x82660d6add698a171f3b7c195f5b3a485e08eea4',
+	address: '0x654a9186b472ce8cf8cafcea91ea3461c223647b',
 	is_deprecated: false,
-	created_at: 1716974172,
+	created_at: 1717376581,
 	abi: abi,
 }
 export default WHITELISTED_MINTER
