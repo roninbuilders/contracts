@@ -307,6 +307,30 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '_index',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_to',
+				type: 'address',
+			},
+		],
+		name: 'getAmountToClaim',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -450,6 +474,25 @@ const abi = [
 				type: 'uint256',
 			},
 		],
+		name: 'mintedAmount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
 		name: 'mintings',
 		outputs: [
 			{
@@ -540,6 +583,29 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '_index',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address[]',
+				name: '_to',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+		],
+		name: 'setAdditionalAmount',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -566,9 +632,9 @@ const abi = [
 ] as const
 const WHITELISTED_MINTER: Contract<typeof abi> = {
 	name: 'Whitelisted Minter',
-	address: '0x654a9186b472ce8cf8cafcea91ea3461c223647b',
+	address: '0x1205cc285f443f3b439f17b8a93c830f7a6fd84f',
 	is_deprecated: false,
-	created_at: 1717376581,
+	created_at: 1720012265,
 	abi: abi,
 }
 export default WHITELISTED_MINTER

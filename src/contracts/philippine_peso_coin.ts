@@ -636,11 +636,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const STABLE_COINS_OF_PESO: Contract<typeof abi> = {
-	name: 'Stable Coins Of Peso',
+const PHILIPPINE_PESO_COIN: Contract<typeof abi> = {
+	name: 'Philippine Peso Coin',
 	address: '0x63c6e9f027947be84d390cfa7b2332d13b529353',
 	is_deprecated: false,
 	created_at: 0,
 	abi: abi,
 }
-export default STABLE_COINS_OF_PESO
+export default PHILIPPINE_PESO_COIN
