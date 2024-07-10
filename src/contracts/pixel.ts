@@ -17,6 +17,11 @@ const abi = [
 				name: 'minter',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: 'cappedSupply_',
+				type: 'uint256',
+			},
 		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
@@ -307,6 +312,19 @@ const abi = [
 		name: 'burnFrom',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'cap',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -626,9 +644,9 @@ const abi = [
 ] as const
 const PIXEL: Contract<typeof abi> = {
 	name: 'PIXEL',
-	address: '0xdf18fd85ab57d7c1aae59729f2ef560be56867b0',
+	address: '0x58a4d05e59f065192173b7ab846aa1eb3727b3bf',
 	is_deprecated: true,
-	created_at: 1706284088,
+	created_at: 1706284139,
 	abi: abi,
 }
 export default PIXEL
