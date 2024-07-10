@@ -5,7 +5,7 @@ import fs from 'fs'
 import { Abi } from 'abitype'
 import { default as PQueue } from 'p-queue'
 
-const QUEUE_CONCURRENCY = 4
+const QUEUE_CONCURRENCY = 3
 const RONIN_EXPLORER_API_URL = process.env.RONIN_EXPLORER_API_URL
 if (!RONIN_EXPLORER_API_URL) {
 	throw new Error('RONIN_EXPLORER_API_URL is not set')
@@ -83,8 +83,6 @@ const fetchAbi = async (contractAddress: string, retryCount = 0): Promise<readon
 	const url = `${RONIN_EXPLORER_API_URL}contract/${contractAddress}/abi`
 
 	try {
-		console.log(`Fetching ABI for contract ${contractAddress}...`)
-
 		const contracts = await fetch(url, {
 			headers: {
 				accept: 'application/json',
@@ -107,11 +105,10 @@ const fetchAbi = async (contractAddress: string, retryCount = 0): Promise<readon
 		}
 
 		// Log the error and retry
-		console.error(`Error fetching ABI for contract ${contractAddress}: ${(error as any).message}`)
-		console.log('Retrying in 2 seconds...')
+		console.info(`Retrying ${contractAddress}: ${retryCount + 1}...`)
 
-		// Wait for 2 seconds and try again
-		await new Promise((resolve) => setTimeout(resolve, 2000))
+		// Wait for 10 seconds and try again
+		await new Promise((resolve) => setTimeout(resolve, 10000))
 		return await fetchAbi(contractAddress, retryCount + 1)
 	}
 }
@@ -185,8 +182,8 @@ let failedCount = 0
 const saveLocalFile = async (
 	contractAddress: `0x${string}`,
 	contractName: string,
-	is_deprecated: boolean,
-	created_at: number,
+	is_deprecated: boolean = false,
+	created_at: number = 0,
 ) => {
 	try {
 		// Get the ABI from the API
