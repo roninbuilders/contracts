@@ -767,9 +767,9 @@ const abi = [
 ] as const
 const KATANA_PAIR_PROXY: Contract<typeof abi> = {
 	name: 'Katana Pair Proxy',
-	address: '0x363475ce45aef7ce55850d51872639464f993dd4',
+	address: '0x2adedce2a7e03abf24a7e7eedddd0c0ea52d23f5',
 	is_deprecated: false,
-	created_at: 1698380486,
+	created_at: 1721210417,
 	abi: abi,
 }
 export default KATANA_PAIR_PROXY

@@ -678,7 +678,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '',
+				name: 'tokenId',
 				type: 'uint256',
 			},
 		],
@@ -696,9 +696,9 @@ const abi = [
 ] as const
 const RONIN_GAME_NFT: Contract<typeof abi> = {
 	name: 'Ronin Game NFT',
-	address: '0x5efdf6440c0640cc31d08820a15e1383a4221fc1',
+	address: '0x4059f5c8dfc39c6d7a8b2bb3d169d1aee587a349',
 	is_deprecated: false,
-	created_at: 1720946404,
+	created_at: 1720948756,
 	abi: abi,
 }
 export default RONIN_GAME_NFT
