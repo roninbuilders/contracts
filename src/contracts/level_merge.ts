@@ -6,29 +6,14 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'ApprovalForAll',
-		type: 'event',
+		inputs: [],
+		name: 'InsufficientFee',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'OnlyCoordinatorCanFulfill',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -41,6 +26,56 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'targetTokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256[]',
+				name: 'materialTokenIds',
+				type: 'uint256[]',
+			},
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'successRate',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'upgraded',
+				type: 'bool',
+			},
+		],
+		name: 'MonsterMerged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'Paused',
 		type: 'event',
 	},
 	{
@@ -122,93 +157,13 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
 				indexed: false,
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
 			},
 		],
-		name: 'TransferBatch',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'TransferSingle',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'value',
-				type: 'string',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'URI',
+		name: 'Unpaused',
 		type: 'event',
 	},
 	{
@@ -219,6 +174,19 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'FEE_RECEIVER',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -239,11 +207,123 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGVINE',
+		name: 'NYANGKIT',
+		outputs: [
+			{
+				internalType: 'contract INyangKit',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'PAYMENT_TOKEN',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'RAGMON',
+		outputs: [
+			{
+				internalType: 'contract IRagmon',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'calculateAccumulatedValue',
+		outputs: [
+			{
+				internalType: 'uint16',
+				name: 'accumulatedValue',
+				type: 'uint16',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+		],
+		name: 'calculateAccumulatedValues',
+		outputs: [
+			{
+				internalType: 'uint16[]',
+				name: '',
+				type: 'uint16[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'targetTokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'materialTokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'calculateMergeSuccessRate',
+		outputs: [
+			{
+				internalType: 'uint16',
+				name: 'successRate',
+				type: 'uint16',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+			{
+				internalType: 'uint8[]',
+				name: 'materialLevels',
+				type: 'uint8[]',
+			},
+		],
+		name: 'calculateTotalValue',
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '',
+				name: 'totalValue',
 				type: 'uint256',
 			},
 		],
@@ -252,7 +332,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'RAGMON_TICKET',
+		name: 'callbackGasLimit',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -266,17 +346,30 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
 			},
 			{
+				internalType: 'uint16',
+				name: 'successRate',
+				type: 'uint16',
+			},
+		],
+		name: 'estimateAdditionalCost',
+		outputs: [
+			{
 				internalType: 'uint256',
-				name: 'id',
+				name: 'totalFee',
 				type: 'uint256',
 			},
 		],
-		name: 'balanceOf',
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'gasPrice',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -290,71 +383,20 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: 'accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
 			},
 		],
-		name: 'balanceOfBatch',
+		name: 'getBaseProbabilities',
 		outputs: [
 			{
-				internalType: 'uint256[]',
+				internalType: 'uint16[]',
 				name: '',
-				type: 'uint256[]',
+				type: 'uint16[]',
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'burnBatch',
-		outputs: [],
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -421,9 +463,19 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'string',
-				name: 'baseTokenURI',
-				type: 'string',
+				internalType: 'address',
+				name: '_ragmon',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_nyangkit',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_vrfCoordinator',
+				type: 'address',
 			},
 		],
 		name: 'initialize',
@@ -434,17 +486,55 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'targetTokenId',
+				type: 'uint256',
 			},
 			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
+				internalType: 'uint256[]',
+				name: 'materialTokenIds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint16',
+				name: 'berryAmount',
+				type: 'uint16',
 			},
 		],
-		name: 'isApprovedForAll',
+		name: 'merge',
+		outputs: [],
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: '',
+				type: 'uint8',
+			},
+		],
+		name: 'mergeCostByRarity',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'pause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'paused',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -458,34 +548,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
+				internalType: 'bytes32',
+				name: '_reqHash',
+				type: 'bytes32',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_randomSeed',
 				type: 'uint256',
 			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
 		],
-		name: 'mintLaunchpad',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
+		name: 'rawFulfillRandomSeed',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -528,32 +602,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
 			},
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
+				internalType: 'uint16[]',
+				name: 'baseProbabilities',
+				type: 'uint16[]',
 			},
 		],
-		name: 'safeBatchTransferFrom',
+		name: 'setBaseProbabilities',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -562,62 +621,73 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'from',
+				name: '_feeReceiver',
 				type: 'address',
 			},
+		],
+		name: 'setFeeReceiver',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
 			},
 			{
 				internalType: 'uint256',
-				name: 'id',
+				name: 'mergeCost',
+				type: 'uint256',
+			},
+		],
+		name: 'setMergeCost',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_paymentToken',
+				type: 'address',
+			},
+		],
+		name: 'setPaymentToken',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: '_treasuryRate',
+				type: 'uint16',
+			},
+		],
+		name: 'setTreasuryRate',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_callbackGasLimit',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_gasPrice',
 				type: 'uint256',
 			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
 		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'setApprovalForAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'newURI',
-				type: 'string',
-			},
-		],
-		name: 'setURI',
+		name: 'setVRFVariables',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -642,49 +712,44 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenURI',
+		inputs: [],
+		name: 'treasuryRate',
 		outputs: [
 			{
-				internalType: 'string',
+				internalType: 'uint16',
 				name: '',
-				type: 'string',
+				type: 'uint16',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'uri',
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'vrfCoordinator',
 		outputs: [
 			{
-				internalType: 'string',
+				internalType: 'address',
 				name: '',
-				type: 'string',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
-const NYANG_KIT: Contract<typeof abi> = {
-	name: 'Nyang Kit',
-	address: '0x720f344397762782a993c1d15738d8cb5bd50f63',
+const LEVEL_MERGE: Contract<typeof abi> = {
+	name: 'Level Merge',
+	address: '0xc3506ca85fe4888558c005f148107c7187736452',
 	is_deprecated: false,
-	created_at: 1716377945,
+	created_at: 1721976571,
 	abi: abi,
 }
-export default NYANG_KIT
+export default LEVEL_MERGE
