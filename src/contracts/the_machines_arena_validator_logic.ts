@@ -6,28 +6,160 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
+		inputs: [],
+		name: 'AccessControlBadConfirmation',
+		type: 'error',
+	},
+	{
 		inputs: [
 			{
-				indexed: true,
 				internalType: 'address',
 				name: 'account',
 				type: 'address',
 			},
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
+				internalType: 'bytes32',
+				name: 'neededRole',
+				type: 'bytes32',
 			},
 		],
-		name: 'ApprovalForAll',
+		name: 'AccessControlUnauthorizedAccount',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'target',
+				type: 'address',
+			},
+		],
+		name: 'AddressEmptyCode',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'AlreadyIsValidator',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'ERC1967InvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'EnforcedPause',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ExpectedPause',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidAddress',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInitialization',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInputs',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidNFTContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidRecipient',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidSignature',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidTokenContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'IsNotValidator',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'MainnetNotAllowed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NotEnoughValidators',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NotInitializing',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'UUPSUnauthorizedCallContext',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'slot',
+				type: 'bytes32',
+			},
+		],
+		name: 'UUPSUnsupportedProxiableUUID',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'UnknownNetwork',
+		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint64',
+				name: 'version',
+				type: 'uint64',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -35,12 +167,12 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
 			},
 		],
-		name: 'Initialized',
+		name: 'Paused',
 		type: 'event',
 	},
 	{
@@ -122,37 +254,32 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
+				indexed: false,
+				internalType: 'uint256',
+				name: 'oldThreshold',
+				type: 'uint256',
 			},
 			{
 				indexed: false,
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
+				internalType: 'uint256',
+				name: 'newThreshold',
+				type: 'uint256',
 			},
 		],
-		name: 'TransferBatch',
+		name: 'ThresholdUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'Unpaused',
 		type: 'event',
 	},
 	{
@@ -161,35 +288,11 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'operator',
+				name: 'implementation',
 				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
 			},
 		],
-		name: 'TransferSingle',
+		name: 'Upgraded',
 		type: 'event',
 	},
 	{
@@ -197,18 +300,25 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'string',
-				name: 'value',
-				type: 'string',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
+				internalType: 'address',
+				name: 'validator',
+				type: 'address',
 			},
 		],
-		name: 'URI',
+		name: 'ValidatorAdded',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'validator',
+				type: 'address',
+			},
+		],
+		name: 'ValidatorRemoved',
 		type: 'event',
 	},
 	{
@@ -226,7 +336,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'MINTER_ROLE',
+		name: 'PAUSER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -239,12 +349,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGVINE',
+		name: 'UPGRADER_ROLE',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'bytes32',
 				name: '',
-				type: 'uint256',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -252,12 +362,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'RAGMON_TICKET',
+		name: 'UPGRADE_INTERFACE_VERSION',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'string',
 				name: '',
-				type: 'uint256',
+				type: 'string',
 			},
 		],
 		stateMutability: 'view',
@@ -270,66 +380,8 @@ const abi = [
 				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
 		],
-		name: 'balanceOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-		],
-		name: 'balanceOfBatch',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
+		name: 'adminAddValidator',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -341,20 +393,36 @@ const abi = [
 				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
 		],
-		name: 'burnBatch',
+		name: 'adminRemoveValidator',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'newThreshold',
+				type: 'uint256',
+			},
+		],
+		name: 'adminSetThreshold',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'baseVersion',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -421,9 +489,9 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'string',
-				name: 'baseTokenURI',
-				type: 'string',
+				internalType: 'address',
+				name: 'admin',
+				type: 'address',
 			},
 		],
 		name: 'initialize',
@@ -438,13 +506,8 @@ const abi = [
 				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
 		],
-		name: 'isApprovedForAll',
+		name: 'isValidator',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -456,37 +519,49 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'mintLaunchpad',
+		inputs: [],
+		name: 'numValidators',
 		outputs: [
 			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'pause',
+		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'paused',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'proxiableUUID',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -498,7 +573,7 @@ const abi = [
 			},
 			{
 				internalType: 'address',
-				name: 'account',
+				name: 'callerConfirmation',
 				type: 'address',
 			},
 		],
@@ -528,103 +603,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeBatchTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'setApprovalForAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'newURI',
-				type: 'string',
-			},
-		],
-		name: 'setURI',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -642,19 +620,62 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'threshold',
+		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'id',
+				name: '',
 				type: 'uint256',
 			},
 		],
-		name: 'tokenURI',
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'newImplementation',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'upgradeToAndCall',
+		outputs: [],
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes',
+				name: 'message',
+				type: 'bytes',
+			},
+			{
+				internalType: 'bytes',
+				name: 'signature',
+				type: 'bytes',
+			},
+		],
+		name: 'verifyMessage',
 		outputs: [
 			{
-				internalType: 'string',
+				internalType: 'bool',
 				name: '',
-				type: 'string',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -663,28 +684,33 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
+				internalType: 'bytes32',
+				name: 'messageHash',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'bytes',
+				name: 'signature',
+				type: 'bytes',
 			},
 		],
-		name: 'uri',
+		name: 'verifyMessageHash',
 		outputs: [
 			{
-				internalType: 'string',
+				internalType: 'bool',
 				name: '',
-				type: 'string',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
-const NYANG_KIT: Contract<typeof abi> = {
-	name: 'Nyang Kit',
-	address: '0x720f344397762782a993c1d15738d8cb5bd50f63',
+const THE_MACHINES_ARENA_VALIDATOR_LOGIC: Contract<typeof abi> = {
+	name: 'The Machines Arena Validator Logic',
+	address: '0x1da7b13f42605fc501366ec62613ddb9570662c5',
 	is_deprecated: false,
-	created_at: 1716377945,
+	created_at: 1709089350,
 	abi: abi,
 }
-export default NYANG_KIT
+export default THE_MACHINES_ARENA_VALIDATOR_LOGIC
