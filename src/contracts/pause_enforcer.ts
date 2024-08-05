@@ -1,25 +1,24 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'contract IPauseTarget',
-				name: '_target',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: '_sentries',
-				type: 'address[]',
-			},
-		],
+		inputs: [],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
+	},
+	{
+		inputs: [],
+		name: 'ErrNotOnEmergencyPause',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrTargetIsNotOnPaused',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ErrTargetIsOnPaused',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -45,6 +44,19 @@ const abi = [
 			},
 		],
 		name: 'EmergencyUnpaused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
+			},
+		],
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -170,7 +182,6 @@ const abi = [
 			},
 		],
 		name: 'changeTarget',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -263,7 +274,6 @@ const abi = [
 			},
 		],
 		name: 'grantRole',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -276,7 +286,6 @@ const abi = [
 			},
 		],
 		name: 'grantSentry',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -307,6 +316,28 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'contract IPauseTarget',
+				name: '_target',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_admin',
+				type: 'address',
+			},
+			{
+				internalType: 'address[]',
+				name: '_sentries',
+				type: 'address[]',
+			},
+		],
+		name: 'initialize',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -318,7 +349,6 @@ const abi = [
 			},
 		],
 		name: 'renounceRole',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -336,7 +366,6 @@ const abi = [
 			},
 		],
 		name: 'revokeRole',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -349,7 +378,6 @@ const abi = [
 			},
 		],
 		name: 'revokeSentry',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -388,23 +416,21 @@ const abi = [
 	{
 		inputs: [],
 		name: 'triggerPause',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [],
 		name: 'triggerUnpause',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 ] as const
 const PAUSE_ENFORCER: Contract<typeof abi> = {
 	name: 'Pause Enforcer',
-	address: '0x2367cd5468c2b3cd18aa74adb7e14e43426af837',
+	address: '0x3ba040bc32352e2dc21f9a85c5573e84696a74dd',
 	is_deprecated: false,
-	created_at: 1684208936,
+	created_at: 1722410264,
 	abi: abi,
 }
 export default PAUSE_ENFORCER

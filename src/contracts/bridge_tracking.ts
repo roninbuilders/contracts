@@ -6,17 +6,61 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		inputs: [],
-		name: 'ErrCallerMustBeBridgeContract',
+		inputs: [
+			{
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrContractTypeNotFound',
 		type: 'error',
 	},
 	{
-		inputs: [],
-		name: 'ErrCallerMustBeValidatorContract',
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum RoleAccess',
+				name: 'expectedRole',
+				type: 'uint8',
+			},
+		],
+		name: 'ErrUnauthorized',
 		type: 'error',
 	},
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				internalType: 'enum ContractType',
+				name: 'expectedContractType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'actual',
+				type: 'address',
+			},
+		],
+		name: 'ErrUnexpectedInternalCall',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'addr',
+				type: 'address',
+			},
+		],
 		name: 'ErrZeroCodeContract',
 		type: 'error',
 	},
@@ -24,13 +68,44 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+				indexed: true,
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
+			},
+			{
+				indexed: true,
 				internalType: 'address',
-				name: '',
+				name: 'addr',
 				type: 'address',
 			},
 		],
-		name: 'BridgeContractUpdated',
+		name: 'ContractUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes4',
+				name: 'msgSig',
+				type: 'bytes4',
+			},
+			{
+				indexed: false,
+				internalType: 'bytes',
+				name: 'reason',
+				type: 'bytes',
+			},
+		],
+		name: 'ExternalCallFailed',
 		type: 'event',
 	},
 	{
@@ -47,25 +122,18 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
 			},
 		],
-		name: 'ValidatorContractUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'bridgeContract',
+		name: 'getContract',
 		outputs: [
 			{
 				internalType: 'address',
-				name: '',
+				name: 'contract_',
 				type: 'address',
 			},
 		],
@@ -76,12 +144,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 			{
 				internalType: 'address[]',
-				name: '_bridgeOperators',
+				name: 'operators',
 				type: 'address[]',
 			},
 		],
@@ -100,17 +168,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'enum IBridgeTracking.VoteKind',
-				name: '_kind',
+				name: 'kind',
 				type: 'uint8',
 			},
 			{
 				internalType: 'uint256',
-				name: '_requestId',
+				name: 'requestId',
 				type: 'uint256',
 			},
 		],
 		name: 'handleVoteApproved',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -118,22 +185,60 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_bridgeContract',
+				name: 'bridgeContract',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: '_validatorContract',
+				name: 'validatorContract',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: '_startedAtBlock',
+				name: 'startedAtBlock_',
 				type: 'uint256',
 			},
 		],
 		name: 'initialize',
-		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'initializeREP2',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'initializeV2',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'bridgeManager',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'bridgeSlash',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'bridgeReward',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'dposGA',
+				type: 'address',
+			},
+		],
+		name: 'initializeV3',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -141,48 +246,38 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'enum IBridgeTracking.VoteKind',
-				name: '_kind',
+				name: 'kind',
 				type: 'uint8',
 			},
 			{
 				internalType: 'uint256',
-				name: '_requestId',
+				name: 'requestId',
 				type: 'uint256',
 			},
 			{
 				internalType: 'address',
-				name: '_operator',
+				name: 'operator',
 				type: 'address',
 			},
 		],
 		name: 'recordVote',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
+				internalType: 'enum ContractType',
+				name: 'contractType',
+				type: 'uint8',
 			},
-		],
-		name: 'setBridgeContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
 				internalType: 'address',
-				name: '_addr',
+				name: 'addr',
 				type: 'address',
 			},
 		],
-		name: 'setValidatorContract',
-		outputs: [],
+		name: 'setContract',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -203,15 +298,15 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
-		name: 'totalBallots',
+		name: 'totalBallot',
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '_totalBallots',
+				name: 'totalBallot_',
 				type: 'uint256',
 			},
 		],
@@ -222,16 +317,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 			{
 				internalType: 'address',
-				name: '_bridgeOperator',
+				name: 'bridgeOperator',
 				type: 'address',
 			},
 		],
-		name: 'totalBallotsOf',
+		name: 'totalBallotOf',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -246,29 +341,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_period',
+				name: 'period',
 				type: 'uint256',
 			},
 		],
-		name: 'totalVotes',
+		name: 'totalVote',
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '_totalVotes',
+				name: 'totalVote_',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'validatorContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -277,9 +359,9 @@ const abi = [
 ] as const
 const BRIDGE_TRACKING: Contract<typeof abi> = {
 	name: 'Bridge Tracking',
-	address: '0xfca143fe2751a992e8cff2eb5d64eda809049295',
+	address: '0x9521dbe27803f5d31da86d5846e7fe011d235018',
 	is_deprecated: false,
-	created_at: 1679636483,
+	created_at: 1722410264,
 	abi: abi,
 }
 export default BRIDGE_TRACKING
