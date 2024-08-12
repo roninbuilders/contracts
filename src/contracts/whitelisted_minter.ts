@@ -39,6 +39,12 @@ const abi = [
 				name: 'timestamp',
 				type: 'uint256',
 			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
 		],
 		name: 'Minted',
 		type: 'event',
@@ -632,9 +638,9 @@ const abi = [
 ] as const
 const WHITELISTED_MINTER: Contract<typeof abi> = {
 	name: 'Whitelisted Minter',
-	address: '0x1205cc285f443f3b439f17b8a93c830f7a6fd84f',
+	address: '0x5f8a9c18f0942f78b36fcab41019e58a9c4f7d98',
 	is_deprecated: false,
-	created_at: 1720012265,
+	created_at: 1720064190,
 	abi: abi,
 }
 export default WHITELISTED_MINTER

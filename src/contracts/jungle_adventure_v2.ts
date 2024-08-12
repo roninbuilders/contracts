@@ -186,6 +186,31 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
+				internalType: 'uint256',
+				name: 'vxId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'potionType',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'Healed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
 				internalType: 'uint8',
 				name: 'version',
 				type: 'uint8',
@@ -1683,9 +1708,9 @@ const abi = [
 ] as const
 const JUNGLE_ADVENTURE_V2: Contract<typeof abi> = {
 	name: 'Jungle Adventure V2',
-	address: '0xb07564803eb28884467cd3c98a054e7c9477092f',
+	address: '0xf81e5b1dd4fffdf719f281b7805cd6a0d6b9a075',
 	is_deprecated: false,
-	created_at: 1711379178,
+	created_at: 1712249214,
 	abi: abi,
 }
 export default JUNGLE_ADVENTURE_V2

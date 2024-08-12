@@ -1,17 +1,6 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-		],
-		name: 'ErrAlreadyVoted',
-		type: 'error',
-	},
-	{
 		inputs: [],
 		name: 'ErrBelowMinRequiredGovernors',
 		type: 'error',
@@ -94,17 +83,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInsufficientGas',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes4',
 				name: 'msgSig',
 				type: 'bytes4',
@@ -114,83 +92,8 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'actual',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expected',
-				type: 'uint256',
-			},
-		],
-		name: 'ErrInvalidChainId',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrInvalidExpiryTimestamp',
-		type: 'error',
-	},
-	{
 		inputs: [],
 		name: 'ErrInvalidInput',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidOrder',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'actual',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'expected',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInvalidProposal',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidProposalNonce',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidSignatures',
 		type: 'error',
 	},
 	{
@@ -224,22 +127,6 @@ const abi = [
 			},
 		],
 		name: 'ErrLengthMismatch',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'callIndex',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'revertMsg',
-				type: 'bytes',
-			},
-		],
-		name: 'ErrLooseProposalInternallyRevert',
 		type: 'error',
 	},
 	{
@@ -294,17 +181,6 @@ const abi = [
 			},
 		],
 		name: 'ErrUnsupportedInterface',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrUnsupportedVoteType',
 		type: 'error',
 	},
 	{
@@ -927,222 +803,7 @@ const abi = [
 			},
 		],
 		name: 'addBridgeOperators',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'enum GlobalProposal.TargetOption[]',
-						name: 'targetOptions',
-						type: 'uint8[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct GlobalProposal.GlobalProposalDetail',
-				name: 'globalProposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: 'supports_',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: 'signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'castGlobalProposalBySignatures',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: 'supports_',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: 'signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'castProposalBySignatures',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType',
-				name: 'support',
-				type: 'uint8',
-			},
-		],
-		name: 'castProposalVoteForCurrentNetwork',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -1163,109 +824,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-		],
-		name: 'execute',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'enum GlobalProposal.TargetOption[]',
-						name: 'targetOptions',
-						type: 'uint8[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct GlobalProposal.GlobalProposalDetail',
-				name: 'globalProposal',
-				type: 'tuple',
-			},
-		],
-		name: 'executeGlobal',
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1599,12 +1157,63 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'num',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'denom',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'roninChainId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'expiryDuration',
+				type: 'uint256',
+			},
+			{
 				internalType: 'address',
-				name: 'newGwImpl',
+				name: 'bridgeContract',
 				type: 'address',
 			},
+			{
+				internalType: 'address[]',
+				name: 'callbackRegisters',
+				type: 'address[]',
+			},
+			{
+				internalType: 'address[]',
+				name: 'bridgeOperators',
+				type: 'address[]',
+			},
+			{
+				internalType: 'address[]',
+				name: 'governors',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint96[]',
+				name: 'voteWeights',
+				type: 'uint96[]',
+			},
+			{
+				internalType: 'enum GlobalProposal.TargetOption[]',
+				name: 'targetOptions',
+				type: 'uint8[]',
+			},
+			{
+				internalType: 'address[]',
+				name: 'targets',
+				type: 'address[]',
+			},
 		],
-		name: 'hotfix__mapToken_setMinimumThresholds_registerCallbacks',
+		name: 'initialize',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -1672,290 +1281,13 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiryTimestamp',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'executor',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'calldatas',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'gasAmounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'propose',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'expiryTimestamp',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'executor',
-				type: 'address',
-			},
-			{
-				internalType: 'enum GlobalProposal.TargetOption[]',
-				name: 'targetOptions',
-				type: 'uint8[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'calldatas',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'gasAmounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'proposeGlobal',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'enum GlobalProposal.TargetOption[]',
-						name: 'targetOptions',
-						type: 'uint8[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct GlobalProposal.GlobalProposalDetail',
-				name: 'globalProposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: 'supports_',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: 'signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'proposeGlobalProposalStructAndCastVotes',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'expiryTimestamp',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'executor',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'calldatas',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'gasAmounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'enum Ballot.VoteType',
-				name: 'support',
-				type: 'uint8',
-			},
-		],
-		name: 'proposeProposalForCurrentNetwork',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: '_proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: '_supports',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: '_signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'proposeProposalStructAndCastVotes',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'address[]',
 				name: 'registers',
 				type: 'address[]',
 			},
 		],
 		name: 'registerCallbacks',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -1968,6 +1300,7 @@ const abi = [
 			},
 		],
 		name: 'removeBridgeOperators',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2023,6 +1356,7 @@ const abi = [
 			},
 		],
 		name: 'setContract',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2035,6 +1369,7 @@ const abi = [
 			},
 		],
 		name: 'setMinRequiredGovernor',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2052,6 +1387,7 @@ const abi = [
 			},
 		],
 		name: 'setThreshold',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2096,6 +1432,7 @@ const abi = [
 			},
 		],
 		name: 'unregisterCallbacks',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2113,6 +1450,7 @@ const abi = [
 			},
 		],
 		name: 'updateManyTargetOption',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2161,11 +1499,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const RONIN_BRIDGE_MANAGER: Contract<typeof abi> = {
-	name: 'Ronin Bridge Manager',
-	address: '0x5d4050d8d1e5fc6e8e19e268b5c30d88cfd22aa7',
+const RONIN_BRIDGE_MANAGER_CONSTRUCTOR: Contract<typeof abi> = {
+	name: 'Ronin Bridge Manager Constructor',
+	address: '0x89f25ef52e46e583ead6c5e1acd2471ed499c8c7',
 	is_deprecated: false,
-	created_at: 1722925217,
+	created_at: 1722328225,
 	abi: abi,
 }
-export default RONIN_BRIDGE_MANAGER
+export default RONIN_BRIDGE_MANAGER_CONSTRUCTOR

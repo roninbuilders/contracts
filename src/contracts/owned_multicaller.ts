@@ -31,51 +31,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		inputs: [],
-		name: 'kill',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract INSUnified',
-				name: 'rns',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'parentId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'resolver',
-				type: 'address',
-			},
-			{
-				internalType: 'uint64',
-				name: 'duration',
-				type: 'uint64',
-			},
-			{
-				internalType: 'address[]',
-				name: 'tos',
-				type: 'address[]',
-			},
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-		],
-		name: 'multiMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address[]',
@@ -110,6 +65,118 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'bytes',
+				name: '',
+				type: 'bytes',
+			},
+		],
+		name: 'onERC1155BatchReceived',
+		outputs: [
+			{
+				internalType: 'bytes4',
+				name: '',
+				type: 'bytes4',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: '',
+				type: 'bytes',
+			},
+		],
+		name: 'onERC1155Received',
+		outputs: [
+			{
+				internalType: 'bytes4',
+				name: '',
+				type: 'bytes4',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: '',
+				type: 'bytes',
+			},
+		],
+		name: 'onERC721Received',
+		outputs: [
+			{
+				internalType: 'bytes4',
+				name: '',
+				type: 'bytes4',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'owner',
 		outputs: [
@@ -132,6 +199,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes4',
+				name: 'interfaceId',
+				type: 'bytes4',
+			},
+		],
+		name: 'supportsInterface',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'newOwner',
 				type: 'address',
@@ -145,9 +231,9 @@ const abi = [
 ] as const
 const OWNED_MULTICALLER: Contract<typeof abi> = {
 	name: 'Owned Multicaller',
-	address: '0x8975923d01132beb6c412f827f63d44712726e13',
+	address: '0x27876429db2cddf017dbb63560d0366e4b4e6f8a',
 	is_deprecated: false,
-	created_at: 1699347565,
+	created_at: 1721026274,
 	abi: abi,
 }
 export default OWNED_MULTICALLER
