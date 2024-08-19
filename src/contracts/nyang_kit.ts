@@ -213,6 +213,19 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'COMMON_YGGDRASIL_BERRY',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
 			{
@@ -226,12 +239,51 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'EPIC_YGGDRASIL_BERRY',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'LEGENDARY_YGGDRASIL_BERRY',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'MINTER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'MYTHIC_YGGDRASIL_BERRY',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -253,6 +305,19 @@ const abi = [
 	{
 		inputs: [],
 		name: 'RAGMON_TICKET',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'RARE_YGGDRASIL_BERRY',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -492,6 +557,61 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'mintYggdrasilBerry',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'name',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+		],
+		name: 'rarityToYggdrasilBerry',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -642,6 +762,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'symbol',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -682,9 +815,9 @@ const abi = [
 ] as const
 const NYANG_KIT: Contract<typeof abi> = {
 	name: 'Nyang Kit',
-	address: '0x720f344397762782a993c1d15738d8cb5bd50f63',
+	address: '0xe7ab3720e2ef4268ad1837196634f49313803b16',
 	is_deprecated: false,
-	created_at: 1716377945,
+	created_at: 1721752059,
 	abi: abi,
 }
 export default NYANG_KIT
