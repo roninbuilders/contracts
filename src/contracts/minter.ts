@@ -136,11 +136,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'MintExpired',
-		type: 'error',
-	},
-	{
-		inputs: [],
 		name: 'NoValidatorContract',
 		type: 'error',
 	},
@@ -162,6 +157,11 @@ const abi = [
 	{
 		inputs: [],
 		name: 'SignatureAlreadyUsed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'SignatureExpired',
 		type: 'error',
 	},
 	{
@@ -200,6 +200,25 @@ const abi = [
 		inputs: [],
 		name: 'UnknownNetwork',
 		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'treasuryAddress',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'FundsSentToTreasury',
+		type: 'event',
 	},
 	{
 		anonymous: false,
@@ -627,22 +646,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract IMintableToken',
-				name: 'tokenContract',
+				internalType: 'address',
+				name: 'recipient',
 				type: 'address',
 			},
 			{
-				internalType: 'address[]',
-				name: 'accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
+				internalType: 'string',
+				name: 'details',
+				type: 'string',
 			},
 		],
-		name: 'adminMintTokens',
+		name: 'adminGiftOffchainItem',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1142,9 +1156,9 @@ const abi = [
 ] as const
 const MINTER: Contract<typeof abi> = {
 	name: 'Minter',
-	address: '0x88bc7541153374fac167428cbc8d9d1bccb069ca',
+	address: '0xd831d7245726e7a0fc400c8f3fb48071866655d8',
 	is_deprecated: false,
-	created_at: 1715931102,
+	created_at: 1722488740,
 	abi: abi,
 }
 export default MINTER

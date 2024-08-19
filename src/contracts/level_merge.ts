@@ -747,9 +747,9 @@ const abi = [
 ] as const
 const LEVEL_MERGE: Contract<typeof abi> = {
 	name: 'Level Merge',
-	address: '0x5775572682d08bdb6e6e531cbfe938b91b3816b1',
+	address: '0x99aeb4179a9e0011ef9630f40cfe7813f036a3bd',
 	is_deprecated: false,
-	created_at: 1721984068,
+	created_at: 1722838366,
 	abi: abi,
 }
 export default LEVEL_MERGE
