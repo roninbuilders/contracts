@@ -19,6 +19,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'feeReceiver',
+				type: 'address',
+			},
+		],
+		name: 'FeeReceiverChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'uint8',
 				name: 'version',
@@ -747,9 +760,9 @@ const abi = [
 ] as const
 const LEVEL_MERGE: Contract<typeof abi> = {
 	name: 'Level Merge',
-	address: '0x99aeb4179a9e0011ef9630f40cfe7813f036a3bd',
+	address: '0x3c4752ba472d2da88ca86586f879dc32da72d336',
 	is_deprecated: false,
-	created_at: 1722838366,
+	created_at: 1723600926,
 	abi: abi,
 }
 export default LEVEL_MERGE

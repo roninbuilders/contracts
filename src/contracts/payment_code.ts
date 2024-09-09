@@ -161,6 +161,7 @@ const abi = [
 			},
 		],
 		name: 'bulkClaim',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -188,6 +189,7 @@ const abi = [
 			},
 		],
 		name: 'bulkRecoverFunds',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -235,6 +237,7 @@ const abi = [
 			},
 		],
 		name: 'claim',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -282,7 +285,27 @@ const abi = [
 			},
 		],
 		name: 'claimMany',
+		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'velocityControlId',
+				type: 'uint256',
+			},
+		],
+		name: 'getIntervalAllowedAmount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -350,34 +373,34 @@ const abi = [
 				type: 'bytes32',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'operator',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'from',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'ids',
+				name: '',
 				type: 'uint256[]',
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'values',
+				name: '',
 				type: 'uint256[]',
 			},
 			{
 				internalType: 'bytes',
-				name: 'data',
+				name: '',
 				type: 'bytes',
 			},
 		],
@@ -396,27 +419,27 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'operator',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'from',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'id',
+				name: '',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'value',
+				name: '',
 				type: 'uint256',
 			},
 			{
 				internalType: 'bytes',
-				name: 'data',
+				name: '',
 				type: 'bytes',
 			},
 		],
@@ -435,22 +458,22 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'operator',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'from',
+				name: '',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '',
 				type: 'uint256',
 			},
 			{
 				internalType: 'bytes',
-				name: 'data',
+				name: '',
 				type: 'bytes',
 			},
 		],
@@ -499,7 +522,7 @@ const abi = [
 				type: 'address',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -526,12 +549,14 @@ const abi = [
 			},
 		],
 		name: 'recoverFunds',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [],
 		name: 'renounceOwnership',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -544,6 +569,7 @@ const abi = [
 			},
 		],
 		name: 'setSigner',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -574,8 +600,24 @@ const abi = [
 				name: 'expiry',
 				type: 'uint256',
 			},
+			{
+				internalType: 'uint256',
+				name: 'intervalLimit',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'interval',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'intervalStart',
+				type: 'uint256',
+			},
 		],
 		name: 'setVelocityControl',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -595,12 +637,32 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes4',
+				name: 'interfaceId',
+				type: 'bytes4',
+			},
+		],
+		name: 'supportsInterface',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'newOwner',
 				type: 'address',
 			},
 		],
 		name: 'transferOwnership',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -659,6 +721,21 @@ const abi = [
 				type: 'uint256',
 			},
 			{
+				internalType: 'uint256',
+				name: 'intervalLimit',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'interval',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'intervalStart',
+				type: 'uint256',
+			},
+			{
 				internalType: 'bool',
 				name: 'enabled',
 				type: 'bool',
@@ -691,12 +768,16 @@ const abi = [
 		stateMutability: 'view',
 		type: 'function',
 	},
+	{
+		stateMutability: 'payable',
+		type: 'receive',
+	},
 ] as const
 const PAYMENT_CODE: Contract<typeof abi> = {
 	name: 'Payment Code',
-	address: '0xc613daccbf2c707c2b302381cb5fb233e19a5ae1',
+	address: '0x00abc4acffdb598c3333094f40c286fda64c6198',
 	is_deprecated: false,
-	created_at: 1710881612,
+	created_at: 1724955235,
 	abi: abi,
 }
 export default PAYMENT_CODE
