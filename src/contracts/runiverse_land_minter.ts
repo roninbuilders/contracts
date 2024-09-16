@@ -18,6 +18,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'BadSignature',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'DeniedProcessDuringMinting',
 		type: 'error',
 	},
@@ -205,6 +210,63 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: '_messageHash',
+				type: 'bytes32',
+			},
+		],
+		name: 'getEthSignedMessageHash',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: '_message',
+				type: 'string',
+			},
+		],
+		name: 'getMessageHash',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'userAddress',
+				type: 'address',
+			},
+		],
+		name: 'getNonce',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'getPlotPrices',
 		outputs: [
@@ -225,6 +287,19 @@ const abi = [
 				internalType: 'uint256[]',
 				name: '',
 				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getSigner',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -706,6 +781,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: '_signer',
+				type: 'address',
+			},
+		],
+		name: 'setSigner',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address payable',
 				name: '_newVaultAddress',
 				type: 'address',
@@ -714,6 +802,19 @@ const abi = [
 		name: 'setVaultAddress',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'signer',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -745,6 +846,48 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'string',
+				name: '_message',
+				type: 'string',
+			},
+			{
+				internalType: 'bytes',
+				name: '_signature',
+				type: 'bytes',
+			},
+		],
+		name: 'verify',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes',
+				name: 'signature',
+				type: 'bytes',
+			},
+			{
+				internalType: 'enum IRuniverseLand.PlotSize',
+				name: 'plotSize',
+				type: 'uint8',
+			},
+		],
+		name: 'verifyAndMint',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256',
 				name: '_amount',
 				type: 'uint256',
@@ -765,9 +908,9 @@ const abi = [
 ] as const
 const RUNIVERSE_LAND_MINTER: Contract<typeof abi> = {
 	name: 'Runiverse Land Minter',
-	address: '0x87371e78b904704a69efac02a1ef511db2f8005d',
+	address: '0x8bffe7c3fdb06c40e65bd50259f88a87233c7528',
 	is_deprecated: false,
-	created_at: 1721414247,
+	created_at: 1724353840,
 	abi: abi,
 }
 export default RUNIVERSE_LAND_MINTER
