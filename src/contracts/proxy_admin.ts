@@ -163,9 +163,9 @@ const abi = [
 ] as const
 const PROXY_ADMIN: Contract<typeof abi> = {
 	name: 'Proxy Admin',
-	address: '0x2b39883e3d01bc9d94263c500f75c349af09a844',
+	address: '0x24d42d3c86b97363031f48420b76f37fce6a3f94',
 	is_deprecated: false,
-	created_at: 1718059579,
+	created_at: 1718807184,
 	abi: abi,
 }
 export default PROXY_ADMIN

@@ -204,8 +204,46 @@ const abi = [
 				name: '_tokenId',
 				type: 'uint256',
 			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_gene',
+				type: 'uint256',
+			},
 		],
-		name: 'UpdatePlanet',
+		name: 'UpdateGene',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_iv',
+				type: 'uint256',
+			},
+		],
+		name: 'UpdateIV',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'string',
+				name: '_baseURI',
+				type: 'string',
+			},
+		],
+		name: 'UpdateURI',
 		type: 'event',
 	},
 	{
@@ -274,57 +312,12 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_gene',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_breedCount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_breedCountMax',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_createTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_bornTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_lastBreedTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_parent',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_children',
-				type: 'uint256[]',
 			},
 		],
-		name: 'bridgeMint',
+		name: 'burn',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -333,13 +326,113 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
-		name: 'burn',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		name: 'checkTokenExist',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'currentOriginTokenId',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'currentOtherTokenId',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'currentZombieTokenId',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'getApostleData',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'gene',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'iv',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'createTime',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct ApostleMeta.ApostleData',
+				name: '',
+				type: 'tuple',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'getApostleGeneAttributes',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -356,87 +449,6 @@ const abi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getPlanetData',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'gene',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'baseAge',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'evolve',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'breedCount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'breedCountMax',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'createTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'bornTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lastBreedTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'relicsTokenIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'parents',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'children',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct PlanetMeta.PlanetData',
-				name: '',
-				type: 'tuple',
-			},
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -557,24 +569,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'baseURI_',
-				type: 'string',
-			},
-			{
-				internalType: 'bool',
-				name: 'pause',
-				type: 'bool',
-			},
-			{
-				internalType: 'address',
-				name: '_blacklist',
-				type: 'address',
-			},
-		],
-		name: 'ownerSetting',
+		inputs: [],
+		name: 'pause',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -603,27 +599,61 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'gene',
+				name: '_gene',
 				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'parents',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_iv',
 				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_id',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_to',
+				type: 'address',
+			},
+		],
+		name: 'reserve',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_gene',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_iv',
+				type: 'uint256',
+			},
+			{
+				internalType: 'enum ApeironApostle.MINT_TYPE',
+				name: '_mintType',
+				type: 'uint8',
+			},
+			{
+				internalType: 'address',
+				name: '_to',
+				type: 'address',
 			},
 		],
 		name: 'safeMint',
-		outputs: [],
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -710,6 +740,19 @@ const abi = [
 			},
 		],
 		name: 'setApprovalForAll',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: '_baseURI',
+				type: 'string',
+			},
+		],
+		name: 'setBaseURI',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -821,39 +864,98 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'gene',
+				name: '_createTime',
 				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addAge',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addEvolve',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addBreedCountMax',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'setBornTime',
-				type: 'bool',
 			},
 		],
-		name: 'updatePlanetData',
+		name: 'updateApostleCreateTime',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_gene',
+				type: 'uint256',
+			},
+		],
+		name: 'updateApostleGene',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_iv',
+				type: 'uint256',
+			},
+		],
+		name: 'updateApostleIV',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_blacklistAddress',
+				type: 'address',
+			},
+		],
+		name: 'updateBlacklistContract',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_originalTokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_zombieTokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_otherTokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'updateTokenId',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -890,11 +992,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const APEIRON_PLANET: Contract<typeof abi> = {
-	name: 'Apeiron Planet',
-	address: '0xbaab8289e96ced54570d72f30de9d7df6c4ad3e7',
+const APEIRON_APOSTLE: Contract<typeof abi> = {
+	name: 'Apeiron Apostle',
+	address: '0xca5825f1b8c5472879421c34883207ecc3e66f36',
 	is_deprecated: false,
-	created_at: 1702693750,
+	created_at: 1701710697,
 	abi: abi,
 }
-export default APEIRON_PLANET
+export default APEIRON_APOSTLE
