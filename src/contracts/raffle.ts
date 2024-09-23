@@ -7,25 +7,175 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'InsufficientFee',
+		name: 'AccessControlBadConfirmation',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes32',
+				name: 'neededRole',
+				type: 'bytes32',
+			},
+		],
+		name: 'AccessControlUnauthorizedAccount',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'target',
+				type: 'address',
+			},
+		],
+		name: 'AddressEmptyCode',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'ERC1967InvalidImplementation',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'OnlyCoordinatorCanFulfill',
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'EnforcedPause',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ExpectedPause',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidAddress',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInitialization',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInputs',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInterval',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidMaxCheckin',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidNFTContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidRecipient',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidSignature',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidTokenContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'MainnetNotAllowed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'MaxCheckinReached',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NotInitializing',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'SignatureAlreadyUsed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'SignatureExpired',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'UUPSUnauthorizedCallContext',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'slot',
+				type: 'bytes32',
+			},
+		],
+		name: 'UUPSUnsupportedProxiableUUID',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'UnknownNetwork',
 		type: 'error',
 	},
 	{
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'feeReceiver',
-				type: 'address',
+				indexed: false,
+				internalType: 'uint256',
+				name: 'oldInterval',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newInterval',
+				type: 'uint256',
 			},
 		],
-		name: 'FeeReceiverChanged',
+		name: 'CheckinIntervalUpdated',
 		type: 'event',
 	},
 	{
@@ -33,9 +183,9 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: 'uint8',
+				internalType: 'uint64',
 				name: 'version',
-				type: 'uint8',
+				type: 'uint64',
 			},
 		],
 		name: 'Initialized',
@@ -45,37 +195,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
+				indexed: false,
 				internalType: 'uint256',
-				name: 'targetTokenId',
+				name: 'oldMaxCheckin',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
-				internalType: 'uint256[]',
-				name: 'materialTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'upgraded',
-				type: 'bool',
+				internalType: 'uint256',
+				name: 'newMaxCheckin',
+				type: 'uint256',
 			},
 		],
-		name: 'MonsterMerged',
+		name: 'MaxCheckinUpdated',
 		type: 'event',
 	},
 	{
@@ -89,6 +221,43 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'wallet',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newPeriodCheckin',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newTotalCheckin',
+				type: 'uint256',
+			},
+		],
+		name: 'RaffleCheckin',
 		type: 'event',
 	},
 	{
@@ -180,6 +349,19 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'Upgraded',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -194,20 +376,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'FEE_RECEIVER',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MINTER_ROLE',
+		name: 'PAUSER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -220,12 +389,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGKIT',
+		name: 'UPGRADER_ROLE',
 		outputs: [
 			{
-				internalType: 'contract INyangKit',
+				internalType: 'bytes32',
 				name: '',
-				type: 'address',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -233,180 +402,106 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'PAYMENT_TOKEN',
+		name: 'UPGRADE_INTERFACE_VERSION',
 		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'newInterval',
+				type: 'uint256',
+			},
+		],
+		name: 'adminSetCheckinInterval',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'newMaxCheckin',
+				type: 'uint256',
+			},
+		],
+		name: 'adminSetMaxCheckin',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'checkin',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
 				internalType: 'address',
-				name: '',
+				name: 'wallet',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+		],
+		name: 'checkinCount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
 		inputs: [],
-		name: 'RAGMON',
+		name: 'checkinInterval',
 		outputs: [
 			{
-				internalType: 'contract IRagmon',
+				internalType: 'uint256',
 				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'wallet',
 				type: 'address',
 			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'timestamp',
 				type: 'uint256',
 			},
 		],
-		name: 'calculateAccumulatedValue',
-		outputs: [
-			{
-				internalType: 'uint16',
-				name: 'accumulatedValue',
-				type: 'uint16',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-		],
-		name: 'calculateAccumulatedValues',
-		outputs: [
-			{
-				internalType: 'uint16[]',
-				name: '',
-				type: 'uint16[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'targetTokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'materialTokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'calculateMergeSuccessRate',
-		outputs: [
-			{
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint8[]',
-				name: 'materialLevels',
-				type: 'uint8[]',
-			},
-		],
-		name: 'calculateTotalValue',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalValue',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'callbackGasLimit',
+		name: 'checkinLeft',
 		outputs: [
 			{
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-		],
-		name: 'estimateAdditionalCost',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalFee',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'gasPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-		],
-		name: 'getBaseProbabilities',
-		outputs: [
-			{
-				internalType: 'uint16[]',
-				name: '',
-				type: 'uint16[]',
 			},
 		],
 		stateMutability: 'view',
@@ -477,18 +572,18 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_ragmon',
+				name: 'admin',
 				type: 'address',
 			},
 			{
-				internalType: 'address',
-				name: '_nyangkit',
-				type: 'address',
+				internalType: 'uint256',
+				name: '_checkinInterval',
+				type: 'uint256',
 			},
 			{
-				internalType: 'address',
-				name: '_vrfCoordinator',
-				type: 'address',
+				internalType: 'uint256',
+				name: '_maxCheckin',
+				type: 'uint256',
 			},
 		],
 		name: 'initialize',
@@ -497,37 +592,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'targetTokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'materialTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint16',
-				name: 'berryAmount',
-				type: 'uint16',
-			},
-		],
-		name: 'merge',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		name: 'mergeCostByRarity',
+		inputs: [],
+		name: 'maxCheckin',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -559,21 +625,16 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'proxiableUUID',
+		outputs: [
 			{
 				internalType: 'bytes32',
-				name: '_reqHash',
+				name: '',
 				type: 'bytes32',
 			},
-			{
-				internalType: 'uint256',
-				name: '_randomSeed',
-				type: 'uint256',
-			},
 		],
-		name: 'rawFulfillRandomSeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -585,7 +646,7 @@ const abi = [
 			},
 			{
 				internalType: 'address',
-				name: 'account',
+				name: 'callerConfirmation',
 				type: 'address',
 			},
 		],
@@ -615,99 +676,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16[]',
-				name: 'baseProbabilities',
-				type: 'uint16[]',
-			},
-		],
-		name: 'setBaseProbabilities',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_feeReceiver',
-				type: 'address',
-			},
-		],
-		name: 'setFeeReceiver',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'mergeCost',
-				type: 'uint256',
-			},
-		],
-		name: 'setMergeCost',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_paymentToken',
-				type: 'address',
-			},
-		],
-		name: 'setPaymentToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint16',
-				name: '_treasuryRate',
-				type: 'uint16',
-			},
-		],
-		name: 'setTreasuryRate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_callbackGasLimit',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_gasPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'setVRFVariables',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -725,13 +693,19 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'treasuryRate',
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'wallet',
+				type: 'address',
+			},
+		],
+		name: 'totalCheckin',
 		outputs: [
 			{
-				internalType: 'uint16',
+				internalType: 'uint256',
 				name: '',
-				type: 'uint16',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -745,24 +719,42 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'vrfCoordinator',
-		outputs: [
+		inputs: [
 			{
 				internalType: 'address',
-				name: '',
+				name: 'newImplementation',
 				type: 'address',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'upgradeToAndCall',
+		outputs: [],
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'version',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
-const LEVEL_MERGE: Contract<typeof abi> = {
-	name: 'Level Merge',
-	address: '0x3c4752ba472d2da88ca86586f879dc32da72d336',
+const RAFFLE: Contract<typeof abi> = {
+	name: 'Raffle',
+	address: '0x503c2d306b0237224caeba7749747500af33d020',
 	is_deprecated: false,
-	created_at: 1723600926,
+	created_at: 1725612847,
 	abi: abi,
 }
-export default LEVEL_MERGE
+export default RAFFLE
