@@ -4,7 +4,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'initialOwner',
+				name: '_achievement',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_burnToken',
 				type: 'address',
 			},
 		],
@@ -31,59 +36,79 @@ const abi = [
 		type: 'event',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
+		inputs: [],
+		name: 'achievement',
+		outputs: [
 			{
 				internalType: 'address',
-				name: 'newAdmin',
+				name: '',
 				type: 'address',
 			},
 		],
-		name: 'changeProxyAdmin',
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'burnAddress',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'burnPrices',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'burnToken',
+		outputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_erc1155',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_id',
+				type: 'uint256',
+			},
+		],
+		name: 'mint',
 		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyAdmin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -109,6 +134,42 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: '_id',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_price',
+				type: 'uint256',
+			},
+		],
+		name: 'setBurnPrice',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: '_ids',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_prices',
+				type: 'uint256[]',
+			},
+		],
+		name: 'setBurnPrices',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'newOwner',
 				type: 'address',
@@ -119,53 +180,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'upgrade',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
 ] as const
-const PROXY_ADMIN: Contract<typeof abi> = {
-	name: 'Proxy Admin',
-	address: '0x24d42d3c86b97363031f48420b76f37fce6a3f94',
+const BURNING_MINTER: Contract<typeof abi> = {
+	name: 'Burning Minter',
+	address: '0xed63f5c3dfebbc26acb738b907257b67c7ddf1e3',
 	is_deprecated: false,
-	created_at: 1718807184,
+	created_at: 1727131640,
 	abi: abi,
 }
-export default PROXY_ADMIN
+export default BURNING_MINTER
