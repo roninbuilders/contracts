@@ -715,12 +715,16 @@ const abi = [
 		stateMutability: 'payable',
 		type: 'function',
 	},
+	{
+		stateMutability: 'payable',
+		type: 'receive',
+	},
 ] as const
 const RONIN_GAME_INBOX: Contract<typeof abi> = {
 	name: 'Ronin Game Inbox',
-	address: '0x3900fa08bac3423526e0c614d3c8130d60f912ed',
+	address: '0xf75ffabbeee2b98031a7b756489a7813400accf7',
 	is_deprecated: false,
-	created_at: 1720869862,
+	created_at: 1722685975,
 	abi: abi,
 }
 export default RONIN_GAME_INBOX
