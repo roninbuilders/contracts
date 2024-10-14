@@ -1,7 +1,13 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'axieImpl',
+				type: 'address',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
@@ -30,108 +36,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'enum IAxie.AxieStage',
-				name: 'stage',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'neededDuration',
-				type: 'uint256',
-			},
-		],
-		name: 'AxieStageNotReadyToGrow',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'EmptyGenes',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'hoppingAxieId',
-				type: 'uint256',
-			},
-		],
-		name: 'HoppingAxieAlreadyOwned',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'hoppingAxieId',
-				type: 'uint256',
-			},
-		],
-		name: 'InvalidHoppingAxieId',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'sig',
-				type: 'bytes4',
-			},
-		],
-		name: 'InvalidLength',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'NonExistentAxie',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
 			},
 		],
 		name: 'NonExistentToken',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'NotAxieAdult',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'NotAxiegg',
 		type: 'error',
 	},
 	{
@@ -385,6 +294,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address',
+				name: 'previousAdmin',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'newAdmin',
+				type: 'address',
+			},
+		],
+		name: 'AdminChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'address',
 				name: '_owner',
@@ -436,296 +364,12 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct AxieGenetics.Genes',
-				name: '_genes',
-				type: 'tuple',
+				internalType: 'address',
+				name: 'beacon',
+				type: 'address',
 			},
 		],
-		name: 'AxieEvolved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'level',
-				type: 'uint256',
-			},
-		],
-		name: 'AxieLevelUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'sireId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'matronId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthDate',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'genes',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint8',
-						name: 'breedCount',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'level',
-						type: 'uint16',
-					},
-				],
-				indexed: false,
-				internalType: 'struct IAxie.Axie',
-				name: '_axie',
-				type: 'tuple',
-			},
-		],
-		name: 'AxieMinted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'sireId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'matronId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthDate',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'genes',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint8',
-						name: 'breedCount',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'level',
-						type: 'uint16',
-					},
-				],
-				indexed: false,
-				internalType: 'struct IAxie.Axie',
-				name: '_axie',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'sireGenes',
-						type: 'tuple',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'matronGenes',
-						type: 'tuple',
-					},
-				],
-				indexed: false,
-				internalType: 'struct IAxie.Axiegg',
-				name: '_axiegg',
-				type: 'tuple',
-			},
-		],
-		name: 'AxieggMinted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'sireId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'matronId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'sireBreedCount',
-				type: 'uint8',
-			},
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'matronBreedCount',
-				type: 'uint8',
-			},
-			{
-				components: [
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'sireGenes',
-						type: 'tuple',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'matronGenes',
-						type: 'tuple',
-					},
-				],
-				indexed: false,
-				internalType: 'struct IAxie.Axiegg',
-				name: 'axiegg',
-				type: 'tuple',
-			},
-		],
-		name: 'BreedingInfoUpdated',
+		name: 'BeaconUpgraded',
 		type: 'event',
 	},
 	{
@@ -1212,6 +856,19 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'Upgraded',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -1245,6 +902,19 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'IMPLEMENTATION',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -1501,72 +1171,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256[]',
-				name: '_axieIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_seeds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchGrowAxieggsToAdults',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '_axiePackages',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '_axieggPackages',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-		],
-		name: 'batchMintAxieggs',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '_packages',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-		],
-		name: 'batchMintAxies',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'address',
 				name: 'controller',
 				type: 'address',
@@ -1604,35 +1208,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct AxieGenetics.Genes',
-				name: '_genes',
-				type: 'tuple',
-			},
-		],
-		name: 'evolveAxie',
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1684,124 +1259,6 @@ const abi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'getAxie',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'sireId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'matronId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthDate',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'genes',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint8',
-						name: 'breedCount',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'level',
-						type: 'uint16',
-					},
-				],
-				internalType: 'struct IAxie.Axie',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'getAxiegg',
-		outputs: [
-			{
-				components: [
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'sireGenes',
-						type: 'tuple',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'matronGenes',
-						type: 'tuple',
-					},
-				],
-				internalType: 'struct IAxie.Axiegg',
-				name: '',
-				type: 'tuple',
 			},
 		],
 		stateMutability: 'view',
@@ -1980,23 +1437,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_seed',
-				type: 'uint256',
-			},
-		],
-		name: 'growAxieggToAdult',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -2035,6 +1475,47 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'initialize',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'axieAscendContract',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'initializeV2',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'axieBreedContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV3',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -2274,145 +1755,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'sireId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'matronId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthDate',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'genes',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint8',
-						name: 'breedCount',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'level',
-						type: 'uint16',
-					},
-				],
-				internalType: 'struct IAxie.Axie',
-				name: '_axie',
-				type: 'tuple',
-			},
-		],
-		name: 'mintAxie',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_hoppingAxieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'sireId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'matronId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthDate',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256',
-								name: 'x',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'y',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct AxieGenetics.Genes',
-						name: 'genes',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint8',
-						name: 'breedCount',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'level',
-						type: 'uint16',
-					},
-				],
-				internalType: 'struct IAxie.Axie',
-				name: '_axie',
-				type: 'tuple',
-			},
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-		],
-		name: 'mintPromoAxie',
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -2768,80 +2110,12 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint16',
-				name: 'level',
-				type: 'uint16',
-			},
-		],
-		name: 'setAxieLevel',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct AxieGenetics.Genes',
-				name: 'newGene',
-				type: 'tuple',
-			},
-		],
-		name: 'setAxiePartsStage',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'string',
 				name: '_baseTokenURI',
 				type: 'string',
 			},
 		],
 		name: 'setBaseTokenURI',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'sireId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'matronId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'setBreedingInfo',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -2943,23 +2217,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256[]',
-				name: '_axieIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_hoppingAxieIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setHoppingAxieIds',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'address',
 				name: '_operator',
 				type: 'address',
@@ -3005,25 +2262,6 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'stageOf',
-		outputs: [
-			{
-				internalType: 'enum IAxie.AxieStage',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
 			},
@@ -3040,25 +2278,6 @@ const abi = [
 		],
 		name: 'startDelegateOwnership',
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'stateOf',
-		outputs: [
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -3358,11 +2577,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const AXIE: Contract<typeof abi> = {
-	name: 'Axie',
-	address: '0x861f56cd7069d200f7c4fcb25e66670aa2780434',
+const AXIE_INITIALIZER: Contract<typeof abi> = {
+	name: 'Axie Initializer',
+	address: '0x1db83f3cb28780b2394e8313ffe5a8d6803fdefd',
 	is_deprecated: false,
 	created_at: 1728656609,
 	abi: abi,
 }
-export default AXIE
+export default AXIE_INITIALIZER
