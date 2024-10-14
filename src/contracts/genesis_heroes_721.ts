@@ -1,30 +1,6 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
 		anonymous: false,
 		inputs: [
 			{
@@ -110,38 +86,13 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_nonce',
-				type: 'uint256',
+				indexed: false,
+				internalType: 'uint8',
+				name: 'version',
+				type: 'uint8',
 			},
 		],
-		name: 'NonceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
+		name: 'Initialized',
 		type: 'event',
 	},
 	{
@@ -155,6 +106,81 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'previousAdminRole',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'newAdminRole',
+				type: 'bytes32',
+			},
+		],
+		name: 'RoleAdminChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleRevoked',
 		type: 'event',
 	},
 	{
@@ -199,19 +225,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'UpdatePlanet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'address',
 				name: 'implementation',
@@ -220,6 +233,19 @@ const abi = [
 		],
 		name: 'Upgraded',
 		type: 'event',
+	},
+	{
+		inputs: [],
+		name: 'DEFAULT_ADMIN_ROLE',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
 	},
 	{
 		inputs: [
@@ -260,86 +286,40 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'blacklist',
+		name: 'getAllHeroesList',
 		outputs: [
 			{
-				internalType: 'contract IBlacklist',
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'tokenId',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'birthTime',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct GenesisHeroes721.Heroes[]',
 				name: '',
-				type: 'address',
+				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'getAllHolders',
+		outputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_gene',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_breedCount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_breedCountMax',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_createTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_bornTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_lastBreedTime',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_parent',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_children',
-				type: 'uint256[]',
+				internalType: 'address[]',
+				name: '',
+				type: 'address[]',
 			},
 		],
-		name: 'bridgeMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -365,86 +345,97 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
-		name: 'getPlanetData',
+		name: 'getHeroes',
 		outputs: [
 			{
 				components: [
 					{
 						internalType: 'uint256',
-						name: 'gene',
+						name: 'tokenId',
 						type: 'uint256',
 					},
 					{
 						internalType: 'uint256',
-						name: 'baseAge',
+						name: 'birthTime',
 						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'evolve',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'breedCount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'breedCountMax',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'createTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'bornTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lastBreedTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'relicsTokenIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'parents',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'children',
-						type: 'uint256[]',
 					},
 				],
-				internalType: 'struct PlanetMeta.PlanetData',
+				internalType: 'struct GenesisHeroes721.Heroes',
 				name: '',
 				type: 'tuple',
-			},
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'initialize',
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_account',
+				type: 'address',
+			},
+		],
+		name: 'getHeroesList',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'tokenId',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'birthTime',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct GenesisHeroes721.Heroes[]',
+				name: '',
+				type: 'tuple[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleAdmin',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'grantRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -452,12 +443,17 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
 				internalType: 'address',
-				name: 'admin',
+				name: 'account',
 				type: 'address',
 			},
 		],
-		name: 'isAdmin',
+		name: 'hasRole',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -466,6 +462,52 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'player',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'birthTime',
+				type: 'uint256',
+			},
+		],
+		name: 'heroesMint',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'symbol',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: '_prefixURI',
+				type: 'string',
+			},
+		],
+		name: 'initialize',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -493,6 +535,65 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'multiBurn',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'players',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'birthTimes',
+				type: 'uint256[]',
+			},
+		],
+		name: 'multiMint',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'players',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256',
+				name: 'birthTimes',
+				type: 'uint256',
+			},
+		],
+		name: 'multiMintForSinglePlayer',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'name',
 		outputs: [
@@ -500,38 +601,6 @@ const abi = [
 				internalType: 'string',
 				name: '',
 				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'nonces',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -557,29 +626,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'baseURI_',
-				type: 'string',
-			},
-			{
-				internalType: 'bool',
-				name: 'pause',
-				type: 'bool',
-			},
-			{
-				internalType: 'address',
-				name: '_blacklist',
-				type: 'address',
-			},
-		],
-		name: 'ownerSetting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'paused',
 		outputs: [
@@ -594,7 +640,31 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'renounceOwnership',
+		name: 'proxiableUUID',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'renounceRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -602,27 +672,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'gene',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'parents',
-				type: 'uint256[]',
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
 			},
 			{
 				internalType: 'address',
-				name: 'to',
+				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
 		],
-		name: 'safeMint',
+		name: 'revokeRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -669,29 +729,11 @@ const abi = [
 			},
 			{
 				internalType: 'bytes',
-				name: '_data',
+				name: 'data',
 				type: 'bytes',
 			},
 		],
 		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -717,20 +759,32 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
+				internalType: 'string',
+				name: 'newBaseURI',
+				type: 'string',
 			},
 		],
-		name: 'stateOf',
-		outputs: [
+		name: 'setBaseURI',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
 			},
 		],
-		stateMutability: 'view',
+		name: 'setGrantRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -769,6 +823,49 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenByIndex',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenOfOwnerByIndex',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
 			},
@@ -779,6 +876,19 @@ const abi = [
 				internalType: 'string',
 				name: '',
 				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -803,57 +913,6 @@ const abi = [
 			},
 		],
 		name: 'transferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'gene',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addAge',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addEvolve',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addBreedCountMax',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'setBornTime',
-				type: 'bool',
-			},
-		],
-		name: 'updatePlanetData',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -890,11 +949,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const APEIRON_PLANET: Contract<typeof abi> = {
-	name: 'Apeiron Planet',
-	address: '0xbaab8289e96ced54570d72f30de9d7df6c4ad3e7',
+const GENESIS_HEROES_721: Contract<typeof abi> = {
+	name: 'Genesis Heroes 721',
+	address: '0x83be7f9c9a7d6392c8121695b6f0985cdc5eff81',
 	is_deprecated: false,
-	created_at: 1702693750,
+	created_at: 1728621541,
 	abi: abi,
 }
-export default APEIRON_PLANET
+export default GENESIS_HEROES_721

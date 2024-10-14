@@ -526,9 +526,9 @@ const abi = [
 						type: 'uint16',
 					},
 					{
-						internalType: 'uint16',
+						internalType: 'uint24',
 						name: 'kongiumFallback',
-						type: 'uint16',
+						type: 'uint24',
 					},
 					{
 						internalType: 'uint24',
@@ -670,14 +670,14 @@ const abi = [
 						type: 'uint16',
 					},
 					{
-						internalType: 'uint16',
+						internalType: 'uint24',
 						name: 'kongiumEarned',
-						type: 'uint16',
+						type: 'uint24',
 					},
 					{
-						internalType: 'uint16',
+						internalType: 'uint24',
 						name: 'fallbackKongium',
-						type: 'uint16',
+						type: 'uint24',
 					},
 					{
 						internalType: 'uint16',
@@ -697,14 +697,14 @@ const abi = [
 						type: 'uint8',
 					},
 					{
-						internalType: 'uint16',
+						internalType: 'uint24',
 						name: 'extraKongium',
-						type: 'uint16',
+						type: 'uint24',
 					},
 					{
-						internalType: 'uint16',
+						internalType: 'uint24',
 						name: 'fallbackKongium',
-						type: 'uint16',
+						type: 'uint24',
 					},
 					{
 						internalType: 'address[2]',
@@ -1078,9 +1078,9 @@ const abi = [
 ] as const
 const JUNGLE_LOGIC: Contract<typeof abi> = {
 	name: 'Jungle Logic',
-	address: '0x72b7387169562b9849c4586371bbfbd44085f188',
+	address: '0x7dd814c6408382977ae85ed69ee8a81da5886be7',
 	is_deprecated: false,
-	created_at: 1712395672,
+	created_at: 1728040431,
 	abi: abi,
 }
 export default JUNGLE_LOGIC
