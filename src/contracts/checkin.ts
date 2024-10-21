@@ -41,17 +41,6 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'AddressInsufficientBalance',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
 				name: 'implementation',
 				type: 'address',
 			},
@@ -86,17 +75,22 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'InvalidAirdropId',
-		type: 'error',
-	},
-	{
-		inputs: [],
 		name: 'InvalidInitialization',
 		type: 'error',
 	},
 	{
 		inputs: [],
 		name: 'InvalidInputs',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidInterval',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidMaxCheckin',
 		type: 'error',
 	},
 	{
@@ -126,12 +120,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ItemAlreadyMinted',
+		name: 'MainnetNotAllowed',
 		type: 'error',
 	},
 	{
 		inputs: [],
-		name: 'MainnetNotAllowed',
+		name: 'MaxCheckinReached',
 		type: 'error',
 	},
 	{
@@ -141,17 +135,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NotEnoughPayment',
-		type: 'error',
-	},
-	{
-		inputs: [],
 		name: 'NotInitializing',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ReentrancyGuardReentrantCall',
 		type: 'error',
 	},
 	{
@@ -162,22 +146,6 @@ const abi = [
 	{
 		inputs: [],
 		name: 'SignatureExpired',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'length',
-				type: 'uint256',
-			},
-		],
-		name: 'StringsInsufficientHexLength',
 		type: 'error',
 	},
 	{
@@ -205,19 +173,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'treasuryAddress',
-				type: 'address',
+				indexed: false,
+				internalType: 'uint256',
+				name: 'oldInterval',
+				type: 'uint256',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'amount',
+				name: 'newInterval',
 				type: 'uint256',
 			},
 		],
-		name: 'FundsSentToTreasury',
+		name: 'CheckinIntervalUpdated',
 		type: 'event',
 	},
 	{
@@ -237,87 +205,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'oldMintPrice',
+				name: 'oldMaxCheckin',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'newMintPrice',
+				name: 'newMaxCheckin',
 				type: 'uint256',
 			},
 		],
-		name: 'MintPriceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'airDropId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'mintedTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'genesisTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'mergedDetails',
-				type: 'string',
-			},
-		],
-		name: 'NFTAirDroppedBatch',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'price',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'details',
-				type: 'string',
-			},
-		],
-		name: 'OffchainItemPurchased',
+		name: 'MaxCheckinUpdated',
 		type: 'event',
 	},
 	{
@@ -331,6 +231,55 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'wallet',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'string',
+				name: 'playerId',
+				type: 'string',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'period',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'oldCount',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newCount',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'string',
+				name: 'details',
+				type: 'string',
+			},
+		],
+		name: 'PlayerCheckin',
 		type: 'event',
 	},
 	{
@@ -412,25 +361,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldAddress',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAddress',
-				type: 'address',
-			},
-		],
-		name: 'TreasuryUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: false,
 				internalType: 'address',
 				name: 'account',
@@ -458,55 +388,6 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'itemId',
-				type: 'string',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'mintedTokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'details',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'counterName',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'counterValue',
-				type: 'uint256',
-			},
-		],
-		name: 'UserMintedNFT',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
 				internalType: 'contract Validator',
 				name: 'oldContract',
 				type: 'address',
@@ -520,38 +401,6 @@ const abi = [
 		],
 		name: 'ValidatorContractUpdated',
 		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'Withdraw',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'AIRDROP_ID_MULTIPLIER',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
 	},
 	{
 		inputs: [],
@@ -609,103 +458,24 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'airDropId',
+				name: 'newInterval',
 				type: 'uint256',
 			},
-			{
-				internalType: 'contract IExplicitTokenIdNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'genesisTokenIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool',
-				name: 'useSafeMint',
-				type: 'bool',
-			},
-			{
-				internalType: 'string',
-				name: 'details',
-				type: 'string',
-			},
 		],
-		name: 'adminAirDropNFT',
+		name: 'adminSetCheckinInterval',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				internalType: 'string[]',
-				name: 'details',
-				type: 'string[]',
-			},
-		],
-		name: 'adminBatchGiftOffchainItems',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				internalType: 'string',
-				name: 'details',
-				type: 'string',
-			},
-		],
-		name: 'adminGiftOffchainItem',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
 			{
 				internalType: 'uint256',
-				name: 'mintPrice',
+				name: 'newMaxCheckin',
 				type: 'uint256',
 			},
 		],
-		name: 'adminSetMintPrice',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'newTreasuryAddress',
-				type: 'address',
-			},
-		],
-		name: 'adminSetTreasuryAddress',
+		name: 'adminSetMaxCheckin',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -719,37 +489,6 @@ const abi = [
 			},
 		],
 		name: 'adminSetValidatorContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'adminWithdraw',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'recipient',
-				type: 'address',
-			},
-		],
-		name: 'adminWithdrawAll',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -770,17 +509,57 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'airDropId',
-				type: 'uint256',
+				components: [
+					{
+						internalType: 'string',
+						name: 'playerId',
+						type: 'string',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expireTime',
+						type: 'uint256',
+					},
+					{
+						internalType: 'string',
+						name: 'details',
+						type: 'string',
+					},
+					{
+						internalType: 'bytes',
+						name: 'signature',
+						type: 'bytes',
+					},
+					{
+						internalType: 'bool',
+						name: 'verifyMessageHash',
+						type: 'bool',
+					},
+				],
+				internalType: 'struct Checkin.CheckinPayload',
+				name: 'payload',
+				type: 'tuple',
+			},
+		],
+		name: 'checkin',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'wallet',
+				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'genesisTokenId',
+				name: 'timestamp',
 				type: 'uint256',
 			},
 		],
-		name: 'encodeTokenId',
+		name: 'checkinCount',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -788,23 +567,12 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		stateMutability: 'pure',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				internalType: 'string',
-				name: 'counterName',
-				type: 'string',
-			},
-		],
-		name: 'getMintCounter',
+		inputs: [],
+		name: 'checkinInterval',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -818,12 +586,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
+				internalType: 'address',
+				name: 'wallet',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
 		],
-		name: 'getMintPrice',
+		name: 'checkinLeft',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -848,30 +621,6 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract BaseNFT',
-				name: 'nftContract',
-				type: 'address',
-			},
-			{
-				internalType: 'string',
-				name: 'itemId',
-				type: 'string',
-			},
-		],
-		name: 'getUserMintedTokenId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -926,10 +675,33 @@ const abi = [
 				name: 'admin',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: '_checkinInterval',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_maxCheckin',
+				type: 'uint256',
+			},
 		],
 		name: 'initialize',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'maxCheckin',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -963,51 +735,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expireTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'string',
-						name: 'details',
-						type: 'string',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bool',
-						name: 'verifyMessageHash',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct Minter.OffchainPurchasePayload',
-				name: 'payload',
-				type: 'tuple',
-			},
-		],
-		name: 'purchaseOffchainItem',
-		outputs: [],
-		stateMutability: 'payable',
 		type: 'function',
 	},
 	{
@@ -1067,19 +794,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'treasuryAddress',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'unpause',
 		outputs: [],
 		stateMutability: 'nonpayable',
@@ -1104,61 +818,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'contract BaseNFT',
-						name: 'nftContract',
-						type: 'address',
-					},
-					{
-						internalType: 'string',
-						name: 'itemId',
-						type: 'string',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expireTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'string',
-						name: 'details',
-						type: 'string',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-					{
-						internalType: 'string',
-						name: 'counterName',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'verifyMessageHash',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct Minter.UserMintPayload',
-				name: 'payload',
-				type: 'tuple',
-			},
-		],
-		name: 'userMintNFT',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'validatorContract',
 		outputs: [
@@ -1172,11 +831,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const MINTER: Contract<typeof abi> = {
-	name: 'Minter',
-	address: '0x5270ead1da6b3ebdd5b72e616b30d646a7ebdfc5',
+const CHECKIN: Contract<typeof abi> = {
+	name: 'Checkin',
+	address: '0xc01a0b6df2fe283fe98f8d3c4c37d10e90cc56bf',
 	is_deprecated: false,
-	created_at: 1723513038,
+	created_at: 1721379618,
 	abi: abi,
 }
-export default MINTER
+export default CHECKIN

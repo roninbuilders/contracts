@@ -696,9 +696,9 @@ const abi = [
 ] as const
 const RONIN_GAME_NFT: Contract<typeof abi> = {
 	name: 'Ronin Game NFT',
-	address: '0x960a9c8f41bacbb2a7b529a5cad497fc1f22f7f5',
+	address: '0xa8a44f449b0de4f20568a4f7242ed03a8916ecfc',
 	is_deprecated: false,
-	created_at: 1721037956,
+	created_at: 1722665809,
 	abi: abi,
 }
 export default RONIN_GAME_NFT

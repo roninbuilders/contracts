@@ -505,9 +505,9 @@ const abi = [
 ] as const
 const MINTABLE_ERC1155: Contract<typeof abi> = {
 	name: 'Mintable ERC1155',
-	address: '0x0e4329f633733fe6638721cf676d31931ff2281c',
+	address: '0x9598f7c838c39a81ab5c1c1e489f4ad554cbcce9',
 	is_deprecated: false,
-	created_at: 1727131484,
+	created_at: 1727131490,
 	abi: abi,
 }
 export default MINTABLE_ERC1155
