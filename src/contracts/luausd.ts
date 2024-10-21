@@ -275,14 +275,14 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
 				internalType: 'address',
 				name: 'to',
 				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
 			},
 		],
 		name: 'mint',
@@ -438,9 +438,9 @@ const abi = [
 ] as const
 const LUAUSD: Contract<typeof abi> = {
 	name: 'LUAUSD',
-	address: '0x416f9b0d4660b01b208aa22c092a9a5f22a379c1',
+	address: '0x18d2bdef572c67127e218c425f546fe64430a92c',
 	is_deprecated: false,
-	created_at: 1728570339,
+	created_at: 1729315847,
 	abi: abi,
 }
 export default LUAUSD

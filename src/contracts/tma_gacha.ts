@@ -1419,9 +1419,9 @@ const abi = [
 ] as const
 const TMA_GACHA: Contract<typeof abi> = {
 	name: 'TMA Gacha',
-	address: '0x67590a32092786a9a0e366ebb9b74eb5fa5d1bd9',
+	address: '0x8e6bc15f0f382ea36a724e71bfaf7fa921add905',
 	is_deprecated: false,
-	created_at: 1727961258,
+	created_at: 1727977172,
 	abi: abi,
 }
 export default TMA_GACHA

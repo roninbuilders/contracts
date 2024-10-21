@@ -120,6 +120,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'InvalidValidatorContract',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'MainnetNotAllowed',
 		type: 'error',
 	},
@@ -131,6 +136,11 @@ const abi = [
 	{
 		inputs: [],
 		name: 'MintFailed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NoValidatorContract',
 		type: 'error',
 	},
 	{
@@ -397,6 +407,25 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'contract Validator',
+				name: 'oldContract',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'contract Validator',
+				name: 'newContract',
+				type: 'address',
+			},
+		],
+		name: 'ValidatorContractUpdated',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -470,6 +499,19 @@ const abi = [
 			},
 		],
 		name: 'adminSetMaxCheckin',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'contract Validator',
+				name: 'validator',
+				type: 'address',
+			},
+		],
+		name: 'adminSetValidatorContract',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -622,12 +664,12 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct ItemRaffle.ItemRaffleStorage',
+				internalType: 'struct ItemRaffle.ViewableStorage',
 				name: '',
 				type: 'tuple',
 			},
 		],
-		stateMutability: 'pure',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -733,6 +775,47 @@ const abi = [
 	{
 		inputs: [],
 		name: 'mintItem',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenID',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'seed',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'expireTime',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: 'signature',
+						type: 'bytes',
+					},
+					{
+						internalType: 'bool',
+						name: 'verifyMessageHash',
+						type: 'bool',
+					},
+				],
+				internalType: 'struct ItemRaffle.MintItemPayload',
+				name: 'payload',
+				type: 'tuple',
+			},
+		],
+		name: 'mintWithCustomSeed',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -858,6 +941,19 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'validatorContract',
+		outputs: [
+			{
+				internalType: 'contract Validator',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'version',
 		outputs: [
 			{
@@ -872,9 +968,9 @@ const abi = [
 ] as const
 const ITEM_RAFFLE: Contract<typeof abi> = {
 	name: 'Item Raffle',
-	address: '0x5df10ccdde0b7ee99294ae483558181aff26776d',
+	address: '0xad2fdc03606e6fedbe05f2d0ff7a33de5b234f3e',
 	is_deprecated: false,
-	created_at: 1726635975,
+	created_at: 1726727988,
 	abi: abi,
 }
 export default ITEM_RAFFLE
