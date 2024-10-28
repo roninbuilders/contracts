@@ -4,7 +4,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_logic',
+				name: 'implementation',
 				type: 'address',
 			},
 			{
@@ -13,40 +13,40 @@ const abi = [
 				type: 'bytes',
 			},
 		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
+				name: 'target',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		name: 'AddressEmptyCode',
+		type: 'error',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
-		type: 'event',
+		name: 'ERC1967InvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -65,16 +65,12 @@ const abi = [
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
 ] as const
-const NFT721_PROXY: Contract<typeof abi> = {
-	name: 'NFT721 Proxy',
-	address: '0x72288a7f32bec9de4a42bd19a746b9e7798996bb',
+const MIRPASS_PROXY: Contract<typeof abi> = {
+	name: 'Mirpass Proxy',
+	address: '0x36ad85bade93ec08dfddc0dd0186bf685d7c3962',
 	is_deprecated: false,
-	created_at: 1729522001,
+	created_at: 1729989561,
 	abi: abi,
 }
-export default NFT721_PROXY
+export default MIRPASS_PROXY
