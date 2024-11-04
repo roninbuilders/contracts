@@ -13,7 +13,7 @@ const abi = [
 				type: 'bytes',
 			},
 		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'constructor',
 	},
 	{
@@ -70,11 +70,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const NFT721_PROXY: Contract<typeof abi> = {
-	name: 'NFT721 Proxy',
-	address: '0x72288a7f32bec9de4a42bd19a746b9e7798996bb',
+const APEIRON_VIP_TOKEN_STAKING_PROXY: Contract<typeof abi> = {
+	name: 'Apeiron Vip Token Staking Proxy',
+	address: '0x311b7bc9c5811f20b741934c8b63ff17fdf07ad1',
 	is_deprecated: false,
-	created_at: 1729522001,
+	created_at: 1730457250,
 	abi: abi,
 }
-export default NFT721_PROXY
+export default APEIRON_VIP_TOKEN_STAKING_PROXY
