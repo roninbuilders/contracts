@@ -50,6 +50,11 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'ErrInvalidAxieVaultInterface',
+		type: 'error',
+	},
+	{
+		inputs: [],
 		name: 'ErrInvalidChestCategoryLength',
 		type: 'error',
 	},
@@ -656,11 +661,11 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: 'id',
+				name: 'index',
 				type: 'uint256',
 			},
 		],
-		name: 'TransferAxieFailed',
+		name: 'TransferAxieAtIndexFailed',
 		type: 'event',
 	},
 	{
@@ -1489,9 +1494,9 @@ const abi = [
 ] as const
 const GACHA_MACHINE: Contract<typeof abi> = {
 	name: 'Gacha Machine',
-	address: '0x44ac41de42f6f79f80b2f877762a84970132dafb',
+	address: '0xf65ed059b267011e4d03778a2d72518a41c589f9',
 	is_deprecated: false,
-	created_at: 1704271628,
+	created_at: 1719307263,
 	abi: abi,
 }
 export default GACHA_MACHINE

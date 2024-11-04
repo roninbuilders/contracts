@@ -8,6 +8,11 @@ const abi = [
 				type: 'address',
 			},
 			{
+				internalType: 'address',
+				name: '_admin',
+				type: 'address',
+			},
+			{
 				internalType: 'bytes',
 				name: '_data',
 				type: 'bytes',
@@ -62,19 +67,21 @@ const abi = [
 		type: 'event',
 	},
 	{
+		inputs: [],
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
 	{
+		inputs: [],
 		stateMutability: 'payable',
 		type: 'receive',
 	},
 ] as const
-const NFT721_PROXY: Contract<typeof abi> = {
-	name: 'NFT721 Proxy',
-	address: '0x72288a7f32bec9de4a42bd19a746b9e7798996bb',
+const KONGZ_MART_RAFFLE_PROXY: Contract<typeof abi> = {
+	name: 'Kongz Mart Raffle Proxy',
+	address: '0xc3a57fdc4e5e10642a555c2d1a01b56fa0ca85b7',
 	is_deprecated: false,
-	created_at: 1729522001,
+	created_at: 1729516823,
 	abi: abi,
 }
-export default NFT721_PROXY
+export default KONGZ_MART_RAFFLE_PROXY

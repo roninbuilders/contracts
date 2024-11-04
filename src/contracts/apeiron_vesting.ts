@@ -200,6 +200,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'successBeneficiaries',
+				type: 'address[]',
+			},
+			{
+				indexed: false,
+				internalType: 'address[]',
+				name: 'failureBeneficiaries',
+				type: 'address[]',
+			},
+		],
+		name: 'VestingCliffAndDurationUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'address',
 				name: 'beneficiary',
@@ -232,7 +251,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: '_beneficiarys',
+				name: '_beneficiaries',
 				type: 'address[]',
 			},
 			{
@@ -623,6 +642,63 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address[]',
+				name: '_beneficiaries',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_cliffs',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_durations',
+				type: 'uint256[]',
+			},
+		],
+		name: 'updateMultiVestingCliffAndDuration',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_beneficiary',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_index',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_cliff',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_duration',
+				type: 'uint256',
+			},
+		],
+		name: 'updateVestingCliffAndDuration',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'newImplementation',
 				type: 'address',
@@ -708,9 +784,9 @@ const abi = [
 ] as const
 const APEIRON_VESTING: Contract<typeof abi> = {
 	name: 'Apeiron Vesting',
-	address: '0x755023679f7b23ec67c366d96783ac7dfc0d6e16',
+	address: '0x679a9dff43e71b31983c8c216e968948238cc71e',
 	is_deprecated: false,
-	created_at: 1711423376,
+	created_at: 1716884074,
 	abi: abi,
 }
 export default APEIRON_VESTING

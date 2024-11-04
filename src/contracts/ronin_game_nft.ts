@@ -596,6 +596,24 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'id',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bool',
+				name: 'disableExchange',
+				type: 'bool',
+			},
+		],
+		name: 'setDistableExchange',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: 'user',
 				type: 'address',
@@ -696,9 +714,9 @@ const abi = [
 ] as const
 const RONIN_GAME_NFT: Contract<typeof abi> = {
 	name: 'Ronin Game NFT',
-	address: '0xa8a44f449b0de4f20568a4f7242ed03a8916ecfc',
+	address: '0x8042c8bab903da1375c53621ea4c3fc9f42c3178',
 	is_deprecated: false,
-	created_at: 1722665809,
+	created_at: 1726986446,
 	abi: abi,
 }
 export default RONIN_GAME_NFT

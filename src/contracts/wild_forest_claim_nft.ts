@@ -21,6 +21,11 @@ const abi = [
 		type: 'error',
 	},
 	{
+		inputs: [],
+		name: 'MaximumIdentificatorsExceeded',
+		type: 'error',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'string',
@@ -48,6 +53,19 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'nftContractAddress',
+				type: 'address',
+			},
+		],
+		name: 'NftContractChanged',
 		type: 'event',
 	},
 	{
@@ -123,6 +141,19 @@ const abi = [
 			},
 		],
 		name: 'RoleRevoked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'signerAddress',
+				type: 'address',
+			},
+		],
+		name: 'SignerAddressChanged',
 		type: 'event',
 	},
 	{
@@ -498,9 +529,9 @@ const abi = [
 ] as const
 const WILD_FOREST_CLAIM_NFT: Contract<typeof abi> = {
 	name: 'Wild Forest Claim Nft',
-	address: '0x580e8f220f89d2417ce017dcd6f6bc5de82399b7',
+	address: '0xcef3d02d72a51b7db39972d7cfe3cd0e76ce14c5',
 	is_deprecated: false,
-	created_at: 1715159266,
+	created_at: 1717767634,
 	abi: abi,
 }
 export default WILD_FOREST_CLAIM_NFT

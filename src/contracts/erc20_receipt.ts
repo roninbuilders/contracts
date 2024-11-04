@@ -461,9 +461,9 @@ const abi = [
 ] as const
 const ERC20_RECEIPT: Contract<typeof abi> = {
 	name: 'ERC20 Receipt',
-	address: '0xfac8bd7a7aabf7a7424b5a7079e820df735196b8',
+	address: '0xf0c97554e098383ebdab4645a96fea6eff6c2295',
 	is_deprecated: false,
-	created_at: 1715593056,
+	created_at: 1730457223,
 	abi: abi,
 }
 export default ERC20_RECEIPT

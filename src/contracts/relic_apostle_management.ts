@@ -566,9 +566,9 @@ const abi = [
 ] as const
 const RELIC_APOSTLE_MANAGEMENT: Contract<typeof abi> = {
 	name: 'Relic Apostle Management',
-	address: '0x3cd60694fa8b069c8b8b982cab663616eee0d6bb',
+	address: '0x05560c629b9923820dbfb90b45de462edb7d04bd',
 	is_deprecated: false,
-	created_at: 1724227908,
+	created_at: 1726460385,
 	abi: abi,
 }
 export default RELIC_APOSTLE_MANAGEMENT
