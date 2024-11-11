@@ -1,44 +1,42 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'name_',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol_',
-				type: 'string',
-			},
-			{
-				internalType: 'address',
-				name: 'originalToken_',
-				type: 'address',
-			},
-		],
+		inputs: [],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
+				internalType: 'uint256',
+				name: 'supplyAfterMint',
+				type: 'uint256',
 			},
 		],
-		name: 'AdminAccessSet',
-		type: 'event',
+		name: 'MaxSupplyExceeded',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'SenderNotBurner',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'SenderNotMinter',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -71,13 +69,84 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'previousOwner',
+				name: 'burner',
+				type: 'address',
+			},
+		],
+		name: 'BurnAccessGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'burner',
+				type: 'address',
+			},
+		],
+		name: 'BurnAccessRevoked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'minter',
+				type: 'address',
+			},
+		],
+		name: 'MintAccessGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'minter',
+				type: 'address',
+			},
+		],
+		name: 'MintAccessRevoked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'from',
 				type: 'address',
 			},
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'newOwner',
+				name: 'to',
+				type: 'address',
+			},
+		],
+		name: 'OwnershipTransferRequested',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'to',
 				type: 'address',
 			},
 		],
@@ -108,6 +177,44 @@ const abi = [
 		],
 		name: 'Transfer',
 		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'value',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'Transfer',
+		type: 'event',
+	},
+	{
+		inputs: [],
+		name: 'acceptOwnership',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
 	},
 	{
 		inputs: [
@@ -179,14 +286,22 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'receiptFrom',
-				type: 'address',
-			},
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'amount',
 				type: 'uint256',
+			},
+		],
+		name: 'burn',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
 			},
 			{
 				internalType: 'uint256',
@@ -194,7 +309,25 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'burnForReceipt',
+		name: 'burn',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'burnFrom',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -245,6 +378,95 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
+				name: 'subtractedValue',
+				type: 'uint256',
+			},
+		],
+		name: 'decreaseApproval',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: 'success',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getBurners',
+		outputs: [
+			{
+				internalType: 'address[]',
+				name: '',
+				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'getMinters',
+		outputs: [
+			{
+				internalType: 'address[]',
+				name: '',
+				type: 'address[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'burner',
+				type: 'address',
+			},
+		],
+		name: 'grantBurnRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'burnAndMinter',
+				type: 'address',
+			},
+		],
+		name: 'grantMintAndBurnRoles',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'minter',
+				type: 'address',
+			},
+		],
+		name: 'grantMintRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
 				name: 'addedValue',
 				type: 'uint256',
 			},
@@ -264,11 +486,29 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'addedValue',
+				type: 'uint256',
+			},
+		],
+		name: 'increaseApproval',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'burner',
 				type: 'address',
 			},
 		],
-		name: 'isAdmin',
+		name: 'isBurner',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -283,13 +523,40 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'receiptTo',
+				name: 'minter',
 				type: 'address',
 			},
+		],
+		name: 'isMinter',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'maxSupply',
+		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '',
 				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
 			},
 			{
 				internalType: 'uint256',
@@ -297,7 +564,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'mintForReceipt',
+		name: 'mint',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -317,19 +584,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'originalToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'owner',
 		outputs: [
 			{
@@ -342,8 +596,14 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'renounceOwnership',
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'burner',
+				type: 'address',
+			},
+		],
+		name: 'revokeBurnRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -352,18 +612,32 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: 'minter',
 				type: 'address',
 			},
+		],
+		name: 'revokeMintRole',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'interfaceId',
+				type: 'bytes4',
+			},
+		],
+		name: 'supportsInterface',
+		outputs: [
 			{
 				internalType: 'bool',
-				name: 'enabled',
+				name: '',
 				type: 'bool',
 			},
 		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -420,6 +694,35 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'transferAndCall',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: 'success',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: 'from',
 				type: 'address',
 			},
@@ -449,7 +752,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'newOwner',
+				name: 'to',
 				type: 'address',
 			},
 		],
@@ -459,11 +762,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const ERC20_RECEIPT: Contract<typeof abi> = {
-	name: 'ERC20 Receipt',
-	address: '0xdc20ca4df25d6df51f36be48292cbcc509b10f28',
+const LINK_TOKEN: Contract<typeof abi> = {
+	name: 'Link Token',
+	address: '0x3902228d6a3d2dc44731fd9d45fee6a61c722d0b',
 	is_deprecated: false,
-	created_at: 1730457232,
+	created_at: 1730187965,
 	abi: abi,
 }
-export default ERC20_RECEIPT
+export default LINK_TOKEN

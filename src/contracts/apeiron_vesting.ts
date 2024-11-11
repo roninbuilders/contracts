@@ -784,9 +784,9 @@ const abi = [
 ] as const
 const APEIRON_VESTING: Contract<typeof abi> = {
 	name: 'Apeiron Vesting',
-	address: '0x679a9dff43e71b31983c8c216e968948238cc71e',
+	address: '0x7a3c029ee41937827b1f33a2210509489479f571',
 	is_deprecated: false,
-	created_at: 1716884074,
+	created_at: 1729599494,
 	abi: abi,
 }
 export default APEIRON_VESTING
