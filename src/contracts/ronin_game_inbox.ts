@@ -540,6 +540,29 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'token',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'payToken',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'postUpgrade',
 		outputs: [],
@@ -722,9 +745,9 @@ const abi = [
 ] as const
 const RONIN_GAME_INBOX: Contract<typeof abi> = {
 	name: 'Ronin Game Inbox',
-	address: '0xf75ffabbeee2b98031a7b756489a7813400accf7',
+	address: '0xcb47086ad46e6d0419903860daa035ee3d37c903',
 	is_deprecated: false,
-	created_at: 1722685975,
+	created_at: 1727622256,
 	abi: abi,
 }
 export default RONIN_GAME_INBOX

@@ -235,6 +235,44 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'approvedContract',
+				type: 'address',
+			},
+		],
+		name: 'TokenLocked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'approvedContract',
+				type: 'address',
+			},
+		],
+		name: 'TokenUnlocked',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
 				internalType: 'address',
 				name: 'from',
 				type: 'address',
@@ -302,6 +340,25 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: '_locks',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -616,6 +673,38 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_id',
+				type: 'uint256',
+			},
+		],
+		name: 'isUnlocked',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'lockIds',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -976,6 +1065,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'unlockIds',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'unpause',
 		outputs: [],
@@ -985,9 +1087,9 @@ const abi = [
 ] as const
 const WILD_FOREST_NFT: Contract<typeof abi> = {
 	name: 'Wild Forest Nft',
-	address: '0x6655d4db0360c02213efb2cd0853094972b7a816',
+	address: '0xb557c78d3d9a788e473d7607d9810b9272c43895',
 	is_deprecated: false,
-	created_at: 1717768342,
+	created_at: 1730099964,
 	abi: abi,
 }
 export default WILD_FOREST_NFT
