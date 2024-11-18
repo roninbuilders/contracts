@@ -145,11 +145,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const MAVIS_PAY_PROXY: Contract<typeof abi> = {
-	name: 'Mavis Pay Proxy',
-	address: '0x8a28c188a067dfa6aaec36e2b67b34d2c3042df9',
+const PUZZLE_CHAMPIONS_NFT_PROXY: Contract<typeof abi> = {
+	name: 'Puzzle Champions NFT Proxy',
+	address: '0xe0042bffba452767e68ed4a0289ae5873281eb8b',
 	is_deprecated: false,
-	created_at: 1701069325,
+	created_at: 1731030236,
 	abi: abi,
 }
-export default MAVIS_PAY_PROXY
+export default PUZZLE_CHAMPIONS_NFT_PROXY
