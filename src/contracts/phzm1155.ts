@@ -206,6 +206,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'SummoningStoneUsed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'uint256',
 				name: 'tokenId',
@@ -1112,6 +1131,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'summoningStoneUse',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -1214,9 +1246,9 @@ const abi = [
 ] as const
 const PHZM1155: Contract<typeof abi> = {
 	name: 'PHZM1155',
-	address: '0xb2414254ca88f4292b4d482103c03c6d87276ff3',
+	address: '0x853517179c035a074286671c825cd18f5806bd87',
 	is_deprecated: false,
-	created_at: 1729329197,
+	created_at: 1729764313,
 	abi: abi,
 }
 export default PHZM1155

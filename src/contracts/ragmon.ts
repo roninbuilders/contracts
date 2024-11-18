@@ -30,25 +30,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'address',
 				name: 'owner',
@@ -99,13 +80,45 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+				indexed: false,
+				internalType: 'string',
+				name: 'baseURI',
+				type: 'string',
+			},
+		],
+		name: 'BaseURIUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'receiver',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
+		name: 'BulkMintFailed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newGasLimit',
+				type: 'uint256',
+			},
+		],
+		name: 'BulkMintGasLimitUpdated',
 		type: 'event',
 	},
 	{
@@ -119,6 +132,44 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+			{
+				indexed: false,
+				internalType: 'uint8',
+				name: 'level',
+				type: 'uint8',
+			},
+		],
+		name: 'MaxLevelUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'limit',
+				type: 'uint256',
+			},
+		],
+		name: 'MonsterLimitUpdated',
 		type: 'event',
 	},
 	{
@@ -151,6 +202,25 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+		],
+		name: 'RarityUpdated',
 		type: 'event',
 	},
 	{
@@ -267,19 +337,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -340,6 +397,30 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+		],
+		name: 'attemptSafeMint',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: 'owner',
 				type: 'address',
 			},
@@ -359,7 +440,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'recipients',
+				name: '',
 				type: 'address[]',
 			},
 		],
@@ -367,11 +448,42 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'tokenIds',
+				name: '',
 				type: 'uint256[]',
 			},
 		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16[]',
+				name: 'monsterTypes',
+				type: 'uint16[]',
+			},
+			{
+				internalType: 'address[]',
+				name: 'receivers',
+				type: 'address[]',
+			},
+		],
+		name: 'bulkMint',
+		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'bulkMintGasLimit',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -388,38 +500,19 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'getAllHolders',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'address[]',
+				internalType: 'uint16',
 				name: '',
-				type: 'address[]',
+				type: 'uint16',
 			},
 		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAllList',
+		name: 'countByMonsterType',
 		outputs: [
 			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
+				internalType: 'uint256',
 				name: '',
-				type: 'tuple[]',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -439,68 +532,6 @@ const abi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getNft',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_account',
-				type: 'address',
-			},
-		],
-		name: 'getNftList',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
-				name: '',
-				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
@@ -624,7 +655,7 @@ const abi = [
 			},
 			{
 				internalType: 'string',
-				name: '_prefixURI',
+				name: 'baseTokenURI',
 				type: 'string',
 			},
 		],
@@ -660,23 +691,57 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'player',
-				type: 'address',
+				internalType: 'uint16',
+				name: '',
+				type: 'uint16',
 			},
+		],
+		name: 'limitByMonsterType',
+		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthTime',
+				name: '',
 				type: 'uint256',
 			},
 		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: '',
+				type: 'uint8',
+			},
+		],
+		name: 'maxLevel',
+		outputs: [
+			{
+				internalType: 'uint8',
+				name: '',
+				type: 'uint8',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+		],
 		name: 'mint',
-		outputs: [],
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -684,7 +749,31 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'to',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'mint',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'pure',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				internalType: 'address',
+				name: 'receiver',
 				type: 'address',
 			},
 		],
@@ -702,60 +791,37 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiBurn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'players',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'birthTimes',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'players',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
 				internalType: 'uint256',
-				name: 'birthTimes',
+				name: 'tokenId',
 				type: 'uint256',
 			},
 		],
-		name: 'multiMintForSinglePlayer',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		name: 'monsters',
+		outputs: [
+			{
+				components: [
+					{
+						internalType: 'uint16',
+						name: 'monsterType',
+						type: 'uint16',
+					},
+					{
+						internalType: 'uint8',
+						name: 'level',
+						type: 'uint8',
+					},
+					{
+						internalType: 'uint256',
+						name: 'birthTime',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct IRagmon.Monster',
+				name: '',
+				type: 'tuple',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -830,13 +896,19 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'proxiableUUID',
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: '',
+				type: 'uint16',
+			},
+		],
+		name: 'rarityByMonsterType',
 		outputs: [
 			{
-				internalType: 'bytes32',
+				internalType: 'enum Rarity',
 				name: '',
-				type: 'bytes32',
+				type: 'uint8',
 			},
 		],
 		stateMutability: 'view',
@@ -951,7 +1023,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'string',
-				name: 'newBaseURI',
+				name: '_uri',
 				type: 'string',
 			},
 		],
@@ -963,17 +1035,89 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
+				internalType: 'uint256',
+				name: 'newGasLimit',
+				type: 'uint256',
 			},
 		],
-		name: 'setGrantRole',
+		name: 'setBulkMintGasLimit',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				internalType: 'uint256',
+				name: 'limit',
+				type: 'uint256',
+			},
+		],
+		name: 'setLimit',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+			{
+				internalType: 'uint8',
+				name: '_maxLevel',
+				type: 'uint8',
+			},
+		],
+		name: 'setMaxLevel',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+			{
+				internalType: 'uint256',
+				name: 'limit',
+				type: 'uint256',
+			},
+		],
+		name: 'setMonster',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				internalType: 'enum Rarity',
+				name: 'rarity',
+				type: 'uint8',
+			},
+		],
+		name: 'setRarity',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1137,40 +1281,35 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
 			},
 		],
-		name: 'upgradeTo',
+		name: 'upgrade',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'version',
+		outputs: [
 			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
+				internalType: 'uint8',
+				name: '',
+				type: 'uint8',
 			},
 		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
+		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
-const NFT721: Contract<typeof abi> = {
-	name: 'NFT721',
-	address: '0x3458d13ec72d08083b1a1b86c5cf57a4c1fbeaf6',
+const RAGMON: Contract<typeof abi> = {
+	name: 'Ragmon',
+	address: '0x1a69a3dbed09e36704d95fe8e682095551a25d10',
 	is_deprecated: false,
-	created_at: 1728634144,
+	created_at: 1715785370,
 	abi: abi,
 }
-export default NFT721
+export default RAGMON
