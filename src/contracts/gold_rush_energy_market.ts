@@ -1,22 +1,45 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_price',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_admin',
+				type: 'address',
+			},
+			{
+				internalType: 'address payable',
+				name: '_treasury',
+				type: 'address',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
+		inputs: [],
+		name: 'IncorrectPrice',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NotOpen',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'TransferFailed',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ZeroAddressNotAllowed',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -24,11 +47,17 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address',
-				name: 'account',
+				name: 'player',
 				type: 'address',
 			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'quantity',
+				type: 'uint256',
+			},
 		],
-		name: 'Paused',
+		name: 'BoughtEnergy',
 		type: 'event',
 	},
 	{
@@ -107,17 +136,17 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
+		inputs: [],
+		name: 'ADMIN_ROLE',
+		outputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
 			},
 		],
-		name: 'Unpaused',
-		type: 'event',
+		stateMutability: 'view',
+		type: 'function',
 	},
 	{
 		inputs: [],
@@ -134,7 +163,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'MINTER_ROLE',
+		name: 'PRICER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -147,20 +176,43 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGKIT',
+		name: 'SWEEPER_ROLE',
 		outputs: [
 			{
-				internalType: 'contract INyangKit',
+				internalType: 'bytes32',
 				name: '',
-				type: 'address',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'dailyUserMintLimit',
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'qty',
+				type: 'uint256',
+			},
+		],
+		name: 'buy',
+		stateMutability: 'payable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'qty',
+				type: 'uint256',
+			},
+		],
+		name: 'getPrice',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -191,16 +243,15 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'giftTokenId',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
+				internalType: 'address',
+				name: 'pricer',
+				type: 'address',
 			},
 		],
-		stateMutability: 'view',
+		name: 'grantPricerRole',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -217,7 +268,18 @@ const abi = [
 			},
 		],
 		name: 'grantRole',
-		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sweeper',
+				type: 'address',
+			},
+		],
+		name: 'grantSweeperRole',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -246,53 +308,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nyangkit',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'inviteCodeMintCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [],
-		name: 'paused',
+		name: 'isOpen',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -317,7 +334,18 @@ const abi = [
 			},
 		],
 		name: 'renounceRole',
-		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'pricer',
+				type: 'address',
+			},
+		],
+		name: 'revokePricerRole',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -335,7 +363,30 @@ const abi = [
 			},
 		],
 		name: 'revokeRole',
-		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sweeper',
+				type: 'address',
+			},
+		],
+		name: 'revokeSweeperRole',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bool',
+				name: 'open',
+				type: 'bool',
+			},
+		],
+		name: 'setIsOpen',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -343,25 +394,23 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'limit',
+				name: '_price',
 				type: 'uint256',
 			},
 		],
-		name: 'setDailyUserMintLimit',
-		outputs: [],
+		name: 'setPrice',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'address payable',
+				name: '_treasury',
+				type: 'address',
 			},
 		],
-		name: 'setGiftTokenId',
-		outputs: [],
+		name: 'setTreasury',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -385,30 +434,30 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'userDailyMintLimit',
+		inputs: [],
+		name: 'treasury',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'address payable',
 				name: '',
-				type: 'uint256',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
+	{
+		inputs: [],
+		name: 'withdraw',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
 ] as const
-const CHECK_IN: Contract<typeof abi> = {
-	name: 'Check In',
-	address: '0x5a718d6e79d85a6ed4f27496ddd1ae49f3e2e67f',
+const GOLD_RUSH_ENERGY_MARKET: Contract<typeof abi> = {
+	name: 'Gold Rush Energy Market',
+	address: '0x4561d810467116972e434f89351bf5eb9b8c2ad6',
 	is_deprecated: false,
-	created_at: 1723652028,
+	created_at: 1731543713,
 	abi: abi,
 }
-export default CHECK_IN
+export default GOLD_RUSH_ENERGY_MARKET

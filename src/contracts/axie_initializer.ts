@@ -1522,6 +1522,18 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'axieNightmareContract',
+				type: 'address',
+			},
+		],
+		name: 'initializeV4',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: '_owner',
 				type: 'address',
 			},
@@ -2579,9 +2591,9 @@ const abi = [
 ] as const
 const AXIE_INITIALIZER: Contract<typeof abi> = {
 	name: 'Axie Initializer',
-	address: '0x1db83f3cb28780b2394e8313ffe5a8d6803fdefd',
+	address: '0xf461009e052b14d4cf72490b1deebdcce679284f',
 	is_deprecated: false,
-	created_at: 1728656609,
+	created_at: 1731928418,
 	abi: abi,
 }
 export default AXIE_INITIALIZER

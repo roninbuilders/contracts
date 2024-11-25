@@ -1,49 +1,25 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
-		name: 'ErrInvalidArrayLength',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrNonExistentToken',
-		type: 'error',
-	},
-	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
 			},
 			{
-				internalType: 'bytes32',
-				name: 'neededRole',
-				type: 'bytes32',
+				internalType: 'string',
+				name: 'symbol',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'baseTokenURI',
+				type: 'string',
 			},
 		],
-		name: 'ErrUnauthorizedAccount',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
+		stateMutability: 'nonpayable',
+		type: 'constructor',
 	},
 	{
 		anonymous: false,
@@ -101,24 +77,17 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'to',
 				type: 'address',
 			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
 			{
 				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
 			},
 		],
-		name: 'Initialized',
+		name: 'MintToClaimerCalled',
 		type: 'event',
 	},
 	{
@@ -127,13 +96,13 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 			{
 				indexed: true,
 				internalType: 'uint256',
-				name: 'nonce',
+				name: '_nonce',
 				type: 'uint256',
 			},
 		],
@@ -267,19 +236,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -359,7 +315,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address[]',
-				name: 'recipients',
+				name: '_recipients',
 				type: 'address[]',
 			},
 		],
@@ -367,7 +323,7 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'tokenIds',
+				name: '_tokenIds',
 				type: 'uint256[]',
 			},
 		],
@@ -388,44 +344,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'getAllHolders',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAllList',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'uint256',
@@ -439,68 +357,6 @@ const abi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getNft',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_account',
-				type: 'address',
-			},
-		],
-		name: 'getNftList',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
-				name: '',
-				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
@@ -613,29 +469,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: '_prefixURI',
-				type: 'string',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'address',
 				name: 'owner',
 				type: 'address',
@@ -661,29 +494,6 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'player',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthTime',
-				type: 'uint256',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
 				name: 'to',
 				type: 'address',
 			},
@@ -692,69 +502,10 @@ const abi = [
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiBurn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'players',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'birthTimes',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'players',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthTimes',
-				type: 'uint256',
-			},
-		],
-		name: 'multiMintForSinglePlayer',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -775,7 +526,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '',
 				type: 'uint256',
 			},
 		],
@@ -824,19 +575,6 @@ const abi = [
 				internalType: 'bool',
 				name: '',
 				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -951,7 +689,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'string',
-				name: 'newBaseURI',
+				name: 'baseTokenURI',
 				type: 'string',
 			},
 		],
@@ -963,26 +701,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'setGrantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
@@ -1134,43 +854,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
 ] as const
-const NFT721: Contract<typeof abi> = {
-	name: 'NFT721',
-	address: '0x3458d13ec72d08083b1a1b86c5cf57a4c1fbeaf6',
-	is_deprecated: false,
-	created_at: 1728634144,
+const TEST_ERC721: Contract<typeof abi> = {
+	name: 'Test ERC721',
+	address: '0x6263b2502e930211d1b5269ed0da00b01c7755a9',
+	is_deprecated: true,
+	created_at: 1732087402,
 	abi: abi,
 }
-export default NFT721
+export default TEST_ERC721

@@ -2,28 +2,23 @@ import { Contract } from '@/contract'
 const abi = [
 	{
 		inputs: [],
-		name: 'ErrInvalidArrayLength',
-		type: 'error',
+		stateMutability: 'nonpayable',
+		type: 'constructor',
 	},
 	{
 		inputs: [],
-		name: 'ErrNonExistentToken',
+		name: 'InvalidShortString',
 		type: 'error',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'neededRole',
-				type: 'bytes32',
+				internalType: 'string',
+				name: 'str',
+				type: 'string',
 			},
 		],
-		name: 'ErrUnauthorizedAccount',
+		name: 'StringTooLong',
 		type: 'error',
 	},
 	{
@@ -32,17 +27,11 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
+				name: '_user',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
+		name: 'AddedBlackList',
 		type: 'event',
 	},
 	{
@@ -57,13 +46,13 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'approved',
+				name: 'spender',
 				type: 'address',
 			},
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'value',
 				type: 'uint256',
 			},
 		],
@@ -74,70 +63,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
+				name: '_blackListedUser',
 				type: 'address',
 			},
 			{
 				indexed: false,
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'ApprovalForAll',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
 				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'nonce',
+				name: '_balance',
 				type: 'uint256',
 			},
 		],
-		name: 'NonceUpdated',
+		name: 'DestroyedBlackFunds',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [],
+		name: 'EIP712DomainChanged',
 		type: 'event',
 	},
 	{
@@ -151,6 +95,76 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '_user',
+				type: 'address',
+			},
+		],
+		name: 'RemovedBlackList',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '_user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RewardsConsumed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '_user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_balance',
+				type: 'uint256',
+			},
+		],
+		name: 'RewardsConverted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: '_user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RewardsMinted',
 		type: 'event',
 	},
 	{
@@ -244,9 +258,9 @@ const abi = [
 				type: 'address',
 			},
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'value',
 				type: 'uint256',
 			},
 		],
@@ -267,21 +281,21 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
+		inputs: [],
+		name: 'DEFAULT_ADMIN_ROLE',
+		outputs: [
 			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
 			},
 		],
-		name: 'Upgraded',
-		type: 'event',
+		stateMutability: 'view',
+		type: 'function',
 	},
 	{
 		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
+		name: 'DOMAIN_SEPARATOR',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -322,16 +336,24 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'to',
+				name: '_evilUser',
 				type: 'address',
 			},
+		],
+		name: 'addBlackList',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'address',
+				name: '_address',
+				type: 'address',
 			},
 		],
-		name: 'approve',
+		name: 'addRewardConsumer',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -341,6 +363,54 @@ const abi = [
 			{
 				internalType: 'address',
 				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
+			},
+		],
+		name: 'allowance',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'approve',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
 				type: 'address',
 			},
 		],
@@ -358,27 +428,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-		],
-		name: 'bulkMint',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -388,88 +439,85 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'getAllHolders',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bool',
+				name: 'useRewards',
+				type: 'bool',
 			},
 		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAllList',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
+		name: 'burn',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bool',
+				name: 'useRewards',
+				type: 'bool',
+			},
+		],
+		name: 'burnFrom',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
-		name: 'getApproved',
-		outputs: [
+		name: 'burnFrom',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
 			{
 				internalType: 'address',
-				name: '',
+				name: 'account',
 				type: 'address',
 			},
 		],
-		stateMutability: 'view',
+		name: 'convertRewardsBalance',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getNft',
+		inputs: [],
+		name: 'decimals',
 		outputs: [
 			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT',
+				internalType: 'uint8',
 				name: '',
-				type: 'tuple',
+				type: 'uint8',
 			},
 		],
 		stateMutability: 'view',
@@ -479,28 +527,109 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_account',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'subtractedValue',
+				type: 'uint256',
+			},
+		],
+		name: 'decreaseAllowance',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_blackListedUser',
 				type: 'address',
 			},
 		],
-		name: 'getNftList',
+		name: 'destroyBlackFunds',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_blackListedUser',
+				type: 'address',
+			},
+		],
+		name: 'destroyRewards',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'eip712Domain',
 		outputs: [
 			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'birthTime',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct NFT721.NFT[]',
+				internalType: 'bytes1',
+				name: 'fields',
+				type: 'bytes1',
+			},
+			{
+				internalType: 'string',
+				name: 'name',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: 'version',
+				type: 'string',
+			},
+			{
+				internalType: 'uint256',
+				name: 'chainId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: 'verifyingContract',
+				type: 'address',
+			},
+			{
+				internalType: 'bytes32',
+				name: 'salt',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'extensions',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_user',
+				type: 'address',
+			},
+		],
+		name: 'getBlackListStatus',
+		outputs: [
+			{
+				internalType: 'bool',
 				name: '',
-				type: 'tuple[]',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -528,36 +657,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'index',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
-		name: 'getRoleMember',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
+		name: 'getUsableReward',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -613,23 +723,24 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
 			},
 			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: '_prefixURI',
-				type: 'string',
+				internalType: 'uint256',
+				name: 'addedValue',
+				type: 'uint256',
 			},
 		],
-		name: 'initialize',
-		outputs: [],
+		name: 'increaseAllowance',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -637,16 +748,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'operator',
+				name: '',
 				type: 'address',
 			},
 		],
-		name: 'isApprovedForAll',
+		name: 'isBlackListed',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -661,17 +767,31 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'player',
+				name: '_address',
+				type: 'address',
+			},
+		],
+		name: 'isRewardConsumer',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
 				type: 'address',
 			},
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthTime',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
@@ -687,73 +807,18 @@ const abi = [
 				name: 'to',
 				type: 'address',
 			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bool',
+				name: 'isReward',
+				type: 'bool',
+			},
 		],
 		name: 'mint',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiBurn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'players',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'birthTimes',
-				type: 'uint256[]',
-			},
-		],
-		name: 'multiMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'players',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthTimes',
-				type: 'uint256',
-			},
-		],
-		name: 'multiMintForSinglePlayer',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -774,9 +839,9 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
 			},
 		],
 		name: 'nonces',
@@ -785,25 +850,6 @@ const abi = [
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'ownerOf',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -830,16 +876,72 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'value',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'deadline',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint8',
+				name: 'v',
+				type: 'uint8',
+			},
 			{
 				internalType: 'bytes32',
-				name: '',
+				name: 'r',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'bytes32',
+				name: 's',
 				type: 'bytes32',
 			},
 		],
-		stateMutability: 'view',
+		name: 'permit',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_clearedUser',
+				type: 'address',
+			},
+		],
+		name: 'removeBlackList',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_address',
+				type: 'address',
+			},
+		],
+		name: 'removeRewardConsumer',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -882,116 +984,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'from',
+				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
 		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'setApprovalForAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'newBaseURI',
-				type: 'string',
-			},
-		],
-		name: 'setBaseURI',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'setGrantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'stateOf',
+		name: 'rewardBalanceOf',
 		outputs: [
 			{
-				internalType: 'bytes',
+				internalType: 'uint256',
 				name: '',
-				type: 'bytes',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -1030,68 +1032,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenByIndex',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenOfOwnerByIndex',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenURI',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'totalSupply',
 		outputs: [
@@ -1108,6 +1048,30 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'transfer',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: 'from',
 				type: 'address',
 			},
@@ -1118,13 +1082,38 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
 		name: 'transferFrom',
-		outputs: [],
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'transferrableBalanceOf',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -1134,43 +1123,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
 ] as const
-const NFT721: Contract<typeof abi> = {
-	name: 'NFT721',
-	address: '0x3458d13ec72d08083b1a1b86c5cf57a4c1fbeaf6',
+const BTX_TOKEN: Contract<typeof abi> = {
+	name: 'BTX Token',
+	address: '0x777baeb8bdad0e95ea94e3a4bcc6cc2938763725',
 	is_deprecated: false,
-	created_at: 1728634144,
+	created_at: 1731940043,
 	abi: abi,
 }
-export default NFT721
+export default BTX_TOKEN

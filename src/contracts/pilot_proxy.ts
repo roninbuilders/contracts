@@ -145,11 +145,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const MAVIS_PAY_PROXY: Contract<typeof abi> = {
-	name: 'Mavis Pay Proxy',
-	address: '0x8a28c188a067dfa6aaec36e2b67b34d2c3042df9',
+const PILOT_PROXY: Contract<typeof abi> = {
+	name: 'Pilot Proxy',
+	address: '0xc676f28365c8bfb73b1158b19a98c7fb342184ea',
 	is_deprecated: false,
-	created_at: 1701069325,
+	created_at: 1731622859,
 	abi: abi,
 }
-export default MAVIS_PAY_PROXY
+export default PILOT_PROXY

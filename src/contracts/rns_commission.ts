@@ -6,6 +6,112 @@ const abi = [
 		type: 'constructor',
 	},
 	{
+		inputs: [],
+		name: 'InvalidAmountOfRON',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidArrayLength',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'InvalidRatio',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'NullAddress',
+		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'updatedBy',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'commissionIdx',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'address payable',
+				name: 'newRecipient',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'string',
+				name: 'newName',
+				type: 'string',
+			},
+		],
+		name: 'CommissionInfoUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'updatedBy',
+				type: 'address',
+			},
+			{
+				components: [
+					{
+						internalType: 'address payable',
+						name: 'recipient',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: 'ratio',
+						type: 'uint256',
+					},
+					{
+						internalType: 'string',
+						name: 'name',
+						type: 'string',
+					},
+				],
+				indexed: false,
+				internalType: 'struct INSCommission.Commission[]',
+				name: 'commissionInfos',
+				type: 'tuple[]',
+			},
+		],
+		name: 'CommissionsUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'recipient',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'commissionAmount',
+				type: 'uint256',
+			},
+		],
+		name: 'Distributed',
+		type: 'event',
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -16,19 +122,6 @@ const abi = [
 			},
 		],
 		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
 		type: 'event',
 	},
 	{
@@ -107,19 +200,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -134,7 +214,20 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'MINTER_ROLE',
+		name: 'MAX_PERCENTAGE',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'SENDER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -147,25 +240,29 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGKIT',
+		name: 'getCommissions',
 		outputs: [
 			{
-				internalType: 'contract INyangKit',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'dailyUserMintLimit',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
+				components: [
+					{
+						internalType: 'address payable',
+						name: 'recipient',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: 'ratio',
+						type: 'uint256',
+					},
+					{
+						internalType: 'string',
+						name: 'name',
+						type: 'string',
+					},
+				],
+				internalType: 'struct INSCommission.Commission[]',
+				name: 'commissionInfos',
+				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
@@ -191,8 +288,38 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'giftTokenId',
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'getRoleMember',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleMemberCount',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -249,58 +376,40 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_nyangkit',
+				name: 'admin',
 				type: 'address',
+			},
+			{
+				components: [
+					{
+						internalType: 'address payable',
+						name: 'recipient',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: 'ratio',
+						type: 'uint256',
+					},
+					{
+						internalType: 'string',
+						name: 'name',
+						type: 'string',
+					},
+				],
+				internalType: 'struct INSCommission.Commission[]',
+				name: 'commissionInfos',
+				type: 'tuple[]',
+			},
+			{
+				internalType: 'address[]',
+				name: 'allowedSenders',
+				type: 'address[]',
 			},
 		],
 		name: 'initialize',
 		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'inviteCodeMintCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -343,11 +452,21 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'limit',
+				name: 'commissionIdx',
 				type: 'uint256',
 			},
+			{
+				internalType: 'address payable',
+				name: 'newRecipient',
+				type: 'address',
+			},
+			{
+				internalType: 'string',
+				name: 'newName',
+				type: 'string',
+			},
 		],
-		name: 'setDailyUserMintLimit',
+		name: 'setCommissionInfo',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -355,12 +474,29 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				components: [
+					{
+						internalType: 'address payable',
+						name: 'recipient',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: 'ratio',
+						type: 'uint256',
+					},
+					{
+						internalType: 'string',
+						name: 'name',
+						type: 'string',
+					},
+				],
+				internalType: 'struct INSCommission.Commission[]',
+				name: 'commissionInfos',
+				type: 'tuple[]',
 			},
 		],
-		name: 'setGiftTokenId',
+		name: 'setCommissions',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -385,30 +521,15 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'userDailyMintLimit',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
+		stateMutability: 'payable',
+		type: 'receive',
 	},
 ] as const
-const CHECK_IN: Contract<typeof abi> = {
-	name: 'Check In',
-	address: '0x5a718d6e79d85a6ed4f27496ddd1ae49f3e2e67f',
+const RNS_COMMISSION: Contract<typeof abi> = {
+	name: 'RNS Commission',
+	address: '0x70d1a6f75161e8d5de10e4aaa82aa1b423b4362a',
 	is_deprecated: false,
-	created_at: 1723652028,
+	created_at: 1720085010,
 	abi: abi,
 }
-export default CHECK_IN
+export default RNS_COMMISSION

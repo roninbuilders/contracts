@@ -1,23 +1,15 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
+				internalType: 'string',
+				name: 'uri_',
+				type: 'string',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		stateMutability: 'nonpayable',
+		type: 'constructor',
 	},
 	{
 		anonymous: false,
@@ -48,19 +40,25 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '_fromTokenId',
+				name: 'tokenId',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '_toTokenId',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
-		name: 'BatchMetadataUpdate',
+		name: 'BurnCalled',
 		type: 'event',
 	},
 	{
@@ -69,50 +67,98 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'to',
 				type: 'address',
 			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'messageId',
-				type: 'bytes32',
-			},
-		],
-		name: 'GameRollupMessage',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '_tokenId',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
 				type: 'uint256',
 			},
 		],
-		name: 'MetadataUpdate',
+		name: 'MintToClaimerCalled',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'previousAdminRole',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'newAdminRole',
+				type: 'bytes32',
+			},
+		],
+		name: 'RoleAdminChanged',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleGranted',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'RoleRevoked',
 		type: 'event',
 	},
 	{
@@ -209,26 +255,13 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
 		inputs: [],
-		name: 'ERC1155NFTPrefix',
+		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'bytes32',
 				name: '',
-				type: 'uint8',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -236,38 +269,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ERC20NFTPrefix',
+		name: 'MINTER_ROLE',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'bytes32',
 				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'ERC721NFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'GameNFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -322,13 +329,37 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'config',
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId_',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount_',
+				type: 'uint256',
+			},
+		],
+		name: 'burn',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleAdmin',
 		outputs: [
 			{
-				internalType: 'contract IConfig',
+				internalType: 'bytes32',
 				name: '',
-				type: 'address',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -337,57 +368,43 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getItemId',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
 			},
 			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes',
-				name: 'b',
-				type: 'bytes',
-			},
-		],
-		name: 'hex2Uint256',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IConfig',
-				name: 'config_',
+				internalType: 'address',
+				name: 'account',
 				type: 'address',
 			},
 		],
-		name: 'initialize',
+		name: 'grantRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'hasRole',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -415,50 +432,53 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'name',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
+				internalType: 'address',
+				name: 'to_',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId_',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount_',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
+		name: 'mintToClaimer',
 		outputs: [
 			{
-				internalType: 'bytes32',
+				internalType: 'uint256',
 				name: '',
-				type: 'bytes32',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
 				internalType: 'address',
-				name: 'from',
+				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
 		],
-		name: 'safeBatchBurn',
+		name: 'renounceRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -466,27 +486,17 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
 				internalType: 'address',
-				name: 'to',
+				name: 'account',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'itemIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
 		],
-		name: 'safeBatchMint',
+		name: 'revokeRole',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -578,73 +588,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'canTransfer',
-				type: 'bool',
-			},
-		],
-		name: 'setCanTransfer',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'disableExchange',
-				type: 'bool',
-			},
-		],
-		name: 'setDistableExchange',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'locked',
-				type: 'bool',
-			},
-		],
-		name: 'setLocked',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'newURI',
-				type: 'string',
-			},
-		],
-		name: 'setMetadataURI',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -664,39 +607,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
@@ -712,11 +624,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const RONIN_GAME_NFT: Contract<typeof abi> = {
-	name: 'Ronin Game NFT',
-	address: '0xeebdf0690308088c007676c697e2d83a9fe2839b',
+const INFOMON_ERC1155: Contract<typeof abi> = {
+	name: 'Infomon ERC1155',
+	address: '0x954bd1181f5ca8a0485c1d634658677ecd22cb08',
 	is_deprecated: false,
-	created_at: 1726992962,
+	created_at: 1732170828,
 	abi: abi,
 }
-export default RONIN_GAME_NFT
+export default INFOMON_ERC1155

@@ -259,19 +259,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'blacklist',
-		outputs: [
-			{
-				internalType: 'contract IBlacklist',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -721,6 +708,24 @@ const abi = [
 				name: '_tokenId',
 				type: 'uint256',
 			},
+			{
+				internalType: 'uint256[]',
+				name: '_relicsTokenIDs',
+				type: 'uint256[]',
+			},
+		],
+		name: 'setRelicsTokenIDs',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
 		],
 		name: 'stateOf',
 		outputs: [
@@ -892,9 +897,9 @@ const abi = [
 ] as const
 const APEIRON_PLANET: Contract<typeof abi> = {
 	name: 'Apeiron Planet',
-	address: '0xbaab8289e96ced54570d72f30de9d7df6c4ad3e7',
+	address: '0xd77140ecd7da864db03d1fb42e366c95f8fd1287',
 	is_deprecated: false,
-	created_at: 1702693750,
+	created_at: 1726468251,
 	abi: abi,
 }
 export default APEIRON_PLANET
