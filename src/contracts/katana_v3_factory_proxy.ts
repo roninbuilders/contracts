@@ -46,19 +46,6 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
 				name: 'implementation',
 				type: 'address',
 			},
@@ -67,6 +54,7 @@ const abi = [
 		type: 'event',
 	},
 	{
+		inputs: [],
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
@@ -92,7 +80,6 @@ const abi = [
 			},
 		],
 		name: 'changeAdmin',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -118,7 +105,6 @@ const abi = [
 			},
 		],
 		name: 'upgradeTo',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -136,20 +122,20 @@ const abi = [
 			},
 		],
 		name: 'upgradeToAndCall',
-		outputs: [],
 		stateMutability: 'payable',
 		type: 'function',
 	},
 	{
+		inputs: [],
 		stateMutability: 'payable',
 		type: 'receive',
 	},
 ] as const
-const MAVIS_PAY_PROXY: Contract<typeof abi> = {
-	name: 'Mavis Pay Proxy',
-	address: '0x8a28c188a067dfa6aaec36e2b67b34d2c3042df9',
+const KATANA_V3_FACTORY_PROXY: Contract<typeof abi> = {
+	name: 'Katana V3 Factory Proxy',
+	address: '0x1f0b70d9a137e3caef0ceacd312bc5f81da0cc0c',
 	is_deprecated: false,
-	created_at: 1701069325,
+	created_at: 1732163857,
 	abi: abi,
 }
-export default MAVIS_PAY_PROXY
+export default KATANA_V3_FACTORY_PROXY

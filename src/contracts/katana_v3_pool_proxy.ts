@@ -4,7 +4,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'initialOwner',
+				name: 'poolImplementation',
 				type: 'address',
 			},
 		],
@@ -31,51 +31,47 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
+				indexed: true,
 				internalType: 'address',
-				name: 'newAdmin',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'changeProxyAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
+		name: 'Upgraded',
+		type: 'event',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyAdmin',
+		inputs: [],
+		name: 'POOL_PROXY_INIT_CODE',
 		outputs: [
 			{
-				internalType: 'address',
+				internalType: 'bytes',
 				name: '',
-				type: 'address',
+				type: 'bytes',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'POOL_PROXY_INIT_CODE_HASH',
+		outputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
 			},
 		],
-		name: 'getProxyImplementation',
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'implementation',
 		outputs: [
 			{
 				internalType: 'address',
@@ -102,7 +98,6 @@ const abi = [
 	{
 		inputs: [],
 		name: 'renounceOwnership',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -115,57 +110,27 @@ const abi = [
 			},
 		],
 		name: 'transferOwnership',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
 				internalType: 'address',
-				name: 'implementation',
+				name: 'newImplementation',
 				type: 'address',
 			},
 		],
-		name: 'upgrade',
-		outputs: [],
+		name: 'upgradeTo',
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeAndCall',
-		outputs: [],
-		stateMutability: 'payable',
 		type: 'function',
 	},
 ] as const
-const PROXY_ADMIN: Contract<typeof abi> = {
-	name: 'Proxy Admin',
-	address: '0x9238d42f699dcaa5a68332e1d44bb4c5a798299f',
+const KATANA_V3_POOL_PROXY: Contract<typeof abi> = {
+	name: 'Katana V3 Pool Proxy',
+	address: '0x4c4c0ae2fa6f117dc4a1f0495cbfc902e78cdf31',
 	is_deprecated: false,
-	created_at: 1731622847,
+	created_at: 1732163854,
 	abi: abi,
 }
-export default PROXY_ADMIN
+export default KATANA_V3_POOL_PROXY

@@ -4,7 +4,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'beacon',
+				name: 'logic',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'admin',
 				type: 'address',
 			},
 			{
@@ -17,47 +22,23 @@ const abi = [
 		type: 'constructor',
 	},
 	{
+		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
 				internalType: 'address',
-				name: 'target',
+				name: 'previousAdmin',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'newAdmin',
 				type: 'address',
 			},
 		],
-		name: 'AddressEmptyCode',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'ERC1967InvalidBeacon',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'ERC1967InvalidImplementation',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ERC1967NonPayable',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FailedInnerCall',
-		type: 'error',
+		name: 'AdminChanged',
+		type: 'event',
 	},
 	{
 		anonymous: false,
@@ -73,16 +54,34 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'implementation',
+				type: 'address',
+			},
+		],
+		name: 'Upgraded',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
+	{
+		inputs: [],
+		stateMutability: 'payable',
+		type: 'receive',
+	},
 ] as const
-const MAVIS_PRESALE_PROXY: Contract<typeof abi> = {
-	name: 'Mavis Presale Proxy',
-	address: '0x2c34a3151d93de04b64a0bfb3d71e2985af84559',
+const AXIE_FORGE_PROXY: Contract<typeof abi> = {
+	name: 'Axie Forge Proxy',
+	address: '0xee85902589eb0c7f88603bb203045b885a1c3a98',
 	is_deprecated: false,
-	created_at: 1731659078,
+	created_at: 1730791686,
 	abi: abi,
 }
-export default MAVIS_PRESALE_PROXY
+export default AXIE_FORGE_PROXY

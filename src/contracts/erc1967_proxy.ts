@@ -4,12 +4,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 			{
 				internalType: 'bytes',
-				name: 'data',
+				name: '_data',
 				type: 'bytes',
 			},
 		],
@@ -25,17 +25,6 @@ const abi = [
 			},
 		],
 		name: 'AddressEmptyCode',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'ERC1967InvalidBeacon',
 		type: 'error',
 	},
 	{
@@ -65,24 +54,23 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
+		name: 'Upgraded',
 		type: 'event',
 	},
 	{
-		inputs: [],
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
 ] as const
-const MAVIS_PRESALE_PROXY: Contract<typeof abi> = {
-	name: 'Mavis Presale Proxy',
-	address: '0x2c34a3151d93de04b64a0bfb3d71e2985af84559',
+const ERC1967_PROXY: Contract<typeof abi> = {
+	name: 'ERC1967 Proxy',
+	address: '0xea9d2c1b5922531cbc27adbb082166d23c46f318',
 	is_deprecated: false,
-	created_at: 1731659078,
+	created_at: 1730854670,
 	abi: abi,
 }
-export default MAVIS_PRESALE_PROXY
+export default ERC1967_PROXY

@@ -1,7 +1,23 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_btxToken',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '_usdcToken',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_initialBtxToUsdcRate',
+				type: 'uint256',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
@@ -9,13 +25,38 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
 				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
+				internalType: 'uint256',
+				name: 'btxAmount',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'usdcAmount',
+				type: 'uint256',
 			},
 		],
-		name: 'Initialized',
+		name: 'BTXSwappedForUSDC',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'newRate',
+				type: 'uint256',
+			},
+		],
+		name: 'BTXToUSDCExchangeRateUpdated',
 		type: 'event',
 	},
 	{
@@ -110,6 +151,31 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'usdcAmount',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'btxAmount',
+				type: 'uint256',
+			},
+		],
+		name: 'USDCSwappedForBTX',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'account',
@@ -118,6 +184,19 @@ const abi = [
 		],
 		name: 'Unpaused',
 		type: 'event',
+	},
+	{
+		inputs: [],
+		name: 'BTXToken',
+		outputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
 	},
 	{
 		inputs: [],
@@ -134,7 +213,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'MINTER_ROLE',
+		name: 'OWNER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -147,10 +226,10 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGKIT',
+		name: 'USDCToken',
 		outputs: [
 			{
-				internalType: 'contract INyangKit',
+				internalType: 'contract IERC20',
 				name: '',
 				type: 'address',
 			},
@@ -160,11 +239,30 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'dailyUserMintLimit',
+		name: 'btxToUsdcRate',
 		outputs: [
 			{
 				internalType: 'uint256',
 				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'usdcAmount',
+				type: 'uint256',
+			},
+		],
+		name: 'getBtxAmountForUsdc',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'btxAmount',
 				type: 'uint256',
 			},
 		],
@@ -192,11 +290,40 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'giftTokenId',
+		name: 'getSwapState',
 		outputs: [
 			{
 				internalType: 'uint256',
-				name: '',
+				name: 'btxToUsdc',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'btxBalance',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'usdcBalance',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'btxAmount',
+				type: 'uint256',
+			},
+		],
+		name: 'getUsdcAmountForBtx',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'usdcAmount',
 				type: 'uint256',
 			},
 		],
@@ -246,46 +373,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nyangkit',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'inviteCodeMintCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'inviteCode',
-				type: 'string',
-			},
-		],
-		name: 'mint',
+		inputs: [],
+		name: 'pause',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -342,32 +431,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'limit',
-				type: 'uint256',
-			},
-		],
-		name: 'setDailyUserMintLimit',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'setGiftTokenId',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes4',
 				name: 'interfaceId',
 				type: 'bytes4',
@@ -387,28 +450,91 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'userDailyMintLimit',
-		outputs: [
-			{
 				internalType: 'uint256',
-				name: '',
+				name: '_btxAmount',
 				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		name: 'swapBTXForUSDC',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_usdcAmount',
+				type: 'uint256',
+			},
+		],
+		name: 'swapUSDCForBTX',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_newRate',
+				type: 'uint256',
+			},
+		],
+		name: 'updateBTXToUSDCExchangeRate',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_recipient',
+				type: 'address',
+			},
+		],
+		name: 'withdrawBTX',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'address',
+				name: '_recipient',
+				type: 'address',
+			},
+		],
+		name: 'withdrawUSDC',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 ] as const
-const CHECK_IN: Contract<typeof abi> = {
-	name: 'Check In',
-	address: '0x5a718d6e79d85a6ed4f27496ddd1ae49f3e2e67f',
+const BTXUSDC_STABLE_SWAP: Contract<typeof abi> = {
+	name: 'BTXUSDC Stable Swap',
+	address: '0xf2ccfe14910562fc8a308db8bc8c512f7ecf7157',
 	is_deprecated: false,
-	created_at: 1723652028,
+	created_at: 1732191171,
 	abi: abi,
 }
-export default CHECK_IN
+export default BTXUSDC_STABLE_SWAP
