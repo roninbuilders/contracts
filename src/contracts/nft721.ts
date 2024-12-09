@@ -1168,9 +1168,9 @@ const abi = [
 ] as const
 const NFT721: Contract<typeof abi> = {
 	name: 'NFT721',
-	address: '0x3458d13ec72d08083b1a1b86c5cf57a4c1fbeaf6',
+	address: '0x9456b2b9f22b4c0cf392dcea893c7ab122dbb877',
 	is_deprecated: false,
-	created_at: 1728634144,
+	created_at: 1729521995,
 	abi: abi,
 }
 export default NFT721

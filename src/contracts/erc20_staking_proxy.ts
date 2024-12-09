@@ -4,49 +4,59 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'implementation_',
+				name: 'beacon',
 				type: 'address',
 			},
 			{
-				internalType: 'address',
-				name: 'initialOwner',
-				type: 'address',
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
 			},
 		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'constructor',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address',
+				name: 'target',
+				type: 'address',
+			},
+		],
+		name: 'AddressEmptyCode',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'beacon',
+				type: 'address',
+			},
+		],
+		name: 'ERC1967InvalidBeacon',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
 				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconInvalidImplementation',
+		name: 'ERC1967InvalidImplementation',
 		type: 'error',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-		],
-		name: 'OwnableInvalidOwner',
+		inputs: [],
+		name: 'ERC1967NonPayable',
 		type: 'error',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'OwnableUnauthorizedAccount',
+		inputs: [],
+		name: 'FailedInnerCall',
 		type: 'error',
 	},
 	{
@@ -55,97 +65,23 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
+				name: 'beacon',
 				type: 'address',
 			},
 		],
-		name: 'OwnershipTransferred',
+		name: 'BeaconUpgraded',
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'implementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
+		stateMutability: 'payable',
+		type: 'fallback',
 	},
 ] as const
 const ERC20_STAKING_PROXY: Contract<typeof abi> = {
 	name: 'ERC20 Staking Proxy',
-	address: '0xe870abf043c669c9e2a0c00712fc1e1742044a8b',
+	address: '0x61fc9e0524e2c6a5b193318d7fd1ce2b67797509',
 	is_deprecated: false,
-	created_at: 1716206149,
+	created_at: 1718359578,
 	abi: abi,
 }
 export default ERC20_STAKING_PROXY

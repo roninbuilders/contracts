@@ -579,6 +579,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'releaseMonster',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -760,9 +773,9 @@ const abi = [
 ] as const
 const LEVEL_MERGE: Contract<typeof abi> = {
 	name: 'Level Merge',
-	address: '0x3c4752ba472d2da88ca86586f879dc32da72d336',
+	address: '0x711746ca3c515cd47bd754858b2e9a0108eb9e66',
 	is_deprecated: false,
-	created_at: 1723600926,
+	created_at: 1725344255,
 	abi: abi,
 }
 export default LEVEL_MERGE

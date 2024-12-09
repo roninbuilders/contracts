@@ -912,9 +912,9 @@ const abi = [
 ] as const
 const COMMIT_STORE: Contract<typeof abi> = {
 	name: 'Commit Store',
-	address: '0xd154a8ce39b93098f3c55ffd94418def75b33627',
+	address: '0x28c66d9693b2634b2f3b170f6d9584eec2f72ff0',
 	is_deprecated: false,
-	created_at: 1730713041,
+	created_at: 1733253150,
 	abi: abi,
 }
 export default COMMIT_STORE

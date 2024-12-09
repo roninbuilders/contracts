@@ -404,7 +404,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes[]',
+				internalType: 'struct GenesisHeroes721.HeroZ[]',
 				name: '',
 				type: 'tuple[]',
 			},
@@ -452,7 +452,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'getHeroes',
+		name: 'getHeroZ',
 		outputs: [
 			{
 				components: [
@@ -467,7 +467,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes',
+				internalType: 'struct GenesisHeroes721.HeroZ',
 				name: '',
 				type: 'tuple',
 			},
@@ -483,7 +483,7 @@ const abi = [
 				type: 'address',
 			},
 		],
-		name: 'getHeroesList',
+		name: 'getHeroZList',
 		outputs: [
 			{
 				components: [
@@ -498,7 +498,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes[]',
+				internalType: 'struct GenesisHeroes721.HeroZ[]',
 				name: '',
 				type: 'tuple[]',
 			},
@@ -628,7 +628,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'heroesMint',
+		name: 'heroZMint',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1168,9 +1168,9 @@ const abi = [
 ] as const
 const GENESIS_HEROES_721: Contract<typeof abi> = {
 	name: 'Genesis Heroes 721',
-	address: '0xa3bd4e86cd0ec20b03c9710359599c9f82f8fe9e',
+	address: '0x1f63754618cb33d811e8c1634f09b4edb313f3e8',
 	is_deprecated: false,
-	created_at: 1728633766,
+	created_at: 1730742673,
 	abi: abi,
 }
 export default GENESIS_HEROES_721

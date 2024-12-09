@@ -48,25 +48,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_fromTokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_toTokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'BatchMetadataUpdate',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'address',
 				name: 'beacon',
@@ -74,19 +55,6 @@ const abi = [
 			},
 		],
 		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'messageId',
-				type: 'bytes32',
-			},
-		],
-		name: 'GameRollupMessage',
 		type: 'event',
 	},
 	{
@@ -106,26 +74,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+				indexed: true,
 				internalType: 'address',
-				name: 'airdrop',
+				name: 'previousOwner',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'newOwner',
 				type: 'address',
 			},
 		],
-		name: 'LuLuMoonAirdropUpdate',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'MetadataUpdate',
+		name: 'OwnershipTransferred',
 		type: 'event',
 	},
 	{
@@ -236,12 +197,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ERC1155NFTPrefix',
+		name: 'CAPSULE_TYPE1_ID',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'uint256',
 				name: '',
-				type: 'uint8',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -249,12 +210,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ERC20NFTPrefix',
+		name: 'CAPSULE_TYPE2_ID',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'uint256',
 				name: '',
-				type: 'uint8',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -262,12 +223,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'ERC721NFTPrefix',
+		name: 'CAPSULE_TYPE3_ID',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'uint256',
 				name: '',
-				type: 'uint8',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -275,12 +236,77 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'GameNFTPrefix',
+		name: 'CAPSULE_TYPE4_ID',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'uint256',
 				name: '',
-				type: 'uint8',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'CAPSULE_TYPE5_ID',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'CHAMPIONS_MAX_ID',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'CHAMPIONS_MIN_ID',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'CHAMPIONS_SILVER_ID_MAX',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'CHEST_ID',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -335,13 +361,37 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'config',
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'championId',
+				type: 'uint256',
+			},
+		],
+		name: 'burnChampion',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+		],
+		name: 'getOwnedCapsule',
 		outputs: [
 			{
-				internalType: 'contract IConfig',
-				name: '',
-				type: 'address',
+				internalType: 'uint256[]',
+				name: 'ownedCounts',
+				type: 'uint256[]',
 			},
 		],
 		stateMutability: 'view',
@@ -350,51 +400,37 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
 			},
 		],
-		name: 'getItemId',
+		name: 'getOwnedChampions',
 		outputs: [
 			{
-				internalType: 'uint8',
+				internalType: 'uint256[]',
 				name: '',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
+				type: 'uint256[]',
 			},
 		],
-		stateMutability: 'pure',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'bytes',
-				name: 'b',
-				type: 'bytes',
+				internalType: 'string',
+				name: 'tokenName',
+				type: 'string',
 			},
-		],
-		name: 'hex2Uint256',
-		outputs: [
 			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
+				internalType: 'string',
+				name: 'tokenSymbol',
+				type: 'string',
 			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
-				internalType: 'contract IConfig',
-				name: 'config_',
+				internalType: 'address',
+				name: '_proxyAdmin',
 				type: 'address',
 			},
 		],
@@ -428,63 +464,29 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'luluMoonAirdrop',
-		outputs: [
-			{
-				internalType: 'contract ILuLuMoonAirdrop',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'name',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'from',
+				name: 'account',
 				type: 'address',
 			},
 			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
+				internalType: 'uint256',
+				name: 'id',
+				type: 'uint256',
 			},
 			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
 			},
 		],
-		name: 'safeBatchBurn',
+		name: 'mint',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -503,7 +505,84 @@ const abi = [
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'itemIds',
+				name: 'amounts',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'mintBatch',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'capsuleId',
+				type: 'uint256',
+			},
+		],
+		name: 'mintCapsule',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'capsuleId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'championId',
+				type: 'uint256',
+			},
+		],
+		name: 'mintChampion',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'quantity',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: '',
+				type: 'bytes',
+			},
+		],
+		name: 'mintChest',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
 				type: 'uint256[]',
 			},
 			{
@@ -512,7 +591,38 @@ const abi = [
 				type: 'uint256[]',
 			},
 		],
-		name: 'safeBatchMint',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'owner',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'proxiableUUID',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'renounceOwnership',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -604,66 +714,12 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'canTransfer',
-				type: 'bool',
+				internalType: 'string',
+				name: 'newBaseURI',
+				type: 'string',
 			},
 		],
-		name: 'setCanTransfer',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'disableExchange',
-				type: 'bool',
-			},
-		],
-		name: 'setDistableExchange',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'locked',
-				type: 'bool',
-			},
-		],
-		name: 'setLocked',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract ILuLuMoonAirdrop',
-				name: 'airdrop',
-				type: 'address',
-			},
-		],
-		name: 'setLuLuMoonAirdrop',
+		name: 'setBaseURI',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -672,11 +728,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'string',
-				name: 'newURI',
+				name: 'newuri',
 				type: 'string',
 			},
 		],
-		name: 'setMetadataURI',
+		name: 'setURI',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -698,6 +754,19 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'newOwner',
+				type: 'address',
+			},
+		],
+		name: 'transferOwnership',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -751,11 +820,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const RONIN_GAME_NFT: Contract<typeof abi> = {
-	name: 'Ronin Game NFT',
-	address: '0xdf5814f66fb9b504d72fd4c50a2861c80287d683',
+const PUZZLE_CHAMPIONS_NFT: Contract<typeof abi> = {
+	name: 'Puzzle Champions NFT',
+	address: '0xbf84526dca85cf2a5043e6ef4093fd9a53f98cd2',
 	is_deprecated: false,
-	created_at: 1731315546,
+	created_at: 1731030227,
 	abi: abi,
 }
-export default RONIN_GAME_NFT
+export default PUZZLE_CHAMPIONS_NFT
