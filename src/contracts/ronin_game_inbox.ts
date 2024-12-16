@@ -108,6 +108,25 @@ const abi = [
 				type: 'uint256',
 			},
 		],
+		name: 'DepositLUAToGame',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
 		name: 'DepositRonToGame',
 		type: 'event',
 	},
@@ -388,6 +407,24 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'depositLUAToGame',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -745,9 +782,9 @@ const abi = [
 ] as const
 const RONIN_GAME_INBOX: Contract<typeof abi> = {
 	name: 'Ronin Game Inbox',
-	address: '0xcb47086ad46e6d0419903860daa035ee3d37c903',
+	address: '0x4bba9f2cc156cb885fa5b605f693be20c5d1aa9b',
 	is_deprecated: false,
-	created_at: 1727622256,
+	created_at: 1730859948,
 	abi: abi,
 }
 export default RONIN_GAME_INBOX
