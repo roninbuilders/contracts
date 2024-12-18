@@ -511,7 +511,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address payable',
+				internalType: 'address',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -790,9 +790,9 @@ const abi = [
 ] as const
 const MAINTENANCE: Contract<typeof abi> = {
 	name: 'Maintenance',
-	address: '0x3e07aeeef99a1f6ebc9b236b8b0051ac18560a48',
+	address: '0x1966d1facc5feff39a14b7c90d2ff568dc8a54c3',
 	is_deprecated: false,
-	created_at: 1718685420,
+	created_at: 1711428443,
 	abi: abi,
 }
 export default MAINTENANCE

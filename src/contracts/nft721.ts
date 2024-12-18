@@ -125,6 +125,56 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: false,
+				internalType: 'address',
+				name: 'player',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+		],
+		name: 'NFTStaking',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'player',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+		],
+		name: 'NFTUnStaking',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: true,
 				internalType: 'uint256',
 				name: 'tokenId',
@@ -509,6 +559,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: '_account',
+				type: 'address',
+			},
+		],
+		name: 'getNftTokenIdList',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -759,6 +828,19 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'multiNftStaking',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'name',
 		outputs: [
@@ -769,6 +851,19 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'nftStaking',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -1168,9 +1263,9 @@ const abi = [
 ] as const
 const NFT721: Contract<typeof abi> = {
 	name: 'NFT721',
-	address: '0x3458d13ec72d08083b1a1b86c5cf57a4c1fbeaf6',
+	address: '0x828ffd13d007e8fb23cbc7c3816a0fe4696c6463',
 	is_deprecated: false,
-	created_at: 1728634144,
+	created_at: 1732110757,
 	abi: abi,
 }
 export default NFT721

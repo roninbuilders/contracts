@@ -146,7 +146,7 @@ const abi = [
 	},
 ] as const
 const AXIE_CONSUMABLE_ERC1155_PROXY: Contract<typeof abi> = {
-	name: 'AxieConsumableERC1155Proxy',
+	name: 'Axie Consumable ERC1155 Proxy',
 	address: '0x737b80335a9396a8658405d7adcbc57343ff0558',
 	is_deprecated: false,
 	created_at: 1702268420,

@@ -524,7 +524,7 @@ const ACKNOWLEDGEMENT: Contract<typeof abi> = {
 	name: 'Acknowledgement',
 	address: '0x0000000000000000000000000000000000000022',
 	is_deprecated: true,
-	created_at: 1718826033,
+	created_at: 0,
 	abi: abi,
 }
 export default ACKNOWLEDGEMENT

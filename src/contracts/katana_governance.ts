@@ -53,25 +53,6 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'actor',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'allowed',
-				type: 'bool',
-			},
-		],
-		name: 'AllowedActorUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
 				name: 'by',
 				type: 'address',
 			},
@@ -205,31 +186,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'by',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldRouter',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRouter',
-				type: 'address',
-			},
-		],
-		name: 'RouterUpdated',
-		type: 'event',
-	},
-	{
 		inputs: [],
 		name: 'INIT_CODE_PAIR_HASH',
 		outputs: [
@@ -351,30 +307,16 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
+		inputs: [],
+		name: 'getFactory',
+		outputs: [
 			{
-				internalType: 'uint24',
-				name: 'fee',
-				type: 'uint24',
-			},
-			{
-				internalType: 'int24',
-				name: 'tickSpacing',
-				type: 'int24',
-			},
-			{
-				internalType: 'uint8',
-				name: 'feeProtocolNum',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint8',
-				name: 'feeProtocolDen',
-				type: 'uint8',
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
-		name: 'enableFeeAmount',
-		stateMutability: 'nonpayable',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -413,58 +355,6 @@ const abi = [
 			{
 				internalType: 'address',
 				name: 'pair',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getPositionManager',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getRouter',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getV2Factory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getV3Factory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
 				type: 'address',
 			},
 		],
@@ -528,58 +418,8 @@ const abi = [
 			},
 		],
 		name: 'initialize',
+		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'v3Factory',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'positionManager',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'v3Migrator',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'legacyPermissionedRouter',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'aggregateRouter',
-				type: 'address',
-			},
-		],
-		name: 'initializeV2',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'actor',
-				type: 'address',
-			},
-		],
-		name: 'isAllowedActor',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -659,23 +499,7 @@ const abi = [
 	{
 		inputs: [],
 		name: 'renounceOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'actor',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'allowed',
-				type: 'bool',
-			},
-		],
-		name: 'setAllowedActor',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -688,6 +512,20 @@ const abi = [
 			},
 		],
 		name: 'setAllowedAll',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'factory',
+				type: 'address',
+			},
+		],
+		name: 'setFactory',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -700,6 +538,7 @@ const abi = [
 			},
 		],
 		name: 'setPairImplementation',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -727,18 +566,7 @@ const abi = [
 			},
 		],
 		name: 'setPermission',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'router',
-				type: 'address',
-			},
-		],
-		name: 'setRouter',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -751,12 +579,7 @@ const abi = [
 			},
 		],
 		name: 'setTreasury',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'toggleFlashLoanPermission',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -769,6 +592,7 @@ const abi = [
 			},
 		],
 		name: 'transferOwnership',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -788,9 +612,9 @@ const abi = [
 ] as const
 const KATANA_GOVERNANCE: Contract<typeof abi> = {
 	name: 'Katana Governance',
-	address: '0x082c33e95956e360f97703ce20ad7bcaa5c9a754',
+	address: '0x8abadb049daecc7846297c00c2e0295228e7228f',
 	is_deprecated: false,
-	created_at: 1732174992,
+	created_at: 1716205735,
 	abi: abi,
 }
 export default KATANA_GOVERNANCE

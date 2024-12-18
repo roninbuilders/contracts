@@ -1862,9 +1862,9 @@ const abi = [
 ] as const
 const EVM2_EVM_ON_RAMP: Contract<typeof abi> = {
 	name: 'EVM2 EVM On Ramp',
-	address: '0x02b60267bceeafdc45005e0fa0dd783efebc9f1b',
+	address: '0x261fe8a0c492a1ede8cf966aed16619c772198f5',
 	is_deprecated: false,
-	created_at: 1730712915,
+	created_at: 1733253126,
 	abi: abi,
 }
 export default EVM2_EVM_ON_RAMP

@@ -891,6 +891,42 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'updateRagmonReward',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'updateRagmonTreasuryReward',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'address',
 				name: '',
 				type: 'address',
@@ -923,9 +959,9 @@ const abi = [
 ] as const
 const WEEKLY_CHECK_IN: Contract<typeof abi> = {
 	name: 'Weekly Check In',
-	address: '0xf3a1d3be948f26db3462b062356e1880ab9cd770',
+	address: '0xe7fccb9c4ab4e1f13e9fcc57b2b3a4ea29efa144',
 	is_deprecated: false,
-	created_at: 1732151335,
+	created_at: 1733315361,
 	abi: abi,
 }
 export default WEEKLY_CHECK_IN

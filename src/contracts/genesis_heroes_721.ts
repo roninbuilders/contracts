@@ -404,7 +404,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes[]',
+				internalType: 'struct GenesisHeroes721.HeroZ[]',
 				name: '',
 				type: 'tuple[]',
 			},
@@ -452,7 +452,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'getHeroes',
+		name: 'getHeroZ',
 		outputs: [
 			{
 				components: [
@@ -467,7 +467,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes',
+				internalType: 'struct GenesisHeroes721.HeroZ',
 				name: '',
 				type: 'tuple',
 			},
@@ -483,7 +483,7 @@ const abi = [
 				type: 'address',
 			},
 		],
-		name: 'getHeroesList',
+		name: 'getHeroZList',
 		outputs: [
 			{
 				components: [
@@ -498,7 +498,7 @@ const abi = [
 						type: 'uint256',
 					},
 				],
-				internalType: 'struct GenesisHeroes721.Heroes[]',
+				internalType: 'struct GenesisHeroes721.HeroZ[]',
 				name: '',
 				type: 'tuple[]',
 			},
@@ -571,6 +571,25 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'getTokenIdByGrade',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -628,7 +647,7 @@ const abi = [
 				type: 'uint256',
 			},
 		],
-		name: 'heroesMint',
+		name: 'heroZMint',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -754,6 +773,24 @@ const abi = [
 			},
 		],
 		name: 'multiMintForSinglePlayer',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'players',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		name: 'multiTransfer',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -981,6 +1018,42 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'uint256[]',
+				name: 'tokenIds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'grades',
+				type: 'uint256[]',
+			},
+		],
+		name: 'setMultiTokenIdByGrade',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'grade',
+				type: 'uint256',
+			},
+		],
+		name: 'setTokenIdByGrade',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
@@ -1168,9 +1241,9 @@ const abi = [
 ] as const
 const GENESIS_HEROES_721: Contract<typeof abi> = {
 	name: 'Genesis Heroes 721',
-	address: '0xa3bd4e86cd0ec20b03c9710359599c9f82f8fe9e',
+	address: '0x2e089359c20a207f6b1bf35cdc81dfbace6aa8ca',
 	is_deprecated: false,
-	created_at: 1728633766,
+	created_at: 1733471902,
 	abi: abi,
 }
 export default GENESIS_HEROES_721

@@ -1136,9 +1136,9 @@ const abi = [
 ] as const
 const LAND_V3: Contract<typeof abi> = {
 	name: 'Land V3',
-	address: '0x8095586a53bce83e1aa427ea4c269ed833cb6fd6',
+	address: '0x437d1bd550083c364842996727b9265149b88467',
 	is_deprecated: false,
-	created_at: 1719227358,
+	created_at: 1719219066,
 	abi: abi,
 }
 export default LAND_V3

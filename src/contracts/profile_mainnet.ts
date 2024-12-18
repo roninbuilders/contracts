@@ -44,17 +44,6 @@ const abi = [
 		type: 'error',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrDuplicatedVRFKeyHash',
-		type: 'error',
-	},
-	{
 		inputs: [],
 		name: 'ErrExistentProfile',
 		type: 'error',
@@ -89,17 +78,6 @@ const abi = [
 			},
 		],
 		name: 'ErrLookUpIdFailed',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrLookUpIdFromVRFKeyFailed',
 		type: 'error',
 	},
 	{
@@ -334,25 +312,6 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'VRFKeyHashChanged',
-		type: 'event',
-	},
-	{
 		inputs: [
 			{
 				internalType: 'bytes[][2]',
@@ -452,24 +411,6 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'changeVRFKeyHash',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
 				name: 'admin',
 				type: 'address',
 			},
@@ -529,7 +470,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address payable',
+				internalType: 'address',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -545,111 +486,6 @@ const abi = [
 				internalType: 'uint256',
 				name: '',
 				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2Admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2BeaconInfo',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'vrfKeyHashLastChange',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'registeredAt',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2Consensus',
-		outputs: [
-			{
-				internalType: 'TConsensus',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2OldConsensus',
-		outputs: [
-			{
-				internalType: 'TConsensus',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2OldPubkey',
-		outputs: [
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
 			},
 		],
 		stateMutability: 'view',
@@ -712,139 +548,10 @@ const abi = [
 						name: 'oldConsensus',
 						type: 'address',
 					},
-					{
-						internalType: 'uint256',
-						name: 'registeredAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'vrfKeyHash',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'vrfKeyHashLastChange',
-						type: 'uint256',
-					},
 				],
 				internalType: 'struct IProfile.CandidateProfile',
 				name: '',
 				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2ProfileLastChange',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2Pubkey',
-		outputs: [
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2RegisteredAt',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2Treasury',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2VRFKeyHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		name: 'getId2VRFKeyHashLastChange',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -877,98 +584,12 @@ const abi = [
 				type: 'address[]',
 			},
 		],
-		name: 'getManyId2Admin',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'adminList',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'idList',
-				type: 'address[]',
-			},
-		],
 		name: 'getManyId2Consensus',
 		outputs: [
 			{
 				internalType: 'TConsensus[]',
 				name: 'consensusList',
 				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'idList',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyId2RegisteredAt',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'registeredAtList',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'getVRFKeyHash2BeaconInfo',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'vrfKeyHashLastChange',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'registeredAt',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'getVRFKeyHash2Id',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -1093,36 +714,12 @@ const abi = [
 		stateMutability: 'view',
 		type: 'function',
 	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'vrfKeyHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'tryGetVRFKeyHash2Id',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'found',
-				type: 'bool',
-			},
-			{
-				internalType: 'address',
-				name: 'id',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
 ] as const
 const PROFILE_MAINNET: Contract<typeof abi> = {
 	name: 'ProfileMainnet',
-	address: '0xf2686639c1c8d291059eb19ab3c5e75683e50ad2',
+	address: '0x6af57471da36bb9ca5e36b27f927d45bdab95239',
 	is_deprecated: false,
-	created_at: 1718685423,
+	created_at: 1711428452,
 	abi: abi,
 }
 export default PROFILE_MAINNET

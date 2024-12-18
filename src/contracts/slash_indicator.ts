@@ -286,19 +286,6 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'slashRandomBeaconAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'RandomBeaconSlashingConfigsUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
 				indexed: true,
 				internalType: 'address',
 				name: 'cid',
@@ -318,25 +305,6 @@ const abi = [
 			},
 		],
 		name: 'Slashed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'period',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'validatorId',
-				type: 'address',
-			},
-		],
-		name: 'SlashingBeaconSkipped',
 		type: 'event',
 	},
 	{
@@ -468,7 +436,7 @@ const abi = [
 		name: 'getContract',
 		outputs: [
 			{
-				internalType: 'address payable',
+				internalType: 'address',
 				name: 'contract_',
 				type: 'address',
 			},
@@ -581,31 +549,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getRandomBeaconSlashingConfigs',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: '_slashAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: '_activatedAtPeriod',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct ISlashRandomBeacon.SlashRandomBeaconConfig',
-				name: 'config',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -740,29 +683,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'randomBeaconContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'randomBeaconSlashAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'activatedAtPeriod',
-				type: 'uint256',
-			},
-		],
-		name: 'initializeV4',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'lastUnavailabilitySlashedBlock',
 		outputs: [
@@ -892,24 +812,6 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'slashAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'activatedAtPeriod',
-				type: 'uint256',
-			},
-		],
-		name: 'setRandomBeaconSlashingConfigs',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
 				name: 'tier1Threshold',
 				type: 'uint256',
 			},
@@ -998,24 +900,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'validatorId',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'period',
-				type: 'uint256',
-			},
-		],
-		name: 'slashRandomBeacon',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'TConsensus',
 				name: 'consensusAddr',
 				type: 'address',
@@ -1029,9 +913,9 @@ const abi = [
 ] as const
 const SLASH_INDICATOR: Contract<typeof abi> = {
 	name: 'Slash Indicator',
-	address: '0xd503747234cd3179508831de24be8990f50ebfc8',
+	address: '0x47fec49fc75d687114edcf8beb2dcd349b19ae19',
 	is_deprecated: false,
-	created_at: 1718685429,
+	created_at: 1711428479,
 	abi: abi,
 }
 export default SLASH_INDICATOR

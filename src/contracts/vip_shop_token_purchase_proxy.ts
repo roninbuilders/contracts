@@ -72,9 +72,9 @@ const abi = [
 ] as const
 const VIP_SHOP_TOKEN_PURCHASE_PROXY: Contract<typeof abi> = {
 	name: 'VIP Shop Token Purchase Proxy',
-	address: '0x3fd8440d5a2e6ce3c49ab9982c95cfe6776b2724',
+	address: '0x6dc54916da93409e27a094c57ccf1491a30babb9',
 	is_deprecated: false,
-	created_at: 1730457325,
+	created_at: 1733997773,
 	abi: abi,
 }
 export default VIP_SHOP_TOKEN_PURCHASE_PROXY

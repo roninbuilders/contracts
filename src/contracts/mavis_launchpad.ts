@@ -2622,9 +2622,9 @@ const abi = [
 ] as const
 const MAVIS_LAUNCHPAD: Contract<typeof abi> = {
 	name: 'Mavis Launchpad',
-	address: '0xcc586c388ba7449e885848033ee8350dc8cdd4a3',
+	address: '0x30b8d14c5018d7f63c99b4347509b6534232fa7e',
 	is_deprecated: false,
-	created_at: 1719561138,
+	created_at: 1716444531,
 	abi: abi,
 }
 export default MAVIS_LAUNCHPAD
