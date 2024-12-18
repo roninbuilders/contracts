@@ -64,3 +64,4 @@ jobs:
           delete-branch: true
           labels: "automated pr"
           assignees: "alexx855"
+          auto-merge: true
