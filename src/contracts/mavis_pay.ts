@@ -10,12 +10,43 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
+				internalType: 'address',
+				name: '_merchant',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: '_token',
+				type: 'address',
+			},
+			{
+				indexed: false,
 				internalType: 'bool',
-				name: 'flag',
+				name: '_accepted',
 				type: 'bool',
 			},
 		],
-		name: 'AllowedAllPaymentTokens',
+		name: 'AcceptedERC20TokenChange',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: '_merchant',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'bool',
+				name: '_accepted',
+				type: 'bool',
+			},
+		],
+		name: 'AcceptedRONChange',
 		type: 'event',
 	},
 	{
@@ -36,118 +67,76 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'contract IKatanaRouter',
-				name: 'router',
-				type: 'address',
-			},
-		],
-		name: 'KanataRouterUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
 				internalType: 'address',
-				name: 'payService',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-		],
-		name: 'NoncePayServiceIncreased',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address[]',
-				name: 'payServices',
-				type: 'address[]',
-			},
-			{
-				indexed: true,
-				internalType: 'address[]',
-				name: 'treasuries',
-				type: 'address[]',
-			},
-		],
-		name: 'PayServiceInfosUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'orderId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'price',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'paymentToken',
+				name: '_merchant',
 				type: 'address',
 			},
 			{
 				indexed: false,
-				internalType: 'uint256',
-				name: 'validUntil',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'buyer',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'payToken',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'PaymentSuccess',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-			{
-				indexed: true,
 				internalType: 'bool',
-				name: 'allowed',
+				name: '_enabled',
 				type: 'bool',
 			},
 		],
-		name: 'PaymentTokensAllowed',
+		name: 'MerchantUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				components: [
+					{
+						internalType: 'address',
+						name: '_to',
+						type: 'address',
+					},
+					{
+						internalType: 'uint256',
+						name: '_amount',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: '_maxAmountPaid',
+						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: '_paymentReference',
+						type: 'bytes',
+					},
+					{
+						internalType: 'uint256',
+						name: '_validUntil',
+						type: 'uint256',
+					},
+					{
+						internalType: 'address[]',
+						name: '_path',
+						type: 'address[]',
+					},
+				],
+				indexed: false,
+				internalType: 'struct MavisPay.PaymentRequest',
+				name: '_request',
+				type: 'tuple',
+			},
+		],
+		name: 'PaymentComplete',
 		type: 'event',
 	},
 	{
@@ -229,26 +218,26 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'contract IWRONHelper',
-				name: 'wronHelper',
+				indexed: false,
+				internalType: 'address',
+				name: 'account',
 				type: 'address',
 			},
 		],
-		name: 'WRONHelperUpdated',
+		name: 'Unpaused',
 		type: 'event',
 	},
 	{
 		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'contract IWRON',
-				name: 'wron',
-				type: 'address',
+				indexed: false,
+				internalType: 'bool',
+				name: 'enabled',
+				type: 'bool',
 			},
 		],
-		name: 'WRONUpdated',
+		name: 'WhitelistUpdated',
 		type: 'event',
 	},
 	{
@@ -266,7 +255,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'DOMAIN_SEPARATOR',
+		name: 'MERCHANT_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -279,12 +268,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'WRON',
+		name: 'MERCHANT_WHITELIST_ENABLED',
 		outputs: [
 			{
-				internalType: 'contract IWRON',
+				internalType: 'bool',
 				name: '',
-				type: 'address',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -292,12 +281,25 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'allowedAllPaymentTokens',
+		name: 'PAUSER_ROLE',
 		outputs: [
 			{
-				internalType: 'bool',
+				internalType: 'bytes32',
 				name: '',
-				type: 'bool',
+				type: 'bytes32',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'WHITELIST_ROLE',
+		outputs: [
+			{
+				internalType: 'bytes32',
+				name: '',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -306,36 +308,22 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
+				internalType: 'address[]',
+				name: '_path',
+				type: 'address[]',
 			},
-		],
-		name: 'allowedPaymentToken',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'payService',
-				type: 'address',
-			},
-		],
-		name: 'getNonce',
-		outputs: [
 			{
 				internalType: 'uint256',
-				name: '',
+				name: '_amountOut',
 				type: 'uint256',
+			},
+		],
+		name: 'getAmountsIn',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'amountsIn',
+				type: 'uint256[]',
 			},
 		],
 		stateMutability: 'view',
@@ -368,74 +356,13 @@ const abi = [
 				type: 'bytes32',
 			},
 			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'getRoleMember',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'payService',
-				type: 'address',
-			},
-		],
-		name: 'getTreasury',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
 				internalType: 'address',
 				name: 'account',
 				type: 'address',
 			},
 		],
 		name: 'grantRole',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -467,189 +394,145 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'payService',
+				name: '_katanaRouter',
 				type: 'address',
 			},
-		],
-		name: 'increaseNoncePayService',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: '_admin',
 				type: 'address',
-			},
-			{
-				internalType: 'contract IKatanaRouter',
-				name: 'katanaRouter',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IWRON',
-				name: 'wron',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IWRONHelper',
-				name: 'wronHelper',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'allowedAllPaymentTokens',
-				type: 'bool',
-			},
-			{
-				internalType: 'address[]',
-				name: 'paymentTokens',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'payServices',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'treasuries',
-				type: 'address[]',
 			},
 		],
 		name: 'initialize',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'katanaRouterContract',
-		outputs: [
-			{
-				internalType: 'contract IKatanaRouter',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		name: 'orderFinalized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'payService',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'orderId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'validUntil',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
-					},
-				],
-				internalType: 'struct GemOrder',
-				name: 'order',
-				type: 'tuple',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'payWithRON',
+		outputs: [],
 		stateMutability: 'payable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: '_merchant',
+				type: 'address',
+			},
+		],
+		name: 'isMerchantWhitelisted',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'merchantAcceptRON',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'merchantAcceptToken',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'pause',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'paused',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				components: [
 					{
 						internalType: 'address',
-						name: 'payService',
+						name: '_to',
 						type: 'address',
 					},
 					{
-						internalType: 'bytes32',
-						name: 'orderId',
-						type: 'bytes32',
-					},
-					{
 						internalType: 'uint256',
-						name: 'validUntil',
+						name: '_amount',
 						type: 'uint256',
 					},
 					{
 						internalType: 'uint256',
-						name: 'price',
+						name: '_maxAmountPaid',
 						type: 'uint256',
+					},
+					{
+						internalType: 'bytes',
+						name: '_paymentReference',
+						type: 'bytes',
 					},
 					{
 						internalType: 'uint256',
-						name: 'nonce',
+						name: '_validUntil',
 						type: 'uint256',
 					},
 					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
+						internalType: 'address[]',
+						name: '_path',
+						type: 'address[]',
 					},
 				],
-				internalType: 'struct GemOrder',
-				name: 'order',
+				internalType: 'struct MavisPay.PaymentRequest',
+				name: '_request',
 				type: 'tuple',
 			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
 		],
-		name: 'payWithToken',
-		stateMutability: 'nonpayable',
+		name: 'pay',
+		outputs: [],
+		stateMutability: 'payable',
 		type: 'function',
 	},
 	{
@@ -666,6 +549,7 @@ const abi = [
 			},
 		],
 		name: 'renounceRole',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -683,6 +567,7 @@ const abi = [
 			},
 		],
 		name: 'revokeRole',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -690,81 +575,71 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'bool',
-				name: 'flag',
+				name: '_accepted',
 				type: 'bool',
 			},
 		],
-		name: 'setAllowedAllPaymentTokens',
+		name: 'setAcceptRON',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'contract IKatanaRouter',
-				name: 'katanaRouter',
+				internalType: 'address',
+				name: '_merchant',
 				type: 'address',
-			},
-		],
-		name: 'setKatanaRouter',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'payServices',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'treasuries',
-				type: 'address[]',
-			},
-		],
-		name: 'setPayServiceInfos',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
 			},
 			{
 				internalType: 'bool',
-				name: 'allowed',
+				name: '_accepted',
 				type: 'bool',
 			},
 		],
-		name: 'setPaymentTokens',
+		name: 'setAcceptRON',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'contract IWRON',
-				name: 'wron',
+				internalType: 'address',
+				name: '_merchant',
 				type: 'address',
 			},
+			{
+				internalType: 'address',
+				name: '_token',
+				type: 'address',
+			},
+			{
+				internalType: 'bool',
+				name: '_allowed',
+				type: 'bool',
+			},
 		],
-		name: 'setWRON',
+		name: 'setAllowedToken',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'contract IWRONHelper',
-				name: 'wronHelper',
+				internalType: 'address',
+				name: '_token',
 				type: 'address',
 			},
+			{
+				internalType: 'bool',
+				name: '_allowed',
+				type: 'bool',
+			},
 		],
-		name: 'setWRONHelper',
+		name: 'setAllowedToken',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -788,147 +663,53 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'payService',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'orderId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'validUntil',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
-					},
-				],
-				internalType: 'struct GemOrder',
-				name: 'order',
-				type: 'tuple',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-			{
-				internalType: 'address[]',
-				name: 'path',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'deadline',
-				type: 'uint256',
-			},
-		],
-		name: 'swapRONAndPay',
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'payService',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'orderId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'validUntil',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'paymentToken',
-						type: 'address',
-					},
-				],
-				internalType: 'struct GemOrder',
-				name: 'order',
-				type: 'tuple',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amountIn',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'path',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'deadline',
-				type: 'uint256',
-			},
-		],
-		name: 'swapTokenAndPay',
+		inputs: [],
+		name: 'unpause',
+		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'wronHelperContract',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'contract IWRONHelper',
-				name: '',
+				internalType: 'address',
+				name: '_merchant',
 				type: 'address',
 			},
+			{
+				internalType: 'bool',
+				name: '_enabled',
+				type: 'bool',
+			},
 		],
-		stateMutability: 'view',
+		name: 'updateMerchant',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bool',
+				name: '_enabled',
+				type: 'bool',
+			},
+		],
+		name: 'updateWhitelist',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		stateMutability: 'payable',
+		type: 'receive',
 	},
 ] as const
 const MAVIS_PAY: Contract<typeof abi> = {
 	name: 'Mavis Pay',
-	address: '0x584514fa22f057a4b49ea136a0c4e8e89d9178df',
+	address: '0xb9a0914da17b460ff382da8924d9d23f77db0e28',
 	is_deprecated: false,
-	created_at: 1730272654,
+	created_at: 1691120479,
 	abi: abi,
 }
 export default MAVIS_PAY

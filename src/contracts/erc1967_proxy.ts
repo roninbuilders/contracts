@@ -45,7 +45,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'FailedInnerCall',
+		name: 'FailedCall',
 		type: 'error',
 	},
 	{
@@ -62,15 +62,16 @@ const abi = [
 		type: 'event',
 	},
 	{
+		inputs: [],
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
 ] as const
 const ERC1967_PROXY: Contract<typeof abi> = {
 	name: 'ERC1967 Proxy',
-	address: '0xea9d2c1b5922531cbc27adbb082166d23c46f318',
+	address: '0x9fa2b2b2b314f0486a15c48810b736ae83d5cc53',
 	is_deprecated: false,
-	created_at: 1730854670,
+	created_at: 1734263584,
 	abi: abi,
 }
 export default ERC1967_PROXY

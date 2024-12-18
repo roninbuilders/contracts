@@ -74,7 +74,7 @@ const LUNA_N_SOLAR_BURNER_PROXY: Contract<typeof abi> = {
 	name: 'Luna N Solar Burner Proxy',
 	address: '0x4520b9562aab89dae009a840bc0b2f6c755d634c',
 	is_deprecated: false,
-	created_at: 1718826043,
+	created_at: 0,
 	abi: abi,
 }
 export default LUNA_N_SOLAR_BURNER_PROXY

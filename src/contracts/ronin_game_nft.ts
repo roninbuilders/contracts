@@ -107,6 +107,19 @@ const abi = [
 		inputs: [
 			{
 				indexed: false,
+				internalType: 'address',
+				name: 'airdrop',
+				type: 'address',
+			},
+		],
+		name: 'LuLuMoonAirdropUpdate',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
 				internalType: 'uint256',
 				name: '_tokenId',
 				type: 'uint256',
@@ -416,6 +429,19 @@ const abi = [
 	},
 	{
 		inputs: [],
+		name: 'luluMoonAirdrop',
+		outputs: [
+			{
+				internalType: 'contract ILuLuMoonAirdrop',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
 		name: 'name',
 		outputs: [
 			{
@@ -632,6 +658,19 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'contract ILuLuMoonAirdrop',
+				name: 'airdrop',
+				type: 'address',
+			},
+		],
+		name: 'setLuLuMoonAirdrop',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
 				internalType: 'string',
 				name: 'newURI',
 				type: 'string',
@@ -714,9 +753,9 @@ const abi = [
 ] as const
 const RONIN_GAME_NFT: Contract<typeof abi> = {
 	name: 'Ronin Game NFT',
-	address: '0xeebdf0690308088c007676c697e2d83a9fe2839b',
+	address: '0x1054055bbbff3de6a89b1df45af1a6710d08ffea',
 	is_deprecated: false,
-	created_at: 1726992962,
+	created_at: 1731682519,
 	abi: abi,
 }
 export default RONIN_GAME_NFT

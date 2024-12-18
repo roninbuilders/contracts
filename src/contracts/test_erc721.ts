@@ -857,9 +857,9 @@ const abi = [
 ] as const
 const TEST_ERC721: Contract<typeof abi> = {
 	name: 'Test ERC721',
-	address: '0x6263b2502e930211d1b5269ed0da00b01c7755a9',
+	address: '0x9b20b1056cd459121b4dd686a5681a878560c9cf',
 	is_deprecated: true,
-	created_at: 1732087402,
+	created_at: 1732086991,
 	abi: abi,
 }
 export default TEST_ERC721

@@ -146,7 +146,7 @@ const abi = [
 	},
 ] as const
 const PART_EVOLUTION_PROXY: Contract<typeof abi> = {
-	name: 'PartEvolutionProxy',
+	name: 'Part Evolution Proxy',
 	address: '0x6e8699915b5328363855af28543d4bdb7439db71',
 	is_deprecated: false,
 	created_at: 1702269527,

@@ -67,6 +67,25 @@ const abi = [
 				type: 'address',
 			},
 			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'timestamp',
+				type: 'uint256',
+			},
+		],
+		name: 'DailyCheck',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
 				indexed: true,
 				internalType: 'uint256',
 				name: 'tokenId',
@@ -599,6 +618,13 @@ const abi = [
 	{
 		inputs: [],
 		name: 'dailyClaim',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'dailyClaimAll',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -1246,9 +1272,9 @@ const abi = [
 ] as const
 const PHZM1155: Contract<typeof abi> = {
 	name: 'PHZM1155',
-	address: '0x853517179c035a074286671c825cd18f5806bd87',
+	address: '0x267af13cfba7c5ccb57c47d7c2a7f5a516e41216',
 	is_deprecated: false,
-	created_at: 1729764313,
+	created_at: 1733969240,
 	abi: abi,
 }
 export default PHZM1155
