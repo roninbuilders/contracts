@@ -136,9 +136,11 @@ const writeAbiToFile = async (
 	created_at: number,
 ) => {
 	try {
-		const filename = transformString(name.replace(/[\s.'-]/g, '_'))
+		const baseFilename = transformString(name.replace(/[\s.'-]/g, '_'))
 		const dirPath = path.join(__dirname, 'contracts')
-		const filePath = path.join(dirPath, `${filename}.ts`)
+		let filename = baseFilename
+		let filePath = path.join(dirPath, `${filename}.ts`)
+		let suffix = 1
 
 		// Create the directory if it doesn't exist
 		try {
@@ -147,24 +149,24 @@ const writeAbiToFile = async (
 			await fs.promises.mkdir(dirPath, { recursive: true })
 		}
 
-		// Check if the file already exists
-		try {
-			await fs.promises.access(filePath)
-
-			// Import the existing contract and compare it with the new one
+		// Check if a file with the same name but different address already exists
+		while (true) {
 			try {
+				await fs.promises.access(filePath)
 				const existingContract = (await import(filePath)).default as Contract<Abi | readonly unknown[]>
-				const isUpdated = created_at > existingContract.created_at
-
-				// If the contract is not updated or the ABI is not changed, return early
-				if (!isUpdated) {
-					return
+				if (existingContract.address.toLowerCase() === address.toLowerCase()) {
+					// Same contract, no need to add suffix
+					break
+				} else {
+					// Different contract, add a suffix
+					filename = `${baseFilename}_${suffix}`
+					filePath = path.join(dirPath, `${filename}.ts`)
+					suffix++
 				}
-			} catch (importError) {
-				console.error(`Error importing file ${filePath}: ${importError}`)
+			} catch {
+				// File doesn't exist, proceed to write
+				break
 			}
-		} catch {
-			// File doesn't exist, do nothing
 		}
 
 		// Write the data to the file
