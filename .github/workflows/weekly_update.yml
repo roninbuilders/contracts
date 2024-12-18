@@ -63,4 +63,4 @@ jobs:
           branch: "updates/${{ github.run_number }}"
           delete-branch: true
           labels: "automated pr"
-          assignees: "alexx855"
+          auto-merge: true
