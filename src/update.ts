@@ -3,13 +3,11 @@ import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
 import { Abi } from 'abitype'
-import { default as PQueue } from 'p-queue'
+import PQueue from 'p-queue'
 
 const QUEUE_CONCURRENCY = 3
-const RONIN_EXPLORER_API_URL = process.env.RONIN_EXPLORER_API_URL
-if (!RONIN_EXPLORER_API_URL) {
-	throw new Error('RONIN_EXPLORER_API_URL is not set')
-}
+const RONIN_EXPLORER_API_URL = 'https://explorer-kintsugi.roninchain.com/v2/2020/'
+const CONTRACTS_PER_PAGE = 100
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -67,8 +65,8 @@ interface OutputResult extends BaseResult {
 	}
 }
 
-const fetchContracts = async () => {
-	const url = `${RONIN_EXPLORER_API_URL}contracts?ps=1000&p=1`
+const fetchContracts = async (page: number) => {
+	const url = `${RONIN_EXPLORER_API_URL}contracts?ps=${CONTRACTS_PER_PAGE}&p=${page}`
 	const response = await fetch(url, {
 		headers: {
 			accept: 'application/json',
@@ -77,8 +75,9 @@ const fetchContracts = async () => {
 	})
 
 	const data = (await response.json()) as Response<ItemsResult>
-	return data.result.items
+	return data.result
 }
+
 const fetchAbi = async (contractAddress: string, retryCount = 0): Promise<readonly unknown[] | Abi> => {
 	const url = `${RONIN_EXPLORER_API_URL}contract/${contractAddress}/abi`
 
@@ -90,17 +89,21 @@ const fetchAbi = async (contractAddress: string, retryCount = 0): Promise<readon
 			},
 		})
 		const data = (await contracts.json()) as Response<OutputResult>
-		const response = data.result.output?.abi || false
+		const response = data.result?.output?.abi || false
 
-		if (!response && data.message === 'API rate limit exceeded') {
-			throw new Error('API rate limit exceeded')
+		if (!response || !Array.isArray(response)) {
+			if (data.message === 'API rate limit exceeded') {
+				throw new Error('API rate limit exceeded')
+			}
+			console.error(`Error fetching ABI for ${contractAddress}:`, data)
+			return [] // Return empty ABI to continue execution
 		}
 
 		console.log(`Successfully fetched ABI for contract ${contractAddress}`)
-
 		return response
 	} catch (error) {
 		if (retryCount >= 5) {
+			console.error(`Max retries reached for ${contractAddress}:`, error)
 			throw error
 		}
 
@@ -236,8 +239,23 @@ const processContract = async (apiContractItem: Item) => {
 
 const updateAbis = async () => {
 	try {
-		const contracts = await fetchContracts()
-		if (!contracts || contracts.length === 0) {
+		let currentPage = 1
+		let hasNext = true
+		const allContracts: Item[] = []
+
+		// Fetch all contracts using pagination
+		while (hasNext) {
+			const result = await fetchContracts(currentPage)
+			if (!result.items || result.items.length === 0) {
+				break
+			}
+
+			allContracts.push(...result.items)
+			hasNext = result.hasNext || false
+			currentPage++
+		}
+
+		if (allContracts.length === 0) {
 			throw new Error('No contracts found')
 		}
 
@@ -245,7 +263,7 @@ const updateAbis = async () => {
 		const queue = new PQueue({ concurrency: QUEUE_CONCURRENCY })
 
 		// Add tasks to the queue
-		contracts.forEach((contract) => {
+		allContracts.forEach((contract) => {
 			queue.add(() => processContract(contract))
 		})
 
