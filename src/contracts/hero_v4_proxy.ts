@@ -4,7 +4,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_logic',
+				name: 'implementation',
 				type: 'address',
 			},
 			{
@@ -17,36 +17,36 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
+				name: 'target',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		name: 'AddressEmptyCode',
+		type: 'error',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
-		type: 'event',
+		name: 'ERC1967InvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -65,16 +65,12 @@ const abi = [
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
 ] as const
-const VIP_SHOP_TOKEN_PURCHASE_PROXY: Contract<typeof abi> = {
-	name: 'VIP Shop Token Purchase Proxy',
-	address: '0x6dc54916da93409e27a094c57ccf1491a30babb9',
+const HERO_V4_PROXY: Contract<typeof abi> = {
+	name: 'Hero V4 Proxy',
+	address: '0x924f2f3d25a3ee2902b601a21d4dd22cf5669d60',
 	is_deprecated: false,
-	created_at: 1733997773,
+	created_at: 1729990038,
 	abi: abi,
 }
-export default VIP_SHOP_TOKEN_PURCHASE_PROXY
+export default HERO_V4_PROXY

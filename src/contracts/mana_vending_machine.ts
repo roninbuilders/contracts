@@ -6,6 +6,28 @@ const abi = [
 		type: 'constructor',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+		],
+		name: 'OwnableInvalidOwner',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'OwnableUnauthorizedAccount',
+		type: 'error',
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -36,23 +58,11 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'uint256[]',
-				name: 'quantities',
+				name: 'quantity',
 				type: 'uint256[]',
 			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'totalEth',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'totalMana',
-				type: 'uint256',
-			},
 		],
-		name: 'PurchasePackages',
+		name: 'PurchaseEvent',
 		type: 'event',
 	},
 	{
@@ -76,12 +86,24 @@ const abi = [
 				type: 'address',
 			},
 		],
-		name: 'getManaBalance',
+		name: 'getBalances',
 		outputs: [
 			{
-				internalType: 'uint256',
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'packageIndex',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'quantity',
+						type: 'uint256',
+					},
+				],
+				internalType: 'struct ManaVendingMachine.Balances[]',
 				name: '',
-				type: 'uint256',
+				type: 'tuple[]',
 			},
 		],
 		stateMutability: 'view',
@@ -91,18 +113,18 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint8',
-				name: 'pkgId',
+				name: 'packageIndex',
 				type: 'uint8',
 			},
 		],
-		name: 'getPackageFromId',
+		name: 'getPackageFromIndex',
 		outputs: [
 			{
 				components: [
 					{
-						internalType: 'uint256',
-						name: 'manaQty',
-						type: 'uint256',
+						internalType: 'string',
+						name: 'packageId',
+						type: 'string',
 					},
 					{
 						internalType: 'uint256',
@@ -125,9 +147,9 @@ const abi = [
 			{
 				components: [
 					{
-						internalType: 'uint256',
-						name: 'manaQty',
-						type: 'uint256',
+						internalType: 'string',
+						name: 'packageId',
+						type: 'string',
 					},
 					{
 						internalType: 'uint256',
@@ -157,25 +179,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'manaBalances',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'owner',
 		outputs: [
@@ -183,6 +186,30 @@ const abi = [
 				internalType: 'address',
 				name: '',
 				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'packageBalances',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -199,9 +226,9 @@ const abi = [
 		name: 'packages',
 		outputs: [
 			{
-				internalType: 'uint256',
-				name: 'manaQty',
-				type: 'uint256',
+				internalType: 'string',
+				name: 'packageId',
+				type: 'string',
 			},
 			{
 				internalType: 'uint256',
@@ -229,7 +256,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256[]',
-				name: '_qty',
+				name: '_quantity',
 				type: 'uint256[]',
 			},
 		],
@@ -248,9 +275,9 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256[]',
-				name: '_manaQty',
-				type: 'uint256[]',
+				internalType: 'string[]',
+				name: '_packageIds',
+				type: 'string[]',
 			},
 			{
 				internalType: 'uint256[]',
@@ -325,9 +352,9 @@ const abi = [
 ] as const
 const MANA_VENDING_MACHINE: Contract<typeof abi> = {
 	name: 'Mana Vending Machine',
-	address: '0xd5c7e6257d264ede9cc7a2e74e52df65e727eb4e',
+	address: '0x0cb20e015600d8f416900ce1bab3cd6990b097a5',
 	is_deprecated: false,
-	created_at: 1721411235,
+	created_at: 1734024108,
 	abi: abi,
 }
 export default MANA_VENDING_MACHINE

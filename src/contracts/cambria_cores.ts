@@ -1,26 +1,98 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [],
+		inputs: [
+			{
+				internalType: 'string',
+				name: '_baseUri',
+				type: 'string',
+			},
+			{
+				internalType: 'address',
+				name: '_admin',
+				type: 'address',
+			},
+		],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
 	{
 		inputs: [],
-		name: 'OnlyCoordinatorCanFulfill',
+		name: 'MaxSupply',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ZeroAddressForbidden',
 		type: 'error',
 	},
 	{
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
+				indexed: true,
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'approved',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
 			},
 		],
-		name: 'Initialized',
+		name: 'Approval',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'operator',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'bool',
+				name: 'approved',
+				type: 'bool',
+			},
+		],
+		name: 'ApprovalForAll',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: '_nonce',
+				type: 'uint256',
+			},
+		],
+		name: 'NonceUpdated',
 		type: 'event',
 	},
 	{
@@ -115,6 +187,31 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'Transfer',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'account',
@@ -152,227 +249,12 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'NYANGKIT',
+		name: 'PAUSER_ROLE',
 		outputs: [
 			{
-				internalType: 'contract INyangKit',
+				internalType: 'bytes32',
 				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'RAGMON',
-		outputs: [
-			{
-				internalType: 'contract IRagmon',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'STARDUST_TOKEN_ID',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'points',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'stardustAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint16',
-				name: 'monsterType',
-				type: 'uint16',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'addRagmonReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint16',
-				name: 'monsterType',
-				type: 'uint16',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'addRagmonTreasuryReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'bonusPoints',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'bonusThreshold',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'callbackGasLimit',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'checkIn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'consecutiveCheckInCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'startdustAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'convertPoints',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'dailyPoints',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'estimateVRFCost',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'exchangeFee',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'rewardIndex',
-				type: 'uint256',
-			},
-		],
-		name: 'exchangeReward',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'gasPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
+				type: 'bytes32',
 			},
 		],
 		stateMutability: 'view',
@@ -382,11 +264,72 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'user',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'approve',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
 				type: 'address',
 			},
 		],
-		name: 'getNextCheckInTime',
+		name: 'balanceOf',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: '_recipients',
+				type: 'address[]',
+			},
+		],
+		name: 'bulkMint',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: '_tokenIds',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'burn',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'currentTokenId',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -399,64 +342,24 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'getRagmonRewards',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'points',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'stardustAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint16',
-						name: 'monsterType',
-						type: 'uint16',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IWeeklyCheckIn.RagmonReward[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
+		name: 'endMint',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'getRagmonTreasuries',
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'getApproved',
 		outputs: [
 			{
-				components: [
-					{
-						internalType: 'enum Rarity',
-						name: 'rarity',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint16',
-						name: 'monsterType',
-						type: 'uint16',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IWeeklyCheckIn.RagmonTreasury[]',
+				internalType: 'address',
 				name: '',
-				type: 'tuple[]',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -489,13 +392,55 @@ const abi = [
 				type: 'bytes32',
 			},
 			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'getRoleMember',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+		],
+		name: 'getRoleMemberCount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 'role',
+				type: 'bytes32',
+			},
+			{
 				internalType: 'address',
 				name: 'account',
 				type: 'address',
 			},
 		],
 		name: 'grantRole',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -527,39 +472,21 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_ragmon',
+				name: 'owner',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: '_nyangKit',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_vrfCoordinator',
+				name: 'operator',
 				type: 'address',
 			},
 		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'lastCheckInDay',
+		name: 'isApprovedForAll',
 		outputs: [
 			{
-				internalType: 'uint64',
+				internalType: 'bool',
 				name: '',
-				type: 'uint64',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -567,7 +494,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'minimumStardustForPoint',
+		name: 'maxTokenId',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -579,13 +506,83 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'minimumTreasuryRarity',
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+		],
+		name: 'mint',
 		outputs: [
 			{
-				internalType: 'enum Rarity',
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'minter',
+		outputs: [
+			{
+				internalType: 'address',
 				name: '',
-				type: 'uint8',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'name',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'nonces',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'ownerOf',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -594,7 +591,6 @@ const abi = [
 	{
 		inputs: [],
 		name: 'pause',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -614,113 +610,6 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'ragmonRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'points',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'stardustAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint16',
-				name: 'monsterType',
-				type: 'uint16',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'ragmonTreasuries',
-		outputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16',
-				name: 'monsterType',
-				type: 'uint16',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_reqHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: '_randomSeed',
-				type: 'uint256',
-			},
-		],
-		name: 'rawFulfillRandomSeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'removeRagmonReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'removeRagmonTreasuryReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'bytes32',
 				name: 'role',
 				type: 'bytes32',
@@ -732,7 +621,6 @@ const abi = [
 			},
 		],
 		name: 'renounceRole',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -750,7 +638,96 @@ const abi = [
 			},
 		],
 		name: 'revokeRole',
-		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'safeTransferFrom',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes',
+			},
+		],
+		name: 'safeTransferFrom',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'operator',
+				type: 'address',
+			},
+			{
+				internalType: 'bool',
+				name: 'approved',
+				type: 'bool',
+			},
+		],
+		name: 'setApprovalForAll',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: 'baseTokenURI',
+				type: 'string',
+			},
+		],
+		name: 'setBaseURI',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_minter',
+				type: 'address',
+			},
+		],
+		name: 'setMinter',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -758,92 +735,16 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: '_minimumStardustForPoint',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_stardustPerPoint',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_exchangeFee',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
-		name: 'setExchangeParameters',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_dailyPoints',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_bonusPoints',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_bonusPointsThreshold',
-				type: 'uint256',
-			},
-		],
-		name: 'setRewardParameters',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_treasuryChance',
-				type: 'uint256',
-			},
-			{
-				internalType: 'enum Rarity',
-				name: '_minimumTreasuryRarity',
-				type: 'uint8',
-			},
-		],
-		name: 'setTreasury',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_callbackGasLimit',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_gasPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'setVRFVariables',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'stardustPerPoint',
+		name: 'stateOf',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'bytes',
 				name: '',
-				type: 'uint256',
+				type: 'bytes',
 			},
 		],
 		stateMutability: 'view',
@@ -870,7 +771,26 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'treasuryChance',
+		name: 'symbol',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenByIndex',
 		outputs: [
 			{
 				internalType: 'uint256',
@@ -879,89 +799,98 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'index',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenOfOwnerByIndex',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'tokenURI',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'from',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'to',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'transferFrom',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [],
 		name: 'unpause',
-		outputs: [],
 		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'updateRagmonReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'updateRagmonTreasuryReward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'userPoints',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vrfCoordinator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
 		type: 'function',
 	},
 ] as const
-const WEEKLY_CHECK_IN: Contract<typeof abi> = {
-	name: 'Weekly Check In',
-	address: '0xb17f45e271b1b85418fa11018b4aa28ede0d2f81',
+const CAMBRIA_CORES: Contract<typeof abi> = {
+	name: 'Cambria Cores',
+	address: '0x17f93440990354a442369d56baeb20ab56e73ab1',
 	is_deprecated: false,
-	created_at: 1732696092,
+	created_at: 1733724568,
 	abi: abi,
 }
-export default WEEKLY_CHECK_IN
+export default CAMBRIA_CORES

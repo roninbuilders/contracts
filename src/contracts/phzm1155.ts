@@ -604,6 +604,13 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'dailyClaimAll',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
@@ -1246,9 +1253,9 @@ const abi = [
 ] as const
 const PHZM1155: Contract<typeof abi> = {
 	name: 'PHZM1155',
-	address: '0x853517179c035a074286671c825cd18f5806bd87',
+	address: '0xa7d6938984baf2eb5c3404ea5c4bda2352d8ec34',
 	is_deprecated: false,
-	created_at: 1729764313,
+	created_at: 1731495419,
 	abi: abi,
 }
 export default PHZM1155
