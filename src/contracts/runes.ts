@@ -1,23 +1,186 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
+				name: '_initialOwner',
 				type: 'address',
 			},
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'newAdmin',
+				name: '_signer',
+				type: 'address',
+			},
+			{
+				internalType: 'string',
+				name: '_initialUri',
+				type: 'string',
+			},
+			{
+				internalType: 'string',
+				name: '_metadataHash',
+				type: 'string',
+			},
+			{
+				internalType: 'uint256',
+				name: '_maxClaim',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'nonpayable',
+		type: 'constructor',
+	},
+	{
+		inputs: [],
+		name: 'ECDSAInvalidSignature',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'length',
+				type: 'uint256',
+			},
+		],
+		name: 'ECDSAInvalidSignatureLength',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes32',
+				name: 's',
+				type: 'bytes32',
+			},
+		],
+		name: 'ECDSAInvalidSignatureS',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'balance',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'needed',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'ERC1155InsufficientBalance',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'approver',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		name: 'ERC1155InvalidApprover',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'idsLength',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: 'valuesLength',
+				type: 'uint256',
+			},
+		],
+		name: 'ERC1155InvalidArrayLength',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'operator',
+				type: 'address',
+			},
+		],
+		name: 'ERC1155InvalidOperator',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'receiver',
+				type: 'address',
+			},
+		],
+		name: 'ERC1155InvalidReceiver',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'sender',
+				type: 'address',
+			},
+		],
+		name: 'ERC1155InvalidSender',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'operator',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+		],
+		name: 'ERC1155MissingApprovalForAll',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+		],
+		name: 'OwnableInvalidOwner',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+		],
+		name: 'OwnableUnauthorizedAccount',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -50,17 +213,24 @@ const abi = [
 			{
 				indexed: false,
 				internalType: 'uint256',
-				name: '_fromTokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_toTokenId',
+				name: '_newMax',
 				type: 'uint256',
 			},
 		],
-		name: 'BatchMetadataUpdate',
+		name: 'MaxTokensPerClaimUpdated',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'string',
+				name: '_newMetadataHash',
+				type: 'string',
+			},
+		],
+		name: 'MetadataHashUpdated',
 		type: 'event',
 	},
 	{
@@ -69,63 +239,30 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'previousOwner',
 				type: 'address',
 			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
 			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'messageId',
-				type: 'bytes32',
-			},
-		],
-		name: 'GameRollupMessage',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
+				indexed: true,
 				internalType: 'address',
-				name: 'airdrop',
+				name: 'newOwner',
 				type: 'address',
 			},
 		],
-		name: 'LuLuMoonAirdropUpdate',
+		name: 'OwnershipTransferred',
 		type: 'event',
 	},
 	{
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
+				indexed: true,
+				internalType: 'address',
+				name: '_newSigner',
+				type: 'address',
 			},
 		],
-		name: 'MetadataUpdate',
+		name: 'SignerUpdated',
 		type: 'event',
 	},
 	{
@@ -222,65 +359,13 @@ const abi = [
 		type: 'event',
 	},
 	{
-		anonymous: false,
-		inputs: [
+		inputs: [],
+		name: 'authorizedSigner',
+		outputs: [
 			{
-				indexed: true,
 				internalType: 'address',
-				name: 'implementation',
+				name: '',
 				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'ERC1155NFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'ERC20NFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'ERC721NFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'GameNFTPrefix',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
 			},
 		],
 		stateMutability: 'view',
@@ -335,72 +420,68 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [],
-		name: 'config',
-		outputs: [
+		inputs: [
 			{
-				internalType: 'contract IConfig',
-				name: '',
-				type: 'address',
+				internalType: 'uint256[]',
+				name: '_tokenIds',
+				type: 'uint256[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '_tokenAmounts',
+				type: 'uint256[]',
 			},
 		],
-		stateMutability: 'view',
+		name: 'burnBatch',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
+				internalType: 'uint256[]',
+				name: '_tokenIds',
+				type: 'uint256[]',
 			},
-		],
-		name: 'getItemId',
-		outputs: [
 			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
+				internalType: 'uint256[]',
+				name: '_tokenAmounts',
+				type: 'uint256[]',
 			},
 			{
 				internalType: 'uint256',
-				name: '',
+				name: '_nonce',
 				type: 'uint256',
 			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
 			{
 				internalType: 'bytes',
-				name: 'b',
+				name: '_signature',
 				type: 'bytes',
 			},
 		],
-		name: 'hex2Uint256',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
+		name: 'claim',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'contract IConfig',
-				name: 'config_',
-				type: 'address',
+				internalType: 'uint256',
+				name: 'id',
+				type: 'uint256',
 			},
 		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
+		name: 'exists',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -429,12 +510,25 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'luluMoonAirdrop',
+		name: 'maxTokensPerClaim',
 		outputs: [
 			{
-				internalType: 'contract ILuLuMoonAirdrop',
+				internalType: 'uint256',
 				name: '',
-				type: 'address',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'metadataHash',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string',
 			},
 		],
 		stateMutability: 'view',
@@ -450,69 +544,25 @@ const abi = [
 				type: 'string',
 			},
 		],
-		stateMutability: 'pure',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
 		inputs: [],
-		name: 'proxiableUUID',
+		name: 'owner',
 		outputs: [
 			{
-				internalType: 'bytes32',
+				internalType: 'address',
 				name: '',
-				type: 'bytes32',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'safeBatchBurn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'itemIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'safeBatchMint',
+		inputs: [],
+		name: 'renounceOwnership',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -536,7 +586,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'amounts',
+				name: 'values',
 				type: 'uint256[]',
 			},
 			{
@@ -569,7 +619,7 @@ const abi = [
 			},
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: 'value',
 				type: 'uint256',
 			},
 			{
@@ -605,65 +655,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'id',
+				name: '_maxClaim',
 				type: 'uint256',
 			},
-			{
-				internalType: 'bool',
-				name: 'canTransfer',
-				type: 'bool',
-			},
 		],
-		name: 'setCanTransfer',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'disableExchange',
-				type: 'bool',
-			},
-		],
-		name: 'setDistableExchange',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'locked',
-				type: 'bool',
-			},
-		],
-		name: 'setLocked',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract ILuLuMoonAirdrop',
-				name: 'airdrop',
-				type: 'address',
-			},
-		],
-		name: 'setLuLuMoonAirdrop',
+		name: 'setMaxTokensPerClaim',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -672,11 +668,37 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'string',
-				name: 'newURI',
+				name: '_metadataHash',
 				type: 'string',
 			},
 		],
-		name: 'setMetadataURI',
+		name: 'setMetadataHash',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '_signer',
+				type: 'address',
+			},
+		],
+		name: 'setSigner',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: '_newURI',
+				type: 'string',
+			},
+		],
+		name: 'setURI',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -701,14 +723,46 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'id',
+				type: 'uint256',
+			},
+		],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'newImplementation',
+				name: 'newOwner',
 				type: 'address',
 			},
 		],
-		name: 'upgradeTo',
+		name: 'transferOwnership',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -716,26 +770,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'uint256',
-				name: 'tokenId',
+				name: '_tokenId',
 				type: 'uint256',
 			},
 		],
@@ -751,11 +787,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const RONIN_GAME_NFT: Contract<typeof abi> = {
-	name: 'Ronin Game NFT',
-	address: '0xdf5814f66fb9b504d72fd4c50a2861c80287d683',
+const RUNES: Contract<typeof abi> = {
+	name: 'Runes',
+	address: '0xbf0812c6813cf42f63cb5d773b61b91610122520',
 	is_deprecated: false,
-	created_at: 1731315546,
+	created_at: 1733221800,
 	abi: abi,
 }
-export default RONIN_GAME_NFT
+export default RUNES

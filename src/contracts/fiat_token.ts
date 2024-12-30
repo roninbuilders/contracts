@@ -1,28 +1,7 @@
 import { Contract } from '@/contract'
 const abi = [
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'initialSupply',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'address',
-				name: 'ownerAddress',
-				type: 'address',
-			},
-		],
+		inputs: [],
 		stateMutability: 'nonpayable',
 		type: 'constructor',
 	},
@@ -146,13 +125,17 @@ const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
 				internalType: 'uint256',
 				name: 'amount',
 				type: 'uint256',
 			},
 		],
 		name: 'burn',
-		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -166,7 +149,7 @@ const abi = [
 				type: 'uint8',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -218,6 +201,23 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'mint',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'name',
 		outputs: [
@@ -228,6 +228,45 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'owner',
+				type: 'address',
+			},
+			{
+				internalType: 'address',
+				name: 'spender',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'setApprove',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'setBalance',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -260,7 +299,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'to',
+				name: 'recipient',
 				type: 'address',
 			},
 			{
@@ -284,12 +323,12 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'from',
+				name: 'sender',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'to',
+				name: 'recipient',
 				type: 'address',
 			},
 			{
@@ -310,11 +349,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const WILD_FOREST_TOKEN: Contract<typeof abi> = {
-	name: 'Wild Forest Token',
-	address: '0x03affae7e23fd11c85d0c90cc40510994d49e175',
+const FIAT_TOKEN: Contract<typeof abi> = {
+	name: 'Fiat Token',
+	address: '0x07b8bd078337b0838361bc795c3ee50d6509f746',
 	is_deprecated: false,
-	created_at: 1733242116,
+	created_at: 1735113669,
 	abi: abi,
 }
-export default WILD_FOREST_TOKEN
+export default FIAT_TOKEN

@@ -3,23 +3,8 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'initialSupply',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
 				internalType: 'address',
-				name: 'ownerAddress',
+				name: '_recipient',
 				type: 'address',
 			},
 		],
@@ -147,7 +132,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'amount',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
@@ -310,11 +295,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const WILD_FOREST_TOKEN: Contract<typeof abi> = {
-	name: 'Wild Forest Token',
-	address: '0x03affae7e23fd11c85d0c90cc40510994d49e175',
+const KDR: Contract<typeof abi> = {
+	name: 'KDR',
+	address: '0xc6046fa4b8961b0e9d823bb3f2dde8fe161d547d',
 	is_deprecated: false,
-	created_at: 1733242116,
+	created_at: 1733874997,
 	abi: abi,
 }
-export default WILD_FOREST_TOKEN
+export default KDR

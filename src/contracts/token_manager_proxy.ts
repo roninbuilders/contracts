@@ -4,7 +4,7 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_logic',
+				name: 'implementation',
 				type: 'address',
 			},
 			{
@@ -17,36 +17,36 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
 				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
+				name: 'target',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
-		type: 'event',
+		name: 'AddressEmptyCode',
+		type: 'error',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'implementation',
 				type: 'address',
 			},
 		],
-		name: 'BeaconUpgraded',
-		type: 'event',
+		name: 'ERC1967InvalidImplementation',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ERC1967NonPayable',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'FailedInnerCall',
+		type: 'error',
 	},
 	{
 		anonymous: false,
@@ -65,16 +65,12 @@ const abi = [
 		stateMutability: 'payable',
 		type: 'fallback',
 	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
 ] as const
-const VIP_SHOP_TOKEN_PURCHASE_PROXY: Contract<typeof abi> = {
-	name: 'VIP Shop Token Purchase Proxy',
-	address: '0x6dc54916da93409e27a094c57ccf1491a30babb9',
+const TOKEN_MANAGER_PROXY: Contract<typeof abi> = {
+	name: 'Token Manager Proxy',
+	address: '0x4a83acecdac789ee380d48f8bf726275dfd8da3a',
 	is_deprecated: false,
-	created_at: 1733997773,
+	created_at: 1734063021,
 	abi: abi,
 }
-export default VIP_SHOP_TOKEN_PURCHASE_PROXY
+export default TOKEN_MANAGER_PROXY

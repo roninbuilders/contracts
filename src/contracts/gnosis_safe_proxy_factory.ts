@@ -40,70 +40,12 @@ const abi = [
 		name: 'calculateCreateProxyWithNonceAddress',
 		outputs: [
 			{
-				internalType: 'contract GnosisSafeProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
 				internalType: 'address',
-				name: 'singleton',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'createProxy',
-		outputs: [
-			{
-				internalType: 'contract GnosisSafeProxy',
-				name: 'proxy',
+				name: 'safe',
 				type: 'address',
 			},
 		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_singleton',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'initializer',
-				type: 'bytes',
-			},
-			{
-				internalType: 'uint256',
-				name: 'saltNonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'contract IProxyCreationCallback',
-				name: 'callback',
-				type: 'address',
-			},
-		],
-		name: 'createProxyWithCallback',
-		outputs: [
-			{
-				internalType: 'contract GnosisSafeProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
@@ -161,12 +103,31 @@ const abi = [
 		stateMutability: 'pure',
 		type: 'function',
 	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'userToProxy',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
 ] as const
 const GNOSIS_SAFE_PROXY_FACTORY: Contract<typeof abi> = {
 	name: 'Gnosis Safe Proxy Factory',
-	address: '0xa6b71e26c5e0845f74c812102ca7114b6a896ab2',
+	address: '0x1bc19d85cb8f70e354fada65d69e5eda093029c1',
 	is_deprecated: false,
-	created_at: 1635392395,
+	created_at: 1735112019,
 	abi: abi,
 }
 export default GNOSIS_SAFE_PROXY_FACTORY

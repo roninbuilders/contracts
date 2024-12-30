@@ -6,29 +6,6 @@ const abi = [
 		type: 'constructor',
 	},
 	{
-		inputs: [],
-		name: 'InsufficientFee',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'OnlyCoordinatorCanFulfill',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'feeReceiver',
-				type: 'address',
-			},
-		],
-		name: 'FeeReceiverChanged',
-		type: 'event',
-	},
-	{
 		anonymous: false,
 		inputs: [
 			{
@@ -47,35 +24,48 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'owner',
+				name: 'user',
 				type: 'address',
 			},
 			{
-				indexed: true,
+				indexed: false,
 				internalType: 'uint256',
-				name: 'targetTokenId',
+				name: 'tokenId',
 				type: 'uint256',
 			},
 			{
 				indexed: false,
-				internalType: 'uint256[]',
-				name: 'materialTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'upgraded',
-				type: 'bool',
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
 			},
 		],
-		name: 'MonsterMerged',
+		name: 'NyangKitClaimAuthorized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'NyangKitClaimed',
 		type: 'event',
 	},
 	{
@@ -89,6 +79,56 @@ const abi = [
 			},
 		],
 		name: 'Paused',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RagmonClaimAuthorized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RagmonClaimed',
 		type: 'event',
 	},
 	{
@@ -170,6 +210,44 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RupiClaimAuthorized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'RupiClaimed',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
 				indexed: false,
 				internalType: 'address',
 				name: 'account',
@@ -180,6 +258,44 @@ const abi = [
 		type: 'event',
 	},
 	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'ZenyClaimAuthorized',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+			{
+				indexed: false,
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'ZenyClaimed',
+		type: 'event',
+	},
+	{
 		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
@@ -187,19 +303,6 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'FEE_RECEIVER',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -233,19 +336,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'PAYMENT_TOKEN',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'RAGMON',
 		outputs: [
 			{
@@ -258,155 +348,368 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'RUPI',
+		outputs: [
+			{
+				internalType: 'contract IZeny',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'ZENY',
+		outputs: [
+			{
+				internalType: 'contract IZeny',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'users',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'amounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'authorizeNyangKitClaims',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'users',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'amounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'authorizeRagmonClaims',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'users',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'amounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'authorizeRupiClaims',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address[]',
+				name: 'users',
+				type: 'address[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: 'amounts',
+				type: 'uint256[]',
+			},
+		],
+		name: 'authorizeZenyClaims',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'authorizedMonsterTypes',
+		outputs: [
+			{
+				internalType: 'uint16',
+				name: '',
+				type: 'uint16',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		name: 'authorizedNyangKitTokenIds',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'uint256',
 				name: 'tokenId',
 				type: 'uint256',
 			},
-		],
-		name: 'calculateAccumulatedValue',
-		outputs: [
 			{
-				internalType: 'uint16',
-				name: 'accumulatedValue',
-				type: 'uint16',
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		name: 'claimNyangKit',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
+				internalType: 'uint16',
+				name: 'monsterType',
+				type: 'uint16',
 			},
-		],
-		name: 'calculateAccumulatedValues',
-		outputs: [
 			{
-				internalType: 'uint16[]',
-				name: '',
-				type: 'uint16[]',
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
 			},
 		],
-		stateMutability: 'view',
+		name: 'claimRagmon',
+		outputs: [],
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'targetTokenId',
+				name: 'amount',
 				type: 'uint256',
+			},
+		],
+		name: 'claimRupi',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'claimZeny',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'claimable',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'zenyAmount',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'claimableRupi',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		name: 'claimableRupiAmount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'claimableZeny',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+		],
+		name: 'getClaimableNyangKits',
+		outputs: [
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'materialTokenIds',
+				name: '',
 				type: 'uint256[]',
 			},
 		],
-		name: 'calculateMergeSuccessRate',
-		outputs: [
-			{
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint8[]',
-				name: 'materialLevels',
-				type: 'uint8[]',
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
 			},
 		],
-		name: 'calculateTotalValue',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalValue',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'callbackGasLimit',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16',
-				name: 'successRate',
-				type: 'uint16',
-			},
-		],
-		name: 'estimateAdditionalCost',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalFee',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'gasPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-		],
-		name: 'getBaseProbabilities',
+		name: 'getClaimableRagmons',
 		outputs: [
 			{
 				internalType: 'uint16[]',
 				name: '',
 				type: 'uint16[]',
+			},
+			{
+				internalType: 'uint256[]',
+				name: '',
+				type: 'uint256[]',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+		],
+		name: 'getClaimableRupi',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'user',
+				type: 'address',
+			},
+		],
+		name: 'getClaimableZeny',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -482,12 +785,7 @@ const abi = [
 			},
 			{
 				internalType: 'address',
-				name: '_nyangkit',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_vrfCoordinator',
+				name: '_nyangKit',
 				type: 'address',
 			},
 		],
@@ -497,45 +795,16 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'targetTokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'materialTokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint16',
-				name: 'berryAmount',
-				type: 'uint16',
-			},
-		],
-		name: 'merge',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		name: 'mergeCostByRarity',
+		inputs: [],
+		name: 'name',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'string',
 				name: '',
-				type: 'uint256',
+				type: 'string',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -556,37 +825,6 @@ const abi = [
 			},
 		],
 		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_reqHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: '_randomSeed',
-				type: 'uint256',
-			},
-		],
-		name: 'rawFulfillRandomSeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'releaseMonster',
-		outputs: [],
-		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
@@ -628,17 +866,12 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16[]',
-				name: 'baseProbabilities',
-				type: 'uint16[]',
+				internalType: 'address',
+				name: '_rupi',
+				type: 'address',
 			},
 		],
-		name: 'setBaseProbabilities',
+		name: 'setRupi',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -647,73 +880,11 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_feeReceiver',
+				name: '_zeny',
 				type: 'address',
 			},
 		],
-		name: 'setFeeReceiver',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum Rarity',
-				name: 'rarity',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'mergeCost',
-				type: 'uint256',
-			},
-		],
-		name: 'setMergeCost',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_paymentToken',
-				type: 'address',
-			},
-		],
-		name: 'setPaymentToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint16',
-				name: '_treasuryRate',
-				type: 'uint16',
-			},
-		],
-		name: 'setTreasuryRate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_callbackGasLimit',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_gasPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'setVRFVariables',
+		name: 'setZeny',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function',
@@ -739,15 +910,15 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'treasuryRate',
+		name: 'symbol',
 		outputs: [
 			{
-				internalType: 'uint16',
+				internalType: 'string',
 				name: '',
-				type: 'uint16',
+				type: 'string',
 			},
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function',
 	},
 	{
@@ -757,25 +928,12 @@ const abi = [
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
-	{
-		inputs: [],
-		name: 'vrfCoordinator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
 ] as const
-const LEVEL_MERGE: Contract<typeof abi> = {
-	name: 'Level Merge',
-	address: '0x711746ca3c515cd47bd754858b2e9a0108eb9e66',
+const REWARD_CLAIM: Contract<typeof abi> = {
+	name: 'Reward Claim',
+	address: '0xe777b1ac258ea179808220f91cbd0851164ac626',
 	is_deprecated: false,
-	created_at: 1725344255,
+	created_at: 1734694404,
 	abi: abi,
 }
-export default LEVEL_MERGE
+export default REWARD_CLAIM

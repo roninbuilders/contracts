@@ -3,23 +3,18 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'minDelay',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'proposers',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'executors',
-				type: 'address[]',
+				internalType: 'contract PixelDungeonsItems',
+				name: '_items',
+				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'admin',
+				name: '_recipient',
+				type: 'address',
+			},
+			{
+				internalType: 'contract IERC20',
+				name: '_token',
 				type: 'address',
 			},
 		],
@@ -29,6 +24,33 @@ const abi = [
 	{
 		inputs: [],
 		name: 'AccessControlBadConfirmation',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint48',
+				name: 'schedule',
+				type: 'uint48',
+			},
+		],
+		name: 'AccessControlEnforcedDefaultAdminDelay',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'AccessControlEnforcedDefaultAdminRules',
+		type: 'error',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'defaultAdmin',
+				type: 'address',
+			},
+		],
+		name: 'AccessControlInvalidDefaultAdmin',
 		type: 'error',
 	},
 	{
@@ -56,180 +78,109 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
-				name: 'delay',
+				name: 'balance',
 				type: 'uint256',
 			},
 			{
 				internalType: 'uint256',
-				name: 'minDelay',
+				name: 'needed',
 				type: 'uint256',
 			},
 		],
-		name: 'TimelockInsufficientDelay',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'targets',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payloads',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'values',
-				type: 'uint256',
-			},
-		],
-		name: 'TimelockInvalidOperationLength',
+		name: 'InsufficientBalance',
 		type: 'error',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'caller',
+				name: 'recipient',
 				type: 'address',
 			},
 		],
-		name: 'TimelockUnauthorizedCaller',
+		name: 'InvalidRecipient',
+		type: 'error',
+	},
+	{
+		inputs: [],
+		name: 'ReentrancyGuardReentrantCall',
 		type: 'error',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'bytes32',
-				name: 'predecessorId',
-				type: 'bytes32',
-			},
-		],
-		name: 'TimelockUnexecutedPredecessor',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'operationId',
-				type: 'bytes32',
+				internalType: 'uint8',
+				name: 'bits',
+				type: 'uint8',
 			},
 			{
-				internalType: 'bytes32',
-				name: 'expectedStates',
-				type: 'bytes32',
-			},
-		],
-		name: 'TimelockUnexpectedOperationState',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'target',
-				type: 'address',
-			},
-			{
-				indexed: false,
 				internalType: 'uint256',
 				name: 'value',
 				type: 'uint256',
 			},
-			{
-				indexed: false,
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
 		],
-		name: 'CallExecuted',
-		type: 'event',
+		name: 'SafeCastOverflowedUintDowncast',
+		type: 'error',
 	},
 	{
-		anonymous: false,
 		inputs: [
 			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-		],
-		name: 'CallSalt',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
 				internalType: 'address',
-				name: 'target',
+				name: 'token',
+				type: 'address',
+			},
+		],
+		name: 'SafeERC20FailedOperation',
+		type: 'error',
+	},
+	{
+		anonymous: false,
+		inputs: [],
+		name: 'DefaultAdminDelayChangeCanceled',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: false,
+				internalType: 'uint48',
+				name: 'newDelay',
+				type: 'uint48',
+			},
+			{
+				indexed: false,
+				internalType: 'uint48',
+				name: 'effectSchedule',
+				type: 'uint48',
+			},
+		],
+		name: 'DefaultAdminDelayChangeScheduled',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [],
+		name: 'DefaultAdminTransferCanceled',
+		type: 'event',
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{
+				indexed: true,
+				internalType: 'address',
+				name: 'newAdmin',
 				type: 'address',
 			},
 			{
 				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'delay',
-				type: 'uint256',
+				internalType: 'uint48',
+				name: 'acceptSchedule',
+				type: 'uint48',
 			},
 		],
-		name: 'CallScheduled',
+		name: 'DefaultAdminTransferScheduled',
 		type: 'event',
 	},
 	{
@@ -237,31 +188,18 @@ const abi = [
 		inputs: [
 			{
 				indexed: true,
-				internalType: 'bytes32',
+				internalType: 'uint256',
+				name: 'topic',
+				type: 'uint256',
+			},
+			{
+				indexed: true,
+				internalType: 'uint256',
 				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'Cancelled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'oldDuration',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newDuration',
 				type: 'uint256',
 			},
 		],
-		name: 'MinDelayChange',
+		name: 'RewardSent',
 		type: 'event',
 	},
 	{
@@ -341,19 +279,6 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'CANCELLER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
 		name: 'DEFAULT_ADMIN_ROLE',
 		outputs: [
 			{
@@ -367,7 +292,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'EXECUTOR_ROLE',
+		name: 'SENDER_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -380,7 +305,7 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'PROPOSER_ROLE',
+		name: 'WITHDRAW_ROLE',
 		outputs: [
 			{
 				internalType: 'bytes32',
@@ -392,14 +317,8 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'cancel',
+		inputs: [],
+		name: 'acceptDefaultAdminTransfer',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -407,93 +326,66 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'target',
+				name: 'newAdmin',
 				type: 'address',
 			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'payload',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
 		],
-		name: 'execute',
-		stateMutability: 'payable',
+		name: 'beginDefaultAdminTransfer',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'cancelDefaultAdminTransfer',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'payloads',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
+				internalType: 'uint48',
+				name: 'newDelay',
+				type: 'uint48',
 			},
 		],
-		name: 'executeBatch',
-		stateMutability: 'payable',
+		name: 'changeDefaultAdminDelay',
+		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [],
-		name: 'getMinDelay',
+		name: 'defaultAdmin',
 		outputs: [
 			{
-				internalType: 'uint256',
+				internalType: 'address',
 				name: '',
-				type: 'uint256',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'getOperationState',
+		inputs: [],
+		name: 'defaultAdminDelay',
 		outputs: [
 			{
-				internalType: 'enum TimelockController.OperationState',
+				internalType: 'uint48',
 				name: '',
-				type: 'uint8',
+				type: 'uint48',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'defaultAdminDelayIncreaseWait',
+		outputs: [
+			{
+				internalType: 'uint48',
+				name: '',
+				type: 'uint48',
 			},
 		],
 		stateMutability: 'view',
@@ -513,25 +405,6 @@ const abi = [
 				internalType: 'bytes32',
 				name: '',
 				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'getTimestamp',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
 			},
 		],
 		stateMutability: 'view',
@@ -581,90 +454,17 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'address',
-				name: 'target',
-				type: 'address',
-			},
-			{
 				internalType: 'uint256',
-				name: 'value',
+				name: '_topic',
 				type: 'uint256',
 			},
 			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
+				internalType: 'uint256',
+				name: '_id',
+				type: 'uint256',
 			},
 		],
-		name: 'hashOperation',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'payloads',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-		],
-		name: 'hashOperationBatch',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'isOperation',
+		name: 'hasSentReward',
 		outputs: [
 			{
 				internalType: 'bool',
@@ -676,57 +476,13 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'isOperationDone',
+		inputs: [],
+		name: 'items',
 		outputs: [
 			{
-				internalType: 'bool',
+				internalType: 'contract PixelDungeonsItems',
 				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'isOperationPending',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'id',
-				type: 'bytes32',
-			},
-		],
-		name: 'isOperationReady',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
+				type: 'address',
 			},
 		],
 		stateMutability: 'view',
@@ -845,6 +601,68 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'owner',
+		outputs: [
+			{
+				internalType: 'address',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'pendingDefaultAdmin',
+		outputs: [
+			{
+				internalType: 'address',
+				name: 'newAdmin',
+				type: 'address',
+			},
+			{
+				internalType: 'uint48',
+				name: 'schedule',
+				type: 'uint48',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'pendingDefaultAdminDelay',
+		outputs: [
+			{
+				internalType: 'uint48',
+				name: 'newDelay',
+				type: 'uint48',
+			},
+			{
+				internalType: 'uint48',
+				name: 'schedule',
+				type: 'uint48',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [],
+		name: 'recipient',
+		outputs: [
+			{
+				internalType: 'address payable',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
 				internalType: 'bytes32',
@@ -853,7 +671,7 @@ const abi = [
 			},
 			{
 				internalType: 'address',
-				name: 'callerConfirmation',
+				name: 'account',
 				type: 'address',
 			},
 		],
@@ -879,76 +697,76 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'target',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'delay',
-				type: 'uint256',
-			},
-		],
-		name: 'schedule',
+		inputs: [],
+		name: 'rollbackDefaultAdminDelay',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'payloads',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'predecessor',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'delay',
-				type: 'uint256',
+				components: [
+					{
+						internalType: 'uint256',
+						name: 'topic',
+						type: 'uint256',
+					},
+					{
+						internalType: 'uint256',
+						name: 'id',
+						type: 'uint256',
+					},
+					{
+						components: [
+							{
+								internalType: 'enum PixelDungeonsRewards.Category',
+								name: 'category',
+								type: 'uint8',
+							},
+							{
+								internalType: 'address',
+								name: 'receiver',
+								type: 'address',
+							},
+							{
+								internalType: 'uint256',
+								name: 'amount',
+								type: 'uint256',
+							},
+							{
+								internalType: 'uint256',
+								name: 'tokenId',
+								type: 'uint256',
+							},
+							{
+								internalType: 'address',
+								name: 'tokenAddress',
+								type: 'address',
+							},
+						],
+						internalType: 'struct PixelDungeonsRewards.Item[]',
+						name: 'items',
+						type: 'tuple[]',
+					},
+				],
+				internalType: 'struct PixelDungeonsRewards.Reward[]',
+				name: '_rewards',
+				type: 'tuple[]',
 			},
 		],
-		name: 'scheduleBatch',
+		name: 'sendRewards',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'address payable',
+				name: '_recipient',
+				type: 'address',
+			},
+		],
+		name: 'setRecipient',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -972,14 +790,83 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [],
+		name: 'token',
+		outputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '',
+				type: 'address',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
 		inputs: [
 			{
+				internalType: 'contract IERC1155',
+				name: '_token',
+				type: 'address',
+			},
+			{
 				internalType: 'uint256',
-				name: 'newDelay',
+				name: '_id',
+				type: 'uint256',
+			},
+			{
+				internalType: 'uint256',
+				name: '_amount',
 				type: 'uint256',
 			},
 		],
-		name: 'updateDelay',
+		name: 'withdrawERC1155',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'contract IERC20',
+				name: '_token',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+		],
+		name: 'withdrawERC20',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'contract IERC721',
+				name: '_token',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: '_tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'withdrawERC721',
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: '_amount',
+				type: 'uint256',
+			},
+		],
+		name: 'withdrawEther',
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -989,11 +876,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const TIMELOCK: Contract<typeof abi> = {
-	name: 'Timelock',
-	address: '0x96a774375f138f97d952764589712c7d9d317727',
+const PIXEL_DUNGEONS_INCENTIVES: Contract<typeof abi> = {
+	name: 'Pixel Dungeons Incentives',
+	address: '0xba5b435cf60ae1575ebbfc78b955082d93c96958',
 	is_deprecated: false,
-	created_at: 1734633324,
+	created_at: 1734266566,
 	abi: abi,
 }
-export default TIMELOCK
+export default PIXEL_DUNGEONS_INCENTIVES
