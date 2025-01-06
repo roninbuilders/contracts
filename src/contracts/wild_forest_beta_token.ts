@@ -144,19 +144,6 @@ const abi = [
 		type: 'function',
 	},
 	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
 		inputs: [],
 		name: 'decimals',
 		outputs: [
@@ -310,11 +297,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const WILD_FOREST_TOKEN: Contract<typeof abi> = {
-	name: 'Wild Forest Token',
-	address: '0x03affae7e23fd11c85d0c90cc40510994d49e175',
-	is_deprecated: false,
-	created_at: 1733242116,
+const WILD_FOREST_BETA_TOKEN: Contract<typeof abi> = {
+	name: 'Wild Forest Beta Token',
+	address: '0x363c3b97152e161cea85e0e5dc52dfdca01a2db1',
+	is_deprecated: true,
+	created_at: 1699365352,
 	abi: abi,
 }
-export default WILD_FOREST_TOKEN
+export default WILD_FOREST_BETA_TOKEN

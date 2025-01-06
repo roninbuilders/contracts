@@ -324,6 +324,25 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'uint256',
+				name: 'tokenId',
+				type: 'uint256',
+			},
+		],
+		name: 'getCollectionTime',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
 				name: 'grade',
 				type: 'uint256',
 			},
@@ -938,9 +957,9 @@ const abi = [
 ] as const
 const GENESIS_HEROES_721_VAULT: Contract<typeof abi> = {
 	name: 'Genesis Heroes 721 Vault',
-	address: '0xa0f6bf0f6c9767827e320539d0f54aee81e98b02',
+	address: '0x7175cb73eeb5ce3eadc8b6c4fbbe6b02298ff40b',
 	is_deprecated: false,
-	created_at: 1731068577,
+	created_at: 1734928669,
 	abi: abi,
 }
 export default GENESIS_HEROES_721_VAULT

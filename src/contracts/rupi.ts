@@ -3,24 +3,14 @@ const abi = [
 	{
 		inputs: [
 			{
-				internalType: 'uint256',
-				name: 'initialSupply',
-				type: 'uint256',
+				internalType: 'address[]',
+				name: 'receivers',
+				type: 'address[]',
 			},
 			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol',
-				type: 'string',
-			},
-			{
-				internalType: 'address',
-				name: 'ownerAddress',
-				type: 'address',
+				internalType: 'uint256[]',
+				name: 'amounts',
+				type: 'uint256[]',
 			},
 		],
 		stateMutability: 'nonpayable',
@@ -75,6 +65,19 @@ const abi = [
 		],
 		name: 'Transfer',
 		type: 'event',
+	},
+	{
+		inputs: [],
+		name: 'MAX_SUPPLY',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
 	},
 	{
 		inputs: [
@@ -157,6 +160,24 @@ const abi = [
 		type: 'function',
 	},
 	{
+		inputs: [
+			{
+				internalType: 'address',
+				name: 'account',
+				type: 'address',
+			},
+			{
+				internalType: 'uint256',
+				name: 'amount',
+				type: 'uint256',
+			},
+		],
+		name: 'burnFrom',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function',
+	},
+	{
 		inputs: [],
 		name: 'decimals',
 		outputs: [
@@ -225,6 +246,25 @@ const abi = [
 				internalType: 'string',
 				name: '',
 				type: 'string',
+			},
+		],
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'interfaceId',
+				type: 'bytes4',
+			},
+		],
+		name: 'supportsInterface',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
 			},
 		],
 		stateMutability: 'view',
@@ -310,11 +350,11 @@ const abi = [
 		type: 'function',
 	},
 ] as const
-const WILD_FOREST_TOKEN: Contract<typeof abi> = {
-	name: 'Wild Forest Token',
-	address: '0x03affae7e23fd11c85d0c90cc40510994d49e175',
+const RUPI: Contract<typeof abi> = {
+	name: 'Rupi',
+	address: '0x001df631c53c76da3c1f2bb73b4ec7461e11ff5e',
 	is_deprecated: false,
-	created_at: 1733242116,
+	created_at: 1734693207,
 	abi: abi,
 }
-export default WILD_FOREST_TOKEN
+export default RUPI
