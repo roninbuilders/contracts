@@ -4,17 +4,17 @@ const abi = [
 		inputs: [
 			{
 				internalType: 'address',
-				name: '_logic',
+				name: 'implementationAddress',
 				type: 'address',
 			},
 			{
 				internalType: 'address',
-				name: 'admin_',
+				name: 'ownerAddress',
 				type: 'address',
 			},
 			{
 				internalType: 'bytes',
-				name: '_data',
+				name: 'data',
 				type: 'bytes',
 			},
 		],
@@ -25,19 +25,19 @@ const abi = [
 		anonymous: false,
 		inputs: [
 			{
-				indexed: false,
+				indexed: true,
 				internalType: 'address',
-				name: 'previousAdmin',
+				name: 'previousOwner',
 				type: 'address',
 			},
 			{
-				indexed: false,
+				indexed: true,
 				internalType: 'address',
-				name: 'newAdmin',
+				name: 'newOwner',
 				type: 'address',
 			},
 		],
-		name: 'AdminChanged',
+		name: 'OwnershipTransferred',
 		type: 'event',
 	},
 	{
@@ -46,24 +46,17 @@ const abi = [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'beacon',
+				name: 'previousImplementation',
 				type: 'address',
 			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
 			{
 				indexed: true,
 				internalType: 'address',
-				name: 'implementation',
+				name: 'newImplementation',
 				type: 'address',
 			},
 		],
-		name: 'Upgraded',
+		name: 'ProxyImplementationUpdated',
 		type: 'event',
 	},
 	{
@@ -72,40 +65,46 @@ const abi = [
 	},
 	{
 		inputs: [],
-		name: 'admin',
+		name: 'owner',
 		outputs: [
 			{
 				internalType: 'address',
-				name: 'admin_',
+				name: '',
 				type: 'address',
 			},
 		],
-		stateMutability: 'nonpayable',
+		stateMutability: 'view',
+		type: 'function',
+	},
+	{
+		inputs: [
+			{
+				internalType: 'bytes4',
+				name: 'id',
+				type: 'bytes4',
+			},
+		],
+		name: 'supportsInterface',
+		outputs: [
+			{
+				internalType: 'bool',
+				name: '',
+				type: 'bool',
+			},
+		],
+		stateMutability: 'view',
 		type: 'function',
 	},
 	{
 		inputs: [
 			{
 				internalType: 'address',
-				name: 'newAdmin',
+				name: 'newOwner',
 				type: 'address',
 			},
 		],
-		name: 'changeAdmin',
+		name: 'transferOwnership',
 		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'implementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'implementation_',
-				type: 'address',
-			},
-		],
 		stateMutability: 'nonpayable',
 		type: 'function',
 	},
@@ -145,11 +144,11 @@ const abi = [
 		type: 'receive',
 	},
 ] as const
-const GACHA_MACHINE_PROXY: Contract<typeof abi> = {
-	name: 'Gacha Machine Proxy',
-	address: '0x3e0674b1ddc84b0cfd9d773bb2ce23fe8f445de3',
+const TOKEN_EXCHANGE_PROXY: Contract<typeof abi> = {
+	name: 'Token Exchange Proxy',
+	address: '0xa3dcc5ebaca150fbddf9cb4d03a8c9442e90cac1',
 	is_deprecated: false,
-	created_at: 1702275155,
+	created_at: 1734933994,
 	abi: abi,
 }
-export default GACHA_MACHINE_PROXY
+export default TOKEN_EXCHANGE_PROXY
