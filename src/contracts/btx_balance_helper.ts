@@ -1,53 +1,48 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'balanceInfoOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'btxToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const BTX_BALANCE_HELPER: Contract<typeof abi> = {
-	name: 'BTX Balance Helper',
-	address: '0xde4d0c3a4cb1c3f780554b182e108cf030960127',
-	is_deprecated: false,
-	created_at: 1731940859,
-	abi: abi,
-}
-export default BTX_BALANCE_HELPER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5179,
+  address: '0xde4d0c3a4cb1c3f780554b182e108cf030960127' as const,
+  contract_name: 'BTXBalanceHelper',
+  display_name: 'BTX Balance Helper',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1731940859,
+  abi: [
+  {
+    "name": "balanceInfoOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "btxToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

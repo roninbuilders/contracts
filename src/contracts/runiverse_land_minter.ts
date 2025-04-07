@@ -1,916 +1,797 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IRuniverseLand',
-				name: '_runiverseLand',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'Address0Error',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'BadSignature',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'DeniedProcessDuringMinting',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'sended_values',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expected',
-				type: 'uint256',
-			},
-		],
-		name: 'GivedValuesNotValid',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'IncorrectPurchaseLimit',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'MisconfiguredPrices',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'correct_date',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'current_date',
-				type: 'uint256',
-			},
-		],
-		name: 'WrongDateForProcess',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'claimlistMerkleRoot',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum IRuniverseLand.PlotSize',
-				name: 'plotSize',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'numPlots',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'claimedMaxPlots',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32[]',
-				name: '_merkleProof',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'claimlistMint',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'claimlistMintedPerSize',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'claimsStartTime',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'claimsStarted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'forwardERC20s',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAvailableLands',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_messageHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'getEthSignedMessageHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: '_message',
-				type: 'string',
-			},
-		],
-		name: 'getMessageHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'userAddress',
-				type: 'address',
-			},
-		],
-		name: 'getNonce',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getPlotPrices',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getPlotsAvailablePerSize',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getSigner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getTokenIdPlotType',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTotalMintedLands',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTotalMintedLandsBySize',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum IRuniverseLand.PlotSize',
-				name: 'plotSize',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'numPlots',
-				type: 'uint256',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'mintlistMerkleRoot1',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'mintlistMerkleRoot2',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum IRuniverseLand.PlotSize',
-				name: 'plotSize',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint256',
-				name: 'numPlots',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'claimedMaxPlots',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32[]',
-				name: '_merkleProof',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'mintlistMint',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'mintlistMintedPerSize',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'mintlistStartTime',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'mintlistStarted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_who',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_leaf',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32[]',
-				name: '_merkleProof',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'mintlisted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum IRuniverseLand.PlotSize[]',
-				name: 'plotSizes',
-				type: 'uint8[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-		],
-		name: 'ownerMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'plotGlobalOffset',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'plotPrices',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'plotSizeLocalOffset',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'plotsMinted',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'publicMintStartTime',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'publicStarted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'runiverseLand',
-		outputs: [
-			{
-				internalType: 'contract IRuniverseLand',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'newMerkleRoot',
-				type: 'bytes32',
-			},
-		],
-		name: 'setClaimlistMerkleRoot',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newClaimsStartTime',
-				type: 'uint256',
-			},
-		],
-		name: 'setClaimsStartTime',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newGlobalIdOffset',
-				type: 'uint256',
-			},
-		],
-		name: 'setGlobalIdOffset',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_newPlotSizeLocalOffset',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setLocalIdOffsets',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'newMerkleRoot',
-				type: 'bytes32',
-			},
-		],
-		name: 'setMintlistMerkleRoot1',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'newMerkleRoot',
-				type: 'bytes32',
-			},
-		],
-		name: 'setMintlistMerkleRoot2',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newAllowlistMintStartTime',
-				type: 'uint256',
-			},
-		],
-		name: 'setMintlistStartTime',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_newPrices',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setPrices',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newPublicMintStartTime',
-				type: 'uint256',
-			},
-		],
-		name: 'setPublicMintStartTime',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IRuniverseLand',
-				name: '_newRuniverseLandAddress',
-				type: 'address',
-			},
-		],
-		name: 'setRuniverseLand',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_signer',
-				type: 'address',
-			},
-		],
-		name: 'setSigner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: '_newVaultAddress',
-				type: 'address',
-			},
-		],
-		name: 'setVaultAddress',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'signer',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vault',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: '_message',
-				type: 'string',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'verify',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-			{
-				internalType: 'enum IRuniverseLand.PlotSize',
-				name: 'plotSize',
-				type: 'uint8',
-			},
-		],
-		name: 'verifyAndMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'withdraw',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdrawAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const RUNIVERSE_LAND_MINTER: Contract<typeof abi> = {
-	name: 'Runiverse Land Minter',
-	address: '0x8bffe7c3fdb06c40e65bd50259f88a87233c7528',
-	is_deprecated: false,
-	created_at: 1724353840,
-	abi: abi,
-}
-export default RUNIVERSE_LAND_MINTER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3792,
+  address: '0x8bffe7c3fdb06c40e65bd50259f88a87233c7528' as const,
+  contract_name: 'RuniverseLandMinter',
+  display_name: 'Runiverse Land Minter',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1724353840,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_runiverseLand"
+      }
+    ]
+  },
+  {
+    "name": "Address0Error",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "BadSignature",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "DeniedProcessDuringMinting",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "GivedValuesNotValid",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "sended_values"
+      },
+      {
+        "type": "uint256",
+        "name": "expected"
+      }
+    ]
+  },
+  {
+    "name": "IncorrectPurchaseLimit",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "MisconfiguredPrices",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "WrongDateForProcess",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "correct_date"
+      },
+      {
+        "type": "uint256",
+        "name": "current_date"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "claimlistMerkleRoot",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "claimlistMint",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "plotSize"
+      },
+      {
+        "type": "uint256",
+        "name": "numPlots"
+      },
+      {
+        "type": "uint256",
+        "name": "claimedMaxPlots"
+      },
+      {
+        "type": "bytes32[]",
+        "name": "_merkleProof"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claimlistMintedPerSize",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "claimsStartTime",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "claimsStarted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "forwardERC20s",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAvailableLands",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getEthSignedMessageHash",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_messageHash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getMessageHash",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_message"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "userAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getPlotPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getPlotsAvailablePerSize",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getSigner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getTokenIdPlotType",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getTotalMintedLands",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getTotalMintedLandsBySize",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "plotSize"
+      },
+      {
+        "type": "uint256",
+        "name": "numPlots"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintlistMerkleRoot1",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "mintlistMerkleRoot2",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "mintlistMint",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "plotSize"
+      },
+      {
+        "type": "uint256",
+        "name": "numPlots"
+      },
+      {
+        "type": "uint256",
+        "name": "claimedMaxPlots"
+      },
+      {
+        "type": "bytes32[]",
+        "name": "_merkleProof"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintlistMintedPerSize",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "mintlistStartTime",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "mintlistStarted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mintlisted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_who"
+      },
+      {
+        "type": "bytes32",
+        "name": "_leaf"
+      },
+      {
+        "type": "bytes32[]",
+        "name": "_merkleProof"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "ownerMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8[]",
+        "name": "plotSizes"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "plotGlobalOffset",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "plotPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "plotSizeLocalOffset",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "plotsMinted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "publicMintStartTime",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "publicStarted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "runiverseLand",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setClaimlistMerkleRoot",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "newMerkleRoot"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setClaimsStartTime",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newClaimsStartTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setGlobalIdOffset",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newGlobalIdOffset"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setLocalIdOffsets",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_newPlotSizeLocalOffset"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMintlistMerkleRoot1",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "newMerkleRoot"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMintlistMerkleRoot2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "newMerkleRoot"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMintlistStartTime",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAllowlistMintStartTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPrices",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_newPrices"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPublicMintStartTime",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newPublicMintStartTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRuniverseLand",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newRuniverseLandAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setSigner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_signer"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVaultAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newVaultAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "signer",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vault",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "verify",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_message"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "verifyAndMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "signature"
+      },
+      {
+        "type": "uint8",
+        "name": "plotSize"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

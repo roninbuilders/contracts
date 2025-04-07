@@ -1,332 +1,293 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'ConfigUpdate',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator_',
-				type: 'address',
-			},
-		],
-		name: 'checkIsOperator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getGameNFT',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getInitializedVersion',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getRollupPoster',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getRollupPoster2',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'inbox',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'gameNFT_',
-				type: 'address',
-			},
-		],
-		name: 'setGameNFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'inbox_',
-				type: 'address',
-			},
-		],
-		name: 'setInbox',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator_',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled_',
-				type: 'bool',
-			},
-		],
-		name: 'setOperator',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'poster_',
-				type: 'address',
-			},
-		],
-		name: 'setRollupPoster',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'poster_',
-				type: 'address',
-			},
-		],
-		name: 'setRollupPoster2',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const RONIN_CONFIG: Contract<typeof abi> = {
-	name: 'Ronin Config',
-	address: '0x026cd0a70d56a60470ac0bc72e8675dfc8981a14',
-	is_deprecated: false,
-	created_at: 1720869829,
-	abi: abi,
-}
-export default RONIN_CONFIG
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3260,
+  address: '0x026cd0a70d56a60470ac0bc72e8675dfc8981a14' as const,
+  contract_name: 'RoninConfig',
+  display_name: 'Ronin Config',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1720869829,
+  abi: [
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ConfigUpdate",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "checkIsOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator_"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getGameNFT",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getInitializedVersion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "getRollupPoster",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRollupPoster2",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "inbox",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setGameNFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "gameNFT_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setInbox",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "inbox_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setOperator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator_"
+      },
+      {
+        "type": "bool",
+        "name": "enabled_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRollupPoster",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poster_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRollupPoster2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poster_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,496 +1,417 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MINTER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'NYANGKIT',
-		outputs: [
-			{
-				internalType: 'contract INyangKit',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'RUPI',
-		outputs: [
-			{
-				internalType: 'contract IZeny',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenOut',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'exchangeNyangvine',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenIn',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenOut',
-				type: 'address',
-			},
-		],
-		name: 'exchangeRateMap',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'rate',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenIn',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenOut',
-				type: 'address',
-			},
-		],
-		name: 'getExchangeRate',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nyangKit',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_rupi',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'name',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenIn',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenOut',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'rate',
-				type: 'uint256',
-			},
-		],
-		name: 'setExchangeRate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'symbol',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenIn',
-				type: 'address',
-			},
-		],
-		name: 'tokenInAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenOut',
-				type: 'address',
-			},
-		],
-		name: 'tokenOutAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const TOKEN_EXCHANGE: Contract<typeof abi> = {
-	name: 'Token Exchange',
-	address: '0xbb33dbdbb02c626c58bb9987af107de7b22bcea3',
-	is_deprecated: false,
-	created_at: 1734940762,
-	abi: abi,
-}
-export default TOKEN_EXCHANGE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 6075,
+  address: '0x243cb95f6b70ee3e252679ef4593254a7a42bb80' as const,
+  contract_name: 'TokenExchange',
+  display_name: 'Token Exchange',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1734933985,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MINTER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "NYANGKIT",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "RUPI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "exchangeNyangvine",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenOut"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "exchangeRateMap",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenIn"
+      },
+      {
+        "type": "address",
+        "name": "tokenOut"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "rate"
+      }
+    ]
+  },
+  {
+    "name": "getExchangeRate",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenIn"
+      },
+      {
+        "type": "address",
+        "name": "tokenOut"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_nyangKit"
+      },
+      {
+        "type": "address",
+        "name": "_rupi"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setExchangeRate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenIn"
+      },
+      {
+        "type": "address",
+        "name": "tokenOut"
+      },
+      {
+        "type": "uint256",
+        "name": "rate"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "symbol",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "tokenInAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenIn"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "tokenOutAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenOut"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

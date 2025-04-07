@@ -1,232 +1,203 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'verifier',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'operationType',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'Operation',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'oldVerifier',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newVerifier',
-				type: 'address',
-			},
-		],
-		name: 'VerifierChanged',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'operationType',
-				type: 'uint256',
-			},
-		],
-		name: 'getUsedNonce',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'operationType',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-		],
-		name: 'operate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pendingOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setPendingOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_verifier',
-				type: 'address',
-			},
-		],
-		name: 'setVerifier',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'verifier',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const PUFF_ON_CHAIN: Contract<typeof abi> = {
-	name: 'Puff On Chain',
-	address: '0x7c5d20f5d6db2812def1f05544823c4851156687',
-	is_deprecated: false,
-	created_at: 1721400618,
-	abi: abi,
-}
-export default PUFF_ON_CHAIN
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3313,
+  address: '0x7c5d20f5d6db2812def1f05544823c4851156687' as const,
+  contract_name: 'PuffOnChain',
+  display_name: 'Puff On Chain',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1721400618,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "verifier"
+      }
+    ]
+  },
+  {
+    "name": "Operation",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "nonce",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "operationType",
+        "indexed": true
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "VerifierChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldVerifier"
+      },
+      {
+        "type": "address",
+        "name": "newVerifier"
+      }
+    ]
+  },
+  {
+    "name": "acceptOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "getUsedNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "operationType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "operate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "operationType"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pendingOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setPendingOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVerifier",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_verifier"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "verifier",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

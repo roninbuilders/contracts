@@ -1,1784 +1,1518 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'payable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AgreementExpiredOrNotYetStarted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'steward',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'AlreadyAssignedFor',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'AlreadyClaimed',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'AlreadySubmited',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'AlreadyTerminated',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ExceedsMaxLevel',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ExpiredAgreement',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FixedSalaryInvalidConfig',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'required',
-				type: 'uint256',
-			},
-		],
-		name: 'InsufficientAmount',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidConfig',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidDuration',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'InvalidOwnerOf',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidRatio',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidShortString',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'signer',
-				type: 'address',
-			},
-		],
-		name: 'InvalidSignature',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'NFTIsForbidden',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NativeValueShouldBeZero',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NullAddress',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'OwnerIsSteward',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'PayoutTokenIsForbidden',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'RatioExceedMaxPercentage',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'RewardSharingInvalidConfig',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'SignatureExpired',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'SignatureUsed',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'str',
-				type: 'string',
-			},
-		],
-		name: 'StringTooLong',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'TerminationTooEarly',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'Unauthorized',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'UnexistAgreement',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'UnknownSteward',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'submitter',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'depositAmount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint64',
-				name: 'endAt',
-				type: 'uint64',
-			},
-		],
-		name: 'AgreementExtended',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'submitter',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum ILandDelegationV2Struct.RecipientOpt',
-								name: 'recipientOpt',
-								type: 'uint8',
-							},
-							{
-								internalType: 'uint256',
-								name: 'ratio',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ILandDelegationV2Struct.Commission[]',
-						name: 'payouts',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'level',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'address[]',
-						name: 'acceptances',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint64',
-						name: 'duration',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'agreementCode',
-						type: 'string',
-					},
-				],
-				indexed: false,
-				internalType: 'struct ILandDelegationV2Struct.DelegationAgreement',
-				name: 'agreement',
-				type: 'tuple',
-			},
-		],
-		name: 'AgreementSubmitted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'submitter',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'terminatedAt',
-				type: 'uint256',
-			},
-		],
-		name: 'AgreementTerminated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'EIP712DomainChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'caller',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'payout',
-				type: 'uint256',
-			},
-		],
-		name: 'EarningsClaimed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'maxLevel',
-				type: 'uint256',
-			},
-		],
-		name: 'MaxLevelUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'refundAddr',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'payoutToken',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'refundAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'Refunded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newTerminationMinDuration',
-				type: 'uint256',
-			},
-		],
-		name: 'TerminationMinDurationUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'isBlacklisted',
-				type: 'bool',
-			},
-		],
-		name: 'TokenStatusUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MAX_PERCENTAGE',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'NATIVE_TOKEN',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'OPERATOR_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'PAUSER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'eip712Domain',
-		outputs: [
-			{
-				internalType: 'bytes1',
-				name: 'fields',
-				type: 'bytes1',
-			},
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'version',
-				type: 'string',
-			},
-			{
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'verifyingContract',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'extensions',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint64',
-				name: 'duration',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint64',
-				name: 'validUntil',
-				type: 'uint64',
-			},
-			{
-				internalType: 'bytes',
-				name: 'approvalSig',
-				type: 'bytes',
-			},
-		],
-		name: 'extendAgreement',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC721',
-				name: 'nft',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'getAgreementOf',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAllAgreementHashes',
-		outputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'agreementHashes',
-				type: 'bytes32[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'steward',
-				type: 'address',
-			},
-		],
-		name: 'getAssignedAgreements',
-		outputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'agreementHashes',
-				type: 'bytes32[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'getCurrentState',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint64',
-						name: 'terminatedAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint64',
-						name: 'submittedAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'address',
-						name: 'steward',
-						type: 'address',
-					},
-					{
-						internalType: 'uint64',
-						name: 'endAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'released',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.RealTimeAgreement',
-				name: 'realTimeAgreement',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getMaxLevel',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'getRoleMember',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum ILandDelegationV2Struct.RecipientOpt',
-								name: 'recipientOpt',
-								type: 'uint8',
-							},
-							{
-								internalType: 'uint256',
-								name: 'ratio',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ILandDelegationV2Struct.Commission[]',
-						name: 'payouts',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'level',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'address[]',
-						name: 'acceptances',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint64',
-						name: 'duration',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'agreementCode',
-						type: 'string',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.DelegationAgreement',
-				name: 'agreement',
-				type: 'tuple',
-			},
-		],
-		name: 'getStructAgreementHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'structHash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint64',
-				name: 'duration',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint256',
-				name: 'depositAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint64',
-				name: 'validUntil',
-				type: 'uint64',
-			},
-		],
-		name: 'getStructExtendAgreementHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'structHash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint64',
-				name: 'validUntil',
-				type: 'uint64',
-			},
-		],
-		name: 'getStructTerminateAgreementHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'structHash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTerminationMinDuration',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'getTokenStatus',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'isBlacklisted',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'maxLevel',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'terminationMinDuration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'pausers',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'operators',
-				type: 'address[]',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'maxLevel',
-				type: 'uint256',
-			},
-		],
-		name: 'setMaxLevel',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'terminationMinDuration',
-				type: 'uint256',
-			},
-		],
-		name: 'setTerminationMinDuration',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldBlacklist',
-				type: 'bool',
-			},
-		],
-		name: 'setTokenStatus',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum ILandDelegationV2Struct.RecipientOpt',
-								name: 'recipientOpt',
-								type: 'uint8',
-							},
-							{
-								internalType: 'uint256',
-								name: 'ratio',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ILandDelegationV2Struct.Commission[]',
-						name: 'payouts',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'level',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'address[]',
-						name: 'acceptances',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint64',
-						name: 'duration',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'agreementCode',
-						type: 'string',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.DelegationAgreement',
-				name: 'agreement',
-				type: 'tuple',
-			},
-			{
-				internalType: 'address',
-				name: 'steward',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'ownerSig',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes',
-				name: 'stewardSig',
-				type: 'bytes',
-			},
-		],
-		name: 'submitDelegationAgreement',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint64',
-						name: 'terminatedAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint64',
-						name: 'submittedAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'address',
-						name: 'steward',
-						type: 'address',
-					},
-					{
-						internalType: 'uint64',
-						name: 'endAt',
-						type: 'uint64',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'released',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.RealTimeAgreement',
-				name: 'currentState',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'agreementHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint64',
-				name: 'validUntil',
-				type: 'uint64',
-			},
-			{
-				internalType: 'bytes',
-				name: 'approvalSig',
-				type: 'bytes',
-			},
-		],
-		name: 'terminateAgreement',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum ILandDelegationV2Struct.RecipientOpt',
-								name: 'recipientOpt',
-								type: 'uint8',
-							},
-							{
-								internalType: 'uint256',
-								name: 'ratio',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ILandDelegationV2Struct.Commission[]',
-						name: 'payouts',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'level',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'address[]',
-						name: 'acceptances',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint64',
-						name: 'duration',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'agreementCode',
-						type: 'string',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.DelegationAgreement',
-				name: 'agreement',
-				type: 'tuple',
-			},
-		],
-		name: 'validateAgreement',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'isValid',
-				type: 'bool',
-			},
-			{
-				internalType: 'bytes',
-				name: 'reason',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Payout',
-						name: 'payoutOption',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'extensionRule',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum ILandDelegationV2Struct.Permission',
-						name: 'earlyTermination',
-						type: 'uint8',
-					},
-					{
-						components: [
-							{
-								internalType: 'enum ILandDelegationV2Struct.RecipientOpt',
-								name: 'recipientOpt',
-								type: 'uint8',
-							},
-							{
-								internalType: 'uint256',
-								name: 'ratio',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ILandDelegationV2Struct.Commission[]',
-						name: 'payouts',
-						type: 'tuple[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'salary',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'level',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'payoutToken',
-						type: 'address',
-					},
-					{
-						internalType: 'contract IERC721',
-						name: 'nft',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ids',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'address[]',
-						name: 'acceptances',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint64',
-						name: 'duration',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'agreementCode',
-						type: 'string',
-					},
-				],
-				internalType: 'struct ILandDelegationV2Struct.DelegationAgreement',
-				name: 'agreement',
-				type: 'tuple',
-			},
-			{
-				internalType: 'address',
-				name: 'steward',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'submitter',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'nativeAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'validateAndCheckSubmissionEligibility',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'isValid',
-				type: 'bool',
-			},
-			{
-				internalType: 'bytes',
-				name: 'reason',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const LAND_DELEGATION_LOGIC: Contract<typeof abi> = {
-	name: 'Land Delegation Logic',
-	address: '0x8d34da00d712a5aa5444f7619ac6390abfb6e9e4',
-	is_deprecated: false,
-	created_at: 1705558627,
-	abi: abi,
-}
-export default LAND_DELEGATION_LOGIC
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1578,
+  address: '0x8d34da00d712a5aa5444f7619ac6390abfb6e9e4' as const,
+  contract_name: 'LandDelegationV2',
+  display_name: 'Land Delegation Logic',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1705558627,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "payable",
+    "inputs": []
+  },
+  {
+    "name": "AgreementExpiredOrNotYetStarted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AlreadyAssignedFor",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "steward"
+      },
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      }
+    ]
+  },
+  {
+    "name": "AlreadyClaimed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AlreadySubmited",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AlreadyTerminated",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExceedsMaxLevel",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExpiredAgreement",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FixedSalaryInvalidConfig",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InsufficientAmount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "required"
+      }
+    ]
+  },
+  {
+    "name": "InvalidConfig",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidDuration",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidOwnerOf",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ]
+  },
+  {
+    "name": "InvalidRatio",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidShortString",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidSignature",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "signer"
+      }
+    ]
+  },
+  {
+    "name": "NFTIsForbidden",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "NativeValueShouldBeZero",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NullAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "OwnerIsSteward",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "PayoutTokenIsForbidden",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "RatioExceedMaxPercentage",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "RewardSharingInvalidConfig",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "SignatureExpired",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "SignatureUsed",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ]
+  },
+  {
+    "name": "StringTooLong",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "str"
+      }
+    ]
+  },
+  {
+    "name": "TerminationTooEarly",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Unauthorized",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UnexistAgreement",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UnknownSteward",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AgreementExtended",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "submitter",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "agreementHash",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "depositAmount"
+      },
+      {
+        "type": "uint64",
+        "name": "endAt"
+      }
+    ]
+  },
+  {
+    "name": "AgreementSubmitted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "submitter",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "agreementHash",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "agreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "tuple[]",
+            "name": "payouts",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "recipientOpt"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "level"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          },
+          {
+            "type": "address[]",
+            "name": "acceptances"
+          },
+          {
+            "type": "uint64",
+            "name": "duration"
+          },
+          {
+            "type": "string",
+            "name": "agreementCode"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "AgreementTerminated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "submitter",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "agreementHash",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "terminatedAt"
+      }
+    ]
+  },
+  {
+    "name": "EIP712DomainChanged",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "EarningsClaimed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "caller",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "payee",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "agreementHash",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "payout"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MaxLevelUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "maxLevel"
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Refunded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "refundAddr",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "payoutToken",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "refundAmount"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TerminationMinDurationUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "newTerminationMinDuration"
+      }
+    ]
+  },
+  {
+    "name": "TokenStatusUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "isBlacklisted"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MAX_PERCENTAGE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "NATIVE_TOKEN",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "OPERATOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "PAUSER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "eip712Domain",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes1",
+        "name": "fields"
+      },
+      {
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "version"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "address",
+        "name": "verifyingContract"
+      },
+      {
+        "type": "bytes32",
+        "name": "salt"
+      },
+      {
+        "type": "uint256[]",
+        "name": "extensions"
+      }
+    ]
+  },
+  {
+    "name": "extendAgreement",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      },
+      {
+        "type": "uint64",
+        "name": "duration"
+      },
+      {
+        "type": "uint64",
+        "name": "validUntil"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalSig"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAgreementOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "nft"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      }
+    ]
+  },
+  {
+    "name": "getAllAgreementHashes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32[]",
+        "name": "agreementHashes"
+      }
+    ]
+  },
+  {
+    "name": "getAssignedAgreements",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "steward"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32[]",
+        "name": "agreementHashes"
+      }
+    ]
+  },
+  {
+    "name": "getCurrentState",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "name": "realTimeAgreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "uint64",
+            "name": "terminatedAt"
+          },
+          {
+            "type": "uint64",
+            "name": "submittedAt"
+          },
+          {
+            "type": "address",
+            "name": "steward"
+          },
+          {
+            "type": "uint64",
+            "name": "endAt"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "released"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getMaxLevel",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getStructAgreementHash",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "agreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "tuple[]",
+            "name": "payouts",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "recipientOpt"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "level"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          },
+          {
+            "type": "address[]",
+            "name": "acceptances"
+          },
+          {
+            "type": "uint64",
+            "name": "duration"
+          },
+          {
+            "type": "string",
+            "name": "agreementCode"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "structHash"
+      }
+    ]
+  },
+  {
+    "name": "getStructExtendAgreementHash",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      },
+      {
+        "type": "uint64",
+        "name": "duration"
+      },
+      {
+        "type": "uint256",
+        "name": "depositAmount"
+      },
+      {
+        "type": "uint64",
+        "name": "validUntil"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "structHash"
+      }
+    ]
+  },
+  {
+    "name": "getStructTerminateAgreementHash",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      },
+      {
+        "type": "uint64",
+        "name": "validUntil"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "structHash"
+      }
+    ]
+  },
+  {
+    "name": "getTerminationMinDuration",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getTokenStatus",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isBlacklisted"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "uint256",
+        "name": "maxLevel"
+      },
+      {
+        "type": "uint256",
+        "name": "terminationMinDuration"
+      },
+      {
+        "type": "address[]",
+        "name": "pausers"
+      },
+      {
+        "type": "address[]",
+        "name": "operators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMaxLevel",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "maxLevel"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTerminationMinDuration",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "terminationMinDuration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenStatus",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "bool",
+        "name": "shouldBlacklist"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "submitDelegationAgreement",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "agreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "tuple[]",
+            "name": "payouts",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "recipientOpt"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "level"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          },
+          {
+            "type": "address[]",
+            "name": "acceptances"
+          },
+          {
+            "type": "uint64",
+            "name": "duration"
+          },
+          {
+            "type": "string",
+            "name": "agreementCode"
+          }
+        ]
+      },
+      {
+        "type": "address",
+        "name": "steward"
+      },
+      {
+        "type": "bytes",
+        "name": "ownerSig"
+      },
+      {
+        "type": "bytes",
+        "name": "stewardSig"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "name": "currentState",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "uint64",
+            "name": "terminatedAt"
+          },
+          {
+            "type": "uint64",
+            "name": "submittedAt"
+          },
+          {
+            "type": "address",
+            "name": "steward"
+          },
+          {
+            "type": "uint64",
+            "name": "endAt"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "released"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "terminateAgreement",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "agreementHash"
+      },
+      {
+        "type": "uint64",
+        "name": "validUntil"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalSig"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "validateAgreement",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "agreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "tuple[]",
+            "name": "payouts",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "recipientOpt"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "level"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          },
+          {
+            "type": "address[]",
+            "name": "acceptances"
+          },
+          {
+            "type": "uint64",
+            "name": "duration"
+          },
+          {
+            "type": "string",
+            "name": "agreementCode"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isValid"
+      },
+      {
+        "type": "bytes",
+        "name": "reason"
+      }
+    ]
+  },
+  {
+    "name": "validateAndCheckSubmissionEligibility",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "agreement",
+        "components": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint8",
+            "name": "payoutOption"
+          },
+          {
+            "type": "uint8",
+            "name": "extensionRule"
+          },
+          {
+            "type": "uint8",
+            "name": "earlyTermination"
+          },
+          {
+            "type": "tuple[]",
+            "name": "payouts",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "recipientOpt"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "salary"
+          },
+          {
+            "type": "uint256",
+            "name": "level"
+          },
+          {
+            "type": "address",
+            "name": "payoutToken"
+          },
+          {
+            "type": "address",
+            "name": "nft"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ids"
+          },
+          {
+            "type": "address[]",
+            "name": "acceptances"
+          },
+          {
+            "type": "uint64",
+            "name": "duration"
+          },
+          {
+            "type": "string",
+            "name": "agreementCode"
+          }
+        ]
+      },
+      {
+        "type": "address",
+        "name": "steward"
+      },
+      {
+        "type": "address",
+        "name": "submitter"
+      },
+      {
+        "type": "uint256",
+        "name": "nativeAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isValid"
+      },
+      {
+        "type": "bytes",
+        "name": "reason"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

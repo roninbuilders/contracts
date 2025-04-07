@@ -1,337 +1,304 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'ErrCallerMustBeCoinbase',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrContractTypeNotFound',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrOncePerBlock',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum RoleAccess',
-				name: 'expectedRole',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrUnauthorized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ErrZeroCodeContract',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'getContract',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: 'contract_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'epoch',
-				type: 'uint256',
-			},
-			{
-				internalType: 'TConsensus[]',
-				name: 'consensuses',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyFinalityScores',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'scores',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'epoch',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'cids',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyFinalityScoresById',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'scores',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'epoch',
-				type: 'uint256',
-			},
-			{
-				internalType: 'TConsensus[]',
-				name: 'addrs',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyFinalityVoteCounts',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'voteCounts',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'epoch',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'cids',
-				type: 'address[]',
-			},
-		],
-		name: 'getManyFinalityVoteCountsById',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'voteCounts',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'period',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'cid',
-				type: 'address',
-			},
-		],
-		name: 'getNormalizedStake',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'normalizedStake',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'period',
-				type: 'uint256',
-			},
-		],
-		name: 'getNormalizedSum',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'normalizedSum',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'validatorContract',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'profileContract',
-				type: 'address',
-			},
-		],
-		name: 'initializeV2',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'stakingContract',
-				type: 'address',
-			},
-		],
-		name: 'initializeV3',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'latestTrackingBlock',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'TConsensus[]',
-				name: 'voters',
-				type: 'address[]',
-			},
-		],
-		name: 'recordFinality',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'setContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const FAST_FINALITY_TRACKING: Contract<typeof abi> = {
-	name: 'Fast Finality Tracking',
-	address: '0xa5ac7555d34cb77585dab49ad6ae12827298fed0',
-	is_deprecated: false,
-	created_at: 1718685417,
-	abi: abi,
-}
-export default FAST_FINALITY_TRACKING
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 2945,
+  address: '0xa5ac7555d34cb77585dab49ad6ae12827298fed0' as const,
+  contract_name: 'FastFinalityTracking',
+  display_name: 'Fast Finality Tracking',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1718685417,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "ErrCallerMustBeCoinbase",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrContractTypeNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ]
+  },
+  {
+    "name": "ErrOncePerBlock",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUnauthorized",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedRole"
+      }
+    ]
+  },
+  {
+    "name": "ErrZeroCodeContract",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ]
+  },
+  {
+    "name": "ContractUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "getContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "contract_"
+      }
+    ]
+  },
+  {
+    "name": "getManyFinalityScores",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "epoch"
+      },
+      {
+        "type": "address[]",
+        "name": "consensuses"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "scores"
+      }
+    ]
+  },
+  {
+    "name": "getManyFinalityScoresById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "epoch"
+      },
+      {
+        "type": "address[]",
+        "name": "cids"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "scores"
+      }
+    ]
+  },
+  {
+    "name": "getManyFinalityVoteCounts",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "epoch"
+      },
+      {
+        "type": "address[]",
+        "name": "addrs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "voteCounts"
+      }
+    ]
+  },
+  {
+    "name": "getManyFinalityVoteCountsById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "epoch"
+      },
+      {
+        "type": "address[]",
+        "name": "cids"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "voteCounts"
+      }
+    ]
+  },
+  {
+    "name": "getNormalizedStake",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period"
+      },
+      {
+        "type": "address",
+        "name": "cid"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "normalizedStake"
+      }
+    ]
+  },
+  {
+    "name": "getNormalizedSum",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "normalizedSum"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "validatorContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "profileContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV3",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakingContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "latestTrackingBlock",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "recordFinality",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "voters"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

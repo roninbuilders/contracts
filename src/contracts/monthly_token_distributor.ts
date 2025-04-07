@@ -1,388 +1,312 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'monthNumber',
-				type: 'uint256',
-			},
-		],
-		name: 'TokenSent',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'addOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_year',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_month',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_recipient',
-				type: 'address',
-			},
-		],
-		name: 'amountReceived',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'currentMonthNumber',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_year',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_month',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: '_recipients',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'distributeTokens',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_recipientCount',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'operator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'operators',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'removeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'removeOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'token',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'withdrawEther',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_token',
-				type: 'address',
-			},
-		],
-		name: 'withdrawToken',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const MONTHLY_TOKEN_DISTRIBUTOR: Contract<typeof abi> = {
-	name: 'Monthly Token Distributor',
-	address: '0x8b5d69ac8c7dcaf87c0d13e33459f470f6399cf0',
-	is_deprecated: true,
-	created_at: 1633062723,
-	abi: abi,
-}
-export default MONTHLY_TOKEN_DISTRIBUTOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 193,
+  address: '0x8b5d69ac8c7dcaf87c0d13e33459f470f6399cf0' as const,
+  contract_name: 'MonthlyTokenDistributor',
+  display_name: 'Monthly Token Distributor',
+  is_deprecated: true,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1633062723,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdminRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "TokenSent",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "monthNumber",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "addOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "amountReceived",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_year"
+      },
+      {
+        "type": "uint256",
+        "name": "_month"
+      },
+      {
+        "type": "address",
+        "name": "_recipient"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "currentMonthNumber",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "distributeTokens",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_year"
+      },
+      {
+        "type": "uint256",
+        "name": "_month"
+      },
+      {
+        "type": "address[]",
+        "name": "_recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amounts"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_recipientCount"
+      }
+    ]
+  },
+  {
+    "name": "operator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "operators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "token",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdrawEther",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdrawToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

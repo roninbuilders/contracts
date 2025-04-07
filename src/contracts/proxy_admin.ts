@@ -1,171 +1,155 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'initialOwner',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeProxyAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyAdmin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'upgrade',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract TransparentUpgradeableProxy',
-				name: 'proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const PROXY_ADMIN: Contract<typeof abi> = {
-	name: 'Proxy Admin',
-	address: '0x9238d42f699dcaa5a68332e1d44bb4c5a798299f',
-	is_deprecated: false,
-	created_at: 1731622847,
-	abi: abi,
-}
-export default PROXY_ADMIN
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 32362,
+  address: '0xbb6e42025050ac79af85c8c2af2635cbd158f694' as const,
+  contract_name: 'ProxyAdmin',
+  display_name: 'Proxy Admin',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1743578984,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "initialOwner"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "changeProxyAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "proxy"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getProxyAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "proxy"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getProxyImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "proxy"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgrade",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "proxy"
+      },
+      {
+        "type": "address",
+        "name": "implementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "proxy"
+      },
+      {
+        "type": "address",
+        "name": "implementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

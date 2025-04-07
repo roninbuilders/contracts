@@ -1,421 +1,372 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AccessControlBadConfirmation',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'neededRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'AccessControlUnauthorizedAccount',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'target',
-				type: 'address',
-			},
-		],
-		name: 'AddressEmptyCode',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'ERC1967InvalidImplementation',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ERC1967NonPayable',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FailedInnerCall',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidInitialization',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotInitializing',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'UUPSUnauthorizedCallContext',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'slot',
-				type: 'bytes32',
-			},
-		],
-		name: 'UUPSUnsupportedProxiableUUID',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint64',
-				name: 'version',
-				type: 'uint64',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'Test',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'UPGRADER_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'UPGRADE_INTERFACE_VERSION',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'callerConfirmation',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'version',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const UUPS_TEST: Contract<typeof abi> = {
-	name: 'UUPS Test',
-	address: '0x06cfa08276605a7709a463a74e676610c4b1a0d1',
-	is_deprecated: false,
-	created_at: 1709039448,
-	abi: abi,
-}
-export default UUPS_TEST
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1744,
+  address: '0x83e405fdded8e31332aa2c359ed78a7d9de41ad9' as const,
+  contract_name: 'UUPSTest',
+  display_name: 'UUPS Test',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1709038665,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "bytes32",
+        "name": "neededRole"
+      }
+    ]
+  },
+  {
+    "name": "AddressEmptyCode",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967InvalidImplementation",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967NonPayable",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedInnerCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidInitialization",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotInitializing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "slot"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "Test",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "UPGRADER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "UPGRADE_INTERFACE_VERSION",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "callerConfirmation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "version",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,105 +1,32 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'payable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnerSet',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'changeOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'charge',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-		],
-		name: 'getBatchBalance',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable[]',
-				name: 'addrs',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amnts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'withdrawls',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const MULTI_SEND: Contract<typeof abi> = {
-	name: 'Multi Send',
-	address: '0x263eebee6ced9ff47fc9208cd461114e79a03f27',
-	is_deprecated: false,
-	created_at: 1698084111,
-	abi: abi,
-}
-export default MULTI_SEND
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 25546,
+  address: '0xe78e19491724e0acda38ecf3364a91a98fd1f33b' as const,
+  contract_name: 'MultiSend',
+  display_name: 'Multi Send',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1739354908,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "multiSend",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "transactions"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

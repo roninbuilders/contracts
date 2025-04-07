@@ -1,202 +1,180 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'AddedAccess',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'CheckAccessDisabled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'CheckAccessEnabled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferRequested',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'RemovedAccess',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'addAccess',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'checkEnabled',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'disableAccessCheck',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'enableAccessCheck',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'hasAccess',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'removeAccess',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const SIMPLE_WRITE_ACCESS_CONTROLLER: Contract<typeof abi> = {
-	name: 'Simple Write Access Controller',
-	address: '0x5ccd985e2e2ab9ab717acf6fc53307e6339f3ad3',
-	is_deprecated: false,
-	created_at: 1736846870,
-	abi: abi,
-}
-export default SIMPLE_WRITE_ACCESS_CONTROLLER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 7177,
+  address: '0x5ccd985e2e2ab9ab717acf6fc53307e6339f3ad3' as const,
+  contract_name: 'SimpleWriteAccessController',
+  display_name: 'Simple Write Access Controller',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1736846870,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AddedAccess",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ]
+  },
+  {
+    "name": "CheckAccessDisabled",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "CheckAccessEnabled",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "OwnershipTransferRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RemovedAccess",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ]
+  },
+  {
+    "name": "acceptOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "addAccess",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "checkEnabled",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "disableAccessCheck",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "enableAccessCheck",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "hasAccess",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "removeAccess",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

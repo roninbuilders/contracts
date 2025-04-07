@@ -1,0 +1,311 @@
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3730,
+  address: '0xd28d2e0b249b184bc72004d751b851170f64bcf4' as const,
+  contract_name: 'ApeironApostleExtension',
+  display_name: 'Apeiron Apostle Extension',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1724227887,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "apeironApostleContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getApostleData",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "gene"
+          },
+          {
+            "type": "uint256",
+            "name": "iv"
+          },
+          {
+            "type": "uint256",
+            "name": "createTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getMultipleApostleData",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_tokenIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "gene"
+          },
+          {
+            "type": "uint256",
+            "name": "iv"
+          },
+          {
+            "type": "uint256",
+            "name": "createTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setApeironApostleContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_apeironApostleContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,1429 +1,1207 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'configuredFeeBps',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'configuredFeeReceiver',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'passed',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'max',
-				type: 'uint256',
-			},
-		],
-		name: 'ConfiguredFeeTooHigh',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'NotTheFeeOperator',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NullFeeReceiver',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'percent',
-				type: 'uint256',
-			},
-		],
-		name: 'ReductionPercentExceedMaximum',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'ApprovalForAll',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oracle',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'questionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'outcomeSlotCount',
-				type: 'uint256',
-			},
-		],
-		name: 'ConditionPreparation',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oracle',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'questionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'outcomeSlotCount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'payoutNumerators',
-				type: 'uint256[]',
-			},
-		],
-		name: 'ConditionResolution',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'oldFeeBps',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newFeeBps',
-				type: 'uint256',
-			},
-		],
-		name: 'FeeBpsUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'oldFeeReceiver',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newFeeReceiver',
-				type: 'address',
-			},
-		],
-		name: 'FeeReceiverUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'bps',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-		],
-		name: 'FeeReductionConfigured',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'redeemer',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'indexSets',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'payout',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'fee',
-				type: 'uint256',
-			},
-		],
-		name: 'PayoutRedemption',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'stakeholder',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'partition',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'PositionSplit',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'stakeholder',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'partition',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'PositionsMerge',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'TransferBatch',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'TransferSingle',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'value',
-				type: 'string',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'URI',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'OPERATOR_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'WHITELIST_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'balanceOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-		],
-		name: 'balanceOfBatch',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'newFeeBps',
-				type: 'uint256',
-			},
-		],
-		name: 'configureFeeBps',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newReceiver',
-				type: 'address',
-			},
-		],
-		name: 'configureFeeReceiver',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'percent',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-		],
-		name: 'configureFeeReduction',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'account',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'percent',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct FeeManager.FeeReductionMsg',
-				name: 'reductionMsg',
-				type: 'tuple',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'configureFeeReductionWithSig',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'feeBps',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'feeReceiver',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'feeReductions',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'percent',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'indexSet',
-				type: 'uint256',
-			},
-		],
-		name: 'getCollectionId',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'oracle',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'questionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'outcomeSlotCount',
-				type: 'uint256',
-			},
-		],
-		name: 'getConditionId',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-		],
-		name: 'getOutcomeSlotCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'collectionId',
-				type: 'bytes32',
-			},
-		],
-		name: 'getPositionId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'grantAdmin',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOperator',
-				type: 'address',
-			},
-		],
-		name: 'grantOperator',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_whitelist',
-				type: 'address',
-			},
-		],
-		name: 'grantWhitelist',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'account',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'percent',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct FeeManager.FeeReductionMsg',
-				name: 'reductionMsg',
-				type: 'tuple',
-			},
-		],
-		name: 'hashReductionMsg',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'isApprovedForAll',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'guardian',
-				type: 'address',
-			},
-		],
-		name: 'isOperator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-		],
-		name: 'isTransferAllowed',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'whitelist',
-				type: 'address',
-			},
-		],
-		name: 'isWhitelist',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'partition',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'mergePositions',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'payoutDenominator',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'payoutNumerators',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'oracle',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'questionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'outcomeSlotCount',
-				type: 'uint256',
-			},
-		],
-		name: 'prepareCondition',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'indexSets',
-				type: 'uint256[]',
-			},
-		],
-		name: 'redeemPositions',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'questionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'payouts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'reportPayouts',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeBatchTransferFrom',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeTransferFrom',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'approved',
-				type: 'bool',
-			},
-		],
-		name: 'setApprovalForAll',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: 'collateralToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'parentCollectionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'partition',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'splitPosition',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'uri',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const CONDITIONAL_TOKENS: Contract<typeof abi> = {
-	name: 'Conditional Tokens',
-	address: '0x79286025f402b685b77d8094d449860467eeda19',
-	is_deprecated: false,
-	created_at: 1735558133,
-	abi: abi,
-}
-export default CONDITIONAL_TOKENS
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 25544,
+  address: '0xf74159bc0c8ef2f9660af1b131bea9bba675c710' as const,
+  contract_name: 'ConditionalTokens',
+  display_name: 'Conditional Tokens',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1739354527,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "configuredFeeBps"
+      },
+      {
+        "type": "address",
+        "name": "configuredFeeReceiver"
+      }
+    ]
+  },
+  {
+    "name": "ConfiguredFeeTooHigh",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "passed"
+      },
+      {
+        "type": "uint256",
+        "name": "max"
+      }
+    ]
+  },
+  {
+    "name": "NotTheFeeOperator",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "NullFeeReceiver",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ReductionPercentExceedMaximum",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "percent"
+      }
+    ]
+  },
+  {
+    "name": "ApprovalForAll",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "approved"
+      }
+    ]
+  },
+  {
+    "name": "ConditionPreparation",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "conditionId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "oracle",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "questionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "outcomeSlotCount"
+      }
+    ]
+  },
+  {
+    "name": "ConditionResolution",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "conditionId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "oracle",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "questionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "outcomeSlotCount"
+      },
+      {
+        "type": "uint256[]",
+        "name": "payoutNumerators"
+      }
+    ]
+  },
+  {
+    "name": "FeeBpsUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "oldFeeBps"
+      },
+      {
+        "type": "uint256",
+        "name": "newFeeBps"
+      }
+    ]
+  },
+  {
+    "name": "FeeReceiverUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldFeeReceiver"
+      },
+      {
+        "type": "address",
+        "name": "newFeeReceiver"
+      }
+    ]
+  },
+  {
+    "name": "FeeReductionConfigured",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "bps"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      }
+    ]
+  },
+  {
+    "name": "PayoutRedemption",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "redeemer",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "collateralToken",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "indexSets"
+      },
+      {
+        "type": "uint256",
+        "name": "payout"
+      },
+      {
+        "type": "uint256",
+        "name": "fee"
+      }
+    ]
+  },
+  {
+    "name": "PositionSplit",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakeholder",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "partition"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "PositionsMerge",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakeholder",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "partition"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TransferBatch",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ]
+  },
+  {
+    "name": "TransferSingle",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ]
+  },
+  {
+    "name": "URI",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "value"
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "OPERATOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "WHITELIST_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "balanceOfBatch",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "accounts"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "configureFeeBps",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "newFeeBps"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "configureFeeReceiver",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newReceiver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "configureFeeReduction",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "uint256",
+        "name": "percent"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "configureFeeReductionWithSig",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "reductionMsg",
+        "components": [
+          {
+            "type": "address",
+            "name": "account"
+          },
+          {
+            "type": "uint256",
+            "name": "percent"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "feeBps",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "feeReceiver",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "feeReductions",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "percent"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      }
+    ]
+  },
+  {
+    "name": "getCollectionId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      },
+      {
+        "type": "uint256",
+        "name": "indexSet"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getConditionId",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oracle"
+      },
+      {
+        "type": "bytes32",
+        "name": "questionId"
+      },
+      {
+        "type": "uint256",
+        "name": "outcomeSlotCount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getOutcomeSlotCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getPositionId",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "collectionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grantOperator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOperator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grantWhitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_whitelist"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "hashReductionMsg",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "reductionMsg",
+        "components": [
+          {
+            "type": "address",
+            "name": "account"
+          },
+          {
+            "type": "uint256",
+            "name": "percent"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isApprovedForAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "guardian"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isTransferAllowed",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isWhitelist",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "whitelist"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mergePositions",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "partition"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "payoutDenominator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "payoutNumerators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "prepareCondition",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oracle"
+      },
+      {
+        "type": "bytes32",
+        "name": "questionId"
+      },
+      {
+        "type": "uint256",
+        "name": "outcomeSlotCount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "redeemPositions",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "indexSets"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "reportPayouts",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "questionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "payouts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeBatchTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setApprovalForAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "bool",
+        "name": "approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "splitPosition",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "parentCollectionId"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "partition"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "uri",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,872 +1,751 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'payable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AlreadyBidding',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ContractBidderIsForbidden',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'EventIsNotCreatedOrAlreadyStarted',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InsufficientAmount',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidArrayLength',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidEventRange',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NameNotReserved',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NoOneBidded',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotYetEnded',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NullAssignment',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'QueryIsNotInPeriod',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'RatioIsTooLarge',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct EventRange',
-				name: 'range',
-				type: 'tuple',
-			},
-		],
-		name: 'AuctionEventSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'ratio',
-				type: 'uint256',
-			},
-		],
-		name: 'BidGapRatioUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'price',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address payable',
-				name: 'bidder',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'previousPrice',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousBidder',
-				type: 'address',
-			},
-		],
-		name: 'BidPlaced',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'startingPrices',
-				type: 'uint256[]',
-			},
-		],
-		name: 'LabelsListed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'TreasuryUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'DOMAIN_EXPIRY_DURATION',
-		outputs: [
-			{
-				internalType: 'uint64',
-				name: '',
-				type: 'uint64',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MAX_AUCTION_DOMAIN_EXPIRY',
-		outputs: [
-			{
-				internalType: 'uint64',
-				name: '',
-				type: 'uint64',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MAX_EXPIRY',
-		outputs: [
-			{
-				internalType: 'uint64',
-				name: '',
-				type: 'uint64',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MAX_PERCENTAGE',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'OPERATOR_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-		],
-		name: 'bulkClaimBidNames',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'claimedAts',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-		],
-		name: 'bulkRegister',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct EventRange',
-				name: 'range',
-				type: 'tuple',
-			},
-		],
-		name: 'createAuctionEvent',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'getAuction',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes32',
-						name: 'auctionId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startingPrice',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'address payable',
-								name: 'bidder',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'price',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'timestamp',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'claimedAt',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct INSAuction.Bid',
-						name: 'bid',
-						type: 'tuple',
-					},
-				],
-				internalType: 'struct INSAuction.DomainAuction',
-				name: 'auction',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: 'beatPrice',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-		],
-		name: 'getAuctionEvent',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct EventRange',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getBidGapRatio',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getRNSUnified',
-		outputs: [
-			{
-				internalType: 'contract INSUnified',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'getRoleMember',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTreasury',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'operators',
-				type: 'address[]',
-			},
-			{
-				internalType: 'contract INSUnified',
-				name: 'rnsUnified',
-				type: 'address',
-			},
-			{
-				internalType: 'address payable',
-				name: 'treasury',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'bidGapRatio',
-				type: 'uint256',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'startingPrices',
-				type: 'uint256[]',
-			},
-		],
-		name: 'listNamesForAuction',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'placeBid',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'reserved',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'auctionId',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endedAt',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct EventRange',
-				name: 'range',
-				type: 'tuple',
-			},
-		],
-		name: 'setAuctionEvent',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'ratio',
-				type: 'uint256',
-			},
-		],
-		name: 'setBidGapRatio',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'setTreasury',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const RNS_AUCTION: Contract<typeof abi> = {
-	name: 'RNS Auction',
-	address: '0x20143137cb90c8663e575bf509d8f370cd711cb8',
-	is_deprecated: false,
-	created_at: 1699254612,
-	abi: abi,
-}
-export default RNS_AUCTION
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1122,
+  address: '0x20143137cb90c8663e575bf509d8f370cd711cb8' as const,
+  contract_name: 'RNSAuction',
+  display_name: 'RNS Auction',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1699254612,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "payable",
+    "inputs": []
+  },
+  {
+    "name": "AlreadyBidding",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ContractBidderIsForbidden",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "EventIsNotCreatedOrAlreadyStarted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InsufficientAmount",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidArrayLength",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidEventRange",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NameNotReserved",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NoOneBidded",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotYetEnded",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NullAssignment",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "QueryIsNotInPeriod",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "RatioIsTooLarge",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AuctionEventSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "range",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startedAt"
+          },
+          {
+            "type": "uint256",
+            "name": "endedAt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "BidGapRatioUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "ratio"
+      }
+    ]
+  },
+  {
+    "name": "BidPlaced",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "address",
+        "name": "bidder"
+      },
+      {
+        "type": "uint256",
+        "name": "previousPrice"
+      },
+      {
+        "type": "address",
+        "name": "previousBidder"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "LabelsListed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "startingPrices"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TreasuryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "DOMAIN_EXPIRY_DURATION",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint64"
+      }
+    ]
+  },
+  {
+    "name": "MAX_AUCTION_DOMAIN_EXPIRY",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint64"
+      }
+    ]
+  },
+  {
+    "name": "MAX_EXPIRY",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint64"
+      }
+    ]
+  },
+  {
+    "name": "MAX_PERCENTAGE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "OPERATOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "bulkClaimBidNames",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "claimedAts"
+      }
+    ]
+  },
+  {
+    "name": "bulkRegister",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string[]",
+        "name": "labels"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ]
+  },
+  {
+    "name": "createAuctionEvent",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "range",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startedAt"
+          },
+          {
+            "type": "uint256",
+            "name": "endedAt"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId"
+      }
+    ]
+  },
+  {
+    "name": "getAuction",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "name": "auction",
+        "components": [
+          {
+            "type": "bytes32",
+            "name": "auctionId"
+          },
+          {
+            "type": "uint256",
+            "name": "startingPrice"
+          },
+          {
+            "type": "tuple",
+            "name": "bid",
+            "components": [
+              {
+                "type": "address",
+                "name": "bidder"
+              },
+              {
+                "type": "uint256",
+                "name": "price"
+              },
+              {
+                "type": "uint256",
+                "name": "timestamp"
+              },
+              {
+                "type": "uint256",
+                "name": "claimedAt"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "beatPrice"
+      }
+    ]
+  },
+  {
+    "name": "getAuctionEvent",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startedAt"
+          },
+          {
+            "type": "uint256",
+            "name": "endedAt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getBidGapRatio",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRNSUnified",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getTreasury",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "address[]",
+        "name": "operators"
+      },
+      {
+        "type": "address",
+        "name": "rnsUnified"
+      },
+      {
+        "type": "address",
+        "name": "treasury"
+      },
+      {
+        "type": "uint256",
+        "name": "bidGapRatio"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "listNamesForAuction",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "startingPrices"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "placeBid",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "reserved",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAuctionEvent",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "auctionId"
+      },
+      {
+        "type": "tuple",
+        "name": "range",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startedAt"
+          },
+          {
+            "type": "uint256",
+            "name": "endedAt"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBidGapRatio",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "ratio"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasury",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

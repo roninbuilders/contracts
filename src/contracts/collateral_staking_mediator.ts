@@ -1,676 +1,528 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		payable: true,
-		stateMutability: 'payable',
-		type: 'fallback',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'accruedRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'accruedRewardsRon',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'activeCollateralizedValidators',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'stakingManager',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-		],
-		name: 'canClaimRewards',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'stakingManager',
-				type: 'address',
-			},
-		],
-		name: 'claimPendingRewards',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'consensusAddrList',
-				type: 'address[]',
-			},
-		],
-		name: 'claimRewardsRon',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'collateralStakingManager',
-		outputs: [
-			{
-				internalType: 'contract CollateralStakingManagerInterface',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'collateralizedDelegatingAmountPerValidator',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'consensusAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'consensusAddrTarget',
-				type: 'address',
-			},
-		],
-		name: 'delegateCollateralizedRon',
-		outputs: [],
-		payable: true,
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'consensusAddr',
-				type: 'address',
-			},
-		],
-		name: 'delegateUncollateralizedRon',
-		outputs: [],
-		payable: true,
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'getActiveCollateralizedValidators',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'getOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-		],
-		name: 'getPendingRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'collateralStakingManager_',
-				type: 'address',
-			},
-			{
-				internalType: 'address payable',
-				name: 'owner_',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'isCollateralStakingMediator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'moveUncollateralizedErc20ToProtocol',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'consensusAddr',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'consensusAddrTarget',
-				type: 'address',
-			},
-		],
-		name: 'moveUncollateralizedRonToProtocol',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC721Received',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'poolToUndelegateCooldown',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'consensusAddrList',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'redeemTokens',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'address payable',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'redeemCollateralizedRon',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'consensusAddrList',
-				type: 'address[]',
-			},
-		],
-		name: 'redelegateRewards',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'stakingManager',
-				type: 'address',
-			},
-		],
-		name: 'restakePendingRewards',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'consensusAddrSrc',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'consensusAddrDst',
-				type: 'address',
-			},
-		],
-		name: 'setValidatorTargetsForRestaking',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'stakeErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'stakeErc721',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'stakeUncollateralizedErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'uncollateralizedDelegatingAmountPerValidator',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'uncollateralizedDelegatingAmountRon',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'uncollateralizedStakingAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'consensusAddrList',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'undelegateUncollateralizedRon',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-		],
-		name: 'unstakeErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-		],
-		name: 'unstakeErc721',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'unstakeUncollateralizedErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'validatorToRestakingTarget',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'validatorUsedForCollateral',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const COLLATERAL_STAKING_MEDIATOR: Contract<typeof abi> = {
-	name: 'Collateral Staking Mediator',
-	address: '0xec8adb923ac6637ac591cbb2a0d0b2d52d41494f',
-	is_deprecated: false,
-	created_at: 1692116109,
-	abi: abi,
-}
-export default COLLATERAL_STAKING_MEDIATOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 25700,
+  address: '0x0d6085f7673337b50e0db07f6f7afff6be766321' as const,
+  contract_name: 'CollateralStakingMediator',
+  display_name: 'Collateral Staking Mediator',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1739882134,
+  abi: [
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  },
+  {
+    "name": "accruedRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "accruedRewardsRon",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "activeCollateralizedValidators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "canClaimRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakingManager"
+      },
+      {
+        "type": "address",
+        "name": "stakingPool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "claimPendingRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakingPool"
+      },
+      {
+        "type": "address",
+        "name": "stakingManager"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claimRewardsRon",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "collateralStakingManager",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "collateralizedDelegatingAmountPerValidator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "delegateCollateralizedRon",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddrTarget"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "delegateUncollateralizedRon",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getActiveCollateralizedValidators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getPendingRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakingPool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralStakingManager_"
+      },
+      {
+        "type": "address",
+        "name": "owner_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isCollateralStakingMediator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "moveUncollateralizedErc20ToProtocol",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "moveUncollateralizedRonToProtocol",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddrTarget"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "onERC721Received",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "poolToUndelegateCooldown",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "redeemCollateralizedRon",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      },
+      {
+        "type": "uint256[]",
+        "name": "redeemTokens"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "redelegateRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "restakePendingRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "stakingPool"
+      },
+      {
+        "type": "address",
+        "name": "stakingManager"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setValidatorTargetsForRestaking",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddrSrc"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddrDst"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeErc721",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeUncollateralizedErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "uncollateralizedDelegatingAmountPerValidator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "uncollateralizedDelegatingAmountRon",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "uncollateralizedStakingAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "undelegateUncollateralizedRon",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstakeErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstakeErc721",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstakeUncollateralizedErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "validatorToRestakingTarget",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "validatorUsedForCollateral",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "withdrawErc20Jaihoz",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

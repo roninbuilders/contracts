@@ -1,0 +1,21 @@
+[install]
+# Install peer dependencies automatically
+peer = true
+
+# Enable debug logging
+debug = false
+
+[install.scopes]
+# Use the public NPM registry for all scopes
+"*" = "https://registry.npmjs.org"
+
+[test]
+coverage = false
+ignore = ["src/contracts/**"]
+
+# Use TypeScript configuration
+typescript = true
+
+[runtime]
+# Enable JSX syntax
+jsx = "react"

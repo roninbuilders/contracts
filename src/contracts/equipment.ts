@@ -1,758 +1,630 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'vxId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'itemId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'itemTokenType',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'uniqueItemBaseId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'uniqueItemStats',
-				type: 'uint256',
-			},
-		],
-		name: 'EquippedItem',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'vxId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'itemId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'itemTokenType',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'uniqueItemBaseId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'uniqueItemStats',
-				type: 'uint256',
-			},
-		],
-		name: 'UnequippedItem',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'vxId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newScore',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'oldScore',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'vxNonce',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'registryVersion',
-				type: 'uint256',
-			},
-		],
-		name: 'VxScoreUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[5]',
-				name: '_itemTypes',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256[5]',
-				name: '_tokenTypes',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256[5]',
-				name: '_itemIds',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'equipItems',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'equipmentRegistry',
-		outputs: [
-			{
-				internalType: 'contract EquipmentRegistry',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'getGearScore',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_vxs',
-				type: 'uint256[]',
-			},
-		],
-		name: 'getGearScores',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'getGeneratedVxScore',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_vxs',
-				type: 'uint256[]',
-			},
-		],
-		name: 'getGeneratedVxScores',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'scores',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'getItems',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_tokenTypes',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_itemIds',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_vxs',
-				type: 'uint256[]',
-			},
-		],
-		name: 'getItemsBatch',
-		outputs: [
-			{
-				internalType: 'uint256[][]',
-				name: '_tokenTypes',
-				type: 'uint256[][]',
-			},
-			{
-				internalType: 'uint256[][]',
-				name: '_itemIds',
-				type: 'uint256[][]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'getVxInfo',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'score',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'itemsIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'itemsTokenTypes',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Equipment.VxInfo',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_vxs',
-				type: 'uint256[]',
-			},
-		],
-		name: 'getVxInfoBatch',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'score',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'itemsIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'itemsTokenTypes',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Equipment.VxInfo[]',
-				name: '_infos',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'getVxSetScore',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_score',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_vxAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_vxArmoryAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_vxArmoryUniqueAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_equipmentRegistryAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_adventure',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: '_maxItemType',
-				type: 'uint8',
-			},
-		],
-		name: 'initialize',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'maxItemType',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC1155BatchReceived',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC1155Received',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC721Received',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint8',
-				name: '_max',
-				type: 'uint8',
-			},
-		],
-		name: 'setMax',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[5]',
-				name: '_itemTypes',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_vx',
-				type: 'uint256',
-			},
-		],
-		name: 'unequipItems',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_reg',
-				type: 'address',
-			},
-		],
-		name: 'updateEquipmentRegistry',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vxArmory',
-		outputs: [
-			{
-				internalType: 'contract IERC1155',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vxArmoryUnique',
-		outputs: [
-			{
-				internalType: 'contract IERC721',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vxKongz',
-		outputs: [
-			{
-				internalType: 'contract IERC721',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vxNonce',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vxRegistryVersion',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vxScore',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const EQUIPMENT: Contract<typeof abi> = {
-	name: 'Equipment',
-	address: '0x0ef6701d812099619a9bdd5d02417eacd72e7c70',
-	is_deprecated: false,
-	created_at: 1711394652,
-	abi: abi,
-}
-export default EQUIPMENT
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 2055,
+  address: '0x0ef6701d812099619a9bdd5d02417eacd72e7c70' as const,
+  contract_name: 'Equipment',
+  display_name: 'Equipment',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1711394652,
+  abi: [
+  {
+    "name": "EquippedItem",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "vxId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "itemTokenType"
+      },
+      {
+        "type": "uint256",
+        "name": "uniqueItemBaseId"
+      },
+      {
+        "type": "uint256",
+        "name": "uniqueItemStats"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "UnequippedItem",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "vxId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "itemId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "itemTokenType"
+      },
+      {
+        "type": "uint256",
+        "name": "uniqueItemBaseId"
+      },
+      {
+        "type": "uint256",
+        "name": "uniqueItemStats"
+      }
+    ]
+  },
+  {
+    "name": "VxScoreUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "vxId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "newScore"
+      },
+      {
+        "type": "uint256",
+        "name": "oldScore"
+      },
+      {
+        "type": "uint256",
+        "name": "vxNonce"
+      },
+      {
+        "type": "uint256",
+        "name": "registryVersion",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "equipItems",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[5]",
+        "name": "_itemTypes"
+      },
+      {
+        "type": "uint256[5]",
+        "name": "_tokenTypes"
+      },
+      {
+        "type": "uint256[5]",
+        "name": "_itemIds"
+      },
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "equipmentRegistry",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getGearScore",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getGearScores",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_vxs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getGeneratedVxScore",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getGeneratedVxScores",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_vxs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "scores"
+      }
+    ]
+  },
+  {
+    "name": "getItems",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "_tokenTypes"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_itemIds"
+      }
+    ]
+  },
+  {
+    "name": "getItemsBatch",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_vxs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[][]",
+        "name": "_tokenTypes"
+      },
+      {
+        "type": "uint256[][]",
+        "name": "_itemIds"
+      }
+    ]
+  },
+  {
+    "name": "getVxInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "score"
+          },
+          {
+            "type": "uint256[]",
+            "name": "itemsIds"
+          },
+          {
+            "type": "uint256[]",
+            "name": "itemsTokenTypes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getVxInfoBatch",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_vxs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "_infos",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "score"
+          },
+          {
+            "type": "uint256[]",
+            "name": "itemsIds"
+          },
+          {
+            "type": "uint256[]",
+            "name": "itemsTokenTypes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getVxSetScore",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_score"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_vxAddress"
+      },
+      {
+        "type": "address",
+        "name": "_vxArmoryAddress"
+      },
+      {
+        "type": "address",
+        "name": "_vxArmoryUniqueAddress"
+      },
+      {
+        "type": "address",
+        "name": "_equipmentRegistryAddress"
+      },
+      {
+        "type": "address",
+        "name": "_adventure"
+      },
+      {
+        "type": "uint8",
+        "name": "_maxItemType"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "maxItemType",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "onERC1155BatchReceived",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "onERC1155Received",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "onERC721Received",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setMax",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "_max"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unequipItems",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[5]",
+        "name": "_itemTypes"
+      },
+      {
+        "type": "uint256",
+        "name": "_vx"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateEquipmentRegistry",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_reg"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vxArmory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "vxArmoryUnique",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "vxKongz",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "vxNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "vxRegistryVersion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "vxScore",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

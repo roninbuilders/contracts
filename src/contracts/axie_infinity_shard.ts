@@ -1,657 +1,522 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'Approval',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-		],
-		name: 'MinterAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-		],
-		name: 'MinterRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'SpenderUnwhitelisted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'SpenderWhitelisted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'Transfer',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedMinters',
-				type: 'address[]',
-			},
-		],
-		name: 'addMinters',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'allowance',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'approve',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'balanceOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'burn',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'burnFrom',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'cappedSupply',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'decimals',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'isMinter',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'mint',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'minter',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'minters',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'name',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'removeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedMinters',
-				type: 'address[]',
-			},
-		],
-		name: 'removeMinters',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'symbol',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'totalSupply',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'transfer',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_value',
-				type: 'uint256',
-			},
-		],
-		name: 'transferFrom',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_success',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'unwhitelist',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'whitelist',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'whitelisted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const AXIE_INFINITY_SHARD: Contract<typeof abi> = {
-	name: 'Axie Infinity Shard',
-	address: '0x97a9107c1793bc407d6f527b77e7fff4d812bece',
-	is_deprecated: false,
-	created_at: 1619582027,
-	abi: abi,
-}
-export default AXIE_INFINITY_SHARD
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 197,
+  address: '0x97a9107c1793bc407d6f527b77e7fff4d812bece' as const,
+  contract_name: 'AXS',
+  display_name: 'Axie Infinity Shard',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1619582027,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdminRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Approval",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_spender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ]
+  },
+  {
+    "name": "MinterAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "MinterRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "SpenderUnwhitelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SpenderWhitelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Transfer",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "addMinters",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedMinters"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "allowance",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ]
+  },
+  {
+    "name": "approve",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender"
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "burn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "burnFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from"
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "cappedSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "decimals",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "isMinter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "minter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minters",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeMinters",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedMinters"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "symbol",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "totalSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "transfer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "transferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from"
+      },
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_success"
+      }
+    ]
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "unwhitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "whitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "whitelisted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

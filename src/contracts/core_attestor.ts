@@ -1,722 +1,624 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'attestationsRegistry',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'relayer',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'withdrawAddress',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'IdHasNoRoot',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InsufficientFee',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint64',
-				name: 'expirationDate',
-				type: 'uint64',
-			},
-			{
-				internalType: 'string',
-				name: 'attestationURL',
-				type: 'string',
-			},
-			{
-				internalType: 'bytes32[]',
-				name: 'proof',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'InvalidData',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidSignature',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'signer',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-		],
-		name: 'InvalidSigner',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ReceiverNotOwner',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'WithdrawAddressNotSet',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'WithdrawFail',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'fee',
-				type: 'uint256',
-			},
-		],
-		name: 'FeeSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'root',
-				type: 'bytes32',
-			},
-		],
-		name: 'RootAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'root',
-				type: 'bytes32',
-			},
-		],
-		name: 'RootSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'ATTESTOR_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: '_attestationsRegistry',
-		outputs: [
-			{
-				internalType: 'contract CliqueAttestationsRegistry',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: '_fees',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'fee',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: '_relayer',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: '_roots',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'root',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: '_withdrawAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'receiver',
-						type: 'address',
-					},
-					{
-						internalType: 'uint64',
-						name: 'expirationDate',
-						type: 'uint64',
-					},
-					{
-						internalType: 'string',
-						name: 'schema',
-						type: 'string',
-					},
-					{
-						internalType: 'string',
-						name: 'attestationURL',
-						type: 'string',
-					},
-					{
-						internalType: 'bytes32[]',
-						name: 'proof',
-						type: 'bytes32[]',
-					},
-				],
-				internalType: 'struct AirdropData[]',
-				name: 'leaves',
-				type: 'tuple[]',
-			},
-		],
-		name: 'airdropAttestations',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint64',
-				name: 'expirationDate',
-				type: 'uint64',
-			},
-			{
-				internalType: 'string',
-				name: 'schema',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'attestationURL',
-				type: 'string',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'attestAttestation',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-		],
-		name: 'revokeAttestation',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'fee',
-				type: 'uint256',
-			},
-		],
-		name: 'setFee',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'relayer',
-				type: 'address',
-			},
-		],
-		name: 'setRelayer',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'root',
-				type: 'bytes32',
-			},
-		],
-		name: 'setRoot',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'withdrawAddress',
-				type: 'address',
-			},
-		],
-		name: 'setWithdrawAddress',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint64',
-				name: 'expirationDate',
-				type: 'uint64',
-			},
-			{
-				internalType: 'string',
-				name: 'attestationURL',
-				type: 'string',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'updateAttestation',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdraw',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const CORE_ATTESTOR: Contract<typeof abi> = {
-	name: 'Core Attestor',
-	address: '0x065e959ffd4c76ae2e0d31cfcf91c0c9834472ec',
-	is_deprecated: false,
-	created_at: 1692001638,
-	abi: abi,
-}
-export default CORE_ATTESTOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 542,
+  address: '0x065e959ffd4c76ae2e0d31cfcf91c0c9834472ec' as const,
+  contract_name: 'CoreAttestor',
+  display_name: 'Core Attestor',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1692001638,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "attestationsRegistry"
+      },
+      {
+        "type": "address",
+        "name": "relayer"
+      },
+      {
+        "type": "address",
+        "name": "withdrawAddress"
+      }
+    ]
+  },
+  {
+    "name": "IdHasNoRoot",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ]
+  },
+  {
+    "name": "InsufficientFee",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidData",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint64",
+        "name": "expirationDate"
+      },
+      {
+        "type": "string",
+        "name": "attestationURL"
+      },
+      {
+        "type": "bytes32[]",
+        "name": "proof"
+      }
+    ]
+  },
+  {
+    "name": "InvalidSignature",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidSigner",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "signer"
+      },
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ]
+  },
+  {
+    "name": "ReceiverNotOwner",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "WithdrawAddressNotSet",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "WithdrawFail",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FeeSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "fee"
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RootAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "bytes32",
+        "name": "root"
+      }
+    ]
+  },
+  {
+    "name": "RootSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "bytes32",
+        "name": "root"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "ATTESTOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "_attestationsRegistry",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "_fees",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "fee"
+      }
+    ]
+  },
+  {
+    "name": "_relayer",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "_roots",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "root"
+      }
+    ]
+  },
+  {
+    "name": "_withdrawAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "airdropAttestations",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "tuple[]",
+        "name": "leaves",
+        "components": [
+          {
+            "type": "address",
+            "name": "receiver"
+          },
+          {
+            "type": "uint64",
+            "name": "expirationDate"
+          },
+          {
+            "type": "string",
+            "name": "schema"
+          },
+          {
+            "type": "string",
+            "name": "attestationURL"
+          },
+          {
+            "type": "bytes32[]",
+            "name": "proof"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "attestAttestation",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint64",
+        "name": "expirationDate"
+      },
+      {
+        "type": "string",
+        "name": "schema"
+      },
+      {
+        "type": "string",
+        "name": "attestationURL"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeAttestation",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setFee",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "fee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRelayer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relayer"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRoot",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "bytes32",
+        "name": "root"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setWithdrawAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "withdrawAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "updateAttestation",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      },
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint64",
+        "name": "expirationDate"
+      },
+      {
+        "type": "string",
+        "name": "attestationURL"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

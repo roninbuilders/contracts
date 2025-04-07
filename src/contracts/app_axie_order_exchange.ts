@@ -1,833 +1,707 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'maker',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-		],
-		name: 'MakerNonceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'requester',
-				type: 'address',
-			},
-		],
-		name: 'OrderCancelled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				components: [
-					{
-						components: [
-							{
-								internalType: 'address',
-								name: 'maker',
-								type: 'address',
-							},
-							{
-								internalType: 'enum OrderKind',
-								name: 'kind',
-								type: 'uint8',
-							},
-							{
-								components: [
-									{
-										internalType: 'enum TokenStandard',
-										name: 'erc',
-										type: 'uint8',
-									},
-									{
-										internalType: 'address',
-										name: 'addr',
-										type: 'address',
-									},
-									{
-										internalType: 'uint256',
-										name: 'id',
-										type: 'uint256',
-									},
-									{
-										internalType: 'uint256',
-										name: 'quantity',
-										type: 'uint256',
-									},
-								],
-								internalType: 'struct Asset[]',
-								name: 'assets',
-								type: 'tuple[]',
-							},
-							{
-								internalType: 'uint256',
-								name: 'expiredAt',
-								type: 'uint256',
-							},
-							{
-								internalType: 'address',
-								name: 'paymentToken',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'startedAt',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'baseUnitPrice',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'endedAt',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'endedUnitPrice',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'expectedState',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'nonce',
-								type: 'uint256',
-							},
-							{
-								internalType: 'bytes32',
-								name: 'hash',
-								type: 'bytes32',
-							},
-							{
-								internalType: 'bool',
-								name: 'verified',
-								type: 'bool',
-							},
-						],
-						internalType: 'struct GenericOrder',
-						name: 'info',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint256',
-						name: 'realPrice',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bytes',
-						name: 'extraData',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'refunder',
-						type: 'address',
-					},
-				],
-				indexed: false,
-				internalType: 'struct GenericOrderExtended',
-				name: 'order',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'settlePrice',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'settleToken',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'matcher',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'acceptedSettlePrice',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'enum IMarketCommission.AllocType',
-						name: 'allocType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address payable',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'owner',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'ratio',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'value',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct IMarketCommission.Allocation[]',
-				name: 'receivedAllocs',
-				type: 'tuple[]',
-			},
-		],
-		name: 'OrderMatched',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'MARKET_OPERATOR',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes',
-				name: 'orderData',
-				type: 'bytes',
-			},
-		],
-		name: 'cancelOrder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'getRoleMember',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleMemberCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'enum TokenStandard',
-						name: 'erc',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'addr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'id',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'quantity',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct Asset[]',
-				name: 'assets',
-				type: 'tuple[]',
-			},
-		],
-		name: 'getState',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'increaseNonceMaker',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'interfaceName',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'maker',
-				type: 'address',
-			},
-		],
-		name: 'makerNonce',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		name: 'orderFinalized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes',
-				name: 'orderData',
-				type: 'bytes',
-			},
-		],
-		name: 'orderValid',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes',
-						name: 'orderData',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'referralAddr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'refunder',
-						type: 'address',
-					},
-				],
-				internalType: 'struct SettleParameter',
-				name: 'settleInfo',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: 'settlePrice',
-				type: 'uint256',
-			},
-		],
-		name: 'settleOrder',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes',
-						name: 'orderData',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'referralAddr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'refunder',
-						type: 'address',
-					},
-				],
-				internalType: 'struct SettleParameter',
-				name: 'settleInfo',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: 'deadline',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'path',
-				type: 'address[]',
-			},
-		],
-		name: 'swapRONAndSettleOrder',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes',
-						name: 'orderData',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'referralAddr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expectedState',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'recipient',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'refunder',
-						type: 'address',
-					},
-				],
-				internalType: 'struct SettleParameter',
-				name: 'settleInfo',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: 'settlePrice',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'deadline',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: 'path',
-				type: 'address[]',
-			},
-		],
-		name: 'swapTokensAndSettleOrder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'hashList',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'tryBulkCancelOrderByHash',
-		outputs: [
-			{
-				internalType: 'bool[]',
-				name: 'orderAlreadyFinalized',
-				type: 'bool[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const APP_AXIE_ORDER_EXCHANGE: Contract<typeof abi> = {
-	name: 'App Axie Order Exchange',
-	address: '0xe35cbc0a0f2025e3bd9ec8e1f30644df333c820f',
-	is_deprecated: false,
-	created_at: 1700712603,
-	abi: abi,
-}
-export default APP_AXIE_ORDER_EXCHANGE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 27345,
+  address: '0xe22984ad7354fd53dc4fbd11cee685c012ad4ac2' as const,
+  contract_name: 'AppAxieOrderExchange',
+  display_name: 'App Axie Order Exchange',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1741321169,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MakerNonceUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "maker"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      }
+    ]
+  },
+  {
+    "name": "OrderCancelled",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address",
+        "name": "requester"
+      }
+    ]
+  },
+  {
+    "name": "OrderMatched",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "tuple",
+            "name": "info",
+            "components": [
+              {
+                "type": "address",
+                "name": "maker"
+              },
+              {
+                "type": "uint8",
+                "name": "kind"
+              },
+              {
+                "type": "tuple[]",
+                "name": "assets",
+                "components": [
+                  {
+                    "type": "uint8",
+                    "name": "erc"
+                  },
+                  {
+                    "type": "address",
+                    "name": "addr"
+                  },
+                  {
+                    "type": "uint256",
+                    "name": "id"
+                  },
+                  {
+                    "type": "uint256",
+                    "name": "quantity"
+                  }
+                ]
+              },
+              {
+                "type": "uint256",
+                "name": "expiredAt"
+              },
+              {
+                "type": "address",
+                "name": "paymentToken"
+              },
+              {
+                "type": "uint256",
+                "name": "startedAt"
+              },
+              {
+                "type": "uint256",
+                "name": "baseUnitPrice"
+              },
+              {
+                "type": "uint256",
+                "name": "endedAt"
+              },
+              {
+                "type": "uint256",
+                "name": "endedUnitPrice"
+              },
+              {
+                "type": "uint256",
+                "name": "expectedState"
+              },
+              {
+                "type": "uint256",
+                "name": "nonce"
+              },
+              {
+                "type": "bytes32",
+                "name": "hash"
+              },
+              {
+                "type": "bool",
+                "name": "verified"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "realPrice"
+          },
+          {
+            "type": "bytes",
+            "name": "extraData"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "refunder"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "settlePrice"
+      },
+      {
+        "type": "address",
+        "name": "settleToken"
+      },
+      {
+        "type": "address",
+        "name": "matcher"
+      },
+      {
+        "type": "uint256",
+        "name": "acceptedSettlePrice"
+      },
+      {
+        "type": "tuple[]",
+        "name": "receivedAllocs",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "allocType"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "uint256",
+            "name": "ratio"
+          },
+          {
+            "type": "uint256",
+            "name": "value"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MARKET_OPERATOR",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "bulkCancelOrders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes[]",
+        "name": "orders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cancelOrder",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "orderData"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getState",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "assets",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "erc"
+          },
+          {
+            "type": "address",
+            "name": "addr"
+          },
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "quantity"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "increaseNonceMaker",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "interfaceName",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "makerNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "maker"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "orderFinalized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "orderValid",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      },
+      {
+        "type": "bytes",
+        "name": "orderData"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "settleOrder",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "settleInfo",
+        "components": [
+          {
+            "type": "bytes",
+            "name": "orderData"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          },
+          {
+            "type": "address",
+            "name": "referralAddr"
+          },
+          {
+            "type": "uint256",
+            "name": "expectedState"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "refunder"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "settlePrice"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "swapRONAndSettleOrder",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "settleInfo",
+        "components": [
+          {
+            "type": "bytes",
+            "name": "orderData"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          },
+          {
+            "type": "address",
+            "name": "referralAddr"
+          },
+          {
+            "type": "uint256",
+            "name": "expectedState"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "refunder"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "deadline"
+      },
+      {
+        "type": "address[]",
+        "name": "path"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "swapTokensAndSettleOrder",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "settleInfo",
+        "components": [
+          {
+            "type": "bytes",
+            "name": "orderData"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          },
+          {
+            "type": "address",
+            "name": "referralAddr"
+          },
+          {
+            "type": "uint256",
+            "name": "expectedState"
+          },
+          {
+            "type": "address",
+            "name": "recipient"
+          },
+          {
+            "type": "address",
+            "name": "refunder"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "settlePrice"
+      },
+      {
+        "type": "uint256",
+        "name": "deadline"
+      },
+      {
+        "type": "address[]",
+        "name": "path"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tryBulkCancelOrderByHash",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32[]",
+        "name": "hashList"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool[]",
+        "name": "orderAlreadyFinalized"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

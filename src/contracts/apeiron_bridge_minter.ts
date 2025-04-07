@@ -1,687 +1,580 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_fromNetworkChainId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_requestIDs',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'enum ApeironBridgeMinter.NFT_TYPE',
-				name: '_nftType',
-				type: 'uint8',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_tokenIDs',
-				type: 'uint256[]',
-			},
-		],
-		name: 'MintAsset',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'apostleContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironApostle',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'blacklistContract',
-		outputs: [
-			{
-				internalType: 'contract IBlacklist',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'godiverseCollectionContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironGodiverseCollection',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_targetWallet',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_fromNetworkChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_requestIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_tokenIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_genes',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_IVs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_createTimes',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'mintApostle',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_targetWallet',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_fromNetworkChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_requestIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_tokenIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_amounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'mintGodiverse',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_targetWallet',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_fromNetworkChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_requestIDs',
-				type: 'uint256[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256[]',
-						name: 'tokenIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'genes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'breedCounts',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'breedCountMaxs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'createTimes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'bornTimes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'lastBreedTimes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'parents',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'children',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct ApeironBridgeMinter.MintPlanetStruct',
-				name: '_mintPlanetStructs',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'mintPlanet',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_targetWallet',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_fromNetworkChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_requestIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_tokenIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_genes',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'mintStar',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'mintedTokenMapping',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'planetContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironPlanet',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'primevalPlanetId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'starContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironStar',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'starDataContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironStarData',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_planetContractAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_starContractAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_starDataContractAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_apostleContractAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_godiverseCollectionContractAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_systemAddress',
-				type: 'address',
-			},
-		],
-		name: 'updateContractSetting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_primevalPlanetId',
-				type: 'uint256',
-			},
-		],
-		name: 'updatePrimevalPlanetId',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const APEIRON_BRIDGE_MINTER: Contract<typeof abi> = {
-	name: 'Apeiron Bridge Minter',
-	address: '0xb85a5d588e88bba273b47704e3ce5ff0c8a36ab3',
-	is_deprecated: false,
-	created_at: 1702606635,
-	abi: abi,
-}
-export default APEIRON_BRIDGE_MINTER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1399,
+  address: '0xb85a5d588e88bba273b47704e3ce5ff0c8a36ab3' as const,
+  contract_name: 'ApeironBridgeMinter',
+  display_name: 'Apeiron Bridge Minter',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1702606635,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "MintAsset",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_fromNetworkChainId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_requestIDs"
+      },
+      {
+        "type": "uint8",
+        "name": "_nftType"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIDs"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "apostleContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "blacklistContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "godiverseCollectionContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mintApostle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      },
+      {
+        "type": "uint256",
+        "name": "_fromNetworkChainId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_requestIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_genes"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_IVs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_createTimes"
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintGodiverse",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      },
+      {
+        "type": "uint256",
+        "name": "_fromNetworkChainId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_requestIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amounts"
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintPlanet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      },
+      {
+        "type": "uint256",
+        "name": "_fromNetworkChainId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_requestIDs"
+      },
+      {
+        "type": "tuple",
+        "name": "_mintPlanetStructs",
+        "components": [
+          {
+            "type": "uint256[]",
+            "name": "tokenIDs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "genes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "breedCounts"
+          },
+          {
+            "type": "uint256[]",
+            "name": "breedCountMaxs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "createTimes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "bornTimes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "lastBreedTimes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "parents"
+          },
+          {
+            "type": "uint256[]",
+            "name": "children"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintStar",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      },
+      {
+        "type": "uint256",
+        "name": "_fromNetworkChainId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_requestIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_genes"
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintedTokenMapping",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "planetContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "primevalPlanetId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "starContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "starDataContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "updateContractSetting",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_planetContractAddress"
+      },
+      {
+        "type": "address",
+        "name": "_starContractAddress"
+      },
+      {
+        "type": "address",
+        "name": "_starDataContractAddress"
+      },
+      {
+        "type": "address",
+        "name": "_apostleContractAddress"
+      },
+      {
+        "type": "address",
+        "name": "_godiverseCollectionContractAddress"
+      },
+      {
+        "type": "address",
+        "name": "_systemAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updatePrimevalPlanetId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_primevalPlanetId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

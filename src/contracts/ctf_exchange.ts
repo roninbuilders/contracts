@@ -1,1907 +1,1617 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_collateral',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_ctf',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_proxyFactory',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_safeFactory',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_proxyWalletFactory',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AlreadyRegistered',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FeeTooHigh',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidComplement',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidNonce',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidSignature',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidTokenId',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'MakingGtRemaining',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'MismatchedTokenIds',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotAdmin',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotCrossing',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotOperator',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotOwner',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotTaker',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'OrderExpired',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'OrderFilledOrCancelled',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'Paused',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'TooLittleTokensReceived',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'receiver',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'FeeCharged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAdminAddress',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'NewAdmin',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOperatorAddress',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'NewOperator',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'orderHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'OrderCancelled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'orderHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'maker',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'taker',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'makerAssetId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'takerAssetId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'makerAmountFilled',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'takerAmountFilled',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'fee',
-				type: 'uint256',
-			},
-		],
-		name: 'OrderFilled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'takerOrderHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'takerOrderMaker',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'makerAssetId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'takerAssetId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'makerAmountFilled',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'takerAmountFilled',
-				type: 'uint256',
-			},
-		],
-		name: 'OrdersMatched',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldProxyFactory',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newProxyFactory',
-				type: 'address',
-			},
-		],
-		name: 'ProxyFactoryUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldProxyFactory',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newProxyFactory',
-				type: 'address',
-			},
-		],
-		name: 'ProxyWalletFactoryUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'removedAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'RemovedAdmin',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'removedOperator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'RemovedOperator',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldSafeFactory',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newSafeFactory',
-				type: 'address',
-			},
-		],
-		name: 'SafeFactoryUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'token0',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'token1',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-		],
-		name: 'TokenRegistered',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'pauser',
-				type: 'address',
-			},
-		],
-		name: 'TradingPaused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'pauser',
-				type: 'address',
-			},
-		],
-		name: 'TradingUnpaused',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin_',
-				type: 'address',
-			},
-		],
-		name: 'addAdmin',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator_',
-				type: 'address',
-			},
-		],
-		name: 'addOperator',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'admins',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'order',
-				type: 'tuple',
-			},
-		],
-		name: 'cancelOrder',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order[]',
-				name: 'orders',
-				type: 'tuple[]',
-			},
-		],
-		name: 'cancelOrders',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'domainSeparator',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'order',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: 'fillAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'fillOrder',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order[]',
-				name: 'orders',
-				type: 'tuple[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'fillAmounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'fillOrders',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getCollateral',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'token',
-				type: 'uint256',
-			},
-		],
-		name: 'getComplement',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'token',
-				type: 'uint256',
-			},
-		],
-		name: 'getConditionId',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getCtf',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getMaxFeeRate',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'orderHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'getOrderStatus',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isFilledOrCancelled',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'remaining',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct OrderStatus',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getPolyProxyFactoryImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'getPolyProxyWalletAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getProxyFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'getProxyWalletAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'getSafeAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getSafeFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getSafeFactoryImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'order',
-				type: 'tuple',
-			},
-		],
-		name: 'hashOrder',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'incrementNonce',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'usr',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'usr',
-				type: 'address',
-			},
-		],
-		name: 'isOperator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'usr',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-		],
-		name: 'isValidNonce',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'takerOrder',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order[]',
-				name: 'makerOrders',
-				type: 'tuple[]',
-			},
-			{
-				internalType: 'uint256',
-				name: 'takerFillAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'makerFillAmounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'matchOrders',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'nonces',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC1155BatchReceived',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC1155Received',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'operators',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'orderStatus',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'isFilledOrCancelled',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint256',
-				name: 'remaining',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'parentCollectionId',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pauseTrading',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxyFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxyWalletFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'token',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'complement',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-		],
-		name: 'registerToken',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'registry',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'complement',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'conditionId',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'removeAdmin',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'removeOperator',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceAdminRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOperatorRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'safeFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newProxyFactory',
-				type: 'address',
-			},
-		],
-		name: 'setProxyFactory',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newProxyFactory',
-				type: 'address',
-			},
-		],
-		name: 'setProxyWalletFactory',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newSafeFactory',
-				type: 'address',
-			},
-		],
-		name: 'setSafeFactory',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpauseTrading',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'token',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'complement',
-				type: 'uint256',
-			},
-		],
-		name: 'validateComplement',
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'order',
-				type: 'tuple',
-			},
-		],
-		name: 'validateOrder',
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'orderHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'salt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'maker',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'signer',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'taker',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'makerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'takerAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'feeRateBps',
-						type: 'uint256',
-					},
-					{
-						internalType: 'enum Side',
-						name: 'side',
-						type: 'uint8',
-					},
-					{
-						internalType: 'enum SignatureType',
-						name: 'signatureType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'signature',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct Order',
-				name: 'order',
-				type: 'tuple',
-			},
-		],
-		name: 'validateOrderSignature',
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'validateTokenId',
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const CTF_EXCHANGE: Contract<typeof abi> = {
-	name: 'CTF Exchange',
-	address: '0x29272a72c79243a7cd93cea1c2d75ab3f80d5655',
-	is_deprecated: false,
-	created_at: 1736440947,
-	abi: abi,
-}
-export default CTF_EXCHANGE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 25543,
+  address: '0x520fe655590e6fee13656590f1be3edf31fe099c' as const,
+  contract_name: 'CTFExchange',
+  display_name: 'CTF Exchange',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1739354527,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_collateral"
+      },
+      {
+        "type": "address",
+        "name": "_ctf"
+      },
+      {
+        "type": "address",
+        "name": "_proxyFactory"
+      },
+      {
+        "type": "address",
+        "name": "_safeFactory"
+      },
+      {
+        "type": "address",
+        "name": "_proxyWalletFactory"
+      }
+    ]
+  },
+  {
+    "name": "AlreadyRegistered",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FeeTooHigh",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidComplement",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidNonce",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidSignature",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidTokenId",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "MakingGtRemaining",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "MismatchedTokenIds",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotAdmin",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotCrossing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotOperator",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotOwner",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotTaker",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "OrderExpired",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "OrderFilledOrCancelled",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Paused",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "TooLittleTokensReceived",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FeeCharged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "NewAdmin",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdminAddress",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewOperator",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOperatorAddress",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OrderCancelled",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "orderHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OrderFilled",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "orderHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "maker",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "taker",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "makerAssetId"
+      },
+      {
+        "type": "uint256",
+        "name": "takerAssetId"
+      },
+      {
+        "type": "uint256",
+        "name": "makerAmountFilled"
+      },
+      {
+        "type": "uint256",
+        "name": "takerAmountFilled"
+      },
+      {
+        "type": "uint256",
+        "name": "fee"
+      }
+    ]
+  },
+  {
+    "name": "OrdersMatched",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "takerOrderHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "takerOrderMaker",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "makerAssetId"
+      },
+      {
+        "type": "uint256",
+        "name": "takerAssetId"
+      },
+      {
+        "type": "uint256",
+        "name": "makerAmountFilled"
+      },
+      {
+        "type": "uint256",
+        "name": "takerAmountFilled"
+      }
+    ]
+  },
+  {
+    "name": "ProxyFactoryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldProxyFactory",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newProxyFactory",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProxyWalletFactoryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldProxyFactory",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newProxyFactory",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RemovedAdmin",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "removedAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RemovedOperator",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "removedOperator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SafeFactoryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldSafeFactory",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newSafeFactory",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TokenRegistered",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "token0",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "token1",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TradingPaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "pauser",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TradingUnpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "pauser",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "addAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "addOperator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admins",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "cancelOrder",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cancelOrders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "orders",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "domainSeparator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "fillOrder",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "fillAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "fillOrders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "orders",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      },
+      {
+        "type": "uint256[]",
+        "name": "fillAmounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getCollateral",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getComplement",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getConditionId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getCtf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getMaxFeeRate",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getOrderStatus",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "orderHash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isFilledOrCancelled"
+          },
+          {
+            "type": "uint256",
+            "name": "remaining"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getPolyProxyFactoryImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getPolyProxyWalletAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getProxyFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getProxyWalletAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getSafeAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getSafeFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getSafeFactoryImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "hashOrder",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "incrementNonce",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "usr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "usr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isValidNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "usr"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "matchOrders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "takerOrder",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      },
+      {
+        "type": "tuple[]",
+        "name": "makerOrders",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "takerFillAmount"
+      },
+      {
+        "type": "uint256[]",
+        "name": "makerFillAmounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "nonces",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "onERC1155BatchReceived",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "onERC1155Received",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "operators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "orderStatus",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isFilledOrCancelled"
+      },
+      {
+        "type": "uint256",
+        "name": "remaining"
+      }
+    ]
+  },
+  {
+    "name": "parentCollectionId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "pauseTrading",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "proxyFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "proxyWalletFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "registerToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "complement"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "registry",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "complement"
+      },
+      {
+        "type": "bytes32",
+        "name": "conditionId"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeOperator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceAdminRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "renounceOperatorRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "safeFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setProxyFactory",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newProxyFactory"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setProxyWalletFactory",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newProxyFactory"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setSafeFactory",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newSafeFactory"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "unpauseTrading",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "validateComplement",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "complement"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "validateOrder",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "validateOrderSignature",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "orderHash"
+      },
+      {
+        "type": "tuple",
+        "name": "order",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "address",
+            "name": "maker"
+          },
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "taker"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "makerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "takerAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "expiration"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "feeRateBps"
+          },
+          {
+            "type": "uint8",
+            "name": "side"
+          },
+          {
+            "type": "uint8",
+            "name": "signatureType"
+          },
+          {
+            "type": "bytes",
+            "name": "signature"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "validateTokenId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

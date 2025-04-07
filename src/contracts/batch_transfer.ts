@@ -1,90 +1,84 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchTransferERC1155',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchTransferERC20',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchTransferERC721',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const BATCH_TRANSFER: Contract<typeof abi> = {
-	name: 'Batch Transfer',
-	address: '0xd51dc8f3885d48736da2759fa91ffcc85801dc6f',
-	is_deprecated: false,
-	created_at: 1707441496,
-	abi: abi,
-}
-export default BATCH_TRANSFER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1689,
+  address: '0xd51dc8f3885d48736da2759fa91ffcc85801dc6f' as const,
+  contract_name: 'BatchTransfer',
+  display_name: 'Batch Transfer',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1707441496,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "batchTransferERC1155",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchTransferERC20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchTransferERC721",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

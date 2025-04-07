@@ -1,296 +1,242 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		name: 'ZeroValueETH',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'battleId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'assetEnum',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'contractAddr',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'amtOrTokenId',
-				type: 'uint256[]',
-			},
-		],
-		name: 'Deposited',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'battleId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'assetEnum',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'contractAddr',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'amtOrTokenId',
-				type: 'uint256[]',
-			},
-		],
-		name: 'Withdrawn',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'battleId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'enum IBatchEscrow.AssetType',
-						name: 'asset',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'contractAddr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amtOrTokenId',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IBatchEscrow.BatchStake[]',
-				name: 'stakes',
-				type: 'tuple[]',
-			},
-		],
-		name: 'deposit',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'battleId',
-				type: 'uint256',
-			},
-		],
-		name: 'depositsOf',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'enum IBatchEscrow.AssetType',
-						name: 'asset',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'contractAddr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amtOrTokenId',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IBatchEscrow.BatchStake[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '',
-				type: 'bytes',
-			},
-		],
-		name: 'onERC721Received',
-		outputs: [
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'payee',
-				type: 'address',
-			},
-			{
-				internalType: 'address payable',
-				name: 'receiver',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'battleId',
-				type: 'uint256',
-			},
-		],
-		name: 'withdraw',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const DUEL_ARENA_ESCROW: Contract<typeof abi> = {
-	name: 'Duel Arena Escrow',
-	address: '0x8482dcd935b922959614aebfa4cf7fbcff9fb9eb',
-	is_deprecated: false,
-	created_at: 1735578030,
-	abi: abi,
-}
-export default DUEL_ARENA_ESCROW
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 6167,
+  address: '0x8482dcd935b922959614aebfa4cf7fbcff9fb9eb' as const,
+  contract_name: 'DuelArenaEscrow',
+  display_name: 'Duel Arena Escrow',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1735578030,
+  abi: [
+  {
+    "name": "ZeroValueETH",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Deposited",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payee",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "battleId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "assetEnum"
+      },
+      {
+        "type": "address[]",
+        "name": "contractAddr"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amtOrTokenId"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Withdrawn",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payee",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "battleId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "assetEnum"
+      },
+      {
+        "type": "address[]",
+        "name": "contractAddr"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amtOrTokenId"
+      }
+    ]
+  },
+  {
+    "name": "deposit",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payee"
+      },
+      {
+        "type": "uint256",
+        "name": "battleId"
+      },
+      {
+        "type": "tuple[]",
+        "name": "stakes",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "asset"
+          },
+          {
+            "type": "address",
+            "name": "contractAddr"
+          },
+          {
+            "type": "uint256",
+            "name": "amtOrTokenId"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "address[]"
+      },
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "depositsOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payee"
+      },
+      {
+        "type": "uint256",
+        "name": "battleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "asset"
+          },
+          {
+            "type": "address",
+            "name": "contractAddr"
+          },
+          {
+            "type": "uint256",
+            "name": "amtOrTokenId"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "onERC721Received",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payee"
+      },
+      {
+        "type": "address",
+        "name": "receiver"
+      },
+      {
+        "type": "uint256",
+        "name": "battleId"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

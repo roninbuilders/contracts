@@ -1,845 +1,712 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'expeditionId',
-				type: 'uint256',
-			},
-		],
-		name: 'ExpeditionClaimableNow',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'expeditionId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'planetIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'optionalAssetIds',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'keyAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'JoinedExpedition',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'expeditionId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'startFrom',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'endTo',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'string',
-						name: 'name',
-						type: 'string',
-					},
-					{
-						internalType: 'address',
-						name: 'addr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'minAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'maxAmount',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct ExpeditionMeta.StakeInfo',
-				name: 'requiredPlanets',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						internalType: 'string',
-						name: 'name',
-						type: 'string',
-					},
-					{
-						internalType: 'address',
-						name: 'addr',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'minAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'maxAmount',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct ExpeditionMeta.StakeInfo',
-				name: 'optionalAsset',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'requiredKeyAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'UpdatedExpedition',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_keyAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'exchangeKeyToToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_keyAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'exchangeTokenToKey',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-		],
-		name: 'getExpeditionInfoList',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startFrom',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endTo',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'string',
-								name: 'name',
-								type: 'string',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'minAmount',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'maxAmount',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ExpeditionMeta.StakeInfo',
-						name: 'requiredPlanet',
-						type: 'tuple',
-					},
-					{
-						components: [
-							{
-								internalType: 'string',
-								name: 'name',
-								type: 'string',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'minAmount',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'maxAmount',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ExpeditionMeta.StakeInfo',
-						name: 'optionalAsset',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'optionalAssetWhitelistIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'apostleWhitelistClasses',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'requiredKeyAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bool',
-						name: 'isClaimableNow',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct ExpeditionMeta.ExpeditionInfo',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-		],
-		name: 'getExpeditionState',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-		],
-		name: 'getUserExpedition',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'joinedAt',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'planetIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'optionalAssetIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'keyAmount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct ExpeditionMeta.JoinExpedition',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'getUserExpeditionIds',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_planetIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_assetIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_keyAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'joinExpedition',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'lastExpeditionId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-		],
-		name: 'setExpeditionClaimable',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'startFrom',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'endTo',
-						type: 'uint256',
-					},
-					{
-						components: [
-							{
-								internalType: 'string',
-								name: 'name',
-								type: 'string',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'minAmount',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'maxAmount',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ExpeditionMeta.StakeInfo',
-						name: 'requiredPlanet',
-						type: 'tuple',
-					},
-					{
-						components: [
-							{
-								internalType: 'string',
-								name: 'name',
-								type: 'string',
-							},
-							{
-								internalType: 'address',
-								name: 'addr',
-								type: 'address',
-							},
-							{
-								internalType: 'uint256',
-								name: 'minAmount',
-								type: 'uint256',
-							},
-							{
-								internalType: 'uint256',
-								name: 'maxAmount',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct ExpeditionMeta.StakeInfo',
-						name: 'optionalAsset',
-						type: 'tuple',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'optionalAssetWhitelistIds',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'apostleWhitelistClasses',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'requiredKeyAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bool',
-						name: 'isClaimableNow',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct ExpeditionMeta.ExpeditionInfo',
-				name: '_info',
-				type: 'tuple',
-			},
-		],
-		name: 'setupExpeditionInfo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_stakingAndKeys',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_tokenReceipt',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_blacklist',
-				type: 'address',
-			},
-		],
-		name: 'setupPeerContracts',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_assetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'stakeFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_assetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'stakeNFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'stakingAndKeysAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_assetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'unstakeFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expeditionId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_assetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_tokenIds',
-				type: 'uint256[]',
-			},
-		],
-		name: 'unstakeNFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const NEBULA_EXPEDITION: Contract<typeof abi> = {
-	name: 'Nebula Expedition',
-	address: '0xcea0249b9aa0a77d55f5a2e1a37433a900ea45a5',
-	is_deprecated: false,
-	created_at: 1715593047,
-	abi: abi,
-}
-export default NEBULA_EXPEDITION
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 32747,
+  address: '0x799e902e91f14cd4d20d3fc797751728532ebf6f' as const,
+  contract_name: 'NebulaExpedition',
+  display_name: 'Nebula Expedition',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1744014074,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ExpeditionClaimableNow",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "expeditionId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "JoinedExpedition",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "expeditionId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "planetIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "optionalAssetIds"
+      },
+      {
+        "type": "uint256",
+        "name": "keyAmount"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "UpdatedExpedition",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "expeditionId"
+      },
+      {
+        "type": "uint256",
+        "name": "startFrom"
+      },
+      {
+        "type": "uint256",
+        "name": "endTo"
+      },
+      {
+        "type": "tuple",
+        "name": "requiredPlanets",
+        "components": [
+          {
+            "type": "string",
+            "name": "name"
+          },
+          {
+            "type": "address",
+            "name": "addr"
+          },
+          {
+            "type": "uint256",
+            "name": "minAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "maxAmount"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "optionalAsset",
+        "components": [
+          {
+            "type": "string",
+            "name": "name"
+          },
+          {
+            "type": "address",
+            "name": "addr"
+          },
+          {
+            "type": "uint256",
+            "name": "minAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "maxAmount"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "requiredKeyAmount"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "exchangeKeyToToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "uint256",
+        "name": "_keyAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "exchangeTokenToKey",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "uint256",
+        "name": "_keyAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getExpeditionInfoList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startFrom"
+          },
+          {
+            "type": "uint256",
+            "name": "endTo"
+          },
+          {
+            "type": "tuple",
+            "name": "requiredPlanet",
+            "components": [
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "address",
+                "name": "addr"
+              },
+              {
+                "type": "uint256",
+                "name": "minAmount"
+              },
+              {
+                "type": "uint256",
+                "name": "maxAmount"
+              }
+            ]
+          },
+          {
+            "type": "tuple",
+            "name": "optionalAsset",
+            "components": [
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "address",
+                "name": "addr"
+              },
+              {
+                "type": "uint256",
+                "name": "minAmount"
+              },
+              {
+                "type": "uint256",
+                "name": "maxAmount"
+              }
+            ]
+          },
+          {
+            "type": "uint256[]",
+            "name": "optionalAssetWhitelistIds"
+          },
+          {
+            "type": "uint256[]",
+            "name": "apostleWhitelistClasses"
+          },
+          {
+            "type": "uint256",
+            "name": "requiredKeyAmount"
+          },
+          {
+            "type": "bool",
+            "name": "isClaimableNow"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getExpeditionState",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getUserExpedition",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      },
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "joinedAt"
+          },
+          {
+            "type": "uint256[]",
+            "name": "planetIds"
+          },
+          {
+            "type": "uint256[]",
+            "name": "optionalAssetIds"
+          },
+          {
+            "type": "uint256",
+            "name": "keyAmount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getUserExpeditionIds",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "joinExpedition",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_planetIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_assetIds"
+      },
+      {
+        "type": "uint256",
+        "name": "_keyAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "lastExpeditionId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setExpeditionClaimable",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setupExpeditionInfo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "tuple",
+        "name": "_info",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "startFrom"
+          },
+          {
+            "type": "uint256",
+            "name": "endTo"
+          },
+          {
+            "type": "tuple",
+            "name": "requiredPlanet",
+            "components": [
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "address",
+                "name": "addr"
+              },
+              {
+                "type": "uint256",
+                "name": "minAmount"
+              },
+              {
+                "type": "uint256",
+                "name": "maxAmount"
+              }
+            ]
+          },
+          {
+            "type": "tuple",
+            "name": "optionalAsset",
+            "components": [
+              {
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "type": "address",
+                "name": "addr"
+              },
+              {
+                "type": "uint256",
+                "name": "minAmount"
+              },
+              {
+                "type": "uint256",
+                "name": "maxAmount"
+              }
+            ]
+          },
+          {
+            "type": "uint256[]",
+            "name": "optionalAssetWhitelistIds"
+          },
+          {
+            "type": "uint256[]",
+            "name": "apostleWhitelistClasses"
+          },
+          {
+            "type": "uint256",
+            "name": "requiredKeyAmount"
+          },
+          {
+            "type": "bool",
+            "name": "isClaimableNow"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setupPeerContracts",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_stakingAndKeys"
+      },
+      {
+        "type": "address",
+        "name": "_tokenReceipt"
+      },
+      {
+        "type": "address",
+        "name": "_blacklist"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_assetAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeNFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "address",
+        "name": "_assetAddress"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakingAndKeysAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstakeFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_assetAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstakeNFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "address",
+        "name": "_assetAddress"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

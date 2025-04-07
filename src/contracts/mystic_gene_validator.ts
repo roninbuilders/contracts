@@ -1,85 +1,72 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IAxie',
-				name: '_axieContract',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'axieContract',
-		outputs: [
-			{
-				internalType: 'contract IAxie',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'x',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'y',
-				type: 'uint256',
-			},
-		],
-		name: 'isMystic',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'isMystic',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const MYSTIC_GENE_VALIDATOR: Contract<typeof abi> = {
-	name: 'Mystic Gene Validator',
-	address: '0x03cbdc84a8352735133b7989199c1b4d06fe2a77',
-	is_deprecated: false,
-	created_at: 1681181524,
-	abi: abi,
-}
-export default MYSTIC_GENE_VALIDATOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 355,
+  address: '0x03cbdc84a8352735133b7989199c1b4d06fe2a77' as const,
+  contract_name: 'MysticGeneValidator',
+  display_name: 'Mystic Gene Validator',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1681181524,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_axieContract"
+      }
+    ]
+  },
+  {
+    "name": "axieContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "isMystic",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "x"
+      },
+      {
+        "type": "uint256",
+        "name": "y"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isMystic",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "axieId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

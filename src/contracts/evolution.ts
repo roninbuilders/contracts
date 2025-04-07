@@ -1,314 +1,264 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IBurnableERC721[]',
-				name: '_burnNFTs',
-				type: 'address[]',
-			},
-			{
-				internalType: 'contract IERC721[]',
-				name: '_evolutionNFTs',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address',
-				name: '_verifier',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'contract IBurnableERC721',
-				name: 'burnNFT',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'burnNftId',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'contract IERC721',
-				name: 'evolutionNFT',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'evolutionNftId',
-				type: 'uint256',
-			},
-		],
-		name: 'Evoluted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'contract IBurnableERC721',
-				name: 'burnNFT',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'contract IERC721',
-				name: 'evolutionNFT',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'avaliable',
-				type: 'bool',
-			},
-		],
-		name: 'NewEvolutionDirection',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'oldVerifier',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newVerifier',
-				type: 'address',
-			},
-		],
-		name: 'VerifierChanged',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IBurnableERC721',
-				name: '_burnNFT',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IERC721',
-				name: '_evolutionNFT',
-				type: 'address',
-			},
-		],
-		name: 'addEvolutionDirection',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IBurnableERC721',
-				name: '_burnNFT',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IERC721',
-				name: '_evolutionNFT',
-				type: 'address',
-			},
-		],
-		name: 'delEvolutionDirection',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IBurnableERC721',
-				name: '_burnNFT',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_burnNftIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'contract IERC721',
-				name: '_evolutionNFT',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_evolutionNftId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint8',
-				name: '_v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_s',
-				type: 'bytes32',
-			},
-		],
-		name: 'evolution',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IBurnableERC721',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IERC721',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'evolutionDirection',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pendingOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setPendingOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_verifier',
-				type: 'address',
-			},
-		],
-		name: 'setVerifier',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'verifier',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const EVOLUTION: Contract<typeof abi> = {
-	name: 'Evolution',
-	address: '0x4525db8c82d1e83eae54085aa535c4303c27feca',
-	is_deprecated: false,
-	created_at: 1721400558,
-	abi: abi,
-}
-export default EVOLUTION
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3312,
+  address: '0x4525db8c82d1e83eae54085aa535c4303c27feca' as const,
+  contract_name: 'Evolution',
+  display_name: 'Evolution',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1721400558,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_burnNFTs"
+      },
+      {
+        "type": "address[]",
+        "name": "_evolutionNFTs"
+      },
+      {
+        "type": "address",
+        "name": "_verifier"
+      }
+    ]
+  },
+  {
+    "name": "Evoluted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "address",
+        "name": "burnNFT"
+      },
+      {
+        "type": "uint256[]",
+        "name": "burnNftId"
+      },
+      {
+        "type": "address",
+        "name": "evolutionNFT"
+      },
+      {
+        "type": "uint256",
+        "name": "evolutionNftId"
+      }
+    ]
+  },
+  {
+    "name": "NewEvolutionDirection",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "burnNFT"
+      },
+      {
+        "type": "address",
+        "name": "evolutionNFT"
+      },
+      {
+        "type": "bool",
+        "name": "avaliable"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "VerifierChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldVerifier"
+      },
+      {
+        "type": "address",
+        "name": "newVerifier"
+      }
+    ]
+  },
+  {
+    "name": "acceptOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "addEvolutionDirection",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burnNFT"
+      },
+      {
+        "type": "address",
+        "name": "_evolutionNFT"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "delEvolutionDirection",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burnNFT"
+      },
+      {
+        "type": "address",
+        "name": "_evolutionNFT"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "evolution",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burnNFT"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_burnNftIds"
+      },
+      {
+        "type": "address",
+        "name": "_evolutionNFT"
+      },
+      {
+        "type": "uint256",
+        "name": "_evolutionNftId"
+      },
+      {
+        "type": "uint8",
+        "name": "_v"
+      },
+      {
+        "type": "bytes32",
+        "name": "_r"
+      },
+      {
+        "type": "bytes32",
+        "name": "_s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "evolutionDirection",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pendingOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setPendingOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVerifier",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_verifier"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "verifier",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

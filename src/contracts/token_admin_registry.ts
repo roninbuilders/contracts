@@ -1,486 +1,433 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'AlreadyRegistered',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'InvalidTokenPoolToken',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'OnlyAdministrator',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'OnlyPendingAdministrator',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'OnlyRegistryModuleOrOwner',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ZeroAddress',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'currentAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdministratorTransferRequested',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdministratorTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferRequested',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousPool',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newPool',
-				type: 'address',
-			},
-		],
-		name: 'PoolSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'module',
-				type: 'address',
-			},
-		],
-		name: 'RegistryModuleAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'module',
-				type: 'address',
-			},
-		],
-		name: 'RegistryModuleRemoved',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'localToken',
-				type: 'address',
-			},
-		],
-		name: 'acceptAdminRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'module',
-				type: 'address',
-			},
-		],
-		name: 'addRegistryModule',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'startIndex',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint64',
-				name: 'maxCount',
-				type: 'uint64',
-			},
-		],
-		name: 'getAllConfiguredTokens',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'getPool',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-		],
-		name: 'getPools',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'getTokenConfig',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'administrator',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'pendingAdministrator',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'tokenPool',
-						type: 'address',
-					},
-				],
-				internalType: 'struct TokenAdminRegistry.TokenConfig',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'localToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'administrator',
-				type: 'address',
-			},
-		],
-		name: 'isAdministrator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'module',
-				type: 'address',
-			},
-		],
-		name: 'isRegistryModule',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'localToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'administrator',
-				type: 'address',
-			},
-		],
-		name: 'proposeAdministrator',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'module',
-				type: 'address',
-			},
-		],
-		name: 'removeRegistryModule',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'localToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'pool',
-				type: 'address',
-			},
-		],
-		name: 'setPool',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'localToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'transferAdminRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'typeAndVersion',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const TOKEN_ADMIN_REGISTRY: Contract<typeof abi> = {
-	name: 'Token Admin Registry',
-	address: '0x90e83d532a4ad13940139c8ace0b93b0ddbd323a',
-	is_deprecated: false,
-	created_at: 1730294325,
-	abi: abi,
-}
-export default TOKEN_ADMIN_REGISTRY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4862,
+  address: '0x90e83d532a4ad13940139c8ace0b93b0ddbd323a' as const,
+  contract_name: 'TokenAdminRegistry',
+  display_name: 'Token Admin Registry',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1730294325,
+  abi: [
+  {
+    "name": "AlreadyRegistered",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "InvalidTokenPoolToken",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "OnlyAdministrator",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "OnlyPendingAdministrator",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "OnlyRegistryModuleOrOwner",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ]
+  },
+  {
+    "name": "ZeroAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AdministratorTransferRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "currentAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdministratorTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PoolSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousPool",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newPool",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RegistryModuleAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "module"
+      }
+    ]
+  },
+  {
+    "name": "RegistryModuleRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "module",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "acceptAdminRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "localToken"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "acceptOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "addRegistryModule",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "module"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAllConfiguredTokens",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "startIndex"
+      },
+      {
+        "type": "uint64",
+        "name": "maxCount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      }
+    ]
+  },
+  {
+    "name": "getPool",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getPools",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getTokenConfig",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "address",
+            "name": "administrator"
+          },
+          {
+            "type": "address",
+            "name": "pendingAdministrator"
+          },
+          {
+            "type": "address",
+            "name": "tokenPool"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "isAdministrator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "localToken"
+      },
+      {
+        "type": "address",
+        "name": "administrator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isRegistryModule",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "module"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "proposeAdministrator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "localToken"
+      },
+      {
+        "type": "address",
+        "name": "administrator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeRegistryModule",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "module"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPool",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "localToken"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferAdminRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "localToken"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "typeAndVersion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

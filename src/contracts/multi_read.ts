@@ -1,130 +1,120 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'initialTokens',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnerSet',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddr',
-				type: 'address',
-			},
-		],
-		name: 'addErc20Token',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'changeOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'wallets',
-				type: 'address[]',
-			},
-		],
-		name: 'getBalances',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'nativeBalances',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[][]',
-				name: 'tokenBalances',
-				type: 'uint256[][]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getErc20TokenList',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddr',
-				type: 'address',
-			},
-		],
-		name: 'removeErc20Token',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const MULTI_READ: Contract<typeof abi> = {
-	name: 'Multi Read',
-	address: '0x864ac7a77db1a87d0b0d6061c98755e8fa5fb1a5',
-	is_deprecated: false,
-	created_at: 1727294309,
-	abi: abi,
-}
-export default MULTI_READ
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4250,
+  address: '0xab46619e072e88e30fc29f9bcdaa11ad4fe7df98' as const,
+  contract_name: 'MultiRead',
+  display_name: 'Multi Read',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1727286620,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "initialTokens"
+      }
+    ]
+  },
+  {
+    "name": "OwnerSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "addErc20Token",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getBalances",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "wallets"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "nativeBalances"
+      },
+      {
+        "type": "uint256[][]",
+        "name": "tokenBalances"
+      }
+    ]
+  },
+  {
+    "name": "getErc20TokenList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "removeErc20Token",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddr"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

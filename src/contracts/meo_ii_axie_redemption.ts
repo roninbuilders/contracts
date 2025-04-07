@@ -1,389 +1,308 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IAxie',
-				name: '_axieContract',
-				type: 'address',
-			},
-			{
-				internalType: 'contract IERC20Burnable',
-				name: '_axieEggCoin',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorRemoved',
-		type: 'event',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'addOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'axieContract',
-		outputs: [
-			{
-				internalType: 'contract IAxie',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'axieEggCoin',
-		outputs: [
-			{
-				internalType: 'contract IERC20Burnable',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'bodies',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'coinRequiredPerAxie',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'operator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'operators',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'partGeneDetails',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_seed',
-				type: 'uint256',
-			},
-		],
-		name: 'redeemAxie',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'removeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'removeOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IAxie',
-				name: '_axieContract',
-				type: 'address',
-			},
-		],
-		name: 'setAxieContract',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IERC20Burnable',
-				name: '_axieEggCoin',
-				type: 'address',
-			},
-		],
-		name: 'setAxieEggCoin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_bodies',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setBodies',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint8',
-				name: '_coinRequiredPerAxie',
-				type: 'uint8',
-			},
-		],
-		name: 'setCoinRequiredPerAxie',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_partType',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_partGeneDetails',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setPartGeneDetails',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const MEO_II_AXIE_REDEMPTION: Contract<typeof abi> = {
-	name: 'Meo II Axie Redemption',
-	address: '0xbcba374d3ae40a19e41c00331b66642945a773f2',
-	is_deprecated: false,
-	created_at: 1622180510,
-	abi: abi,
-}
-export default MEO_II_AXIE_REDEMPTION
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 224,
+  address: '0xbcba374d3ae40a19e41c00331b66642945a773f2' as const,
+  contract_name: 'MeoIIAxieRedemption',
+  display_name: 'Meo II Axie Redemption',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1622180510,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_axieContract"
+      },
+      {
+        "type": "address",
+        "name": "_axieEggCoin"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdminRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "addOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "axieContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "axieEggCoin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "bodies",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "coinRequiredPerAxie",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "operator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "operators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "partGeneDetails",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "redeemAxie",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "uint256",
+        "name": "_seed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAxieContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_axieContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAxieEggCoin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_axieEggCoin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBodies",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_bodies"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCoinRequiredPerAxie",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "_coinRequiredPerAxie"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPartGeneDetails",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_partType"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_partGeneDetails"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

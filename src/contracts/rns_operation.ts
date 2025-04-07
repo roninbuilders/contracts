@@ -1,260 +1,232 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract INSUnified',
-				name: 'rns_',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'resolver_',
-				type: 'address',
-			},
-			{
-				internalType: 'contract INSAuction',
-				name: 'auction_',
-				type: 'address',
-			},
-			{
-				internalType: 'contract INSDomainPrice',
-				name: 'domainPrice_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'auction',
-		outputs: [
-			{
-				internalType: 'contract INSAuction',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'tos',
-				type: 'address[]',
-			},
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
-				internalType: 'uint64',
-				name: 'duration',
-				type: 'uint64',
-			},
-		],
-		name: 'bulkMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'yearlyUSDPrices',
-				type: 'uint256[]',
-			},
-		],
-		name: 'bulkOverrideRenewalFees',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
-				internalType: 'enum INSDomainPrice.Tier[]',
-				name: 'tiers',
-				type: 'uint8[]',
-			},
-		],
-		name: 'bulkOverrideTiers',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldProtect',
-				type: 'bool',
-			},
-		],
-		name: 'bulkSetProtected',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'domainPrice',
-		outputs: [
-			{
-				internalType: 'contract INSDomainPrice',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'tos',
-				type: 'address[]',
-			},
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-			{
-				internalType: 'bool',
-				name: 'allowFailure',
-				type: 'bool',
-			},
-		],
-		name: 'reclaimUnbiddedNames',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'resolver',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'rns',
-		outputs: [
-			{
-				internalType: 'contract INSUnified',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string[]',
-				name: 'labels',
-				type: 'string[]',
-			},
-		],
-		name: 'toIds',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const RNS_OPERATION: Contract<typeof abi> = {
-	name: 'RNS Operation',
-	address: '0xcd245263eddee593a5a66f93f74c58c544957339',
-	is_deprecated: false,
-	created_at: 1710307789,
-	abi: abi,
-}
-export default RNS_OPERATION
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1873,
+  address: '0xcd245263eddee593a5a66f93f74c58c544957339' as const,
+  contract_name: 'RNSOperation',
+  display_name: 'RNS Operation',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1710307789,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "rns_"
+      },
+      {
+        "type": "address",
+        "name": "resolver_"
+      },
+      {
+        "type": "address",
+        "name": "auction_"
+      },
+      {
+        "type": "address",
+        "name": "domainPrice_"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "auction",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "bulkMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tos"
+      },
+      {
+        "type": "string[]",
+        "name": "labels"
+      },
+      {
+        "type": "uint64",
+        "name": "duration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "bulkOverrideRenewalFees",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string[]",
+        "name": "labels"
+      },
+      {
+        "type": "uint256[]",
+        "name": "yearlyUSDPrices"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "bulkOverrideTiers",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string[]",
+        "name": "labels"
+      },
+      {
+        "type": "uint8[]",
+        "name": "tiers"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "bulkSetProtected",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string[]",
+        "name": "labels"
+      },
+      {
+        "type": "bool",
+        "name": "shouldProtect"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "domainPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "reclaimUnbiddedNames",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tos"
+      },
+      {
+        "type": "string[]",
+        "name": "labels"
+      },
+      {
+        "type": "bool",
+        "name": "allowFailure"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "resolver",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "rns",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "toIds",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "string[]",
+        "name": "labels"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

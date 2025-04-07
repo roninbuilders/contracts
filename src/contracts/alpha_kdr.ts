@@ -1,639 +1,544 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'name_',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'symbol_',
-				type: 'string',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'Approval',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'Transfer',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_burner',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'burnerUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_manager',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'managerUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'minterUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_burner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'soulboundTokenBurnt',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'soulboundTokenMinted',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-		],
-		name: 'allowance',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-		],
-		name: 'approve',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'balanceOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchBurnSoulboundToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_accounts',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchMintSoulboundToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'burnSoulboundToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'burner',
-				type: 'address',
-			},
-		],
-		name: 'burners',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'decimals',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'subtractedValue',
-				type: 'uint256',
-			},
-		],
-		name: 'decreaseAllowance',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'spender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'addedValue',
-				type: 'uint256',
-			},
-		],
-		name: 'increaseAllowance',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'manager',
-				type: 'address',
-			},
-		],
-		name: 'managers',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_account',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'mintSoulboundToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'minter',
-				type: 'address',
-			},
-		],
-		name: 'minters',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'name',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_burner',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'setBurner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_manager',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'setManager',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_status',
-				type: 'bool',
-			},
-		],
-		name: 'setMinter',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'symbol',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'totalSupply',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'transfer',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'transferFrom',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const ALPHA_KDR: Contract<typeof abi> = {
-	name: 'AlphaKDR',
-	address: '0xe3c587e40e9b89b3f2af526c9d468d49a66e3c2d',
-	is_deprecated: false,
-	created_at: 1724356873,
-	abi: abi,
-}
-export default ALPHA_KDR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3793,
+  address: '0xe3c587e40e9b89b3f2af526c9d468d49a66e3c2d' as const,
+  contract_name: 'SoulboundERC20',
+  display_name: 'Alpha-KDR',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1724356873,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "name_"
+      },
+      {
+        "type": "string",
+        "name": "symbol_"
+      }
+    ]
+  },
+  {
+    "name": "Approval",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "spender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Transfer",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ]
+  },
+  {
+    "name": "burnerUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burner",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ]
+  },
+  {
+    "name": "managerUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_manager",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ]
+  },
+  {
+    "name": "minterUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ]
+  },
+  {
+    "name": "soulboundTokenBurnt",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_from",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ]
+  },
+  {
+    "name": "soulboundTokenMinted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ]
+  },
+  {
+    "name": "allowance",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "approve",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "batchBurnSoulboundToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_accounts"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchMintSoulboundToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_accounts"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "burnSoulboundToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "burners",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "burner"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "decimals",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "decreaseAllowance",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "subtractedValue"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "increaseAllowance",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "addedValue"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "managers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "manager"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mintSoulboundToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "minters",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "minter"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setBurner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_burner"
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setManager",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_manager"
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinter",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter"
+      },
+      {
+        "type": "bool",
+        "name": "_status"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "symbol",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "totalSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "transfer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "transferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

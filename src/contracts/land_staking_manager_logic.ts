@@ -1,619 +1,532 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_new',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_old',
-				type: 'uint256',
-			},
-		],
-		name: 'MinClaimedBlocksUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'PoolWhitelisted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'debitedRewards',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lastUpdatedBlock',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lastClaimedBlock',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct ILandStakingManager.UserReward',
-				name: '_rewardInfo',
-				type: 'tuple',
-			},
-		],
-		name: 'UserRewardUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'WRON',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'allocateRewards',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '_rewardToken',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_earnedRewards',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'canObtainRewards',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'getCurrentLandWeight',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256[5]',
-						name: 'landTypeWeight',
-						type: 'uint256[5]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAtBlock',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct LandWeightConsumer.LandWeight',
-				name: '_lw',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'getLandWeight',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256[5]',
-						name: 'landTypeWeight',
-						type: 'uint256[5]',
-					},
-					{
-						internalType: 'uint256',
-						name: 'startedAtBlock',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct LandWeightConsumer.LandWeight[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'getPendingRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'getPoolInfo',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'stakingToken',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'rewardToken',
-						type: 'address',
-					},
-					{
-						components: [
-							{
-								internalType: 'uint256[5]',
-								name: 'landTypeWeight',
-								type: 'uint256[5]',
-							},
-							{
-								internalType: 'uint256',
-								name: 'startedAtBlock',
-								type: 'uint256',
-							},
-						],
-						internalType: 'struct LandWeightConsumer.LandWeight[]',
-						name: 'landWeight',
-						type: 'tuple[]',
-					},
-				],
-				internalType: 'struct ILandStakingManager.Pool',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'getRewardTokenOfPool',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_wron',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_minClaimedBlocks',
-				type: 'uint256',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-		],
-		name: 'isPoolWhitelisted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'minClaimedBlocks',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'poolInfo',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'stakingToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'rewardToken',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'resetRewards',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_minClaimedBlocks',
-				type: 'uint256',
-			},
-		],
-		name: 'setMinClaimedBlocks',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_user',
-				type: 'address',
-			},
-		],
-		name: 'syncRewardInfo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[5]',
-				name: '_values',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_startedAtBlock',
-				type: 'uint256',
-			},
-		],
-		name: 'updateLandWeights',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_pool',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_index',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256[5]',
-				name: '_values',
-				type: 'uint256[5]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_startedAtBlock',
-				type: 'uint256',
-			},
-		],
-		name: 'updateSpecificLandWeights',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'userRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'debitedRewards',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'lastUpdatedBlock',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'lastClaimedBlock',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_pools',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_startedAtBlocks',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[5][]',
-				name: '_landTypeWeights',
-				type: 'uint256[5][]',
-			},
-		],
-		name: 'whitelistPools',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdrawNativeToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_token',
-				type: 'address',
-			},
-		],
-		name: 'withdrawToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
-] as const
-const LAND_STAKING_MANAGER_LOGIC: Contract<typeof abi> = {
-	name: 'Land Staking Manager Logic',
-	address: '0xe78918abc57f7a3e6abdf7fe1d0da90ed8b92e26',
-	is_deprecated: false,
-	created_at: 1656494787,
-	abi: abi,
-}
-export default LAND_STAKING_MANAGER_LOGIC
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 159,
+  address: '0xe78918abc57f7a3e6abdf7fe1d0da90ed8b92e26' as const,
+  contract_name: 'LandStakingManager',
+  display_name: 'Land Staking Manager Logic',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1656494787,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MinClaimedBlocksUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_new",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_old",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PoolWhitelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ]
+  },
+  {
+    "name": "UserRewardUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "address",
+        "name": "_user"
+      },
+      {
+        "type": "tuple",
+        "name": "_rewardInfo",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "debitedRewards"
+          },
+          {
+            "type": "uint256",
+            "name": "lastUpdatedBlock"
+          },
+          {
+            "type": "uint256",
+            "name": "lastClaimedBlock"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "WRON",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "allocateRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "_rewardToken"
+      },
+      {
+        "type": "uint256",
+        "name": "_earnedRewards"
+      }
+    ]
+  },
+  {
+    "name": "canObtainRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getCurrentLandWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "name": "_lw",
+        "components": [
+          {
+            "type": "uint256[5]",
+            "name": "landTypeWeight"
+          },
+          {
+            "type": "uint256",
+            "name": "startedAtBlock"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getLandWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256[5]",
+            "name": "landTypeWeight"
+          },
+          {
+            "type": "uint256",
+            "name": "startedAtBlock"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getPendingRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getPoolInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "address",
+            "name": "stakingToken"
+          },
+          {
+            "type": "address",
+            "name": "rewardToken"
+          },
+          {
+            "type": "tuple[]",
+            "name": "landWeight",
+            "components": [
+              {
+                "type": "uint256[5]",
+                "name": "landTypeWeight"
+              },
+              {
+                "type": "uint256",
+                "name": "startedAtBlock"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getRewardTokenOfPool",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "address",
+        "name": "_wron"
+      },
+      {
+        "type": "uint256",
+        "name": "_minClaimedBlocks"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isPoolWhitelisted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minClaimedBlocks",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "poolInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "stakingToken"
+      },
+      {
+        "type": "address",
+        "name": "rewardToken"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "resetRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinClaimedBlocks",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_minClaimedBlocks"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "syncRewardInfo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateLandWeights",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256[5]",
+        "name": "_values"
+      },
+      {
+        "type": "uint256",
+        "name": "_startedAtBlock"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateSpecificLandWeights",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256",
+        "name": "_index"
+      },
+      {
+        "type": "uint256[5]",
+        "name": "_values"
+      },
+      {
+        "type": "uint256",
+        "name": "_startedAtBlock"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "userRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "debitedRewards"
+      },
+      {
+        "type": "uint256",
+        "name": "lastUpdatedBlock"
+      },
+      {
+        "type": "uint256",
+        "name": "lastClaimedBlock"
+      }
+    ]
+  },
+  {
+    "name": "whitelistPools",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_pools"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_startedAtBlocks"
+      },
+      {
+        "type": "uint256[5][]",
+        "name": "_landTypeWeights"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawNativeToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdrawToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

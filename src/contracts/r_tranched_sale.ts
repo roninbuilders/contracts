@@ -1,692 +1,616 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nft',
-				type: 'address',
-			},
-			{
-				internalType: 'address payable',
-				name: '_treasury',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_allocator',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'AllocationUsed',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ExceedsAllocationQty',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ForgedSignature',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'IncorrectValue',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidQuantity',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidShortString',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NonExistantTranche',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: 'str',
-				type: 'string',
-			},
-		],
-		name: 'StringTooLong',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'TrancheNotYetOpen',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'TransferFailed',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ZeroAddressNotAllowed',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'EIP712DomainChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'previousAdminRole',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'newAdminRole',
-				type: 'bytes32',
-			},
-		],
-		name: 'RoleAdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleGranted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'RoleRevoked',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DEFAULT_ADMIN_ROLE',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'TRANCHE_OPS',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint32',
-				name: 'nonce',
-				type: 'uint32',
-			},
-		],
-		name: 'allocationUsed',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'allocator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'currentTranche',
-		outputs: [
-			{
-				internalType: 'uint64',
-				name: '',
-				type: 'uint64',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'eip712Domain',
-		outputs: [
-			{
-				internalType: 'bytes1',
-				name: 'fields',
-				type: 'bytes1',
-			},
-			{
-				internalType: 'string',
-				name: 'name',
-				type: 'string',
-			},
-			{
-				internalType: 'string',
-				name: 'version',
-				type: 'string',
-			},
-			{
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'verifyingContract',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'extensions',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint32',
-						name: 'nonce',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint64',
-						name: 'trancheId',
-						type: 'uint64',
-					},
-					{
-						internalType: 'address',
-						name: 'account',
-						type: 'address',
-					},
-				],
-				internalType: 'struct ITranchedSale.Allocation',
-				name: 'allo',
-				type: 'tuple',
-			},
-		],
-		name: 'getAllocationTypedDataHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'qty',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint64',
-				name: 'trancheId',
-				type: 'uint64',
-			},
-		],
-		name: 'getPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-		],
-		name: 'getRoleAdmin',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'id',
-				type: 'uint64',
-			},
-		],
-		name: 'getTranche',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'exists',
-						type: 'bool',
-					},
-					{
-						internalType: 'bool',
-						name: 'signatureRequired',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint64',
-						name: 'id',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint64',
-						name: 'qty',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct ITranchedSale.Tranche',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'grantRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'grantTrancheOpsRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'hasRole',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'qty',
-				type: 'uint64',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint64',
-				name: 'trancheId',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint32',
-				name: 'nonce',
-				type: 'uint32',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'mint',
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'nft',
-		outputs: [
-			{
-				internalType: 'contract IrNFT',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'renounceRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'role',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'revokeRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'revokeTrancheOpsRole',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_allocator',
-				type: 'address',
-			},
-		],
-		name: 'setAllocator',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'id',
-				type: 'uint64',
-			},
-		],
-		name: 'setCurrentTranche',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nft',
-				type: 'address',
-			},
-		],
-		name: 'setNft',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint64',
-				name: 'id',
-				type: 'uint64',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'exists',
-						type: 'bool',
-					},
-					{
-						internalType: 'bool',
-						name: 'signatureRequired',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint64',
-						name: 'id',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint64',
-						name: 'qty',
-						type: 'uint64',
-					},
-					{
-						internalType: 'uint256',
-						name: 'price',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct ITranchedSale.Tranche',
-				name: 'tranche',
-				type: 'tuple',
-			},
-		],
-		name: 'setTranche',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: '_treasury',
-				type: 'address',
-			},
-		],
-		name: 'setTreasury',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'treasury',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdraw',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const R_TRANCHED_SALE: Contract<typeof abi> = {
-	name: 'R Tranched Sale',
-	address: '0x224fe292cc0612de3ae5d263e45131afeb8bea61',
-	is_deprecated: false,
-	created_at: 1733724727,
-	abi: abi,
-}
-export default R_TRANCHED_SALE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5946,
+  address: '0x224fe292cc0612de3ae5d263e45131afeb8bea61' as const,
+  contract_name: 'RTranchedSale',
+  display_name: 'R Tranched Sale',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1733724727,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_nft"
+      },
+      {
+        "type": "address",
+        "name": "_treasury"
+      },
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_allocator"
+      }
+    ]
+  },
+  {
+    "name": "AllocationUsed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExceedsAllocationQty",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ForgedSignature",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "IncorrectValue",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidQuantity",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidShortString",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NonExistantTranche",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "StringTooLong",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "str"
+      }
+    ]
+  },
+  {
+    "name": "TrancheNotYetOpen",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "TransferFailed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ZeroAddressNotAllowed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "EIP712DomainChanged",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "TRANCHE_OPS",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "allocationUsed",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint32",
+        "name": "nonce"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "allocator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "currentTranche",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint64"
+      }
+    ]
+  },
+  {
+    "name": "eip712Domain",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes1",
+        "name": "fields"
+      },
+      {
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "version"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "address",
+        "name": "verifyingContract"
+      },
+      {
+        "type": "bytes32",
+        "name": "salt"
+      },
+      {
+        "type": "uint256[]",
+        "name": "extensions"
+      }
+    ]
+  },
+  {
+    "name": "getAllocationTypedDataHash",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "allo",
+        "components": [
+          {
+            "type": "uint32",
+            "name": "nonce"
+          },
+          {
+            "type": "uint64",
+            "name": "trancheId"
+          },
+          {
+            "type": "address",
+            "name": "account"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "qty"
+      },
+      {
+        "type": "uint64",
+        "name": "trancheId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getTranche",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "bool",
+            "name": "exists"
+          },
+          {
+            "type": "bool",
+            "name": "signatureRequired"
+          },
+          {
+            "type": "uint64",
+            "name": "id"
+          },
+          {
+            "type": "uint64",
+            "name": "qty"
+          },
+          {
+            "type": "uint256",
+            "name": "price"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grantTrancheOpsRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "qty"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint64",
+        "name": "trancheId"
+      },
+      {
+        "type": "uint32",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "nft",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeTrancheOpsRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAllocator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_allocator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCurrentTranche",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "id"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setNft",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_nft"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTranche",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "id"
+      },
+      {
+        "type": "tuple",
+        "name": "tranche",
+        "components": [
+          {
+            "type": "bool",
+            "name": "exists"
+          },
+          {
+            "type": "bool",
+            "name": "signatureRequired"
+          },
+          {
+            "type": "uint64",
+            "name": "id"
+          },
+          {
+            "type": "uint64",
+            "name": "qty"
+          },
+          {
+            "type": "uint256",
+            "name": "price"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasury",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_treasury"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "treasury",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

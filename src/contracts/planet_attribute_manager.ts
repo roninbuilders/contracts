@@ -1,411 +1,353 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'userAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetAId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetBId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'animusUse',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldUseMiniBlackhole',
-				type: 'bool',
-			},
-			{
-				internalType: 'bool',
-				name: 'isDryRun',
-				type: 'bool',
-			},
-		],
-		name: 'breed',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedContract',
-		outputs: [
-			{
-				internalType: 'contract BreedPlanet',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedPlanetDataContract',
-		outputs: [
-			{
-				internalType: 'contract IBreedPlanetData',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'userAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetAId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetBId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldUseMiniBlackhole',
-				type: 'bool',
-			},
-		],
-		name: 'checkCanBreed',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'planetId',
-				type: 'uint256',
-			},
-		],
-		name: 'getParentID',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'planetContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironPlanet',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'bloodline',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'id',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'fire',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'water',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'air',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'earth',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct PlanetAttributeManager.PlanetTag[]',
-				name: 'planetTagArray',
-				type: 'tuple[]',
-			},
-		],
-		name: 'setUpBloodline',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_planetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address payable',
-				name: '_breedAddress',
-				type: 'address',
-			},
-		],
-		name: 'setUpContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const PLANET_ATTRIBUTE_MANAGER: Contract<typeof abi> = {
-	name: 'Planet Attribute Manager',
-	address: '0x149aadcaaee54eef85255b0c4c72cb3f04fecd8b',
-	is_deprecated: false,
-	created_at: 1702615179,
-	abi: abi,
-}
-export default PLANET_ATTRIBUTE_MANAGER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1406,
+  address: '0x149aadcaaee54eef85255b0c4c72cb3f04fecd8b' as const,
+  contract_name: 'PlanetAttributeManager',
+  display_name: 'Planet Attribute Manager',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1702615179,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "breed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "userAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "planetAId"
+      },
+      {
+        "type": "uint256",
+        "name": "planetBId"
+      },
+      {
+        "type": "uint256",
+        "name": "animusUse"
+      },
+      {
+        "type": "bool",
+        "name": "shouldUseMiniBlackhole"
+      },
+      {
+        "type": "bool",
+        "name": "isDryRun"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "breedContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "breedPlanetDataContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "checkCanBreed",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "userAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "planetAId"
+      },
+      {
+        "type": "uint256",
+        "name": "planetBId"
+      },
+      {
+        "type": "bool",
+        "name": "shouldUseMiniBlackhole"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getParentID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "planetId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "planetContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setUpBloodline",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "bloodline"
+      },
+      {
+        "type": "tuple[]",
+        "name": "planetTagArray",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "fire"
+          },
+          {
+            "type": "uint256",
+            "name": "water"
+          },
+          {
+            "type": "uint256",
+            "name": "air"
+          },
+          {
+            "type": "uint256",
+            "name": "earth"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setUpContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_planetAddress"
+      },
+      {
+        "type": "address",
+        "name": "_breedAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

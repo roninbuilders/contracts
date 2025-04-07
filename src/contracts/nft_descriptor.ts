@@ -1,102 +1,89 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'quoteTokenAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'baseTokenAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'string',
-						name: 'quoteTokenSymbol',
-						type: 'string',
-					},
-					{
-						internalType: 'string',
-						name: 'baseTokenSymbol',
-						type: 'string',
-					},
-					{
-						internalType: 'uint8',
-						name: 'quoteTokenDecimals',
-						type: 'uint8',
-					},
-					{
-						internalType: 'uint8',
-						name: 'baseTokenDecimals',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bool',
-						name: 'flipRatio',
-						type: 'bool',
-					},
-					{
-						internalType: 'int24',
-						name: 'tickLower',
-						type: 'int24',
-					},
-					{
-						internalType: 'int24',
-						name: 'tickUpper',
-						type: 'int24',
-					},
-					{
-						internalType: 'int24',
-						name: 'tickCurrent',
-						type: 'int24',
-					},
-					{
-						internalType: 'int24',
-						name: 'tickSpacing',
-						type: 'int24',
-					},
-					{
-						internalType: 'uint24',
-						name: 'fee',
-						type: 'uint24',
-					},
-					{
-						internalType: 'address',
-						name: 'poolAddress',
-						type: 'address',
-					},
-				],
-				internalType: 'struct NFTDescriptor.ConstructTokenURIParams',
-				name: 'params',
-				type: 'tuple',
-			},
-		],
-		name: 'constructTokenURI',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-] as const
-const NFT_DESCRIPTOR: Contract<typeof abi> = {
-	name: 'NFT Descriptor',
-	address: '0x8f5d2b4b95677833ac62718cf09152efcfe0ad94',
-	is_deprecated: false,
-	created_at: 1732163848,
-	abi: abi,
-}
-export default NFT_DESCRIPTOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5240,
+  address: '0x8f5d2b4b95677833ac62718cf09152efcfe0ad94' as const,
+  contract_name: 'NFTDescriptor',
+  display_name: 'NFT Descriptor',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1732163848,
+  abi: [
+  {
+    "name": "constructTokenURI",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "params",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "address",
+            "name": "quoteTokenAddress"
+          },
+          {
+            "type": "address",
+            "name": "baseTokenAddress"
+          },
+          {
+            "type": "string",
+            "name": "quoteTokenSymbol"
+          },
+          {
+            "type": "string",
+            "name": "baseTokenSymbol"
+          },
+          {
+            "type": "uint8",
+            "name": "quoteTokenDecimals"
+          },
+          {
+            "type": "uint8",
+            "name": "baseTokenDecimals"
+          },
+          {
+            "type": "bool",
+            "name": "flipRatio"
+          },
+          {
+            "type": "int24",
+            "name": "tickLower"
+          },
+          {
+            "type": "int24",
+            "name": "tickUpper"
+          },
+          {
+            "type": "int24",
+            "name": "tickCurrent"
+          },
+          {
+            "type": "int24",
+            "name": "tickSpacing"
+          },
+          {
+            "type": "uint24",
+            "name": "fee"
+          },
+          {
+            "type": "address",
+            "name": "poolAddress"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

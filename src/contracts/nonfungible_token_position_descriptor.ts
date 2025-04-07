@@ -1,143 +1,126 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_WRON',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_nativeCurrencyLabelBytes',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'WRON',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token0',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'token1',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-		],
-		name: 'flipRatio',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'nativeCurrencyLabel',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'nativeCurrencyLabelBytes',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenRatioPriority',
-		outputs: [
-			{
-				internalType: 'int256',
-				name: '',
-				type: 'int256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract INonfungiblePositionManager',
-				name: 'positionManager',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenURI',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const NONFUNGIBLE_TOKEN_POSITION_DESCRIPTOR: Contract<typeof abi> = {
-	name: 'Nonfungible Token Position Descriptor',
-	address: '0x8766648aa6586cc7cd2cdb2bd911eec78cab89ea',
-	is_deprecated: false,
-	created_at: 1732163860,
-	abi: abi,
-}
-export default NONFUNGIBLE_TOKEN_POSITION_DESCRIPTOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5243,
+  address: '0x8766648aa6586cc7cd2cdb2bd911eec78cab89ea' as const,
+  contract_name: 'NonfungibleTokenPositionDescriptor',
+  display_name: 'Nonfungible Token Position Descriptor',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1732163860,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_WRON"
+      },
+      {
+        "type": "bytes32",
+        "name": "_nativeCurrencyLabelBytes"
+      }
+    ]
+  },
+  {
+    "name": "WRON",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "flipRatio",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token0"
+      },
+      {
+        "type": "address",
+        "name": "token1"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "nativeCurrencyLabel",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "nativeCurrencyLabelBytes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "tokenRatioPriority",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "int256"
+      }
+    ]
+  },
+  {
+    "name": "tokenURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "positionManager"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

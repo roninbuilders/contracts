@@ -1,1696 +1,1438 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_approved',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'Approval',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'ApprovalForAll',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-		],
-		name: 'MinterAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_minter',
-				type: 'address',
-			},
-		],
-		name: 'MinterRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_nonce',
-				type: 'uint256',
-			},
-		],
-		name: 'NonceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'PermissionSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'PermissionSetAll',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_seeder',
-				type: 'address',
-			},
-		],
-		name: 'SeederAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_seeder',
-				type: 'address',
-			},
-		],
-		name: 'SeederRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'SpenderUnwhitelisted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'SpenderWhitelisted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'TokenOperatorSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'TokenPermissionSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'Transfer',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		stateMutability: 'nonpayable',
-		type: 'fallback',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedMinters',
-				type: 'address[]',
-			},
-		],
-		name: 'addMinters',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedSeeders',
-				type: 'address[]',
-			},
-		],
-		name: 'addSeeders',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'approve',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'axie',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'sireId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'matronId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'birthDate',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct AxieGenetics.Genes',
-				name: 'genes',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint8',
-				name: 'breedCount',
-				type: 'uint8',
-			},
-			{
-				internalType: 'uint16',
-				name: 'level',
-				type: 'uint16',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'axieBreedLimit',
-		outputs: [
-			{
-				internalType: 'uint8',
-				name: '',
-				type: 'uint8',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'axiegg',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct AxieGenetics.Genes',
-				name: 'sireGenes',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'x',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'y',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct AxieGenetics.Genes',
-				name: 'matronGenes',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-		],
-		name: 'balanceOf',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_balance',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'baseTokenURI',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_sireId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_matronId',
-				type: 'uint256',
-			},
-		],
-		name: 'breedAxies',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedingFee',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedingFeeToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedingPotion',
-		outputs: [
-			{
-				internalType: 'contract IERC20Burnable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'currentAxieId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'geneBrewerContract',
-		outputs: [
-			{
-				internalType: 'contract IAxieGeneBrewer',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'getApproved',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_axieId',
-				type: 'uint256',
-			},
-		],
-		name: 'getRequirementsForBreeding',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'hoppingAxieId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'isApprovedForAll',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'isAuthorized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'isFunctionOperatorOfToken',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'isMinter',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'isPermissionSet',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'isPermissionSetAll',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'isTokenOperator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'minter',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'minters',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'name',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'neededPotionForBreeding',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'nonces',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		name: 'operatorPermission',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'ownerOf',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'preExecutionLogicContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'removeAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedMinters',
-				type: 'address[]',
-			},
-		],
-		name: 'removeMinters',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedSeeders',
-				type: 'address[]',
-			},
-		],
-		name: 'removeSeeders',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_data',
-				type: 'bytes',
-			},
-		],
-		name: 'safeTransferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'seeder',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'seeders',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_toAdultDuration',
-				type: 'uint256',
-			},
-		],
-		name: 'setAdultDuration',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'setAllPermissionFor',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'setApprovalForAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint8',
-				name: '_axieBreedLimit',
-				type: 'uint8',
-			},
-		],
-		name: 'setAxieBreedLimit',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'string',
-				name: '_baseTokenURI',
-				type: 'string',
-			},
-		],
-		name: 'setBaseTokenURI',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_breedingFee',
-				type: 'uint256',
-			},
-		],
-		name: 'setBreedingFee',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_breedingFeeToken',
-				type: 'address',
-			},
-		],
-		name: 'setBreedingFeeToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IERC20Burnable',
-				name: '_breedingPotion',
-				type: 'address',
-			},
-		],
-		name: 'setBreedingPotionContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_currentAxieId',
-				type: 'uint256',
-			},
-		],
-		name: 'setCurrentAxieId',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'setFunctionOperatorForToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'contract IAxieGeneBrewer',
-				name: '_geneBrewerContract',
-				type: 'address',
-			},
-		],
-		name: 'setGeneBrewerContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_neededPotionForBreeding',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setNeededPotionForBreeding',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '_funcSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'setPermissionFor',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_preExecutionLogicContract',
-				type: 'address',
-			},
-		],
-		name: 'setPreExecutionLogicContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: '_approved',
-				type: 'bool',
-			},
-		],
-		name: 'setTokenOperator',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenReceiver',
-				type: 'address',
-			},
-		],
-		name: 'setTokenReceiver',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: '_interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '_supported',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'symbol',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'toAdultDuration',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_index',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenByIndex',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_owner',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_index',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenOfOwnerByIndex',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: '',
-				type: 'bytes4',
-			},
-		],
-		name: 'tokenPermission',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenPermissionInfos',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'funcSig',
-				type: 'bytes4',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'tokenReceiver',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'tokenURI',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '_uri',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'totalSupply',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '_supply',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'transferFrom',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'unwhitelist',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_spender',
-				type: 'address',
-			},
-		],
-		name: 'whitelist',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'whitelisted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const AXIE_PRE_EXECUTION_LOGIC: Contract<typeof abi> = {
-	name: 'Axie Pre Execution Logic',
-	address: '0x26101408945caf2e2fde23cc3c1e12982d7a3368',
-	is_deprecated: false,
-	created_at: 1701253656,
-	abi: abi,
-}
-export default AXIE_PRE_EXECUTION_LOGIC
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1300,
+  address: '0x26101408945caf2e2fde23cc3c1e12982d7a3368' as const,
+  contract_name: 'AxiePreExecutionLogic',
+  display_name: 'Axie Pre Execution Logic',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1701253656,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdminRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Approval",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_approved",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ApprovalForAll",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "MinterAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "MinterRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NonceUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_nonce",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "PermissionSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "PermissionSetAll",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "SeederAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_seeder",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SeederRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_seeder",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SpenderUnwhitelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SpenderWhitelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TokenOperatorSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "TokenPermissionSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "Transfer",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "addMinters",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedMinters"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "addSeeders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedSeeders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "approve",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "axie",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "sireId"
+      },
+      {
+        "type": "uint256",
+        "name": "matronId"
+      },
+      {
+        "type": "uint256",
+        "name": "birthDate"
+      },
+      {
+        "type": "tuple",
+        "name": "genes",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "x"
+          },
+          {
+            "type": "uint256",
+            "name": "y"
+          }
+        ]
+      },
+      {
+        "type": "uint8",
+        "name": "breedCount"
+      },
+      {
+        "type": "uint16",
+        "name": "level"
+      }
+    ]
+  },
+  {
+    "name": "axieBreedLimit",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "axiegg",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "name": "sireGenes",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "x"
+          },
+          {
+            "type": "uint256",
+            "name": "y"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "matronGenes",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "x"
+          },
+          {
+            "type": "uint256",
+            "name": "y"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_balance"
+      }
+    ]
+  },
+  {
+    "name": "baseTokenURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "breedAxies",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_sireId"
+      },
+      {
+        "type": "uint256",
+        "name": "_matronId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "breedingFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "breedingFeeToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "breedingPotion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "currentAxieId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "geneBrewerContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getApproved",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRequirementsForBreeding",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_axieId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "hoppingAxieId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "isApprovedForAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ]
+  },
+  {
+    "name": "isAuthorized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isFunctionOperatorOfToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isMinter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isPermissionSet",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isPermissionSetAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isTokenOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minters",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "neededPotionForBreeding",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "nonces",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "operatorPermission",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "bytes4"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "ownerOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "preExecutionLogicContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeMinters",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedMinters"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeSeeders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedSeeders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from"
+      },
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from"
+      },
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "seeder",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "seeders",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setAdultDuration",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_toAdultDuration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAllPermissionFor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setApprovalForAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAxieBreedLimit",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "_axieBreedLimit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBaseTokenURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_baseTokenURI"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBreedingFee",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_breedingFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBreedingFeeToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_breedingFeeToken"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBreedingPotionContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_breedingPotion"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCurrentAxieId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_currentAxieId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setFunctionOperatorForToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setGeneBrewerContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_geneBrewerContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setNeededPotionForBreeding",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_neededPotionForBreeding"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPermissionFor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "_funcSig"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPreExecutionLogicContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_preExecutionLogicContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenOperator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "address",
+        "name": "_operator"
+      },
+      {
+        "type": "bool",
+        "name": "_approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenReceiver",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenReceiver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "_interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "_supported"
+      }
+    ]
+  },
+  {
+    "name": "symbol",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "toAdultDuration",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "tokenByIndex",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ]
+  },
+  {
+    "name": "tokenOfOwnerByIndex",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      },
+      {
+        "type": "uint256",
+        "name": "_index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ]
+  },
+  {
+    "name": "tokenPermission",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "bytes4"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "tokenPermissionInfos",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "bytes4",
+        "name": "funcSig"
+      }
+    ]
+  },
+  {
+    "name": "tokenReceiver",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "tokenURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "_uri"
+      }
+    ]
+  },
+  {
+    "name": "totalSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "_supply"
+      }
+    ]
+  },
+  {
+    "name": "transferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_from"
+      },
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "unwhitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "whitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "whitelisted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

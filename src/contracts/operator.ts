@@ -1,747 +1,631 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'link',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'senders',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'changedBy',
-				type: 'address',
-			},
-		],
-		name: 'AuthorizedSendersChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-		],
-		name: 'CancelOracleRequest',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'specId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'requester',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'callbackAddr',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes4',
-				name: 'callbackFunctionId',
-				type: 'bytes4',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'cancelExpiration',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'dataVersion',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'OracleRequest',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-		],
-		name: 'OracleResponse',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'acceptedContract',
-				type: 'address',
-			},
-		],
-		name: 'OwnableContractAccepted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferRequested',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'senders',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'changedBy',
-				type: 'address',
-			},
-		],
-		name: 'TargetsUpdatedAuthorizedSenders',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'EXPIRYTIME',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'senders',
-				type: 'address[]',
-			},
-		],
-		name: 'acceptAuthorizedReceivers',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'ownable',
-				type: 'address[]',
-			},
-		],
-		name: 'acceptOwnableContracts',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunc',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-		],
-		name: 'cancelOracleRequest',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunc',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-		],
-		name: 'cancelOracleRequestByRequester',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address payable[]',
-				name: 'receivers',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'distributeFunds',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'callbackAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunctionId',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'data',
-				type: 'bytes32',
-			},
-		],
-		name: 'fulfillOracleRequest',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'requestId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'callbackAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunctionId',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'fulfillOracleRequest2',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAuthorizedSenders',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getChainlinkToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'isAuthorizedSender',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'onTokenTransfer',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'specId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunctionId',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'dataVersion',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'operatorRequest',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'payment',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'specId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'callbackAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'callbackFunctionId',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'dataVersion',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'oracleRequest',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'ownerForward',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'value',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'ownerTransferAndCall',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'success',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'senders',
-				type: 'address[]',
-			},
-		],
-		name: 'setAuthorizedSenders',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'senders',
-				type: 'address[]',
-			},
-		],
-		name: 'setAuthorizedSendersOn',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'ownable',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnableContracts',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'typeAndVersion',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'withdraw',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdrawable',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const OPERATOR: Contract<typeof abi> = {
-	name: 'Operator',
-	address: '0x341f783e47abdde16ff138491248b4b19d2706bd',
-	is_deprecated: false,
-	created_at: 1736944462,
-	abi: abi,
-}
-export default OPERATOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 7204,
+  address: '0x341f783e47abdde16ff138491248b4b19d2706bd' as const,
+  contract_name: 'Operator',
+  display_name: 'Operator',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1736944462,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "link"
+      },
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ]
+  },
+  {
+    "name": "AuthorizedSendersChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "senders"
+      },
+      {
+        "type": "address",
+        "name": "changedBy"
+      }
+    ]
+  },
+  {
+    "name": "CancelOracleRequest",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OracleRequest",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "specId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "requester"
+      },
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "address",
+        "name": "callbackAddr"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunctionId"
+      },
+      {
+        "type": "uint256",
+        "name": "cancelExpiration"
+      },
+      {
+        "type": "uint256",
+        "name": "dataVersion"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ]
+  },
+  {
+    "name": "OracleResponse",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnableContractAccepted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "acceptedContract",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TargetsUpdatedAuthorizedSenders",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "targets"
+      },
+      {
+        "type": "address[]",
+        "name": "senders"
+      },
+      {
+        "type": "address",
+        "name": "changedBy"
+      }
+    ]
+  },
+  {
+    "name": "EXPIRYTIME",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "acceptAuthorizedReceivers",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "targets"
+      },
+      {
+        "type": "address[]",
+        "name": "senders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "acceptOwnableContracts",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "ownable"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "acceptOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "cancelOracleRequest",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunc"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cancelOracleRequestByRequester",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunc"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "distributeFunds",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "receivers"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "fulfillOracleRequest",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "address",
+        "name": "callbackAddress"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunctionId"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      },
+      {
+        "type": "bytes32",
+        "name": "data"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "fulfillOracleRequest2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "address",
+        "name": "callbackAddress"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunctionId"
+      },
+      {
+        "type": "uint256",
+        "name": "expiration"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getAuthorizedSenders",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getChainlinkToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "isAuthorizedSender",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "onTokenTransfer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "operatorRequest",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "bytes32",
+        "name": "specId"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunctionId"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "dataVersion"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "oracleRequest",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "payment"
+      },
+      {
+        "type": "bytes32",
+        "name": "specId"
+      },
+      {
+        "type": "address",
+        "name": "callbackAddress"
+      },
+      {
+        "type": "bytes4",
+        "name": "callbackFunctionId"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "dataVersion"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "ownerForward",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "ownerTransferAndCall",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "success"
+      }
+    ]
+  },
+  {
+    "name": "setAuthorizedSenders",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "senders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAuthorizedSendersOn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "targets"
+      },
+      {
+        "type": "address[]",
+        "name": "senders"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnableContracts",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "ownable"
+      },
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "typeAndVersion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawable",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

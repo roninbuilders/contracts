@@ -1,299 +1,490 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_gachaPrice',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_dailyRedeemAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_kalodiumAddress',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_manager',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_newKalodium',
-				type: 'address',
-			},
-		],
-		name: 'kalodiumUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_player',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: '_paymentHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_price',
-				type: 'uint256',
-			},
-		],
-		name: 'playedGacha',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_manager',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_newPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'priceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_manager',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_newPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'redeemAmountUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_player',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_unixTs',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-		],
-		name: 'redeemedDaily',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'dailyRedeemAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'gachaPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'kalodium',
-		outputs: [
-			{
-				internalType: 'contract IKalodium',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'lastClaimTs',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'unixTs',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'paymentCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_paymentHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'playGacha',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'proofOfPayment',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'redeemDaily',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'setDailyRedeemAmount',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAddress',
-				type: 'address',
-			},
-		],
-		name: 'setKalodiumAddress',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_price',
-				type: 'uint256',
-			},
-		],
-		name: 'setPrice',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const KALODIUM_GACHA: Contract<typeof abi> = {
-	name: 'Kalodium Gacha',
-	address: '0x2b7e3ddd371f4593d3d488e2eff14381d1d3ec58',
-	is_deprecated: false,
-	created_at: 1722089098,
-	abi: abi,
-}
-export default KALODIUM_GACHA
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4447,
+  address: '0x52937be1eeef634c2efbaca2930ac987ea04ffa1' as const,
+  contract_name: 'KalodiumGacha',
+  display_name: 'Kalodium Gacha',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1728416712,
+  abi: [
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "allowedPlayGacha",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "batchPlayedGacha",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "kalodiumUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_manager",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newKalodium"
+      }
+    ]
+  },
+  {
+    "name": "playedGacha",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_player",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_price"
+      }
+    ]
+  },
+  {
+    "name": "priceUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_manager",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_newPrice"
+      }
+    ]
+  },
+  {
+    "name": "redeemAmountUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_manager",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_newPrice"
+      }
+    ]
+  },
+  {
+    "name": "redeemedDaily",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_player",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_unixTs"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ]
+  },
+  {
+    "name": "addDelegatedBurner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchPlayGacha",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchPlayWaitTime",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "dailyRedeemAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "delegatePlayGacha",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "delegatedBurners",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "gachaPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_gachaPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "_dailyRedeemAmount"
+      },
+      {
+        "type": "address",
+        "name": "_kalodiumAddress"
+      },
+      {
+        "type": "bool",
+        "name": "_playGachaEnabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "kalodium",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "lastBatchBurnTs",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "lastClaimTs",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "maxBatchBurnAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "minBatchBurnAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "minKaloBalanceForBurn",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "playGacha",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "playGachaEnabled",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "redeemDaily",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeDelegatedBurner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setBatchPlayWaitTime",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newWaitTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setDailyRedeemAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setKalodiumAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMaxBatchBurnAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinBatchBurnAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinKaloBalanceForBurn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPlayGachaEnabled",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPrice",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_price"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

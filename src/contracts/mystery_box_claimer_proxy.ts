@@ -1,87 +1,77 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_logic',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: '_data',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		stateMutability: 'payable',
-		type: 'fallback',
-	},
-	{
-		inputs: [],
-		stateMutability: 'payable',
-		type: 'receive',
-	},
-] as const
-const MYSTERY_BOX_CLAIMER_PROXY: Contract<typeof abi> = {
-	name: 'Mystery Box Claimer Proxy',
-	address: '0xd6f9734c45f0bdffc6cca98fcbff13449f7b586a',
-	is_deprecated: false,
-	created_at: 1711309373,
-	abi: abi,
-}
-export default MYSTERY_BOX_CLAIMER_PROXY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 2027,
+  address: '0xd6f9734c45f0bdffc6cca98fcbff13449f7b586a' as const,
+  contract_name: 'KongProxy',
+  display_name: 'Mystery Box Claimer Proxy',
+  is_deprecated: false,
+  is_proxy: true,
+  proxy_to: '0xa0262039188ea1079c0551ed10fe2ed16afddc6e',
+  created_at: 1711309373,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_logic"
+      },
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

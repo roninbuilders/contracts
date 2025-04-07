@@ -1,302 +1,263 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_achievement',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_signer',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_rewarder',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'achievement',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'token_id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'claimer',
-				type: 'address',
-			},
-		],
-		name: 'firstHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'token_id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'claimer',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'token_id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'claimer',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-		],
-		name: 'mintAndClaim',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'rewarder',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_rewarder',
-				type: 'address',
-			},
-		],
-		name: 'setRewarder',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_signer',
-				type: 'address',
-			},
-		],
-		name: 'setSigner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'token_id',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'claimer',
-				type: 'address',
-			},
-		],
-		name: 'signatureHash',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'signer',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'usedHashes',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const SIGNATURE_MINTER: Contract<typeof abi> = {
-	name: 'Signature Minter',
-	address: '0xdd284054b2412b8e4cd6d6853b1659cadf4059ff',
-	is_deprecated: false,
-	created_at: 1727131898,
-	abi: abi,
-}
-export default SIGNATURE_MINTER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4211,
+  address: '0xdd284054b2412b8e4cd6d6853b1659cadf4059ff' as const,
+  contract_name: 'SignatureMinter',
+  display_name: 'Signature Minter',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1727131898,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_achievement"
+      },
+      {
+        "type": "address",
+        "name": "_signer"
+      },
+      {
+        "type": "address",
+        "name": "_rewarder"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "achievement",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "firstHash",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "token_id"
+      },
+      {
+        "type": "address",
+        "name": "claimer"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "token_id"
+      },
+      {
+        "type": "address",
+        "name": "claimer"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintAndClaim",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "token_id"
+      },
+      {
+        "type": "address",
+        "name": "claimer"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "rewarder",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setRewarder",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_rewarder"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setSigner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_signer"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "signatureHash",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "token_id"
+      },
+      {
+        "type": "address",
+        "name": "claimer"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "signer",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "usedHashes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

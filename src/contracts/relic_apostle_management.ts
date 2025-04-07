@@ -1,574 +1,481 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_planetOwner',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_planetID',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: '_seedPlanetID',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_slotsWithApostleIDs',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_apostleIDs',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_genes',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_ivs',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_createTimes',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'enum RelicApostleManagement.ACTION_TYPE[]',
-				name: '_actions',
-				type: 'uint8[]',
-			},
-		],
-		name: 'ManageRelicApostle',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_planetOwner',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'planetID',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'seedPlanetID',
-						type: 'string',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'slotsWithApostleIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'apostleIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'genes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ivs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'createTimes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'enum RelicApostleManagement.ACTION_TYPE[]',
-						name: 'actions',
-						type: 'uint8[]',
-					},
-				],
-				indexed: false,
-				internalType: 'struct RelicApostleManagement.ApostlePayload[]',
-				name: '_payloads',
-				type: 'tuple[]',
-			},
-		],
-		name: 'ManageRelicApostlesSummary',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: '_reforgingPriceArray',
-				type: 'uint256[]',
-			},
-		],
-		name: 'ReforgePriceUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint8',
-				name: '_mintType',
-				type: 'uint8',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_saleSchedule',
-				type: 'uint256',
-			},
-		],
-		name: 'SaleScheduleUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_planetIDs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'string[]',
-				name: '_seedPlanetIDs',
-				type: 'string[]',
-			},
-		],
-		name: 'getPlanetNonceArray',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: 'planetResult',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'seedPlanetResult',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_planetIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'string[]',
-				name: '_seedPlanetIds',
-				type: 'string[]',
-			},
-		],
-		name: 'getPlanetSlotsWithApostleIDsMapping',
-		outputs: [
-			{
-				internalType: 'uint256[][]',
-				name: '',
-				type: 'uint256[][]',
-			},
-			{
-				internalType: 'uint256[][]',
-				name: '',
-				type: 'uint256[][]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getReforgingAnimaPriceArray',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'planetID',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'seedPlanetID',
-						type: 'string',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'slotsWithApostleIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'apostleIDs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'genes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'ivs',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'createTimes',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'enum RelicApostleManagement.ACTION_TYPE[]',
-						name: 'actions',
-						type: 'uint8[]',
-					},
-				],
-				internalType: 'struct RelicApostleManagement.ApostlePayload[]',
-				name: '_payloads',
-				type: 'tuple[]',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'manageRelicApostles',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: '_isEnabled',
-				type: 'bool',
-			},
-		],
-		name: 'setEnabled',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[]',
-				name: '_reforgingPriceArray',
-				type: 'uint256[]',
-			},
-		],
-		name: 'setupReforgePrice',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenReceiptHandler',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_planetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_apostleAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_animaAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_systemAddress',
-				type: 'address',
-			},
-		],
-		name: 'updateContractSetting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_wallet',
-				type: 'address',
-			},
-		],
-		name: 'withdrawFunds',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const RELIC_APOSTLE_MANAGEMENT: Contract<typeof abi> = {
-	name: 'Relic Apostle Management',
-	address: '0x05560c629b9923820dbfb90b45de462edb7d04bd',
-	is_deprecated: false,
-	created_at: 1726460385,
-	abi: abi,
-}
-export default RELIC_APOSTLE_MANAGEMENT
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4072,
+  address: '0x05560c629b9923820dbfb90b45de462edb7d04bd' as const,
+  contract_name: 'RelicApostleManagement',
+  display_name: 'Relic Apostle Management',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1726460385,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ManageRelicApostle",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_planetOwner",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_planetID"
+      },
+      {
+        "type": "string",
+        "name": "_seedPlanetID"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_slotsWithApostleIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_apostleIDs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_genes"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_ivs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_createTimes"
+      },
+      {
+        "type": "uint8[]",
+        "name": "_actions"
+      }
+    ]
+  },
+  {
+    "name": "ManageRelicApostlesSummary",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_planetOwner",
+        "indexed": true
+      },
+      {
+        "type": "tuple[]",
+        "name": "_payloads",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "planetID"
+          },
+          {
+            "type": "string",
+            "name": "seedPlanetID"
+          },
+          {
+            "type": "uint256[]",
+            "name": "slotsWithApostleIDs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "apostleIDs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "genes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ivs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "createTimes"
+          },
+          {
+            "type": "uint8[]",
+            "name": "actions"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ReforgePriceUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_reforgingPriceArray"
+      }
+    ]
+  },
+  {
+    "name": "SaleScheduleUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "_mintType",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "_saleSchedule"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "getPlanetNonceArray",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_planetIDs"
+      },
+      {
+        "type": "string[]",
+        "name": "_seedPlanetIDs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "planetResult"
+      },
+      {
+        "type": "uint256[]",
+        "name": "seedPlanetResult"
+      }
+    ]
+  },
+  {
+    "name": "getPlanetSlotsWithApostleIDsMapping",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_planetIds"
+      },
+      {
+        "type": "string[]",
+        "name": "_seedPlanetIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[][]"
+      },
+      {
+        "type": "uint256[][]"
+      }
+    ]
+  },
+  {
+    "name": "getReforgingAnimaPriceArray",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "manageRelicApostles",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "_payloads",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "planetID"
+          },
+          {
+            "type": "string",
+            "name": "seedPlanetID"
+          },
+          {
+            "type": "uint256[]",
+            "name": "slotsWithApostleIDs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "apostleIDs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "genes"
+          },
+          {
+            "type": "uint256[]",
+            "name": "ivs"
+          },
+          {
+            "type": "uint256[]",
+            "name": "createTimes"
+          },
+          {
+            "type": "uint8[]",
+            "name": "actions"
+          }
+        ]
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setEnabled",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "_isEnabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setupReforgePrice",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_reforgingPriceArray"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateContractSetting",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenReceiptHandler"
+      },
+      {
+        "type": "address",
+        "name": "_planetAddress"
+      },
+      {
+        "type": "address",
+        "name": "_apostleAddress"
+      },
+      {
+        "type": "address",
+        "name": "_animaAddress"
+      },
+      {
+        "type": "address",
+        "name": "_systemAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawFunds",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_amount"
+      },
+      {
+        "type": "address",
+        "name": "_wallet"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

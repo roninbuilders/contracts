@@ -1,444 +1,374 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_convertId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_userWalletAddress',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_accountId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_requestId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: '_packageId',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_targetTotalPurchaseAmount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: '_tokenAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'PurchaseSuccess',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_systemAddress',
-				type: 'address',
-			},
-		],
-		name: 'UpdatedSystemAddress',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_purchaseId',
-				type: 'uint256',
-			},
-		],
-		name: 'getPurchaseStructById',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'purchaseId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'accountId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'requestId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'packageId',
-						type: 'string',
-					},
-					{
-						internalType: 'uint256',
-						name: 'targetTotalPurchaseAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'tokenAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenAmount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct VIPShopTokenPurchase.PurchaseStruct',
-				name: '',
-				type: 'tuple',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_userAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'string',
-				name: '_packageId',
-				type: 'string',
-			},
-		],
-		name: 'getUserPurchasedPackageAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'isWhitelistedToken',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_accountId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_requestId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: '_packageId',
-				type: 'string',
-			},
-			{
-				internalType: 'uint256',
-				name: '_targetTotalPurchaseAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: '_signature',
-				type: 'bytes',
-			},
-		],
-		name: 'purchaseItem',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'requestIdMap',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_systemAddress',
-				type: 'address',
-			},
-		],
-		name: 'setupSystemAddress',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_tokenAddressArray',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool',
-				name: '_isWhitelisted',
-				type: 'bool',
-			},
-		],
-		name: 'updateWhitelistTokens',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_targetWallet',
-				type: 'address',
-			},
-		],
-		name: 'withdrawFunds',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const VIP_SHOP_TOKEN_PURCHASE: Contract<typeof abi> = {
-	name: 'VIP Shop Token Purchase',
-	address: '0x87a866bd87c5f410d49309cbe8deea49c8758122',
-	is_deprecated: false,
-	created_at: 1733997767,
-	abi: abi,
-}
-export default VIP_SHOP_TOKEN_PURCHASE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5720,
+  address: '0x87a866bd87c5f410d49309cbe8deea49c8758122' as const,
+  contract_name: 'VIPShopTokenPurchase',
+  display_name: 'VIP Shop Token Purchase',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1733997767,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PurchaseSuccess",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_convertId"
+      },
+      {
+        "type": "address",
+        "name": "_userWalletAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_accountId"
+      },
+      {
+        "type": "uint256",
+        "name": "_requestId"
+      },
+      {
+        "type": "string",
+        "name": "_packageId"
+      },
+      {
+        "type": "uint256",
+        "name": "_targetTotalPurchaseAmount"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenAmount"
+      }
+    ]
+  },
+  {
+    "name": "UpdatedSystemAddress",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_systemAddress",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "getPurchaseStructById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_purchaseId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "purchaseId"
+          },
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "uint256",
+            "name": "accountId"
+          },
+          {
+            "type": "uint256",
+            "name": "requestId"
+          },
+          {
+            "type": "string",
+            "name": "packageId"
+          },
+          {
+            "type": "uint256",
+            "name": "targetTotalPurchaseAmount"
+          },
+          {
+            "type": "address",
+            "name": "tokenAddress"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenAmount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getUserPurchasedPackageAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_userAddress"
+      },
+      {
+        "type": "string",
+        "name": "_packageId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isWhitelistedToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "purchaseItem",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_accountId"
+      },
+      {
+        "type": "uint256",
+        "name": "_requestId"
+      },
+      {
+        "type": "string",
+        "name": "_packageId"
+      },
+      {
+        "type": "uint256",
+        "name": "_targetTotalPurchaseAmount"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "requestIdMap",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "setupSystemAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_systemAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateWhitelistTokens",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_tokenAddressArray"
+      },
+      {
+        "type": "bool",
+        "name": "_isWhitelisted"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawFunds",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      },
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

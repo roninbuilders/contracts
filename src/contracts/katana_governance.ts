@@ -1,620 +1,540 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'InvalidInitialization',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidLength',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'NotInitializing',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-		],
-		name: 'OwnableInvalidOwner',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'OwnableUnauthorizedAccount',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'Unauthorized',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'by',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'factory',
-				type: 'address',
-			},
-		],
-		name: 'FactoryUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint64',
-				name: 'version',
-				type: 'uint64',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token0',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token1',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'pair',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'allPairsLength',
-				type: 'uint256',
-			},
-		],
-		name: 'PairCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newImpl',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldImpl',
-				type: 'address',
-			},
-		],
-		name: 'PairProxyUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'by',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint40',
-				name: 'whitelistUntil',
-				type: 'uint40',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'allowed',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-		],
-		name: 'PermissionUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'INIT_CODE_PAIR_HASH',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index',
-				type: 'uint256',
-			},
-		],
-		name: 'allPairs',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'pair',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'allPairsLength',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'allowedAll',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenA',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenB',
-				type: 'address',
-			},
-		],
-		name: 'createPair',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'pair',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenA',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenB',
-				type: 'address',
-			},
-			{
-				internalType: 'uint40',
-				name: 'whitelistUntil',
-				type: 'uint40',
-			},
-			{
-				internalType: 'address[]',
-				name: 'alloweds',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-		],
-		name: 'createPairAndSetPermission',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'pair',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getFactory',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getManyTokensWhitelistInfo',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint40[]',
-				name: 'whitelistedUntils',
-				type: 'uint40[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenA',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'tokenB',
-				type: 'address',
-			},
-		],
-		name: 'getPair',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'pair',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'getWhitelistUntil',
-		outputs: [
-			{
-				internalType: 'uint40',
-				name: '',
-				type: 'uint40',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'getWhitelistedTokensFor',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint40[]',
-				name: 'whitelistUntils',
-				type: 'uint40[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'factory',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'tokens',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'isAuthorized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'authorized',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'account',
-				type: 'address',
-			},
-		],
-		name: 'isAuthorized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'authorized',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pairImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: 'shouldAllow',
-				type: 'bool',
-			},
-		],
-		name: 'setAllowedAll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'factory',
-				type: 'address',
-			},
-		],
-		name: 'setFactory',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'impl',
-				type: 'address',
-			},
-		],
-		name: 'setPairImplementation',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint40',
-				name: 'whitelistUntil',
-				type: 'uint40',
-			},
-			{
-				internalType: 'address[]',
-				name: 'alloweds',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-		],
-		name: 'setPermission',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newTreasury',
-				type: 'address',
-			},
-		],
-		name: 'setTreasury',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'treasury',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const KATANA_GOVERNANCE: Contract<typeof abi> = {
-	name: 'Katana Governance',
-	address: '0x8abadb049daecc7846297c00c2e0295228e7228f',
-	is_deprecated: false,
-	created_at: 1716205735,
-	abi: abi,
-}
-export default KATANA_GOVERNANCE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 2549,
+  address: '0x8abadb049daecc7846297c00c2e0295228e7228f' as const,
+  contract_name: 'KatanaGovernance',
+  display_name: 'Katana Governance',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1716205735,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "InvalidInitialization",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidLength",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotInitializing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "OwnableInvalidOwner",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ]
+  },
+  {
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Unauthorized",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FactoryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "by",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "factory"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PairCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token0",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "token1",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "pair"
+      },
+      {
+        "type": "uint256",
+        "name": "allPairsLength"
+      }
+    ]
+  },
+  {
+    "name": "PairProxyUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImpl",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "oldImpl",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PermissionUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "by",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "uint40",
+        "name": "whitelistUntil"
+      },
+      {
+        "type": "address[]",
+        "name": "allowed"
+      },
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      }
+    ]
+  },
+  {
+    "name": "INIT_CODE_PAIR_HASH",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "allPairs",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "pair"
+      }
+    ]
+  },
+  {
+    "name": "allPairsLength",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "allowedAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "createPair",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenA"
+      },
+      {
+        "type": "address",
+        "name": "tokenB"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "pair"
+      }
+    ]
+  },
+  {
+    "name": "createPairAndSetPermission",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenA"
+      },
+      {
+        "type": "address",
+        "name": "tokenB"
+      },
+      {
+        "type": "uint40",
+        "name": "whitelistUntil"
+      },
+      {
+        "type": "address[]",
+        "name": "alloweds"
+      },
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "pair"
+      }
+    ]
+  },
+  {
+    "name": "getFactory",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getManyTokensWhitelistInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "uint40[]",
+        "name": "whitelistedUntils"
+      }
+    ]
+  },
+  {
+    "name": "getPair",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenA"
+      },
+      {
+        "type": "address",
+        "name": "tokenB"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "pair"
+      }
+    ]
+  },
+  {
+    "name": "getWhitelistUntil",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint40"
+      }
+    ]
+  },
+  {
+    "name": "getWhitelistedTokensFor",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "uint40[]",
+        "name": "whitelistUntils"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "address",
+        "name": "factory"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isAuthorized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "authorized"
+      }
+    ]
+  },
+  {
+    "name": "isAuthorized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "authorized"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pairImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setAllowedAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "shouldAllow"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setFactory",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "factory"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPairImplementation",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "impl"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPermission",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint40",
+        "name": "whitelistUntil"
+      },
+      {
+        "type": "address[]",
+        "name": "alloweds"
+      },
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasury",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newTreasury"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "treasury",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

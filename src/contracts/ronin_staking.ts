@@ -1,168 +1,1794 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_logic',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'admin_',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: '_data',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'fallback',
-	},
-	{
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'admin_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes',
-				name: '_data',
-				type: 'bytes',
-			},
-		],
-		name: 'functionDelegateCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'implementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'implementation_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
-] as const
-const RONIN_STAKING: Contract<typeof abi> = {
-	name: 'Ronin Staking',
-	address: '0x545edb750eb8769c868429be9586f5857a768758',
-	is_deprecated: false,
-	created_at: 1679636594,
-	abi: abi,
-}
-export default RONIN_STAKING
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 123,
+  address: '0x545edb750eb8769c868429be9586f5857a768758' as const,
+  contract_name: 'TransparentUpgradeableProxyV2',
+  display_name: 'Ronin Staking',
+  is_deprecated: false,
+  is_proxy: true,
+  proxy_to: '0xb7161757c02a6f71361c38f7022876105b266fdc',
+  created_at: 1679636594,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_logic"
+      },
+      {
+        "type": "address",
+        "name": "admin_"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "admin_"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "functionDelegateCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "implementation",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "implementation_"
+      }
+    ]
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi,
+  proxy_abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "ErrAdminOfAnyActivePoolForbidden",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ]
+  },
+  {
+    "name": "ErrCannotTransferRON",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrContractTypeNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ]
+  },
+  {
+    "name": "ErrDuplicated",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInactivePool",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "poolId"
+      }
+    ]
+  },
+  {
+    "name": "ErrInsufficientBalance",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint256",
+        "name": "currentBalance"
+      },
+      {
+        "type": "uint256",
+        "name": "sendAmount"
+      }
+    ]
+  },
+  {
+    "name": "ErrInsufficientDelegatingAmount",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInsufficientStakingAmount",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInvalidArguments",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidArrays",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInvalidCommissionRate",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInvalidPoolShare",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrMigrateWasAdminAlreadyDone",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrOnlyPoolAdminAllowed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrPoolAdminForbidden",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrRecipientRevert",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrStakingAmountLeft",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrThreeInteractionAddrsNotEqual",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUnauthorized",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedRole"
+      }
+    ]
+  },
+  {
+    "name": "ErrUndelegateTooEarly",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUndelegateZeroAmount",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUnexpectedInternalCall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedContractType"
+      },
+      {
+        "type": "address",
+        "name": "actual"
+      }
+    ]
+  },
+  {
+    "name": "ErrUnstakeTooEarly",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUnstakeZeroAmount",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrZeroCodeContract",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ]
+  },
+  {
+    "name": "ErrZeroValue",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "CommissionRateRangeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minRate"
+      },
+      {
+        "type": "uint256",
+        "name": "maxRate"
+      }
+    ]
+  },
+  {
+    "name": "ContractUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "CooldownSecsToUndelegateUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minSecs"
+      }
+    ]
+  },
+  {
+    "name": "Delegated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "delegator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MigrateWasAdminDisabled",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "MigrateWasAdminFinished",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "MinValidatorStakingAmountUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "threshold"
+      }
+    ]
+  },
+  {
+    "name": "PoolApproved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "PoolSharesUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "shares"
+      }
+    ]
+  },
+  {
+    "name": "PoolsDeprecated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      }
+    ]
+  },
+  {
+    "name": "PoolsUpdateConflicted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period",
+        "indexed": true
+      },
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      }
+    ]
+  },
+  {
+    "name": "PoolsUpdateFailed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period",
+        "indexed": true
+      },
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "rewards"
+      }
+    ]
+  },
+  {
+    "name": "PoolsUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "period",
+        "indexed": true
+      },
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "aRps"
+      },
+      {
+        "type": "uint256[]",
+        "name": "shares"
+      }
+    ]
+  },
+  {
+    "name": "RewardClaimed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Staked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "StakeholderChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "oldAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "StakingAmountDeductFailed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "contractBalance"
+      }
+    ]
+  },
+  {
+    "name": "StakingAmountTransferFailed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "contractBalance"
+      }
+    ]
+  },
+  {
+    "name": "Undelegated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "delegator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "Unstaked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "UserRewardUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "debited"
+      }
+    ]
+  },
+  {
+    "name": "WaitingSecsToRevokeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "secs"
+      }
+    ]
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  },
+  {
+    "name": "DEFAULT_ADDITION_GAS",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MIGRATOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "PERIOD_DURATION",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "applyValidatorCandidate",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "candidateAdmin"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "treasuryAddr"
+      },
+      {
+        "type": "uint256",
+        "name": "commissionRate"
+      },
+      {
+        "type": "bytes",
+        "name": "pubkey"
+      },
+      {
+        "type": "bytes",
+        "name": "proofOfPossession"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "bulkUndelegate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claimRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "cooldownSecsToUndelegate",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "delegate",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "delegateRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrList"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddrDst"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "disableMigrateWasAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "execChangeAdminAddr",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId"
+      },
+      {
+        "type": "address",
+        "name": "currAdminAddr"
+      },
+      {
+        "type": "address",
+        "name": "newAdminAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "execDeductStakingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "actualDeductingAmount_"
+      }
+    ]
+  },
+  {
+    "name": "execDeprecatePools",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "uint256",
+        "name": "newPeriod"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "execRecordRewards",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "rewards"
+      },
+      {
+        "type": "uint256",
+        "name": "period"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getCommissionRateRange",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "contract_"
+      }
+    ]
+  },
+  {
+    "name": "getManySelfStakings",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "selfStakings_"
+      }
+    ]
+  },
+  {
+    "name": "getManySelfStakingsById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "selfStakings_"
+      }
+    ]
+  },
+  {
+    "name": "getManyStakingAmounts",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrs"
+      },
+      {
+        "type": "address[]",
+        "name": "userList"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "stakingAmounts"
+      }
+    ]
+  },
+  {
+    "name": "getManyStakingAmountsById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "address[]",
+        "name": "userList"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "stakingAmounts"
+      }
+    ]
+  },
+  {
+    "name": "getManyStakingTotals",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "consensusAddrs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "stakingAmounts_"
+      }
+    ]
+  },
+  {
+    "name": "getManyStakingTotalsById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "stakingAmounts_"
+      }
+    ]
+  },
+  {
+    "name": "getPoolAddressOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getPoolDetail",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "uint256",
+        "name": "stakingAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "stakingTotal"
+      }
+    ]
+  },
+  {
+    "name": "getPoolDetailById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "uint256",
+        "name": "stakingAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "stakingTotal"
+      }
+    ]
+  },
+  {
+    "name": "getReward",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRewardById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "poolId"
+      },
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "address[]",
+        "name": "consensusAddrs"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "rewards_"
+      }
+    ]
+  },
+  {
+    "name": "getRewardsById",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "rewards_"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getStakingAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getStakingTotal",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "__validatorContract"
+      },
+      {
+        "type": "uint256",
+        "name": "__minValidatorStakingAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "__maxCommissionRate"
+      },
+      {
+        "type": "uint256",
+        "name": "__cooldownSecsToUndelegate"
+      },
+      {
+        "type": "uint256",
+        "name": "__waitingSecsToRevoke"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "initializeV3",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "__profileContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV4",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "address",
+        "name": "migrator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isAdminOfActivePool",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "migrateWasAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "poolIds"
+      },
+      {
+        "type": "address[]",
+        "name": "admins"
+      },
+      {
+        "type": "bool[]",
+        "name": "flags"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "minValidatorStakingAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "redelegate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddrSrc"
+      },
+      {
+        "type": "address",
+        "name": "consensusAddrDst"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "requestEmergencyExit",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "requestRenounce",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "requestUpdateCommissionRate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "uint256",
+        "name": "effectiveDaysOnwards"
+      },
+      {
+        "type": "uint256",
+        "name": "commissionRate"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCommissionRateRange",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minRate"
+      },
+      {
+        "type": "uint256",
+        "name": "maxRate"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCooldownSecsToUndelegate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "cooldownSecs"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinValidatorStakingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "threshold"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setWaitingSecsToRevoke",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "secs"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stake",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "undelegate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unstake",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "waitingSecsToRevoke",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,1119 +1,943 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'governor_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'GovernorManaged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'operator_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'OperatorManaged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'RequireOwnershipManaged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'treasury_',
-				type: 'address',
-			},
-		],
-		name: 'TreasuryManaged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'item_',
-				type: 'tuple',
-			},
-		],
-		name: 'VendingItemAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'item_',
-				type: 'tuple',
-			},
-		],
-		name: 'VendingItemGifted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'before_',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'after_',
-				type: 'tuple',
-			},
-		],
-		name: 'VendingItemModified',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'buyer_',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'item_',
-				type: 'tuple',
-			},
-		],
-		name: 'VendingItemPurchased',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'owner_',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				indexed: false,
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'item_',
-				type: 'tuple',
-			},
-		],
-		name: 'VendingItemRemoved',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'BananaToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'GENKAI',
-		outputs: [
-			{
-				internalType: 'contract IERC721',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'controller_',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'G_manageController',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'KONGZVX',
-		outputs: [
-			{
-				internalType: 'contract IERC721',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'governor_',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'O_manageGovernor',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'address_',
-				type: 'address',
-			},
-		],
-		name: 'O_setBananaToken',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'address_',
-				type: 'address',
-			},
-		],
-		name: 'O_setGENKAI',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'address_',
-				type: 'address',
-			},
-		],
-		name: 'O_setKONGZVX',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'O_setRequireHoldGENKAI',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: 'bool_',
-				type: 'bool',
-			},
-		],
-		name: 'O_setRequireHoldVx',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'address_',
-				type: 'address',
-			},
-		],
-		name: 'O_settreasuryAddress',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'VendingItem_',
-				type: 'tuple',
-			},
-		],
-		name: 'addVendingItem',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'controllers',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'deleteMostRecentVendingItem',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'purchaser_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'indexes_',
-				type: 'uint256[]',
-			},
-		],
-		name: 'getIndexToPurchasedBatch',
-		outputs: [
-			{
-				internalType: 'bool[]',
-				name: '',
-				type: 'bool[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index_',
-				type: 'uint256',
-			},
-		],
-		name: 'getPurchasersOfItem',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getVendingItemsAll',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct KongzMartWL.VendingItem[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getVendingItemsLength',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'start_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'end_',
-				type: 'uint256',
-			},
-		],
-		name: 'getVendingItemsPaginated',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct KongzMartWL.VendingItem[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'governors',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'indexToPurchased',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'indexToPurchasers',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_banana',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_treasury',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_vx',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_genkai',
-				type: 'address',
-			},
-		],
-		name: 'initialize',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index_',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'isNativeToken',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountAvailable',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'amountPurchased',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'startTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'endTime',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint32',
-						name: 'tokenId',
-						type: 'uint32',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenPrice',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct KongzMartWL.VendingItem',
-				name: 'VendingItem_',
-				type: 'tuple',
-			},
-		],
-		name: 'modifyVendingItem',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'index_',
-				type: 'uint256',
-			},
-		],
-		name: 'purchaseVendingItem',
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'requireHoldGENKAI',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'requireHoldVX',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'treasuryAddress',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vendingItems',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'isNativeToken',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint32',
-				name: 'amountAvailable',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'amountPurchased',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'startTime',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'endTime',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'tokenId',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenPrice',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const KONGZ_MART_WL: Contract<typeof abi> = {
-	name: 'Kongz Mart WL',
-	address: '0x779126c613c98e462141ccacc15859b82d126872',
-	is_deprecated: false,
-	created_at: 1729516805,
-	abi: abi,
-}
-export default KONGZ_MART_WL
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4724,
+  address: '0x779126c613c98e462141ccacc15859b82d126872' as const,
+  contract_name: 'KongzMartWL',
+  display_name: 'Kongz Mart WL',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1729516805,
+  abi: [
+  {
+    "name": "GovernorManaged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "governor_"
+      },
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "OperatorManaged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "operator_"
+      },
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RequireOwnershipManaged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ]
+  },
+  {
+    "name": "TreasuryManaged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "treasury_"
+      }
+    ]
+  },
+  {
+    "name": "VendingItemAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "item_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "VendingItemGifted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "item_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "VendingItemModified",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "before_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "after_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "VendingItemPurchased",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "buyer_",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "item_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "VendingItemRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner_",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "item_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "BananaToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "GENKAI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "G_manageController",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "controller_"
+      },
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "KONGZVX",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "O_manageGovernor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "governor_"
+      },
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_setBananaToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "address_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_setGENKAI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "address_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_setKONGZVX",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "address_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_setRequireHoldGENKAI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_setRequireHoldVx",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "bool_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "O_settreasuryAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "address_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "addVendingItem",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "VendingItem_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "controllers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "deleteMostRecentVendingItem",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "getIndexToPurchasedBatch",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "purchaser_"
+      },
+      {
+        "type": "uint256[]",
+        "name": "indexes_"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool[]"
+      }
+    ]
+  },
+  {
+    "name": "getPurchasersOfItem",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index_"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getVendingItemsAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getVendingItemsLength",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getVendingItemsPaginated",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "start_"
+      },
+      {
+        "type": "uint256",
+        "name": "end_"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "governors",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "indexToPurchased",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "indexToPurchasers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_banana"
+      },
+      {
+        "type": "address",
+        "name": "_treasury"
+      },
+      {
+        "type": "address",
+        "name": "_vx"
+      },
+      {
+        "type": "address",
+        "name": "_genkai"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "modifyVendingItem",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index_"
+      },
+      {
+        "type": "tuple",
+        "name": "VendingItem_",
+        "components": [
+          {
+            "type": "bool",
+            "name": "isNativeToken"
+          },
+          {
+            "type": "uint32",
+            "name": "amountAvailable"
+          },
+          {
+            "type": "uint32",
+            "name": "amountPurchased"
+          },
+          {
+            "type": "uint32",
+            "name": "startTime"
+          },
+          {
+            "type": "uint32",
+            "name": "endTime"
+          },
+          {
+            "type": "uint32",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenPrice"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "purchaseVendingItem",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "requireHoldGENKAI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "requireHoldVX",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "treasuryAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "vendingItems",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "isNativeToken"
+      },
+      {
+        "type": "uint32",
+        "name": "amountAvailable"
+      },
+      {
+        "type": "uint32",
+        "name": "amountPurchased"
+      },
+      {
+        "type": "uint32",
+        "name": "startTime"
+      },
+      {
+        "type": "uint32",
+        "name": "endTime"
+      },
+      {
+        "type": "uint32",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenPrice"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

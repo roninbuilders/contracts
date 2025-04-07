@@ -1,790 +1,667 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IConfig',
-				name: '_config',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'blockNumber',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes[]',
-				name: 'returnData',
-				type: 'bytes[]',
-			},
-		],
-		name: 'AggregateResult',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'success',
-						type: 'bool',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'bytes',
-						name: 'reason',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct RoninGameInbox.GameResult[]',
-				name: 'results',
-				type: 'tuple[]',
-			},
-		],
-		name: 'SimulateResult',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'DepositLUAToGame',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'DepositRonToGame',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'gameContract',
-				type: 'address',
-			},
-		],
-		name: 'GameContractAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'gameContract',
-				type: 'address',
-			},
-		],
-		name: 'GameContractRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256[]',
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'GameOffchainMintBatch',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'HandleGameMessages',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'messageId',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'success',
-						type: 'bool',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'bytes',
-						name: 'reason',
-						type: 'bytes',
-					},
-				],
-				indexed: false,
-				internalType: 'struct RoninGameInbox.GameResult',
-				name: 'result',
-				type: 'tuple',
-			},
-		],
-		name: 'HandleGameResult',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'gameContracts',
-				type: 'address[]',
-			},
-		],
-		name: 'addGameContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'target',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes',
-						name: 'data',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct RoninGameInbox.MultiGameMessage[]',
-				name: 'multiGameMessages',
-				type: 'tuple[]',
-			},
-		],
-		name: 'aggregate',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes32',
-						name: 'messageId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'target',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes',
-						name: 'data',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'gasFee',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct RoninGameInbox.GameMessage[]',
-				name: 'gameMessages',
-				type: 'tuple[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'target',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes',
-						name: 'data',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct RoninGameInbox.Call[]',
-				name: 'calls',
-				type: 'tuple[]',
-			},
-		],
-		name: 'aggregateAfterGameMessages',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'owner',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'batchDepositGameNFT',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_contract',
-				type: 'address',
-			},
-		],
-		name: 'checkIsGameContract',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'config',
-		outputs: [
-			{
-				internalType: 'contract IConfig',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'depositLUAToGame',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'depositRonToGame',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'executedMessages',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes32',
-						name: 'messageId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'target',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes',
-						name: 'data',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'gasFee',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct RoninGameInbox.GameMessage[]',
-				name: 'gameMessages',
-				type: 'tuple[]',
-			},
-		],
-		name: 'handle',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'success',
-						type: 'bool',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'bytes',
-						name: 'reason',
-						type: 'bytes',
-					},
-				],
-				internalType: 'struct RoninGameInbox.GameResult[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'isGameContract',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'isSimulate',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'payToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'postUpgrade',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'proxiableUUID',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'gameContracts',
-				type: 'address[]',
-			},
-		],
-		name: 'removeGameContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'itemIds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'safeBatchMint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'ids',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: 'amounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'safeBatchMintWithGame',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'bytes32',
-						name: 'messageId',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'target',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes',
-						name: 'data',
-						type: 'bytes',
-					},
-					{
-						internalType: 'address',
-						name: 'userAddress',
-						type: 'address',
-					},
-					{
-						internalType: 'bool',
-						name: 'force',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'gasFee',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct RoninGameInbox.GameMessage[]',
-				name: 'gameMessages',
-				type: 'tuple[]',
-			},
-		],
-		name: 'simulate',
-		outputs: [
-			{
-				internalType: 'bool[]',
-				name: '',
-				type: 'bool[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '',
-				type: 'bytes[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
-] as const
-const RONIN_GAME_INBOX: Contract<typeof abi> = {
-	name: 'Ronin Game Inbox',
-	address: '0x4bba9f2cc156cb885fa5b605f693be20c5d1aa9b',
-	is_deprecated: false,
-	created_at: 1730859948,
-	abi: abi,
-}
-export default RONIN_GAME_INBOX
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5079,
+  address: '0x4bba9f2cc156cb885fa5b605f693be20c5d1aa9b' as const,
+  contract_name: 'RoninGameInbox',
+  display_name: 'Ronin Game Inbox',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1730859948,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_config"
+      }
+    ]
+  },
+  {
+    "name": "AggregateResult",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "blockNumber"
+      },
+      {
+        "type": "bytes[]",
+        "name": "returnData"
+      }
+    ]
+  },
+  {
+    "name": "SimulateResult",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "results",
+        "components": [
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "success"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "bytes",
+            "name": "reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DepositLUAToGame",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "DepositRonToGame",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "GameContractAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "gameContract"
+      }
+    ]
+  },
+  {
+    "name": "GameContractRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "gameContract"
+      }
+    ]
+  },
+  {
+    "name": "GameOffchainMintBatch",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ]
+  },
+  {
+    "name": "HandleGameMessages",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "HandleGameResult",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "messageId",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "result",
+        "components": [
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "success"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "bytes",
+            "name": "reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "addGameContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "gameContracts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "aggregate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "multiGameMessages",
+        "components": [
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes",
+            "name": "data"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "aggregateAfterGameMessages",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "gameMessages",
+        "components": [
+          {
+            "type": "bytes32",
+            "name": "messageId"
+          },
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes",
+            "name": "data"
+          },
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "uint256",
+            "name": "gasFee"
+          }
+        ]
+      },
+      {
+        "type": "tuple[]",
+        "name": "calls",
+        "components": [
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes",
+            "name": "data"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchDepositGameNFT",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "checkIsGameContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_contract"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "config",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "depositLUAToGame",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "depositRonToGame",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "executedMessages",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "handle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "gameMessages",
+        "components": [
+          {
+            "type": "bytes32",
+            "name": "messageId"
+          },
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes",
+            "name": "data"
+          },
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "uint256",
+            "name": "gasFee"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "success"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "bytes",
+            "name": "reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isGameContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isSimulate",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "payToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "postUpgrade",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "removeGameContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "gameContracts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeBatchMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "itemIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeBatchMintWithGame",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "simulate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "gameMessages",
+        "components": [
+          {
+            "type": "bytes32",
+            "name": "messageId"
+          },
+          {
+            "type": "address",
+            "name": "target"
+          },
+          {
+            "type": "bytes",
+            "name": "data"
+          },
+          {
+            "type": "address",
+            "name": "userAddress"
+          },
+          {
+            "type": "bool",
+            "name": "force"
+          },
+          {
+            "type": "uint256",
+            "name": "gasFee"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool[]"
+      },
+      {
+        "type": "bytes[]"
+      }
+    ]
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

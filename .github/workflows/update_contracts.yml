@@ -1,0 +1,77 @@
+name: Automated contract update
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Runs weekly on Sunday at midnight
+  workflow_dispatch: # Allows manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT }}
+          ssh-strict: true
+          persist-credentials: false
+          clean: true
+          lfs: false
+          submodules: false
+          set-safe-directory: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: "https://registry.npmjs.org/"
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Update Contracts
+        run: pnpm run generate-contracts
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet && git diff --staged --quiet || echo "changes_detected=true" >> $GITHUB_OUTPUT
+
+      - name: Increment package version
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: |
+          pnpm version patch --no-git-tag-version
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json
+          git commit -m "Increment package version"
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changes_detected == 'true'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: "chore: contracts update"
+          title: "chore: automated contract update [$(date +%Y-%m-%d)]"
+          body: |
+            This PR contains the following updates:
+            - Contract definitions synchronization
+            - Package version bump
+          branch: "chore/contracts-update-${{ github.run_number }}"
+          delete-branch: true
+          labels: |
+            automated
+            contracts

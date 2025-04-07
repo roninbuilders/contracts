@@ -1,1403 +1,1163 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'mainToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'owners',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'AddOwner',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAlterToken',
-				type: 'address',
-			},
-		],
-		name: 'ChangeAlterToken',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'timestampExpirationDelay',
-				type: 'uint256',
-			},
-		],
-		name: 'ChangeTimestampDelay',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'previousAlternativeFee',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newAlternativeFee',
-				type: 'uint256',
-			},
-		],
-		name: 'CompanyAlterFeeChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'previousCompanyFee',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'newCompanyFee',
-				type: 'uint256',
-			},
-		],
-		name: 'CompanyFeeChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousCompany',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newCompany',
-				type: 'address',
-			},
-		],
-		name: 'CompanyTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'joinIdRef',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'mainTokenRefunded',
-				type: 'uint256',
-			},
-		],
-		name: 'CustomBetCancelled',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'finalValue',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'targetSideWon',
-				type: 'bool',
-			},
-		],
-		name: 'CustomBetClosed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'id',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'eventId',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'hidden',
-				type: 'bool',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'lockTime',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'expirationTime',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'targetValue',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'targetSide',
-				type: 'bool',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'coefficient',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'creator',
-				type: 'address',
-			},
-		],
-		name: 'CustomBetCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'side',
-				type: 'bool',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'mainAmount',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'joinId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'joinIdRef',
-				type: 'uint256',
-			},
-		],
-		name: 'CustomBetJoined',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'mainTokenRefunded',
-				type: 'uint256',
-			},
-		],
-		name: 'CustomBetRefunded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'useAlterFee',
-				type: 'bool',
-			},
-		],
-		name: 'CustomPrizeTaken',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'targetAddress',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'isAlternative',
-				type: 'bool',
-			},
-		],
-		name: 'FeeTaken',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'ownerToRemove',
-				type: 'address',
-			},
-		],
-		name: 'RemoveOwner',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newSwapRouter',
-				type: 'address',
-			},
-		],
-		name: 'SetRouter',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'code',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'votingNumber',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'passed',
-				type: 'bool',
-			},
-		],
-		name: 'VotingResult',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'code',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'votingNumber',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'initiator',
-				type: 'address',
-			},
-		],
-		name: 'VotingStarted',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'acquireNewAlternativeToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acquireNewOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acquireOwnerToRemove',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acquireTakeFee',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'acquireTransferCompany',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'addOwnerVoting',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'createdDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'votingCode',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'joinIdRef',
-				type: 'uint256',
-			},
-		],
-		name: 'cancelCustomJoin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'changeAlterToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'newAlterToken',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'createdDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'votingCode',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'alternativeToken',
-				type: 'address',
-			},
-		],
-		name: 'changeAlternativeTokenStart',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'clientBetsLength',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'close',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'finalValue',
-				type: 'string',
-			},
-			{
-				internalType: 'bool',
-				name: 'targetSideWon',
-				type: 'bool',
-			},
-		],
-		name: 'closeCustomBet',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'company',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'string',
-						name: 'eventId',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'hidden',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lockTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expirationTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'targetValue',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'targetSide',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'coefficient',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct CustomDTOs.CreateCustomRequest',
-				name: 'createRequest',
-				type: 'tuple',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'side',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct CustomDTOs.JoinCustomRequest',
-				name: 'joinRequest',
-				type: 'tuple',
-			},
-		],
-		name: 'createCustomBet',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'customBetIdCounter',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'enableAlternativeToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAlternativeFee',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getAlternativeIERC20Token',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'offset',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'size',
-				type: 'uint256',
-			},
-		],
-		name: 'getClientBets',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getCompanyFee',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'getCompanyFeeBalance',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-		],
-		name: 'getCustomBet',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'id',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'eventId',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'hidden',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lockTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expirationTime',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'targetValue',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'targetSide',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'coefficient',
-						type: 'uint256',
-					},
-					{
-						internalType: 'string',
-						name: 'finalValue',
-						type: 'string',
-					},
-					{
-						internalType: 'bool',
-						name: 'targetSideWon',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct CustomDTOs.CustomBet',
-				name: '',
-				type: 'tuple',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-		],
-		name: 'getCustomClientJoins',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'id',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'client',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'freeAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'lockedAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bool',
-						name: 'targetSide',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'joinRefId',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct CustomDTOs.JoinCustomBetClient[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-		],
-		name: 'getCustomWonAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getMainIERC20Token',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTimestampExpirationDelay',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'isAlternativeTokenEnabled',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				components: [
-					{
-						internalType: 'bool',
-						name: 'side',
-						type: 'bool',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct CustomDTOs.JoinCustomRequest',
-				name: 'joinRequest',
-				type: 'tuple',
-			},
-		],
-		name: 'joinCustomBet',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'ownerAddStart',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'ownerToRemove',
-				type: 'address',
-			},
-		],
-		name: 'ownerToRemoveStart',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'owners',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-		],
-		name: 'refundCustomBet',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'removeOwnerVoting',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'ownerToRemove',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'createdDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'votingCode',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'alternativeFee',
-				type: 'uint256',
-			},
-		],
-		name: 'setAlternativeFeeFee',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'companyFee',
-				type: 'uint256',
-			},
-		],
-		name: 'setCompanyFee',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'router',
-				type: 'address',
-			},
-		],
-		name: 'setRouter',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'timestampExpirationDelay',
-				type: 'uint256',
-			},
-		],
-		name: 'setTimestampExpirationDelay',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'swapRouter',
-		outputs: [
-			{
-				internalType: 'contract SwapRouter',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'betId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'client',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'useAlterFee',
-				type: 'bool',
-			},
-		],
-		name: 'takeCustomPrize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'targetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'isAlternative',
-				type: 'bool',
-			},
-		],
-		name: 'takeFeeStart',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'takeFeeVoting',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'targetAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'isAlternative',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint256',
-				name: 'createdDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'votingCode',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'totalOwners',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newCompany',
-				type: 'address',
-			},
-		],
-		name: 'transferCompanyStart',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'transferCompanyVoting',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'newCompanyAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'createdDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'votingCode',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'voteNegative',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'votePositive',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'voted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'votingActive',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'votingInfo',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'initiator',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'currentNumberOfVotesPositive',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'currentNumberOfVotesNegative',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'startedDate',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'votingCode',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const TRIBALLY_GAME_BATTLES: Contract<typeof abi> = {
-	name: 'Tribally Game Battles',
-	address: '0x3d1b2cf77ac7cc2309601b6e78cb695cbac3c7fe',
-	is_deprecated: false,
-	created_at: 1732063603,
-	abi: abi,
-}
-export default TRIBALLY_GAME_BATTLES
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5207,
+  address: '0x3d1b2cf77ac7cc2309601b6e78cb695cbac3c7fe' as const,
+  contract_name: 'Tribally Game Battles',
+  display_name: 'Tribally Game Battles',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1732063603,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "mainToken"
+      },
+      {
+        "type": "address[]",
+        "name": "owners"
+      }
+    ]
+  },
+  {
+    "name": "AddOwner",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ChangeAlterToken",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAlterToken",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ChangeTimestampDelay",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "timestampExpirationDelay"
+      }
+    ]
+  },
+  {
+    "name": "CompanyAlterFeeChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "previousAlternativeFee"
+      },
+      {
+        "type": "uint256",
+        "name": "newAlternativeFee"
+      }
+    ]
+  },
+  {
+    "name": "CompanyFeeChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "previousCompanyFee"
+      },
+      {
+        "type": "uint256",
+        "name": "newCompanyFee"
+      }
+    ]
+  },
+  {
+    "name": "CompanyTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousCompany",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newCompany",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "CustomBetCancelled",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "joinIdRef"
+      },
+      {
+        "type": "uint256",
+        "name": "mainTokenRefunded"
+      }
+    ]
+  },
+  {
+    "name": "CustomBetClosed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "string",
+        "name": "finalValue"
+      },
+      {
+        "type": "bool",
+        "name": "targetSideWon"
+      }
+    ]
+  },
+  {
+    "name": "CustomBetCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "string",
+        "name": "eventId"
+      },
+      {
+        "type": "bool",
+        "name": "hidden"
+      },
+      {
+        "type": "uint256",
+        "name": "lockTime"
+      },
+      {
+        "type": "uint256",
+        "name": "expirationTime"
+      },
+      {
+        "type": "string",
+        "name": "targetValue"
+      },
+      {
+        "type": "bool",
+        "name": "targetSide"
+      },
+      {
+        "type": "uint256",
+        "name": "coefficient"
+      },
+      {
+        "type": "address",
+        "name": "creator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "CustomBetJoined",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "side"
+      },
+      {
+        "type": "uint256",
+        "name": "mainAmount"
+      },
+      {
+        "type": "address",
+        "name": "client",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "uint256",
+        "name": "joinId"
+      },
+      {
+        "type": "uint256",
+        "name": "joinIdRef"
+      }
+    ]
+  },
+  {
+    "name": "CustomBetRefunded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "mainTokenRefunded"
+      }
+    ]
+  },
+  {
+    "name": "CustomPrizeTaken",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "bool",
+        "name": "useAlterFee"
+      }
+    ]
+  },
+  {
+    "name": "FeeTaken",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "targetAddress",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "isAlternative"
+      }
+    ]
+  },
+  {
+    "name": "RemoveOwner",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "ownerToRemove",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SetRouter",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newSwapRouter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "VotingResult",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "code"
+      },
+      {
+        "type": "uint256",
+        "name": "votingNumber"
+      },
+      {
+        "type": "bool",
+        "name": "passed"
+      }
+    ]
+  },
+  {
+    "name": "VotingStarted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "code"
+      },
+      {
+        "type": "uint256",
+        "name": "votingNumber"
+      },
+      {
+        "type": "address",
+        "name": "initiator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "acquireNewAlternativeToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "acquireNewOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "acquireOwnerToRemove",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "acquireTakeFee",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "acquireTransferCompany",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "addOwnerVoting",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      },
+      {
+        "type": "uint256",
+        "name": "createdDate"
+      },
+      {
+        "type": "uint256",
+        "name": "votingCode"
+      }
+    ]
+  },
+  {
+    "name": "cancelCustomJoin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "uint256",
+        "name": "joinIdRef"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeAlterToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "newAlterToken"
+      },
+      {
+        "type": "uint256",
+        "name": "createdDate"
+      },
+      {
+        "type": "uint256",
+        "name": "votingCode"
+      }
+    ]
+  },
+  {
+    "name": "changeAlternativeTokenStart",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "alternativeToken"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "clientBetsLength",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "close",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "closeCustomBet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "string",
+        "name": "finalValue"
+      },
+      {
+        "type": "bool",
+        "name": "targetSideWon"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "company",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "createCustomBet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "createRequest",
+        "components": [
+          {
+            "type": "string",
+            "name": "eventId"
+          },
+          {
+            "type": "bool",
+            "name": "hidden"
+          },
+          {
+            "type": "uint256",
+            "name": "lockTime"
+          },
+          {
+            "type": "uint256",
+            "name": "expirationTime"
+          },
+          {
+            "type": "string",
+            "name": "targetValue"
+          },
+          {
+            "type": "bool",
+            "name": "targetSide"
+          },
+          {
+            "type": "uint256",
+            "name": "coefficient"
+          }
+        ]
+      },
+      {
+        "type": "tuple",
+        "name": "joinRequest",
+        "components": [
+          {
+            "type": "bool",
+            "name": "side"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "customBetIdCounter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "enableAlternativeToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAlternativeFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getAlternativeIERC20Token",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getClientBets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "client"
+      },
+      {
+        "type": "uint256",
+        "name": "offset"
+      },
+      {
+        "type": "uint256",
+        "name": "size"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getCompanyFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getCompanyFeeBalance",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getCustomBet",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "string",
+            "name": "eventId"
+          },
+          {
+            "type": "bool",
+            "name": "hidden"
+          },
+          {
+            "type": "uint256",
+            "name": "lockTime"
+          },
+          {
+            "type": "uint256",
+            "name": "expirationTime"
+          },
+          {
+            "type": "string",
+            "name": "targetValue"
+          },
+          {
+            "type": "bool",
+            "name": "targetSide"
+          },
+          {
+            "type": "uint256",
+            "name": "coefficient"
+          },
+          {
+            "type": "string",
+            "name": "finalValue"
+          },
+          {
+            "type": "bool",
+            "name": "targetSideWon"
+          }
+        ]
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getCustomClientJoins",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "client"
+      },
+      {
+        "type": "uint256",
+        "name": "betId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "address",
+            "name": "client"
+          },
+          {
+            "type": "uint256",
+            "name": "freeAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "lockedAmount"
+          },
+          {
+            "type": "bool",
+            "name": "targetSide"
+          },
+          {
+            "type": "uint256",
+            "name": "joinRefId"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getCustomWonAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getMainIERC20Token",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getTimestampExpirationDelay",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "isAlternativeTokenEnabled",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "joinCustomBet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "tuple",
+        "name": "joinRequest",
+        "components": [
+          {
+            "type": "bool",
+            "name": "side"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "ownerAddStart",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "ownerToRemoveStart",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "ownerToRemove"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owners",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "refundCustomBet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeOwnerVoting",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ownerToRemove"
+      },
+      {
+        "type": "uint256",
+        "name": "createdDate"
+      },
+      {
+        "type": "uint256",
+        "name": "votingCode"
+      }
+    ]
+  },
+  {
+    "name": "setAlternativeFeeFee",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "alternativeFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCompanyFee",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "companyFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRouter",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "router"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTimestampExpirationDelay",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "timestampExpirationDelay"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "swapRouter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "takeCustomPrize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "betId"
+      },
+      {
+        "type": "address",
+        "name": "client"
+      },
+      {
+        "type": "bool",
+        "name": "useAlterFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "takeFeeStart",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "targetAddress"
+      },
+      {
+        "type": "bool",
+        "name": "isAlternative"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "takeFeeVoting",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "targetAddress"
+      },
+      {
+        "type": "bool",
+        "name": "isAlternative"
+      },
+      {
+        "type": "uint256",
+        "name": "createdDate"
+      },
+      {
+        "type": "uint256",
+        "name": "votingCode"
+      }
+    ]
+  },
+  {
+    "name": "totalOwners",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "transferCompanyStart",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newCompany"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferCompanyVoting",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "newCompanyAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "createdDate"
+      },
+      {
+        "type": "uint256",
+        "name": "votingCode"
+      }
+    ]
+  },
+  {
+    "name": "voteNegative",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "votePositive",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "voted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "votingActive",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "votingInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "initiator"
+      },
+      {
+        "type": "uint256",
+        "name": "currentNumberOfVotesPositive"
+      },
+      {
+        "type": "uint256",
+        "name": "currentNumberOfVotesNegative"
+      },
+      {
+        "type": "uint256",
+        "name": "startedDate"
+      },
+      {
+        "type": "string",
+        "name": "votingCode"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

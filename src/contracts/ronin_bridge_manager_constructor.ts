@@ -1,1509 +1,1271 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		name: 'ErrBelowMinRequiredGovernors',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrContractTypeNotFound',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrCurrentProposalIsNotCompleted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrDuplicated',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'bytes',
-				name: 'callData',
-				type: 'bytes',
-			},
-		],
-		name: 'ErrExistOneInternalCallFailed',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'governor',
-				type: 'address',
-			},
-		],
-		name: 'ErrGovernorNotFound',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'required',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'sender',
-				type: 'address',
-			},
-		],
-		name: 'ErrGovernorNotMatch',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidArguments',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrInvalidInput',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidThreshold',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidVoteWeight',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrLengthMismatch',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrOnlySelfCall',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'ErrOperatorNotFound',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum RoleAccess',
-				name: 'expectedRole',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrUnauthorized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ErrUnsupportedInterface',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrVoteIsFinalized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrZeroAddress',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ErrZeroCodeContract',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'BridgeOperatorAddingFailed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'BridgeOperatorRemovingFailed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'governor',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'fromBridgeOperator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'toBridgeOperator',
-				type: 'address',
-			},
-		],
-		name: 'BridgeOperatorUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-			{
-				indexed: false,
-				internalType: 'uint96[]',
-				name: 'voteWeights',
-				type: 'uint96[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'BridgeOperatorsAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'BridgeOperatorsRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		name: 'CallbackRegistered',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'round',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				indexed: false,
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'globalProposalHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'enum GlobalProposal.TargetOption[]',
-						name: 'targetOptions',
-						type: 'uint8[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				indexed: false,
-				internalType: 'struct GlobalProposal.GlobalProposalDetail',
-				name: 'globalProposal',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'creator',
-				type: 'address',
-			},
-		],
-		name: 'GlobalProposalCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint8',
-				name: 'version',
-				type: 'uint8',
-			},
-		],
-		name: 'Initialized',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'min',
-				type: 'uint256',
-			},
-		],
-		name: 'MinRequiredGovernorUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes',
-				name: 'callData',
-				type: 'bytes',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'registers',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'statuses',
-				type: 'bool[]',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes[]',
-				name: 'returnDatas',
-				type: 'bytes[]',
-			},
-		],
-		name: 'Notified',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalApproved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'round',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address',
-						name: 'executor',
-						type: 'address',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				indexed: false,
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'creator',
-				type: 'address',
-			},
-		],
-		name: 'ProposalCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'successCalls',
-				type: 'bool[]',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes[]',
-				name: 'returnDatas',
-				type: 'bytes[]',
-			},
-		],
-		name: 'ProposalExecuted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalExpired',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'duration',
-				type: 'uint256',
-			},
-		],
-		name: 'ProposalExpiryDurationChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalRejected',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'enum Ballot.VoteType',
-				name: 'support',
-				type: 'uint8',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'weight',
-				type: 'uint256',
-			},
-		],
-		name: 'ProposalVoted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'enum GlobalProposal.TargetOption',
-				name: 'targetOption',
-				type: 'uint8',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'TargetOptionUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'numerator',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'denominator',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'previousNumerator',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'previousDenominator',
-				type: 'uint256',
-			},
-		],
-		name: 'ThresholdUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DOMAIN_SEPARATOR',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint96[]',
-				name: 'voteWeights',
-				type: 'uint96[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'addBridgeOperators',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'voteWeight',
-				type: 'uint256',
-			},
-		],
-		name: 'checkThreshold',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'bridgeOperator',
-				type: 'address',
-			},
-		],
-		name: 'getBridgeOperatorWeight',
-		outputs: [
-			{
-				internalType: 'uint96',
-				name: 'weight',
-				type: 'uint96',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getBridgeOperators',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getCallbackRegisters',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'registers',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'getContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getFullBridgeOperatorInfos',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint96[]',
-				name: 'weights',
-				type: 'uint96[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'round_',
-				type: 'uint256',
-			},
-		],
-		name: 'getGlobalProposalSignatures',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'voters',
-				type: 'address[]',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: 'supports_',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: 'signatures',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		name: 'getGovernorOf',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'governor',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'governor',
-				type: 'address',
-			},
-		],
-		name: 'getGovernorWeight',
-		outputs: [
-			{
-				internalType: 'uint96',
-				name: 'weight',
-				type: 'uint96',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-		],
-		name: 'getGovernorWeights',
-		outputs: [
-			{
-				internalType: 'uint96[]',
-				name: 'weights',
-				type: 'uint96[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getGovernors',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'governor',
-				type: 'address',
-			},
-		],
-		name: 'getOperatorOf',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'operator',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_round',
-				type: 'uint256',
-			},
-		],
-		name: 'getProposalSignatures',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '_voters',
-				type: 'address[]',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: '_supports',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: '_signatures',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getThreshold',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'num',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'denom',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getTotalWeight',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'round_',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-		],
-		name: 'globalProposalVoted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'num',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'denom',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'roninChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiryDuration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'bridgeContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address[]',
-				name: 'callbackRegisters',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint96[]',
-				name: 'voteWeights',
-				type: 'uint96[]',
-			},
-			{
-				internalType: 'enum GlobalProposal.TargetOption[]',
-				name: 'targetOptions',
-				type: 'uint8[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'isBridgeOperator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'minimumVoteWeight',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_round',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_voter',
-				type: 'address',
-			},
-		],
-		name: 'proposalVoted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'registers',
-				type: 'address[]',
-			},
-		],
-		name: 'registerCallbacks',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'bridgeOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'removeBridgeOperators',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum GlobalProposal.TargetOption[]',
-				name: 'targetOptions',
-				type: 'uint8[]',
-			},
-		],
-		name: 'resolveTargets',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'round',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'setContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'min',
-				type: 'uint256',
-			},
-		],
-		name: 'setMinRequiredGovernor',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'num',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'denom',
-				type: 'uint256',
-			},
-		],
-		name: 'setThreshold',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'governors',
-				type: 'address[]',
-			},
-		],
-		name: 'sumGovernorsWeight',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'sum',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'totalBridgeOperator',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'registers',
-				type: 'address[]',
-			},
-		],
-		name: 'unregisterCallbacks',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum GlobalProposal.TargetOption[]',
-				name: 'targetOptions',
-				type: 'uint8[]',
-			},
-			{
-				internalType: 'address[]',
-				name: 'targets',
-				type: 'address[]',
-			},
-		],
-		name: 'updateManyTargetOption',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vote',
-		outputs: [
-			{
-				internalType: 'enum VoteStatusConsumer.VoteStatus',
-				name: 'status',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'againstVoteWeight',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'forVoteWeight',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiryTimestamp',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const RONIN_BRIDGE_MANAGER_CONSTRUCTOR: Contract<typeof abi> = {
-	name: 'Ronin Bridge Manager Constructor',
-	address: '0x89f25ef52e46e583ead6c5e1acd2471ed499c8c7',
-	is_deprecated: false,
-	created_at: 1722328225,
-	abi: abi,
-}
-export default RONIN_BRIDGE_MANAGER_CONSTRUCTOR
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3487,
+  address: '0x89f25ef52e46e583ead6c5e1acd2471ed499c8c7' as const,
+  contract_name: 'RoninBridgeManagerConstructor',
+  display_name: 'Ronin Bridge Manager Constructor',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1722328225,
+  abi: [
+  {
+    "name": "ErrBelowMinRequiredGovernors",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrContractTypeNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ]
+  },
+  {
+    "name": "ErrCurrentProposalIsNotCompleted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrDuplicated",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrExistOneInternalCallFailed",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "bytes",
+        "name": "callData"
+      }
+    ]
+  },
+  {
+    "name": "ErrGovernorNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "governor"
+      }
+    ]
+  },
+  {
+    "name": "ErrGovernorNotMatch",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "required"
+      },
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidArguments",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidInput",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInvalidThreshold",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidVoteWeight",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrLengthMismatch",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrOnlySelfCall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrOperatorNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ]
+  },
+  {
+    "name": "ErrUnauthorized",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedRole"
+      }
+    ]
+  },
+  {
+    "name": "ErrUnsupportedInterface",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ]
+  },
+  {
+    "name": "ErrVoteIsFinalized",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrZeroAddress",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrZeroCodeContract",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ]
+  },
+  {
+    "name": "BridgeOperatorAddingFailed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BridgeOperatorRemovingFailed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BridgeOperatorUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "governor",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "fromBridgeOperator",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "toBridgeOperator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BridgeOperatorsAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      },
+      {
+        "type": "uint96[]",
+        "name": "voteWeights"
+      },
+      {
+        "type": "address[]",
+        "name": "governors"
+      },
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      }
+    ]
+  },
+  {
+    "name": "BridgeOperatorsRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      },
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      }
+    ]
+  },
+  {
+    "name": "CallbackRegistered",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "ContractUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "GlobalProposalCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "round",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address",
+            "name": "executor"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "bytes32",
+        "name": "globalProposalHash"
+      },
+      {
+        "type": "tuple",
+        "name": "globalProposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address",
+            "name": "executor"
+          },
+          {
+            "type": "uint8[]",
+            "name": "targetOptions"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "address",
+        "name": "creator"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MinRequiredGovernorUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "min"
+      }
+    ]
+  },
+  {
+    "name": "Notified",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "callData"
+      },
+      {
+        "type": "address[]",
+        "name": "registers"
+      },
+      {
+        "type": "bool[]",
+        "name": "statuses"
+      },
+      {
+        "type": "bytes[]",
+        "name": "returnDatas"
+      }
+    ]
+  },
+  {
+    "name": "ProposalApproved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "chainId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "round",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address",
+            "name": "executor"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "address",
+        "name": "creator"
+      }
+    ]
+  },
+  {
+    "name": "ProposalExecuted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "bool[]",
+        "name": "successCalls"
+      },
+      {
+        "type": "bytes[]",
+        "name": "returnDatas"
+      }
+    ]
+  },
+  {
+    "name": "ProposalExpired",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalExpiryDurationChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "duration",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalRejected",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalVoted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "voter",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "support"
+      },
+      {
+        "type": "uint256",
+        "name": "weight"
+      }
+    ]
+  },
+  {
+    "name": "TargetOptionUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "targetOption",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ThresholdUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "numerator",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "denominator",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "previousNumerator"
+      },
+      {
+        "type": "uint256",
+        "name": "previousDenominator"
+      }
+    ]
+  },
+  {
+    "name": "DOMAIN_SEPARATOR",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "addBridgeOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint96[]",
+        "name": "voteWeights"
+      },
+      {
+        "type": "address[]",
+        "name": "governors"
+      },
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "checkThreshold",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "voteWeight"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getBridgeOperatorWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "bridgeOperator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint96",
+        "name": "weight"
+      }
+    ]
+  },
+  {
+    "name": "getBridgeOperators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getCallbackRegisters",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "registers"
+      }
+    ]
+  },
+  {
+    "name": "getContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "contract_"
+      }
+    ]
+  },
+  {
+    "name": "getFullBridgeOperatorInfos",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "governors"
+      },
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      },
+      {
+        "type": "uint96[]",
+        "name": "weights"
+      }
+    ]
+  },
+  {
+    "name": "getGlobalProposalSignatures",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "round_"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "voters"
+      },
+      {
+        "type": "uint8[]",
+        "name": "supports_"
+      },
+      {
+        "type": "tuple[]",
+        "name": "signatures",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "v"
+          },
+          {
+            "type": "bytes32",
+            "name": "r"
+          },
+          {
+            "type": "bytes32",
+            "name": "s"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getGovernorOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "governor"
+      }
+    ]
+  },
+  {
+    "name": "getGovernorWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "governor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint96",
+        "name": "weight"
+      }
+    ]
+  },
+  {
+    "name": "getGovernorWeights",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "governors"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint96[]",
+        "name": "weights"
+      }
+    ]
+  },
+  {
+    "name": "getGovernors",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getOperatorOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "governor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ]
+  },
+  {
+    "name": "getProposalSignatures",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_round"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "_voters"
+      },
+      {
+        "type": "uint8[]",
+        "name": "_supports"
+      },
+      {
+        "type": "tuple[]",
+        "name": "_signatures",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "v"
+          },
+          {
+            "type": "bytes32",
+            "name": "r"
+          },
+          {
+            "type": "bytes32",
+            "name": "s"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getThreshold",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "num"
+      },
+      {
+        "type": "uint256",
+        "name": "denom"
+      }
+    ]
+  },
+  {
+    "name": "getTotalWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "globalProposalVoted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "round_"
+      },
+      {
+        "type": "address",
+        "name": "voter"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "num"
+      },
+      {
+        "type": "uint256",
+        "name": "denom"
+      },
+      {
+        "type": "uint256",
+        "name": "roninChainId"
+      },
+      {
+        "type": "uint256",
+        "name": "expiryDuration"
+      },
+      {
+        "type": "address",
+        "name": "bridgeContract"
+      },
+      {
+        "type": "address[]",
+        "name": "callbackRegisters"
+      },
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      },
+      {
+        "type": "address[]",
+        "name": "governors"
+      },
+      {
+        "type": "uint96[]",
+        "name": "voteWeights"
+      },
+      {
+        "type": "uint8[]",
+        "name": "targetOptions"
+      },
+      {
+        "type": "address[]",
+        "name": "targets"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isBridgeOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minimumVoteWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "proposalVoted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_round"
+      },
+      {
+        "type": "address",
+        "name": "_voter"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "registerCallbacks",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "registers"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeBridgeOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "bridgeOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "resolveTargets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8[]",
+        "name": "targetOptions"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "targets"
+      }
+    ]
+  },
+  {
+    "name": "round",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "setContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinRequiredGovernor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "min"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setThreshold",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "num"
+      },
+      {
+        "type": "uint256",
+        "name": "denom"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "sumGovernorsWeight",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "governors"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "sum"
+      }
+    ]
+  },
+  {
+    "name": "totalBridgeOperator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "unregisterCallbacks",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "registers"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateManyTargetOption",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8[]",
+        "name": "targetOptions"
+      },
+      {
+        "type": "address[]",
+        "name": "targets"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vote",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint8",
+        "name": "status"
+      },
+      {
+        "type": "bytes32",
+        "name": "hash"
+      },
+      {
+        "type": "uint256",
+        "name": "againstVoteWeight"
+      },
+      {
+        "type": "uint256",
+        "name": "forVoteWeight"
+      },
+      {
+        "type": "uint256",
+        "name": "expiryTimestamp"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

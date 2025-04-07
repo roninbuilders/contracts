@@ -1,76 +1,1300 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: '_data',
-				type: 'bytes',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'target',
-				type: 'address',
-			},
-		],
-		name: 'AddressEmptyCode',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'ERC1967InvalidImplementation',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ERC1967NonPayable',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FailedInnerCall',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'fallback',
-	},
-] as const
-const THE_MACHINES_ARENA_SKIN_PROXY: Contract<typeof abi> = {
-	name: 'The Machines Arena Skin Proxy',
-	address: '0xb826bfe98d3a88c693c2382e223d162aad5b8f22',
-	is_deprecated: false,
-	created_at: 1709089473,
-	abi: abi,
-}
-export default THE_MACHINES_ARENA_SKIN_PROXY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1762,
+  address: '0xb826bfe98d3a88c693c2382e223d162aad5b8f22' as const,
+  contract_name: 'ERC1967Proxy',
+  display_name: 'The Machines Arena Skin Proxy',
+  is_deprecated: false,
+  is_proxy: true,
+  proxy_to: '0xf3723d3ba45c03f2983f6f6eb36f3751751b83f8',
+  created_at: 1709089473,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ]
+  },
+  {
+    "name": "AddressEmptyCode",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967InvalidImplementation",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967NonPayable",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedInnerCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi,
+  proxy_abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "bytes32",
+        "name": "neededRole"
+      }
+    ]
+  },
+  {
+    "name": "AddressEmptyCode",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967InvalidImplementation",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967NonPayable",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ERC2981InvalidDefaultRoyalty",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "numerator"
+      },
+      {
+        "type": "uint256",
+        "name": "denominator"
+      }
+    ]
+  },
+  {
+    "name": "ERC2981InvalidDefaultRoyaltyReceiver",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ]
+  },
+  {
+    "name": "ERC2981InvalidTokenRoyalty",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "numerator"
+      },
+      {
+        "type": "uint256",
+        "name": "denominator"
+      }
+    ]
+  },
+  {
+    "name": "ERC2981InvalidTokenRoyaltyReceiver",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ]
+  },
+  {
+    "name": "ERC721IncorrectOwner",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InsufficientApproval",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InvalidApprover",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "approver"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InvalidOperator",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InvalidOwner",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InvalidReceiver",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ]
+  },
+  {
+    "name": "ERC721InvalidSender",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ]
+  },
+  {
+    "name": "ERC721NonexistentToken",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ]
+  },
+  {
+    "name": "EnforcedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExpectedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedInnerCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidInitialization",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidInputs",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidNFTContract",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidRecipient",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidSignature",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidTokenContract",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "MainnetNotAllowed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotInitializing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "StringsInsufficientHexLength",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "value"
+      },
+      {
+        "type": "uint256",
+        "name": "length"
+      }
+    ]
+  },
+  {
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "slot"
+      }
+    ]
+  },
+  {
+    "name": "UnknownNetwork",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Approval",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "approved",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ApprovalForAll",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "operator",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "approved"
+      }
+    ]
+  },
+  {
+    "name": "BaseTokenURIUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "oldURI"
+      },
+      {
+        "type": "string",
+        "name": "newURI"
+      }
+    ]
+  },
+  {
+    "name": "ContractURIUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "oldURI"
+      },
+      {
+        "type": "string",
+        "name": "newURI"
+      }
+    ]
+  },
+  {
+    "name": "DefaultRoyaltyInfoUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint96",
+        "name": "royaltyFraction"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "NonceUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "nonce",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TokenURIUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "string",
+        "name": "oldURI"
+      },
+      {
+        "type": "string",
+        "name": "newURI"
+      }
+    ]
+  },
+  {
+    "name": "Transfer",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MINTER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "PAUSER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "UPGRADER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "UPGRADE_INTERFACE_VERSION",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "adminSetBaseTokenURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "newBaseTokenURI"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminSetContractURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "newContractURI"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminSetDefaultRoyaltyInfo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint96",
+        "name": "royaltyFraction"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminSetDummyOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "dummyOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminSetTransferNonceEnabled",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "approve",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "baseTokenURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "burn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "contractURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "currentTokenIdCounter",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getApproved",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_initializer",
+        "components": [
+          {
+            "type": "string",
+            "name": "tokenName"
+          },
+          {
+            "type": "string",
+            "name": "tokenSymbol"
+          },
+          {
+            "type": "address",
+            "name": "adminAddress"
+          },
+          {
+            "type": "address",
+            "name": "dummyOwner"
+          },
+          {
+            "type": "string",
+            "name": "contractURI"
+          },
+          {
+            "type": "string",
+            "name": "baseTokenURI"
+          },
+          {
+            "type": "address",
+            "name": "royaltyRecipient"
+          },
+          {
+            "type": "uint96",
+            "name": "royaltyFraction"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isApprovedForAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "operator"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "nonces",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "ownerOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "callerConfirmation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "royaltyInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "salePrice"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "safeMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setApprovalForAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "bool",
+        "name": "approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stateOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes"
+      }
+    ]
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "symbol",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "tokenURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "transferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferNonceEnabled",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "version",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

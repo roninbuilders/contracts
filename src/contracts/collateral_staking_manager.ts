@@ -1,1016 +1,863 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bool',
-				name: 'newValue',
-				type: 'bool',
-			},
-		],
-		name: 'MoveCollateralPausedChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-		],
-		name: 'NewAdmin',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'NewCollateralStakingMediator',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousImpl',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newImpl',
-				type: 'address',
-			},
-		],
-		name: 'NewCollateralStakingMediatorImplementation',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRedelegatingManager',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRedelegatingManager',
-				type: 'address',
-			},
-		],
-		name: 'NewRedelegatingManager',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRestakingManager',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRestakingManager',
-				type: 'address',
-			},
-		],
-		name: 'NewRestakingManager',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRestakingPool',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRestakingPool',
-				type: 'address',
-			},
-		],
-		name: 'NewRestakingPool',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRestakingUnderlying',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRestakingUnderlying',
-				type: 'address',
-			},
-		],
-		name: 'NewRestakingUnderlying',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'newPercentage',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'previousPercentage',
-				type: 'uint256',
-			},
-		],
-		name: 'NewRewardsRoyaltiesPercentage',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRoninStaking',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRoninStaking',
-				type: 'address',
-			},
-		],
-		name: 'NewRoninStaking',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRoninValidatorSet',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousRoninValidatorSet',
-				type: 'address',
-			},
-		],
-		name: 'NewRoninValidatorSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newReceiver',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousReceiver',
-				type: 'address',
-			},
-		],
-		name: 'NewRoyaltiesReceiver',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'cErcStakingMarket',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'underlyingToken',
-				type: 'address',
-			},
-		],
-		name: 'NewStakingMarket',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'validator',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'bool',
-				name: 'supported',
-				type: 'bool',
-			},
-		],
-		name: 'ValidatorSupported',
-		type: 'event',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'cErcStakingMarket',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'collateralStakingMediatorImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'decreaseTotalDelegatingAmount',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'decreaseTotalRestakingAmount',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'consensusAddr',
-				type: 'address',
-			},
-		],
-		name: 'delegateInitialUncollateralizedRon',
-		outputs: [],
-		payable: true,
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'feeDenominator',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'getCollateralStakingMediator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'user',
-				type: 'address',
-			},
-		],
-		name: 'getOrCreateCollateralStakingMediator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'implementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'increaseTotalAccruedRewards',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'increaseTotalAccruedRewardsRon',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'increaseTotalDelegatingAmount',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'increaseTotalRestakingAmount',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'royaltiesReceiver_',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'collateralStakingMediatorImplementation_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'rewardsRoyaltiesPercentage_',
-				type: 'uint256',
-			},
-		],
-		name: 'initialize',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'isCollateralStakingManager',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'marketPoolWire',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'underlyingToken',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'moveUncollateralizedPaused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'redelegatingManager',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'restakingManager',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'restakingPoolErc20',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'restakingUnderlying',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'rewardsRoyaltiesPercentage',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'roninStaking',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'roninValidatorSet',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'royaltiesReceiver',
-		outputs: [
-			{
-				internalType: 'address payable',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'setCollateralStakingMediatorImplementation',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'bool',
-				name: 'value',
-				type: 'bool',
-			},
-		],
-		name: 'setMoveUncollateralizedPaused',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newRedelegatingManager',
-				type: 'address',
-			},
-		],
-		name: 'setRedelegatingManager',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newManager',
-				type: 'address',
-			},
-		],
-		name: 'setRestakingManager',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'restakingPool',
-				type: 'address',
-			},
-		],
-		name: 'setRestakingPoolErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'underlying',
-				type: 'address',
-			},
-		],
-		name: 'setRestakingUnderlying',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'newPercentage',
-				type: 'uint256',
-			},
-		],
-		name: 'setRewardRoyaltiesPercentage',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newRoninStaking',
-				type: 'address',
-			},
-		],
-		name: 'setRoninStaking',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newRoninValidatorSet',
-				type: 'address',
-			},
-		],
-		name: 'setRoninValidatorSet',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address payable',
-				name: 'newReceiver',
-				type: 'address',
-			},
-		],
-		name: 'setRoyaltiesReceiver',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'stakeInitialUncollateralizedErc20',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'market',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'stakingPool',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'underlyingToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'isErc721',
-				type: 'bool',
-			},
-			{
-				internalType: 'bool',
-				name: 'isErc20',
-				type: 'bool',
-			},
-		],
-		name: 'supportCErcStakingMarket',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: 'validators',
-				type: 'address[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: 'supported',
-				type: 'bool[]',
-			},
-		],
-		name: 'supportValidators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'supportedValidators',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'totalAccruedRewards',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'totalAccruedRewardsRon',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'totalDelegatingAmountRon',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'totalRestakingAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const COLLATERAL_STAKING_MANAGER: Contract<typeof abi> = {
-	name: 'Collateral Staking Manager',
-	address: '0x8ccd796547fcdcc96a9f464dfc02a20d3189c75a',
-	is_deprecated: false,
-	created_at: 1689704978,
-	abi: abi,
-}
-export default COLLATERAL_STAKING_MANAGER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 463,
+  address: '0xa330c96daa39009c18d55d5546a28457731953eb' as const,
+  contract_name: 'CollateralStakingManager',
+  display_name: 'Collateral Staking Manager',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1692116115,
+  abi: [
+  {
+    "name": "MoveCollateralPausedChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "newValue",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewAdmin",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewCEtherStakingMarket",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newCEtherStakingMarket",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousCEtherStakingMarket",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewCollateralStakingMediator",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewCollateralStakingMediatorImplementation",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousImpl"
+      },
+      {
+        "type": "address",
+        "name": "newImpl"
+      }
+    ]
+  },
+  {
+    "name": "NewRedelegatingManager",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRedelegatingManager",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRedelegatingManager",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRestakingManager",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRestakingManager",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRestakingManager",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRestakingPool",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRestakingPool",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRestakingPool",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRestakingUnderlying",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRestakingUnderlying",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRestakingUnderlying",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRewardsRoyaltiesPercentage",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "newPercentage",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "previousPercentage",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRoninStaking",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRoninStaking",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRoninStaking",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRoninValidatorSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRoninValidatorSet",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousRoninValidatorSet",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewRoyaltiesReceiver",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newReceiver",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousReceiver",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "NewStakingMarket",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "cErcStakingMarket",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "stakingPool"
+      },
+      {
+        "type": "address",
+        "name": "underlyingToken"
+      }
+    ]
+  },
+  {
+    "name": "ValidatorSupported",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "validator",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "supported",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "cErcStakingMarket",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "cEtherStakingMarket",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "collateralStakingMediatorImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "decreaseTotalDelegatingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "decreaseTotalRestakingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "delegateInitialUncollateralizedRon",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "consensusAddr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "feeDenominator",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getCollateralStakingMediator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getOrCreateCollateralStakingMediator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getSupportedValidatorsList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "implementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "increaseTotalAccruedRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "increaseTotalAccruedRewardsRon",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "increaseTotalDelegatingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "increaseTotalRestakingAmount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltiesReceiver_"
+      },
+      {
+        "type": "address",
+        "name": "collateralStakingMediatorImplementation_"
+      },
+      {
+        "type": "uint256",
+        "name": "rewardsRoyaltiesPercentage_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isCollateralStakingManager",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "marketPoolWire",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "stakingPool"
+      },
+      {
+        "type": "address",
+        "name": "underlyingToken"
+      }
+    ]
+  },
+  {
+    "name": "moveUncollateralizedPaused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "redelegatingManager",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "restakingManager",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "restakingPoolErc20",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "restakingUnderlying",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "rewardsRoyaltiesPercentage",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "roninStaking",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "roninValidatorSet",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "royaltiesReceiver",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCollateralStakingMediatorImplementation",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMoveUncollateralizedPaused",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRedelegatingManager",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRedelegatingManager"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRestakingManager",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newManager"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRestakingPoolErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "restakingPool"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRestakingUnderlying",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "underlying"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRewardRoyaltiesPercentage",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "newPercentage"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRoninStaking",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRoninStaking"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRoninValidatorSet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRoninValidatorSet"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRoyaltiesReceiver",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newReceiver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "stakeInitialUncollateralizedErc20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportCErcStakingMarket",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "market"
+      },
+      {
+        "type": "address",
+        "name": "stakingPool"
+      },
+      {
+        "type": "address",
+        "name": "underlyingToken"
+      },
+      {
+        "type": "bool",
+        "name": "isErc721"
+      },
+      {
+        "type": "bool",
+        "name": "isErc20"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportCEtherStakingMarket",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newCEtherStakingMarket"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportValidators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "validators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supportedValidators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "supportedValidatorsList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "totalAccruedRewards",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalAccruedRewardsRon",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalDelegatingAmountRon",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalRestakingAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

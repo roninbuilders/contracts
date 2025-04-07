@@ -9,11 +9,14 @@
 			"recommended": true
 		}
 	},
+	"files": {
+		"ignore": ["src/contracts/**", "dist/**"]
+	},
 	"javascript": {
-    "formatter": {
-      "semicolons": "asNeeded",
-			"quoteStyle":"single",
+		"formatter": {
+			"semicolons": "asNeeded",
+			"quoteStyle": "single",
 			"lineWidth": 120
-    }
+		}
 	}
 }

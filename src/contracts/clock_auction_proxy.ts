@@ -1,542 +1,429 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_proxyTo',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenMaxOccurrences',
-				type: 'uint256',
-			},
-			{
-				internalType: 'contract IExchange',
-				name: '_exchangeContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_ownerCut',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_oldAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_operator',
-				type: 'address',
-			},
-		],
-		name: 'OperatorRemoved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Paused',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_new',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: '_old',
-				type: 'address',
-			},
-		],
-		name: 'ProxyUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [],
-		name: 'Unpaused',
-		type: 'event',
-	},
-	{
-		payable: true,
-		stateMutability: 'payable',
-		type: 'fallback',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_addedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'addOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'admin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'auctions',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'seller',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'completeInitilization',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'exchangeContract',
-		outputs: [
-			{
-				internalType: 'contract IExchange',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenNumber',
-				type: 'uint256',
-			},
-		],
-		name: 'getTokenAuctions',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '_sellers',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_listingIndexes',
-				type: 'uint256[]',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_tokenNumber',
-				type: 'uint256',
-			},
-		],
-		name: 'getTokenAuctionsCount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'implementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'initialized',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'operator',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'operators',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'ownerCut',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'pause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'paused',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'proxyType',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'removeAdmin',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_removedOperators',
-				type: 'address[]',
-			},
-		],
-		name: 'removeOperators',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_newOwnerCut',
-				type: 'uint256',
-			},
-		],
-		name: 'setOwnerCut',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_tokenMaxOccurrences',
-				type: 'uint256',
-			},
-		],
-		name: 'setTokenMaxOccurrences',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: true,
-		inputs: [],
-		name: 'tokenMaxOccurrences',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		payable: false,
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'unpause',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IExchange',
-				name: '_exchangeContract',
-				type: 'address',
-			},
-		],
-		name: 'updateExchangeContract',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_newProxyTo',
-				type: 'address',
-			},
-		],
-		name: 'updateProxyTo',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [],
-		name: 'withdrawEther',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '_token',
-				type: 'address',
-			},
-		],
-		name: 'withdrawToken',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const CLOCK_AUCTION_PROXY: Contract<typeof abi> = {
-	name: 'Clock Auction Proxy',
-	address: '0x213073989821f738a7ba3520c3d31a1f9ad31bbd',
-	is_deprecated: true,
-	created_at: 1619438333,
-	abi: abi,
-}
-export default CLOCK_AUCTION_PROXY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 184,
+  address: '0x213073989821f738a7ba3520c3d31a1f9ad31bbd' as const,
+  contract_name: 'ClockAuctionProxy',
+  display_name: 'Clock Auction Proxy',
+  is_deprecated: true,
+  is_proxy: true,
+  proxy_to: '0xc19885924f6523a9bf60d30e852d664291f2d433',
+  created_at: 1619438333,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_proxyTo"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenMaxOccurrences"
+      },
+      {
+        "type": "address",
+        "name": "_exchangeContract"
+      },
+      {
+        "type": "uint256",
+        "name": "_ownerCut"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "AdminRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OperatorRemoved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_operator",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "name": "ProxyUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_new",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "_old",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": []
+  },
+  {
+    "type": "fallback",
+    "stateMutability": "payable"
+  },
+  {
+    "name": "addOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_addedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "admin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "auctions",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "seller"
+      }
+    ]
+  },
+  {
+    "name": "changeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "completeInitilization",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "exchangeContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getTokenAuctions",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenNumber"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "_sellers"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_listingIndexes"
+      }
+    ]
+  },
+  {
+    "name": "getTokenAuctionsCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenNumber"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "implementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "initialized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "operator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "operators",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "ownerCut",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "proxyType",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "removeOperators",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_removedOperators"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setOwnerCut",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newOwnerCut"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenMaxOccurrences",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenMaxOccurrences"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tokenMaxOccurrences",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "updateExchangeContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_exchangeContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateProxyTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newProxyTo"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawEther",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdrawToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

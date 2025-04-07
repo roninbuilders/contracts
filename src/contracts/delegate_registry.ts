@@ -1,845 +1,715 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		name: 'MulticallFailed',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'DelegateAll',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'DelegateContract',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'DelegateERC1155',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'DelegateERC20',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'DelegateERC721',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-		],
-		name: 'checkDelegateForAll',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'valid',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-		],
-		name: 'checkDelegateForContract',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'valid',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-		],
-		name: 'checkDelegateForERC1155',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-		],
-		name: 'checkDelegateForERC20',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-		],
-		name: 'checkDelegateForERC721',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: 'valid',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'delegateAll',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'delegateContract',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'delegateERC1155',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'delegateERC20',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'rights',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bool',
-				name: 'enable',
-				type: 'bool',
-			},
-		],
-		name: 'delegateERC721',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'hashes',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'getDelegationsFromHashes',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'enum IDelegateRegistry.DelegationType',
-						name: 'type_',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'to',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'from',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'rights',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'contract_',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IDelegateRegistry.Delegation[]',
-				name: 'delegations_',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'getIncomingDelegationHashes',
-		outputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'delegationHashes',
-				type: 'bytes32[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-		],
-		name: 'getIncomingDelegations',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'enum IDelegateRegistry.DelegationType',
-						name: 'type_',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'to',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'from',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'rights',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'contract_',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IDelegateRegistry.Delegation[]',
-				name: 'delegations_',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-		],
-		name: 'getOutgoingDelegationHashes',
-		outputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'delegationHashes',
-				type: 'bytes32[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'from',
-				type: 'address',
-			},
-		],
-		name: 'getOutgoingDelegations',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'enum IDelegateRegistry.DelegationType',
-						name: 'type_',
-						type: 'uint8',
-					},
-					{
-						internalType: 'address',
-						name: 'to',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'from',
-						type: 'address',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'rights',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'address',
-						name: 'contract_',
-						type: 'address',
-					},
-					{
-						internalType: 'uint256',
-						name: 'tokenId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'amount',
-						type: 'uint256',
-					},
-				],
-				internalType: 'struct IDelegateRegistry.Delegation[]',
-				name: 'delegations_',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes[]',
-				name: 'data',
-				type: 'bytes[]',
-			},
-		],
-		name: 'multicall',
-		outputs: [
-			{
-				internalType: 'bytes[]',
-				name: 'results',
-				type: 'bytes[]',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'location',
-				type: 'bytes32',
-			},
-		],
-		name: 'readSlot',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'contents',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'locations',
-				type: 'bytes32[]',
-			},
-		],
-		name: 'readSlots',
-		outputs: [
-			{
-				internalType: 'bytes32[]',
-				name: 'contents',
-				type: 'bytes32[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'interfaceId',
-				type: 'bytes4',
-			},
-		],
-		name: 'supportsInterface',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'pure',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'sweep',
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const DELEGATE_REGISTRY: Contract<typeof abi> = {
-	name: 'Delegate Registry',
-	address: '0x00000000000000447e69651d841bd8d104bed493',
-	is_deprecated: false,
-	created_at: 1710836780,
-	abi: abi,
-}
-export default DELEGATE_REGISTRY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1925,
+  address: '0x00000000000000447e69651d841bd8d104bed493' as const,
+  contract_name: 'DelegateRegistry',
+  display_name: 'Delegate Registry',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1710836780,
+  abi: [
+  {
+    "name": "MulticallFailed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "DelegateAll",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ]
+  },
+  {
+    "name": "DelegateContract",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "contract_",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ]
+  },
+  {
+    "name": "DelegateERC1155",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "contract_",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "DelegateERC20",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "contract_",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "DelegateERC721",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "contract_",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ]
+  },
+  {
+    "name": "checkDelegateForAll",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "valid"
+      }
+    ]
+  },
+  {
+    "name": "checkDelegateForContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "valid"
+      }
+    ]
+  },
+  {
+    "name": "checkDelegateForERC1155",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "checkDelegateForERC20",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "checkDelegateForERC721",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "valid"
+      }
+    ]
+  },
+  {
+    "name": "delegateAll",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ]
+  },
+  {
+    "name": "delegateContract",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ]
+  },
+  {
+    "name": "delegateERC1155",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ]
+  },
+  {
+    "name": "delegateERC20",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ]
+  },
+  {
+    "name": "delegateERC721",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "address",
+        "name": "contract_"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "bytes32",
+        "name": "rights"
+      },
+      {
+        "type": "bool",
+        "name": "enable"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ]
+  },
+  {
+    "name": "getDelegationsFromHashes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32[]",
+        "name": "hashes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "delegations_",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "type_"
+          },
+          {
+            "type": "address",
+            "name": "to"
+          },
+          {
+            "type": "address",
+            "name": "from"
+          },
+          {
+            "type": "bytes32",
+            "name": "rights"
+          },
+          {
+            "type": "address",
+            "name": "contract_"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getIncomingDelegationHashes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32[]",
+        "name": "delegationHashes"
+      }
+    ]
+  },
+  {
+    "name": "getIncomingDelegations",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "delegations_",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "type_"
+          },
+          {
+            "type": "address",
+            "name": "to"
+          },
+          {
+            "type": "address",
+            "name": "from"
+          },
+          {
+            "type": "bytes32",
+            "name": "rights"
+          },
+          {
+            "type": "address",
+            "name": "contract_"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getOutgoingDelegationHashes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32[]",
+        "name": "delegationHashes"
+      }
+    ]
+  },
+  {
+    "name": "getOutgoingDelegations",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "delegations_",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "type_"
+          },
+          {
+            "type": "address",
+            "name": "to"
+          },
+          {
+            "type": "address",
+            "name": "from"
+          },
+          {
+            "type": "bytes32",
+            "name": "rights"
+          },
+          {
+            "type": "address",
+            "name": "contract_"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "multicall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "bytes[]",
+        "name": "data"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes[]",
+        "name": "results"
+      }
+    ]
+  },
+  {
+    "name": "readSlot",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "location"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "contents"
+      }
+    ]
+  },
+  {
+    "name": "readSlots",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32[]",
+        "name": "locations"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32[]",
+        "name": "contents"
+      }
+    ]
+  },
+  {
+    "name": "supportsInterface",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "sweep",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

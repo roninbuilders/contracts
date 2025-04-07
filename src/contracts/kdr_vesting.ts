@@ -1,393 +1,329 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_token',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'ALREADY_ACTIVE',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'msgSender',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'active',
-				type: 'bool',
-			},
-		],
-		name: 'Claim',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'Clawback',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'recipient',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'start',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'end',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'unlockFrequency',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'cliff',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'unlockPerPeriod',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'active',
-				type: 'bool',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'vested',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'instantUnlock',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'instantUnlockTransfer',
-				type: 'uint256',
-			},
-		],
-		name: 'Create',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'oldRecipient',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newRecipient',
-				type: 'address',
-			},
-		],
-		name: 'TransferVesting',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_recipient',
-				type: 'address',
-			},
-		],
-		name: 'claim',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_recipient',
-				type: 'address',
-			},
-		],
-		name: 'claimable',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_recipient',
-				type: 'address',
-			},
-		],
-		name: 'clawback',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_recipient',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_start',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_length',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_unlockFrequency',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_cliff',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_instantUnlock',
-				type: 'uint256',
-			},
-		],
-		name: 'create',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'recipients',
-		outputs: [
-			{
-				internalType: 'uint64',
-				name: 'start',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint64',
-				name: 'end',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint64',
-				name: 'lastUnlock',
-				type: 'uint64',
-			},
-			{
-				internalType: 'uint32',
-				name: 'cliff',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'unlockFrequency',
-				type: 'uint32',
-			},
-			{
-				internalType: 'uint248',
-				name: 'unlockPerPeriod',
-				type: 'uint248',
-			},
-			{
-				internalType: 'bool',
-				name: 'active',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint256',
-				name: 'vested',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'claimed',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'token',
-		outputs: [
-			{
-				internalType: 'contract IERC20',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_oldRecipient',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_newRecipient',
-				type: 'address',
-			},
-		],
-		name: 'transferVesting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const KDR_VESTING: Contract<typeof abi> = {
-	name: 'KDR Vesting',
-	address: '0x2e1626e16ba42b9cb0a5f041b994f15e4a314b6d',
-	is_deprecated: false,
-	created_at: 1734455094,
-	abi: abi,
-}
-export default KDR_VESTING
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5906,
+  address: '0x2e1626e16ba42b9cb0a5f041b994f15e4a314b6d' as const,
+  contract_name: 'KDRVesting',
+  display_name: 'KDR Vesting',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1734455094,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ]
+  },
+  {
+    "name": "ALREADY_ACTIVE",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Claim",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "msgSender",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "bool",
+        "name": "active"
+      }
+    ]
+  },
+  {
+    "name": "Clawback",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "Create",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "start"
+      },
+      {
+        "type": "uint256",
+        "name": "end"
+      },
+      {
+        "type": "uint256",
+        "name": "unlockFrequency"
+      },
+      {
+        "type": "uint256",
+        "name": "cliff"
+      },
+      {
+        "type": "uint256",
+        "name": "unlockPerPeriod"
+      },
+      {
+        "type": "bool",
+        "name": "active"
+      },
+      {
+        "type": "uint256",
+        "name": "vested"
+      },
+      {
+        "type": "uint256",
+        "name": "instantUnlock"
+      },
+      {
+        "type": "uint256",
+        "name": "instantUnlockTransfer"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TransferVesting",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldRecipient",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newRecipient",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "claim",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_recipient"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claimable",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_recipient"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "clawback",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_recipient"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "create",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "_start"
+      },
+      {
+        "type": "uint256",
+        "name": "_length"
+      },
+      {
+        "type": "uint256",
+        "name": "_unlockFrequency"
+      },
+      {
+        "type": "uint256",
+        "name": "_cliff"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      },
+      {
+        "type": "uint256",
+        "name": "_instantUnlock"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "recipients",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint64",
+        "name": "start"
+      },
+      {
+        "type": "uint64",
+        "name": "end"
+      },
+      {
+        "type": "uint64",
+        "name": "lastUnlock"
+      },
+      {
+        "type": "uint32",
+        "name": "cliff"
+      },
+      {
+        "type": "uint32",
+        "name": "unlockFrequency"
+      },
+      {
+        "type": "uint248",
+        "name": "unlockPerPeriod"
+      },
+      {
+        "type": "bool",
+        "name": "active"
+      },
+      {
+        "type": "uint256",
+        "name": "vested"
+      },
+      {
+        "type": "uint256",
+        "name": "claimed"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "token",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferVesting",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_oldRecipient"
+      },
+      {
+        "type": "address",
+        "name": "_newRecipient"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

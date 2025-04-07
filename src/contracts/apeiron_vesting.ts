@@ -1,792 +1,671 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'RevokeVesting',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'FDVFactor',
-				type: 'uint256',
-			},
-		],
-		name: 'SetFDVFactor',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'percentageBase',
-				type: 'uint256',
-			},
-		],
-		name: 'SetPercentageBase',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beneficiary',
-				type: 'address',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'initialUnlockPercentage',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'cliff',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'start',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'duration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'released',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'totalAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bool',
-						name: 'affectedByFDV',
-						type: 'bool',
-					},
-				],
-				indexed: false,
-				internalType: 'struct ApeironVesting.VestingStruct',
-				name: 'vesting',
-				type: 'tuple',
-			},
-		],
-		name: 'SetVesting',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-		],
-		name: 'SetVestingToken',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beneficiary',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'VestingAmountAdded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'successBeneficiaries',
-				type: 'address[]',
-			},
-			{
-				indexed: false,
-				internalType: 'address[]',
-				name: 'failureBeneficiaries',
-				type: 'address[]',
-			},
-		],
-		name: 'VestingCliffAndDurationUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beneficiary',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-		],
-		name: 'VestingReleased',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'FDVFactor',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_beneficiaries',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_initialUnlockPercentages',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_cliffs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_starts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_durations',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_releaseds',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_totalAmounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bool[]',
-				name: '_affectedByFDVs',
-				type: 'bool[]',
-			},
-		],
-		name: 'addMultiVestingAccount',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_initialUnlockPercentage',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_cliff',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_start',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_duration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_released',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_totalAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: '_affectedByFDV',
-				type: 'bool',
-			},
-		],
-		name: 'addVestingAccount',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'aprsToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20Upgradeable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'contractAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'getAccountClaimableAndReleasedAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalClaimable',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'totalReleased',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'getAccountTotalAmount',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'totalAmount',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'getCurrentVestedAmount',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_blockNum',
-				type: 'uint256',
-			},
-		],
-		name: 'getVestedAmount',
-		outputs: [
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '',
-				type: 'uint256[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'getVestingAccount',
-		outputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'initialUnlockPercentage',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'cliff',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'start',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'duration',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'released',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'totalAmount',
-						type: 'uint256',
-					},
-					{
-						internalType: 'bool',
-						name: 'affectedByFDV',
-						type: 'bool',
-					},
-				],
-				internalType: 'struct ApeironVesting.VestingStruct[]',
-				name: '',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'percentageBase',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_releaseAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'release',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-		],
-		name: 'revokeVestingAccount',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_FDVFactor',
-				type: 'uint256',
-			},
-		],
-		name: 'setFDVFactor',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_percentageBase',
-				type: 'uint256',
-			},
-		],
-		name: 'setPercentageBase',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_token',
-				type: 'address',
-			},
-		],
-		name: 'setVestingToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address[]',
-				name: '_beneficiaries',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_cliffs',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_durations',
-				type: 'uint256[]',
-			},
-		],
-		name: 'updateMultiVestingCliffAndDuration',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_beneficiary',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_index',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_cliff',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_duration',
-				type: 'uint256',
-			},
-		],
-		name: 'updateVestingCliffAndDuration',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vestingMap',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: 'initialUnlockPercentage',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'cliff',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'start',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'duration',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'released',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'totalAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'affectedByFDV',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const APEIRON_VESTING: Contract<typeof abi> = {
-	name: 'Apeiron Vesting',
-	address: '0x7a3c029ee41937827b1f33a2210509489479f571',
-	is_deprecated: false,
-	created_at: 1729599494,
-	abi: abi,
-}
-export default APEIRON_VESTING
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 4748,
+  address: '0x7a3c029ee41937827b1f33a2210509489479f571' as const,
+  contract_name: 'ApeironVesting',
+  display_name: 'Apeiron Vesting',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1729599494,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RevokeVesting",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beneficiary",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SetFDVFactor",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "FDVFactor",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SetPercentageBase",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "percentageBase",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "SetVesting",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beneficiary",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "vesting",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "initialUnlockPercentage"
+          },
+          {
+            "type": "uint256",
+            "name": "cliff"
+          },
+          {
+            "type": "uint256",
+            "name": "start"
+          },
+          {
+            "type": "uint256",
+            "name": "duration"
+          },
+          {
+            "type": "uint256",
+            "name": "released"
+          },
+          {
+            "type": "uint256",
+            "name": "totalAmount"
+          },
+          {
+            "type": "bool",
+            "name": "affectedByFDV"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SetVestingToken",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "VestingAmountAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beneficiary",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "VestingCliffAndDurationUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "successBeneficiaries"
+      },
+      {
+        "type": "address[]",
+        "name": "failureBeneficiaries"
+      }
+    ]
+  },
+  {
+    "name": "VestingReleased",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beneficiary",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "FDVFactor",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "addMultiVestingAccount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_beneficiaries"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_initialUnlockPercentages"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_cliffs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_starts"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_durations"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_releaseds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_totalAmounts"
+      },
+      {
+        "type": "bool[]",
+        "name": "_affectedByFDVs"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "addVestingAccount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      },
+      {
+        "type": "uint256",
+        "name": "_initialUnlockPercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "_cliff"
+      },
+      {
+        "type": "uint256",
+        "name": "_start"
+      },
+      {
+        "type": "uint256",
+        "name": "_duration"
+      },
+      {
+        "type": "uint256",
+        "name": "_released"
+      },
+      {
+        "type": "uint256",
+        "name": "_totalAmount"
+      },
+      {
+        "type": "bool",
+        "name": "_affectedByFDV"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "aprsToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "contractAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getAccountClaimableAndReleasedAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "totalClaimable"
+      },
+      {
+        "type": "uint256",
+        "name": "totalReleased"
+      }
+    ]
+  },
+  {
+    "name": "getAccountTotalAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "totalAmount"
+      }
+    ]
+  },
+  {
+    "name": "getCurrentVestedAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getVestedAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      },
+      {
+        "type": "uint256",
+        "name": "_blockNum"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getVestingAccount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "initialUnlockPercentage"
+          },
+          {
+            "type": "uint256",
+            "name": "cliff"
+          },
+          {
+            "type": "uint256",
+            "name": "start"
+          },
+          {
+            "type": "uint256",
+            "name": "duration"
+          },
+          {
+            "type": "uint256",
+            "name": "released"
+          },
+          {
+            "type": "uint256",
+            "name": "totalAmount"
+          },
+          {
+            "type": "bool",
+            "name": "affectedByFDV"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "percentageBase",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "release",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_releaseAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "revokeVestingAccount",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setFDVFactor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_FDVFactor"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPercentageBase",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_percentageBase"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVestingToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateMultiVestingCliffAndDuration",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_beneficiaries"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_cliffs"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_durations"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateVestingCliffAndDuration",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_beneficiary"
+      },
+      {
+        "type": "uint256",
+        "name": "_index"
+      },
+      {
+        "type": "uint256",
+        "name": "_cliff"
+      },
+      {
+        "type": "uint256",
+        "name": "_duration"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vestingMap",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "initialUnlockPercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "cliff"
+      },
+      {
+        "type": "uint256",
+        "name": "start"
+      },
+      {
+        "type": "uint256",
+        "name": "duration"
+      },
+      {
+        "type": "uint256",
+        "name": "released"
+      },
+      {
+        "type": "uint256",
+        "name": "totalAmount"
+      },
+      {
+        "type": "bool",
+        "name": "affectedByFDV"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

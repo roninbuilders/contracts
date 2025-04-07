@@ -1,283 +1,243 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract IMintableERC721V5',
-				name: '_nft',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_startAt',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_finishAt',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_verifier',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'nonce',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'nftId',
-				type: 'uint256',
-			},
-		],
-		name: 'Claim',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'oldVerifier',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newVerifier',
-				type: 'address',
-			},
-		],
-		name: 'VerifierChanged',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'acceptOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'finishAt',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_nonce',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_num',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint8',
-				name: '_v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: '_s',
-				type: 'bytes32',
-			},
-		],
-		name: 'mint',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'nft',
-		outputs: [
-			{
-				internalType: 'contract IMintableERC721V5',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'nonces',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pendingOwner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_addr',
-				type: 'address',
-			},
-		],
-		name: 'setPendingOwner',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_verifier',
-				type: 'address',
-			},
-		],
-		name: 'setVerifier',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'startAt',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'totalMintNum',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'verifier',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const CLASSIC_CLAIM: Contract<typeof abi> = {
-	name: 'Classic Claim',
-	address: '0x85bd5e10e8e527bb99a3bde12a36377a834f5e28',
-	is_deprecated: false,
-	created_at: 1721400258,
-	abi: abi,
-}
-export default CLASSIC_CLAIM
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 3314,
+  address: '0x85bd5e10e8e527bb99a3bde12a36377a834f5e28' as const,
+  contract_name: 'ClassicClaim',
+  display_name: 'Classic Claim',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1721400258,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_nft"
+      },
+      {
+        "type": "uint256",
+        "name": "_startAt"
+      },
+      {
+        "type": "uint256",
+        "name": "_finishAt"
+      },
+      {
+        "type": "address",
+        "name": "_verifier"
+      }
+    ]
+  },
+  {
+    "name": "Claim",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "nftId"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "VerifierChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldVerifier"
+      },
+      {
+        "type": "address",
+        "name": "newVerifier"
+      }
+    ]
+  },
+  {
+    "name": "acceptOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "finishAt",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "_num"
+      },
+      {
+        "type": "uint8",
+        "name": "_v"
+      },
+      {
+        "type": "bytes32",
+        "name": "_r"
+      },
+      {
+        "type": "bytes32",
+        "name": "_s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "nft",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "nonces",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pendingOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setPendingOwner",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVerifier",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_verifier"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "startAt",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalMintNum",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "verifier",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

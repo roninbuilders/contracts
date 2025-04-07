@@ -1,1056 +1,894 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'OnlyCoordinatorCanFulfill',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: '_admin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: '_enabled',
-				type: 'bool',
-			},
-		],
-		name: 'AdminAccessSet',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'AdminChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'beacon',
-				type: 'address',
-			},
-		],
-		name: 'BeaconUpgraded',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: '_tokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'BreedSuccess',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: '_requestHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'RequestBreed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'implementation',
-				type: 'address',
-			},
-		],
-		name: 'Upgraded',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		name: 'BreedStructMap',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'userAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetAId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetBId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldUseMiniBlackhole',
-				type: 'bool',
-			},
-			{
-				internalType: 'bool',
-				name: 'isDone',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetId',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'additionBornBaseInterval',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'addonGasPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_reqHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: '_randomSeed',
-				type: 'uint256',
-			},
-		],
-		name: 'adminFulfillRandomSeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'animaPrices',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'animaToMiniBlackhole',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'animaToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20Upgradeable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'apeironGodiverseCollection',
-		outputs: [
-			{
-				internalType: 'contract ERC1155BurnableUpgradeable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'apeironGodiverseCollectionNumbers',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'aprsPrices',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'aprsToken',
-		outputs: [
-			{
-				internalType: 'contract IERC20Upgradeable',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'blacklistContract',
-		outputs: [
-			{
-				internalType: 'contract IBlacklist',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'bornBaseInterval',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'breedPlanetDataContract',
-		outputs: [
-			{
-				internalType: 'contract IBreedPlanetData',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'callbackGaslimit',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'currentPlanetId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'planetId',
-				type: 'uint256',
-			},
-		],
-		name: 'getParentID',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'initialize',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-		],
-		name: 'isAdmin',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'isPrimevalActive',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'minAnimaUse',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'minMiniBlackholeUse',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'miniBlackholeTokenId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'normalBreedBaseInterval',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'planetAttributeManagerContract',
-		outputs: [
-			{
-				internalType: 'contract PlanetAttributeManager',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'planetContract',
-		outputs: [
-			{
-				internalType: 'contract IApeironPlanet',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'primevalAnimaPrices',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'primevalApeironGodiverseCollectionNumbers',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'primevalAprsPrices',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_reqHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: '_randomSeed',
-				type: 'uint256',
-			},
-		],
-		name: 'rawFulfillRandomSeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'planetAId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetBId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldUseMiniBlackhole',
-				type: 'bool',
-			},
-		],
-		name: 'requestBreed',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'planetAId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'planetBId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'animusUse',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bool',
-				name: 'shouldUseMiniBlackhole',
-				type: 'bool',
-			},
-			{
-				internalType: 'uint256',
-				name: 'time',
-				type: 'uint256',
-			},
-			{
-				internalType: 'bytes',
-				name: 'signature',
-				type: 'bytes',
-			},
-		],
-		name: 'requestBreedWithAnimus',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'admin',
-				type: 'address',
-			},
-			{
-				internalType: 'bool',
-				name: 'enabled',
-				type: 'bool',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_animaToMiniBlackhole',
-				type: 'uint256',
-			},
-		],
-		name: 'setAnimaToMiniBlackhole',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[][]',
-				name: '_apeironGodiverseCollectionNumbers',
-				type: 'uint256[][]',
-			},
-			{
-				internalType: 'bool',
-				name: '_isPrimeval',
-				type: 'bool',
-			},
-		],
-		name: 'setApeironGodiverseCollectionNumber',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256[][]',
-				name: '_aprsPrices',
-				type: 'uint256[][]',
-			},
-			{
-				internalType: 'uint256[][]',
-				name: '_animaPrices',
-				type: 'uint256[][]',
-			},
-			{
-				internalType: 'bool',
-				name: '_isPrimeval',
-				type: 'bool',
-			},
-		],
-		name: 'setAprsAndAnimaPrices',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_normalBreedBaseInterval',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_bornBaseInterval',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_additionBornBaseInterval',
-				type: 'uint256',
-			},
-		],
-		name: 'setBreedBornInterval',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_currentPlanetId',
-				type: 'uint256',
-			},
-		],
-		name: 'setCurrentPlanetId',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_miniBlackholeTokenId',
-				type: 'uint256',
-			},
-		],
-		name: 'setMiniBlackholeTokenId',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_minMiniBlackholeUse',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_minAnimaUse',
-				type: 'uint256',
-			},
-		],
-		name: 'setMinimumTokenUse',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bool',
-				name: '_isPrimevalActive',
-				type: 'bool',
-			},
-		],
-		name: 'setPrimevalActive',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_ronToUseInRandomness',
-				type: 'uint256',
-			},
-		],
-		name: 'setRonToUseInRandomness',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_vrfCoordinator',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_callbackGaslimit',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_addonGasPrice',
-				type: 'uint256',
-			},
-		],
-		name: 'setupVRFCoordinator',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_nftAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_breedAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_blacklistAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_apeironGodiverseCollectionAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_aprsTokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_animaTokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_planetAttributeManagerContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_systemAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_ronToUseInRandomness',
-				type: 'uint256',
-			},
-		],
-		name: 'updateContractSetting',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-		],
-		name: 'upgradeTo',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newImplementation',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes',
-				name: 'data',
-				type: 'bytes',
-			},
-		],
-		name: 'upgradeToAndCall',
-		outputs: [],
-		stateMutability: 'payable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'vrfCoordinator',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: 'wallet',
-				type: 'address',
-			},
-		],
-		name: 'withdrawFunds',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		stateMutability: 'payable',
-		type: 'receive',
-	},
-] as const
-const BREED_PLANET: Contract<typeof abi> = {
-	name: 'Breed Planet',
-	address: '0x6c832ab32f6b3e791cc00325878fc5d148ce87d7',
-	is_deprecated: false,
-	created_at: 1711267502,
-	abi: abi,
-}
-export default BREED_PLANET
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 2023,
+  address: '0x6c832ab32f6b3e791cc00325878fc5d148ce87d7' as const,
+  contract_name: 'BreedPlanet',
+  display_name: 'Breed Planet',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1711267502,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AdminAccessSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_admin"
+      },
+      {
+        "type": "bool",
+        "name": "_enabled"
+      }
+    ]
+  },
+  {
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BreedSuccess",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RequestBreed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_requestHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BreedStructMap",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "userAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "planetAId"
+      },
+      {
+        "type": "uint256",
+        "name": "planetBId"
+      },
+      {
+        "type": "bool",
+        "name": "shouldUseMiniBlackhole"
+      },
+      {
+        "type": "bool",
+        "name": "isDone"
+      },
+      {
+        "type": "uint256",
+        "name": "planetId"
+      }
+    ]
+  },
+  {
+    "name": "additionBornBaseInterval",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "addonGasPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "adminFulfillRandomSeed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_reqHash"
+      },
+      {
+        "type": "uint256",
+        "name": "_randomSeed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "animaPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "animaToMiniBlackhole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "animaToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "apeironGodiverseCollection",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "apeironGodiverseCollectionNumbers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "aprsPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "aprsToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "blacklistContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "bornBaseInterval",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "breedPlanetDataContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "callbackGaslimit",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "currentPlanetId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getParentID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "planetId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isPrimevalActive",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "minAnimaUse",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "minMiniBlackholeUse",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "miniBlackholeTokenId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "normalBreedBaseInterval",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "planetAttributeManagerContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "planetContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "primevalAnimaPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "primevalApeironGodiverseCollectionNumbers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "primevalAprsPrices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "rawFulfillRandomSeed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_reqHash"
+      },
+      {
+        "type": "uint256",
+        "name": "_randomSeed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "requestBreed",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "planetAId"
+      },
+      {
+        "type": "uint256",
+        "name": "planetBId"
+      },
+      {
+        "type": "bool",
+        "name": "shouldUseMiniBlackhole"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "requestBreedWithAnimus",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "planetAId"
+      },
+      {
+        "type": "uint256",
+        "name": "planetBId"
+      },
+      {
+        "type": "uint256",
+        "name": "animusUse"
+      },
+      {
+        "type": "bool",
+        "name": "shouldUseMiniBlackhole"
+      },
+      {
+        "type": "uint256",
+        "name": "time"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      },
+      {
+        "type": "bool",
+        "name": "enabled"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAnimaToMiniBlackhole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_animaToMiniBlackhole"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setApeironGodiverseCollectionNumber",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[][]",
+        "name": "_apeironGodiverseCollectionNumbers"
+      },
+      {
+        "type": "bool",
+        "name": "_isPrimeval"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAprsAndAnimaPrices",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[][]",
+        "name": "_aprsPrices"
+      },
+      {
+        "type": "uint256[][]",
+        "name": "_animaPrices"
+      },
+      {
+        "type": "bool",
+        "name": "_isPrimeval"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBreedBornInterval",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_normalBreedBaseInterval"
+      },
+      {
+        "type": "uint256",
+        "name": "_bornBaseInterval"
+      },
+      {
+        "type": "uint256",
+        "name": "_additionBornBaseInterval"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCurrentPlanetId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_currentPlanetId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMiniBlackholeTokenId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_miniBlackholeTokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinimumTokenUse",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_minMiniBlackholeUse"
+      },
+      {
+        "type": "uint256",
+        "name": "_minAnimaUse"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPrimevalActive",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "_isPrimevalActive"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRonToUseInRandomness",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_ronToUseInRandomness"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setupVRFCoordinator",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_vrfCoordinator"
+      },
+      {
+        "type": "uint256",
+        "name": "_callbackGaslimit"
+      },
+      {
+        "type": "uint256",
+        "name": "_addonGasPrice"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updateContractSetting",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_nftAddress"
+      },
+      {
+        "type": "address",
+        "name": "_breedAddress"
+      },
+      {
+        "type": "address",
+        "name": "_blacklistAddress"
+      },
+      {
+        "type": "address",
+        "name": "_apeironGodiverseCollectionAddress"
+      },
+      {
+        "type": "address",
+        "name": "_aprsTokenAddress"
+      },
+      {
+        "type": "address",
+        "name": "_animaTokenAddress"
+      },
+      {
+        "type": "address",
+        "name": "_planetAttributeManagerContract"
+      },
+      {
+        "type": "address",
+        "name": "_systemAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_ronToUseInRandomness"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vrfCoordinator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "withdrawFunds",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "wallet"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

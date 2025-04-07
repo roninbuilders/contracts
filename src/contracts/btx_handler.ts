@@ -1,535 +1,450 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_btxToken',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_treasury',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'burnTag',
-				type: 'string',
-			},
-		],
-		name: 'BTXBurned',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'depositTag',
-				type: 'string',
-			},
-		],
-		name: 'BTXDeposited',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'mintTag',
-				type: 'string',
-			},
-			{
-				indexed: false,
-				internalType: 'bool',
-				name: 'isReward',
-				type: 'bool',
-			},
-		],
-		name: 'BTXMinted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'mintTag',
-				type: 'string',
-			},
-		],
-		name: 'BTXRewardMinted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'useTag',
-				type: 'string',
-			},
-		],
-		name: 'BTXRewardUsed',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'string',
-				name: 'sendTag',
-				type: 'string',
-			},
-		],
-		name: 'BTXSent',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousOwner',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'OwnershipTransferred',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'btxToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'permitAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'burnTag',
-				type: 'string',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bool',
-				name: 'useRewards',
-				type: 'bool',
-			},
-		],
-		name: 'burnBTX',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'burnTag',
-				type: 'string',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bool',
-				name: 'useRewards',
-				type: 'bool',
-			},
-		],
-		name: 'burnBTX',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'permitAmount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'depositTag',
-				type: 'string',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-		],
-		name: 'depositFromUser',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'depositTag',
-				type: 'string',
-			},
-			{
-				internalType: 'uint8',
-				name: 'v',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'r',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 's',
-				type: 'bytes32',
-			},
-		],
-		name: 'depositFromUser',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'to',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'mintTag',
-				type: 'string',
-			},
-			{
-				internalType: 'bool',
-				name: 'isReward',
-				type: 'bool',
-			},
-		],
-		name: 'mintBTX',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'tokenAddress',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'tokenAmount',
-				type: 'uint256',
-			},
-		],
-		name: 'recoverERC20',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'renounceOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'user',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'amount',
-				type: 'uint256',
-			},
-			{
-				internalType: 'string',
-				name: 'sendTag',
-				type: 'string',
-			},
-		],
-		name: 'sendToUser',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_gcToken',
-				type: 'address',
-			},
-		],
-		name: 'setBtxToken',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_treasury',
-				type: 'address',
-			},
-		],
-		name: 'setTreasury',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newOwner',
-				type: 'address',
-			},
-		],
-		name: 'transferOwnership',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'treasury',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'withdrawTreasury',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const BTX_HANDLER: Contract<typeof abi> = {
-	name: 'BTX Handler',
-	address: '0x4f517774388e5f8b5ab4e20b606e0d035514f890',
-	is_deprecated: false,
-	created_at: 1731940589,
-	abi: abi,
-}
-export default BTX_HANDLER
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 5178,
+  address: '0x4f517774388e5f8b5ab4e20b606e0d035514f890' as const,
+  contract_name: 'BTXHandler',
+  display_name: 'BTX Handler',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1731940589,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_btxToken"
+      },
+      {
+        "type": "address",
+        "name": "_treasury"
+      }
+    ]
+  },
+  {
+    "name": "BTXBurned",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "burnTag"
+      }
+    ]
+  },
+  {
+    "name": "BTXDeposited",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "depositTag"
+      }
+    ]
+  },
+  {
+    "name": "BTXMinted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "mintTag"
+      },
+      {
+        "type": "bool",
+        "name": "isReward"
+      }
+    ]
+  },
+  {
+    "name": "BTXRewardMinted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "mintTag"
+      }
+    ]
+  },
+  {
+    "name": "BTXRewardUsed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "useTag"
+      }
+    ]
+  },
+  {
+    "name": "BTXSent",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "sendTag"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "btxToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "burnBTX",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "permitAmount"
+      },
+      {
+        "type": "string",
+        "name": "burnTag"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      },
+      {
+        "type": "bool",
+        "name": "useRewards"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "burnBTX",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "burnTag"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      },
+      {
+        "type": "bool",
+        "name": "useRewards"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "depositFromUser",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "permitAmount"
+      },
+      {
+        "type": "string",
+        "name": "depositTag"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "depositFromUser",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "depositTag"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintBTX",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "mintTag"
+      },
+      {
+        "type": "bool",
+        "name": "isReward"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "recoverERC20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "sendToUser",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "string",
+        "name": "sendTag"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBtxToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_gcToken"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasury",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_treasury"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "treasury",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "withdrawTreasury",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

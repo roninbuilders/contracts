@@ -1,372 +1,314 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'contract ITokenAdminRegistry',
-				name: 'tokenAdminRegistry',
-				type: 'address',
-			},
-			{
-				internalType: 'contract RegistryModuleOwnerCustom',
-				name: 'tokenAdminModule',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'rmnProxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'ccipRouter',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [],
-		name: 'Create2EmptyBytecode',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'FailedDeployment',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: 'balance',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'needed',
-				type: 'uint256',
-			},
-		],
-		name: 'InsufficientBalance',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'InvalidZeroAddress',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint64',
-				name: 'remoteChainSelector',
-				type: 'uint64',
-			},
-			{
-				components: [
-					{
-						internalType: 'address',
-						name: 'remotePoolFactory',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'remoteRouter',
-						type: 'address',
-					},
-					{
-						internalType: 'address',
-						name: 'remoteRMNProxy',
-						type: 'address',
-					},
-					{
-						internalType: 'uint8',
-						name: 'remoteTokenDecimals',
-						type: 'uint8',
-					},
-				],
-				indexed: false,
-				internalType: 'struct TokenPoolFactory.RemoteChainConfig',
-				name: 'remoteChainConfig',
-				type: 'tuple',
-			},
-		],
-		name: 'RemoteChainConfigUpdated',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint64',
-						name: 'remoteChainSelector',
-						type: 'uint64',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remotePoolAddress',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remotePoolInitCode',
-						type: 'bytes',
-					},
-					{
-						components: [
-							{
-								internalType: 'address',
-								name: 'remotePoolFactory',
-								type: 'address',
-							},
-							{
-								internalType: 'address',
-								name: 'remoteRouter',
-								type: 'address',
-							},
-							{
-								internalType: 'address',
-								name: 'remoteRMNProxy',
-								type: 'address',
-							},
-							{
-								internalType: 'uint8',
-								name: 'remoteTokenDecimals',
-								type: 'uint8',
-							},
-						],
-						internalType: 'struct TokenPoolFactory.RemoteChainConfig',
-						name: 'remoteChainConfig',
-						type: 'tuple',
-					},
-					{
-						internalType: 'enum TokenPoolFactory.PoolType',
-						name: 'poolType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remoteTokenAddress',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remoteTokenInitCode',
-						type: 'bytes',
-					},
-					{
-						components: [
-							{
-								internalType: 'bool',
-								name: 'isEnabled',
-								type: 'bool',
-							},
-							{
-								internalType: 'uint128',
-								name: 'capacity',
-								type: 'uint128',
-							},
-							{
-								internalType: 'uint128',
-								name: 'rate',
-								type: 'uint128',
-							},
-						],
-						internalType: 'struct RateLimiter.Config',
-						name: 'rateLimiterConfig',
-						type: 'tuple',
-					},
-				],
-				internalType: 'struct TokenPoolFactory.RemoteTokenPoolInfo[]',
-				name: 'remoteTokenPools',
-				type: 'tuple[]',
-			},
-			{
-				internalType: 'uint8',
-				name: 'localTokenDecimals',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes',
-				name: 'tokenInitCode',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes',
-				name: 'tokenPoolInitCode',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-		],
-		name: 'deployTokenAndTokenPool',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'token',
-				type: 'address',
-			},
-			{
-				internalType: 'uint8',
-				name: 'localTokenDecimals',
-				type: 'uint8',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint64',
-						name: 'remoteChainSelector',
-						type: 'uint64',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remotePoolAddress',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remotePoolInitCode',
-						type: 'bytes',
-					},
-					{
-						components: [
-							{
-								internalType: 'address',
-								name: 'remotePoolFactory',
-								type: 'address',
-							},
-							{
-								internalType: 'address',
-								name: 'remoteRouter',
-								type: 'address',
-							},
-							{
-								internalType: 'address',
-								name: 'remoteRMNProxy',
-								type: 'address',
-							},
-							{
-								internalType: 'uint8',
-								name: 'remoteTokenDecimals',
-								type: 'uint8',
-							},
-						],
-						internalType: 'struct TokenPoolFactory.RemoteChainConfig',
-						name: 'remoteChainConfig',
-						type: 'tuple',
-					},
-					{
-						internalType: 'enum TokenPoolFactory.PoolType',
-						name: 'poolType',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remoteTokenAddress',
-						type: 'bytes',
-					},
-					{
-						internalType: 'bytes',
-						name: 'remoteTokenInitCode',
-						type: 'bytes',
-					},
-					{
-						components: [
-							{
-								internalType: 'bool',
-								name: 'isEnabled',
-								type: 'bool',
-							},
-							{
-								internalType: 'uint128',
-								name: 'capacity',
-								type: 'uint128',
-							},
-							{
-								internalType: 'uint128',
-								name: 'rate',
-								type: 'uint128',
-							},
-						],
-						internalType: 'struct RateLimiter.Config',
-						name: 'rateLimiterConfig',
-						type: 'tuple',
-					},
-				],
-				internalType: 'struct TokenPoolFactory.RemoteTokenPoolInfo[]',
-				name: 'remoteTokenPools',
-				type: 'tuple[]',
-			},
-			{
-				internalType: 'bytes',
-				name: 'tokenPoolInitCode',
-				type: 'bytes',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'salt',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'enum TokenPoolFactory.PoolType',
-				name: 'poolType',
-				type: 'uint8',
-			},
-		],
-		name: 'deployTokenPoolWithExistingToken',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'poolAddress',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'typeAndVersion',
-		outputs: [
-			{
-				internalType: 'string',
-				name: '',
-				type: 'string',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-] as const
-const TOKEN_POOL_FACTORY: Contract<typeof abi> = {
-	name: 'Token Pool Factory',
-	address: '0xdec8a6f06fdda5aae262631f37b79f182a23464b',
-	is_deprecated: false,
-	created_at: 1734469815,
-	abi: abi,
-}
-export default TOKEN_POOL_FACTORY
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 6429,
+  address: '0xdec8a6f06fdda5aae262631f37b79f182a23464b' as const,
+  contract_name: 'TokenPoolFactory',
+  display_name: 'Token Pool Factory',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1734469815,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAdminRegistry"
+      },
+      {
+        "type": "address",
+        "name": "tokenAdminModule"
+      },
+      {
+        "type": "address",
+        "name": "rmnProxy"
+      },
+      {
+        "type": "address",
+        "name": "ccipRouter"
+      }
+    ]
+  },
+  {
+    "name": "Create2EmptyBytecode",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedDeployment",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InsufficientBalance",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "balance"
+      },
+      {
+        "type": "uint256",
+        "name": "needed"
+      }
+    ]
+  },
+  {
+    "name": "InvalidZeroAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "RemoteChainConfigUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint64",
+        "name": "remoteChainSelector",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "remoteChainConfig",
+        "components": [
+          {
+            "type": "address",
+            "name": "remotePoolFactory"
+          },
+          {
+            "type": "address",
+            "name": "remoteRouter"
+          },
+          {
+            "type": "address",
+            "name": "remoteRMNProxy"
+          },
+          {
+            "type": "uint8",
+            "name": "remoteTokenDecimals"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "deployTokenAndTokenPool",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "remoteTokenPools",
+        "components": [
+          {
+            "type": "uint64",
+            "name": "remoteChainSelector"
+          },
+          {
+            "type": "bytes",
+            "name": "remotePoolAddress"
+          },
+          {
+            "type": "bytes",
+            "name": "remotePoolInitCode"
+          },
+          {
+            "type": "tuple",
+            "name": "remoteChainConfig",
+            "components": [
+              {
+                "type": "address",
+                "name": "remotePoolFactory"
+              },
+              {
+                "type": "address",
+                "name": "remoteRouter"
+              },
+              {
+                "type": "address",
+                "name": "remoteRMNProxy"
+              },
+              {
+                "type": "uint8",
+                "name": "remoteTokenDecimals"
+              }
+            ]
+          },
+          {
+            "type": "uint8",
+            "name": "poolType"
+          },
+          {
+            "type": "bytes",
+            "name": "remoteTokenAddress"
+          },
+          {
+            "type": "bytes",
+            "name": "remoteTokenInitCode"
+          },
+          {
+            "type": "tuple",
+            "name": "rateLimiterConfig",
+            "components": [
+              {
+                "type": "bool",
+                "name": "isEnabled"
+              },
+              {
+                "type": "uint128",
+                "name": "capacity"
+              },
+              {
+                "type": "uint128",
+                "name": "rate"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "uint8",
+        "name": "localTokenDecimals"
+      },
+      {
+        "type": "bytes",
+        "name": "tokenInitCode"
+      },
+      {
+        "type": "bytes",
+        "name": "tokenPoolInitCode"
+      },
+      {
+        "type": "bytes32",
+        "name": "salt"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "deployTokenPoolWithExistingToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint8",
+        "name": "localTokenDecimals"
+      },
+      {
+        "type": "tuple[]",
+        "name": "remoteTokenPools",
+        "components": [
+          {
+            "type": "uint64",
+            "name": "remoteChainSelector"
+          },
+          {
+            "type": "bytes",
+            "name": "remotePoolAddress"
+          },
+          {
+            "type": "bytes",
+            "name": "remotePoolInitCode"
+          },
+          {
+            "type": "tuple",
+            "name": "remoteChainConfig",
+            "components": [
+              {
+                "type": "address",
+                "name": "remotePoolFactory"
+              },
+              {
+                "type": "address",
+                "name": "remoteRouter"
+              },
+              {
+                "type": "address",
+                "name": "remoteRMNProxy"
+              },
+              {
+                "type": "uint8",
+                "name": "remoteTokenDecimals"
+              }
+            ]
+          },
+          {
+            "type": "uint8",
+            "name": "poolType"
+          },
+          {
+            "type": "bytes",
+            "name": "remoteTokenAddress"
+          },
+          {
+            "type": "bytes",
+            "name": "remoteTokenInitCode"
+          },
+          {
+            "type": "tuple",
+            "name": "rateLimiterConfig",
+            "components": [
+              {
+                "type": "bool",
+                "name": "isEnabled"
+              },
+              {
+                "type": "uint128",
+                "name": "capacity"
+              },
+              {
+                "type": "uint128",
+                "name": "rate"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "tokenPoolInitCode"
+      },
+      {
+        "type": "bytes32",
+        "name": "salt"
+      },
+      {
+        "type": "uint8",
+        "name": "poolType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "poolAddress"
+      }
+    ]
+  },
+  {
+    "name": "typeAndVersion",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,73 +1,71 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		constant: false,
-		inputs: [
-			{
-				name: 'token',
-				type: 'address',
-			},
-			{
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'disperseTokenSimple',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				name: 'token',
-				type: 'address',
-			},
-			{
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'disperseToken',
-		outputs: [],
-		payable: false,
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		constant: false,
-		inputs: [
-			{
-				name: 'recipients',
-				type: 'address[]',
-			},
-			{
-				name: 'values',
-				type: 'uint256[]',
-			},
-		],
-		name: 'disperseEther',
-		outputs: [],
-		payable: true,
-		stateMutability: 'payable',
-		type: 'function',
-	},
-] as const
-const DISPERSE: Contract<typeof abi> = {
-	name: 'Disperse',
-	address: '0x14978681c5f8ce2f6b66d1f1551b0ec67405574c',
-	is_deprecated: true,
-	created_at: 1620737178,
-	abi: abi,
-}
-export default DISPERSE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 172,
+  address: '0x14978681c5f8ce2f6b66d1f1551b0ec67405574c' as const,
+  contract_name: 'Disperse',
+  display_name: 'Disperse',
+  is_deprecated: true,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1620737178,
+  abi: [
+  {
+    "name": "disperseTokenSimple",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "disperseToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "disperseEther",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

@@ -1,1215 +1,1029 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_roninChainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_roninTrustedOrganizationContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_validatorContract',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: '_expiryDuration',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-		],
-		name: 'ErrAlreadyVoted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrContractTypeNotFound',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrCurrentProposalIsNotCompleted',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInsufficientGas',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'uint256',
-				name: 'actual',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expected',
-				type: 'uint256',
-			},
-		],
-		name: 'ErrInvalidChainId',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrInvalidExpiryTimestamp',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidOrder',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'actual',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'expected',
-				type: 'bytes32',
-			},
-		],
-		name: 'ErrInvalidProposal',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidProposalNonce',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrInvalidSignatures',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrInvalidVoteHash',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrLengthMismatch',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrOnlySelfCall',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForEmptyVote',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForExpiredVote',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrQueryForNonExistentVote',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum RoleAccess',
-				name: 'expectedRole',
-				type: 'uint8',
-			},
-		],
-		name: 'ErrUnauthorized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-			{
-				internalType: 'enum ContractType',
-				name: 'expectedContractType',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address',
-				name: 'actual',
-				type: 'address',
-			},
-		],
-		name: 'ErrUnexpectedInternalCall',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes4',
-				name: 'msgSig',
-				type: 'bytes4',
-			},
-		],
-		name: 'ErrUnsupportedVoteType',
-		type: 'error',
-	},
-	{
-		inputs: [],
-		name: 'ErrVoteIsFinalized',
-		type: 'error',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ErrZeroCodeContract',
-		type: 'error',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'ContractUpdated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'EmergencyExitPollApproved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'validatorId',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'requestedAt',
-				type: 'uint256',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'expiredAt',
-				type: 'uint256',
-			},
-		],
-		name: 'EmergencyExitPollCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: false,
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'EmergencyExitPollExpired',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-		],
-		name: 'EmergencyExitPollVoted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalApproved',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'chainId',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'round',
-				type: 'uint256',
-			},
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				indexed: false,
-				internalType: 'struct Proposal.ProposalDetail',
-				name: 'proposal',
-				type: 'tuple',
-			},
-			{
-				indexed: false,
-				internalType: 'address',
-				name: 'creator',
-				type: 'address',
-			},
-		],
-		name: 'ProposalCreated',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: false,
-				internalType: 'bool[]',
-				name: 'successCalls',
-				type: 'bool[]',
-			},
-			{
-				indexed: false,
-				internalType: 'bytes[]',
-				name: 'returnDatas',
-				type: 'bytes[]',
-			},
-		],
-		name: 'ProposalExecuted',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalExpired',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'uint256',
-				name: 'duration',
-				type: 'uint256',
-			},
-		],
-		name: 'ProposalExpiryDurationChanged',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-		],
-		name: 'ProposalRejected',
-		type: 'event',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'bytes32',
-				name: 'proposalHash',
-				type: 'bytes32',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'voter',
-				type: 'address',
-			},
-			{
-				indexed: false,
-				internalType: 'enum Ballot.VoteType',
-				name: 'support',
-				type: 'uint8',
-			},
-			{
-				indexed: false,
-				internalType: 'uint256',
-				name: 'weight',
-				type: 'uint256',
-			},
-		],
-		name: 'ProposalVoted',
-		type: 'event',
-	},
-	{
-		inputs: [],
-		name: 'DOMAIN_SEPARATOR',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: '',
-				type: 'bytes32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: '_proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: '_supports',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: '_signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'castProposalBySignatures',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: '_proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType',
-				name: '_support',
-				type: 'uint8',
-			},
-		],
-		name: 'castProposalVoteForCurrentNetwork',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_proxy',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'changeProxyAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'validatorId',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'requestedAt',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiredAt',
-				type: 'uint256',
-			},
-		],
-		name: 'createEmergencyExitPoll',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_round',
-				type: 'uint256',
-			},
-		],
-		name: 'deleteExpired',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: '_voteHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: '_voter',
-				type: 'address',
-			},
-		],
-		name: 'emergencyPollVoted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-		],
-		name: 'getContract',
-		outputs: [
-			{
-				internalType: 'address',
-				name: 'contract_',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'getProposalExpiryDuration',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_round',
-				type: 'uint256',
-			},
-		],
-		name: 'getProposalSignatures',
-		outputs: [
-			{
-				internalType: 'address[]',
-				name: '_voters',
-				type: 'address[]',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: '_supports',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: '_signatures',
-				type: 'tuple[]',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyAdmin',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_proxy',
-				type: 'address',
-			},
-		],
-		name: 'getProxyImplementation',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_round',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address',
-				name: '_voter',
-				type: 'address',
-			},
-		],
-		name: 'proposalVoted',
-		outputs: [
-			{
-				internalType: 'bool',
-				name: '',
-				type: 'bool',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_chainId',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '_expiryTimestamp',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: '_targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '_calldatas',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_gasAmounts',
-				type: 'uint256[]',
-			},
-		],
-		name: 'propose',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expiryTimestamp',
-				type: 'uint256',
-			},
-			{
-				internalType: 'address[]',
-				name: '_targets',
-				type: 'address[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_values',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'bytes[]',
-				name: '_calldatas',
-				type: 'bytes[]',
-			},
-			{
-				internalType: 'uint256[]',
-				name: '_gasAmounts',
-				type: 'uint256[]',
-			},
-			{
-				internalType: 'enum Ballot.VoteType',
-				name: '_support',
-				type: 'uint8',
-			},
-		],
-		name: 'proposeProposalForCurrentNetwork',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				components: [
-					{
-						internalType: 'uint256',
-						name: 'nonce',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'chainId',
-						type: 'uint256',
-					},
-					{
-						internalType: 'uint256',
-						name: 'expiryTimestamp',
-						type: 'uint256',
-					},
-					{
-						internalType: 'address[]',
-						name: 'targets',
-						type: 'address[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'values',
-						type: 'uint256[]',
-					},
-					{
-						internalType: 'bytes[]',
-						name: 'calldatas',
-						type: 'bytes[]',
-					},
-					{
-						internalType: 'uint256[]',
-						name: 'gasAmounts',
-						type: 'uint256[]',
-					},
-				],
-				internalType: 'struct Proposal.ProposalDetail',
-				name: '_proposal',
-				type: 'tuple',
-			},
-			{
-				internalType: 'enum Ballot.VoteType[]',
-				name: '_supports',
-				type: 'uint8[]',
-			},
-			{
-				components: [
-					{
-						internalType: 'uint8',
-						name: 'v',
-						type: 'uint8',
-					},
-					{
-						internalType: 'bytes32',
-						name: 'r',
-						type: 'bytes32',
-					},
-					{
-						internalType: 'bytes32',
-						name: 's',
-						type: 'bytes32',
-					},
-				],
-				internalType: 'struct SignatureConsumer.Signature[]',
-				name: '_signatures',
-				type: 'tuple[]',
-			},
-		],
-		name: 'proposeProposalStructAndCastVotes',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'roninChainId',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'round',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'enum ContractType',
-				name: 'contractType',
-				type: 'uint8',
-			},
-			{
-				internalType: 'address',
-				name: 'addr',
-				type: 'address',
-			},
-		],
-		name: 'setContract',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '_expiryDuration',
-				type: 'uint256',
-			},
-		],
-		name: 'setProposalExpiryDuration',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		name: 'vote',
-		outputs: [
-			{
-				internalType: 'enum VoteStatusConsumer.VoteStatus',
-				name: 'status',
-				type: 'uint8',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'hash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint256',
-				name: 'againstVoteWeight',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'forVoteWeight',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiryTimestamp',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'bytes32',
-				name: 'voteHash',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'address',
-				name: 'validatorId',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: 'recipientAfterUnlockedFund',
-				type: 'address',
-			},
-			{
-				internalType: 'uint256',
-				name: 'requestedAt',
-				type: 'uint256',
-			},
-			{
-				internalType: 'uint256',
-				name: 'expiredAt',
-				type: 'uint256',
-			},
-		],
-		name: 'voteEmergencyExit',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const RONIN_GOVERNANCE_ADMIN: Contract<typeof abi> = {
-	name: 'Ronin Governance Admin',
-	address: '0x70fd02049333337a534a9383149c9a99ddf65495',
-	is_deprecated: false,
-	created_at: 1709535721,
-	abi: abi,
-}
-export default RONIN_GOVERNANCE_ADMIN
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1807,
+  address: '0x70fd02049333337a534a9383149c9a99ddf65495' as const,
+  contract_name: 'RoninGovernanceAdmin',
+  display_name: 'Ronin Governance Admin',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1709535721,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_roninChainId"
+      },
+      {
+        "type": "address",
+        "name": "_roninTrustedOrganizationContract"
+      },
+      {
+        "type": "address",
+        "name": "_validatorContract"
+      },
+      {
+        "type": "uint256",
+        "name": "_expiryDuration"
+      }
+    ]
+  },
+  {
+    "name": "ErrAlreadyVoted",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "voter"
+      }
+    ]
+  },
+  {
+    "name": "ErrContractTypeNotFound",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ]
+  },
+  {
+    "name": "ErrCurrentProposalIsNotCompleted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInsufficientGas",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidChainId",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint256",
+        "name": "actual"
+      },
+      {
+        "type": "uint256",
+        "name": "expected"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidExpiryTimestamp",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrInvalidOrder",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidProposal",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "actual"
+      },
+      {
+        "type": "bytes32",
+        "name": "expected"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidProposalNonce",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidSignatures",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrInvalidVoteHash",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrLengthMismatch",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrOnlySelfCall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrQueryForEmptyVote",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrQueryForExpiredVote",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrQueryForNonExistentVote",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrUnauthorized",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedRole"
+      }
+    ]
+  },
+  {
+    "name": "ErrUnexpectedInternalCall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      },
+      {
+        "type": "uint8",
+        "name": "expectedContractType"
+      },
+      {
+        "type": "address",
+        "name": "actual"
+      }
+    ]
+  },
+  {
+    "name": "ErrUnsupportedVoteType",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
+    "name": "ErrVoteIsFinalized",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrZeroCodeContract",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ]
+  },
+  {
+    "name": "ContractUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "addr",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "EmergencyExitPollApproved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "voteHash"
+      }
+    ]
+  },
+  {
+    "name": "EmergencyExitPollCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "voteHash"
+      },
+      {
+        "type": "address",
+        "name": "validatorId"
+      },
+      {
+        "type": "address",
+        "name": "recipientAfterUnlockedFund"
+      },
+      {
+        "type": "uint256",
+        "name": "requestedAt"
+      },
+      {
+        "type": "uint256",
+        "name": "expiredAt"
+      }
+    ]
+  },
+  {
+    "name": "EmergencyExitPollExpired",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "voteHash"
+      }
+    ]
+  },
+  {
+    "name": "EmergencyExitPollVoted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "voteHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "voter",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalApproved",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "chainId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "round",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "address",
+        "name": "creator"
+      }
+    ]
+  },
+  {
+    "name": "ProposalExecuted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "bool[]",
+        "name": "successCalls"
+      },
+      {
+        "type": "bytes[]",
+        "name": "returnDatas"
+      }
+    ]
+  },
+  {
+    "name": "ProposalExpired",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalExpiryDurationChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "duration",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalRejected",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "ProposalVoted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "proposalHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "voter",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "support"
+      },
+      {
+        "type": "uint256",
+        "name": "weight"
+      }
+    ]
+  },
+  {
+    "name": "DOMAIN_SEPARATOR",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "castProposalBySignatures",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "uint8[]",
+        "name": "_supports"
+      },
+      {
+        "type": "tuple[]",
+        "name": "_signatures",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "v"
+          },
+          {
+            "type": "bytes32",
+            "name": "r"
+          },
+          {
+            "type": "bytes32",
+            "name": "s"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "castProposalVoteForCurrentNetwork",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "uint8",
+        "name": "_support"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeProxyAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_proxy"
+      },
+      {
+        "type": "address",
+        "name": "_newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "createEmergencyExitPoll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "validatorId"
+      },
+      {
+        "type": "address",
+        "name": "recipientAfterUnlockedFund"
+      },
+      {
+        "type": "uint256",
+        "name": "requestedAt"
+      },
+      {
+        "type": "uint256",
+        "name": "expiredAt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "deleteExpired",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_round"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "emergencyPollVoted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_voteHash"
+      },
+      {
+        "type": "address",
+        "name": "_voter"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "getContract",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "contract_"
+      }
+    ]
+  },
+  {
+    "name": "getProposalExpiryDuration",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getProposalSignatures",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_round"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "_voters"
+      },
+      {
+        "type": "uint8[]",
+        "name": "_supports"
+      },
+      {
+        "type": "tuple[]",
+        "name": "_signatures",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "v"
+          },
+          {
+            "type": "bytes32",
+            "name": "r"
+          },
+          {
+            "type": "bytes32",
+            "name": "s"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getProxyAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_proxy"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getProxyImplementation",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_proxy"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "proposalVoted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_round"
+      },
+      {
+        "type": "address",
+        "name": "_voter"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "propose",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "_expiryTimestamp"
+      },
+      {
+        "type": "address[]",
+        "name": "_targets"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_values"
+      },
+      {
+        "type": "bytes[]",
+        "name": "_calldatas"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_gasAmounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "proposeProposalForCurrentNetwork",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expiryTimestamp"
+      },
+      {
+        "type": "address[]",
+        "name": "_targets"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_values"
+      },
+      {
+        "type": "bytes[]",
+        "name": "_calldatas"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_gasAmounts"
+      },
+      {
+        "type": "uint8",
+        "name": "_support"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "proposeProposalStructAndCastVotes",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_proposal",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "chainId"
+          },
+          {
+            "type": "uint256",
+            "name": "expiryTimestamp"
+          },
+          {
+            "type": "address[]",
+            "name": "targets"
+          },
+          {
+            "type": "uint256[]",
+            "name": "values"
+          },
+          {
+            "type": "bytes[]",
+            "name": "calldatas"
+          },
+          {
+            "type": "uint256[]",
+            "name": "gasAmounts"
+          }
+        ]
+      },
+      {
+        "type": "uint8[]",
+        "name": "_supports"
+      },
+      {
+        "type": "tuple[]",
+        "name": "_signatures",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "v"
+          },
+          {
+            "type": "bytes32",
+            "name": "r"
+          },
+          {
+            "type": "bytes32",
+            "name": "s"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "roninChainId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "round",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "setContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "contractType"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setProposalExpiryDuration",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expiryDuration"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "vote",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint8",
+        "name": "status"
+      },
+      {
+        "type": "bytes32",
+        "name": "hash"
+      },
+      {
+        "type": "uint256",
+        "name": "againstVoteWeight"
+      },
+      {
+        "type": "uint256",
+        "name": "forVoteWeight"
+      },
+      {
+        "type": "uint256",
+        "name": "expiryTimestamp"
+      }
+    ]
+  },
+  {
+    "name": "voteEmergencyExit",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "voteHash"
+      },
+      {
+        "type": "address",
+        "name": "validatorId"
+      },
+      {
+        "type": "address",
+        "name": "recipientAfterUnlockedFund"
+      },
+      {
+        "type": "uint256",
+        "name": "requestedAt"
+      },
+      {
+        "type": "uint256",
+        "name": "expiredAt"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

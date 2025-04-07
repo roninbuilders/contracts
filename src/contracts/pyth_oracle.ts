@@ -1,219 +1,193 @@
-import { Contract } from '@/contract'
-const abi = [
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'pythContract',
-				type: 'address',
-			},
-			{
-				internalType: 'address',
-				name: '_katanaOracle',
-				type: 'address',
-			},
-		],
-		stateMutability: 'nonpayable',
-		type: 'constructor',
-	},
-	{
-		anonymous: false,
-		inputs: [
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-			{
-				indexed: true,
-				internalType: 'address',
-				name: 'previousAdmin',
-				type: 'address',
-			},
-		],
-		name: 'NewAdmin',
-		type: 'event',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		name: 'cTokenToPriceFeed',
-		outputs: [
-			{
-				internalType: 'bytes32',
-				name: 'basePriceId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'quotePriceId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint32',
-				name: 'inputDecimals',
-				type: 'uint32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'decimalScale',
-		outputs: [
-			{
-				internalType: 'int32',
-				name: '',
-				type: 'int32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'cToken',
-				type: 'address',
-			},
-		],
-		name: 'getUnderlyingDecimals',
-		outputs: [
-			{
-				internalType: 'uint32',
-				name: '',
-				type: 'uint32',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'cToken',
-				type: 'address',
-			},
-		],
-		name: 'getUnderlyingPrice',
-		outputs: [
-			{
-				internalType: 'uint256',
-				name: '',
-				type: 'uint256',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'katanaOracle',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'owner',
-		outputs: [
-			{
-				internalType: 'address',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [],
-		name: 'pyth',
-		outputs: [
-			{
-				internalType: 'contract IPyth',
-				name: '',
-				type: 'address',
-			},
-		],
-		stateMutability: 'view',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'newAdmin',
-				type: 'address',
-			},
-		],
-		name: 'setAdmin',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: '_katanaOracle',
-				type: 'address',
-			},
-		],
-		name: 'setKatanaOracle',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-	{
-		inputs: [
-			{
-				internalType: 'address',
-				name: 'cToken',
-				type: 'address',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'basePriceId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'bytes32',
-				name: 'quotePriceId',
-				type: 'bytes32',
-			},
-			{
-				internalType: 'uint8',
-				name: 'inputDecimals',
-				type: 'uint8',
-			},
-		],
-		name: 'setPriceFeed',
-		outputs: [],
-		stateMutability: 'nonpayable',
-		type: 'function',
-	},
-] as const
-const PYTH_ORACLE: Contract<typeof abi> = {
-	name: 'Pyth Oracle',
-	address: '0x41b3805bafc04c498de063888445783139aa9f6d',
-	is_deprecated: false,
-	created_at: 1706644418,
-	abi: abi,
-}
-export default PYTH_ORACLE
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 1666,
+  address: '0x41b3805bafc04c498de063888445783139aa9f6d' as const,
+  contract_name: 'PythOracle',
+  display_name: 'Pyth Oracle',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1706644418,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "pythContract"
+      },
+      {
+        "type": "address",
+        "name": "_katanaOracle"
+      }
+    ]
+  },
+  {
+    "name": "NewAdmin",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "previousAdmin",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "cTokenToPriceFeed",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "basePriceId"
+      },
+      {
+        "type": "bytes32",
+        "name": "quotePriceId"
+      },
+      {
+        "type": "uint32",
+        "name": "inputDecimals"
+      }
+    ]
+  },
+  {
+    "name": "decimalScale",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "int32"
+      }
+    ]
+  },
+  {
+    "name": "getUnderlyingDecimals",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "cToken"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint32"
+      }
+    ]
+  },
+  {
+    "name": "getUnderlyingPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "cToken"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "katanaOracle",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pyth",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "setAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setKatanaOracle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_katanaOracle"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPriceFeed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "cToken"
+      },
+      {
+        "type": "bytes32",
+        "name": "basePriceId"
+      },
+      {
+        "type": "bytes32",
+        "name": "quotePriceId"
+      },
+      {
+        "type": "uint8",
+        "name": "inputDecimals"
+      }
+    ],
+    "outputs": []
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract
