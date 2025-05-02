@@ -1,7 +1,10 @@
 import { test, describe, expect } from 'bun:test'
 import { createPublicClient, http, formatEther } from 'viem'
 import { RONIN_RPC_URL, TEST_ADDRESS, logSection, formatTimestamp } from './utils'
-import { WRAPPED_ETHER, USD_COIN, AXIE_PROXY, ATIAS_BLESSING } from '../dist'
+import WRAPPED_ETHER from '../dist/wrapped_ether'
+import USD_COIN from '../dist/usd_coin'
+import AXIE_PROXY from '../dist/axie_proxy'
+import ATIAS_BLESSING from '../dist/atias_blessing'
 
 describe('Viem Contract Integration', () => {
 	const client = createPublicClient({
@@ -84,5 +87,28 @@ describe('Viem Contract Integration', () => {
 		expect(typeof lastActivated).toBe('bigint')
 		expect(typeof longestStreak).toBe('bigint')
 		expect(typeof lostStreak).toBe('bigint')
+	})
+
+	test('should fetch Atias Blessing activation status', async () => {
+		logSection('Testing Atias Blessing Activation Status with Viem')
+
+		// Fetch activation status using viem
+		const activationStatus = await client.readContract({
+			address: ATIAS_BLESSING.address,
+			abi: ATIAS_BLESSING.proxy_abi,
+			functionName: 'getActivationStatus',
+			args: [TEST_ADDRESS],
+		})
+
+		// With viem, the result is returned as a tuple
+		const [isLostStreak, hasPrayedToday] = activationStatus
+
+		console.log('Atias Blessing Activation Status:')
+		console.log(`  Is Lost Streak: ${isLostStreak}`)
+		console.log(`  Has Prayed Today: ${hasPrayedToday}`)
+
+		// Verify we have valid boolean values
+		expect(typeof isLostStreak).toBe('boolean')
+		expect(typeof hasPrayedToday).toBe('boolean')
 	})
 })

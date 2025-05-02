@@ -14,13 +14,23 @@ bun add @roninnetwork/contracts
 
 ## Usage
 
-The contracts are grouped by their first letter to reduce bundle size. There are two ways to import them:
+### Import contracts individually:
 
-
-###  Import  contracts directly:
+This is the only supported approach as it minimizes the bundle size for your application.
 
 ```typescript
-import { AXIE_PROXY, KATANA_ROUTER } from '@roninnetwork/contracts'
+import MY_CONTRACT from '@roninbuilders/contracts/my_contract';
+// or for CommonJS
+const MY_CONTRACT = require('@roninbuilders/contracts/my_contract');
+```
+
+### Named imports are not supported:
+
+To ensure optimal bundle size, named imports from the main package are not available:
+
+```typescript
+import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
+import KATANA_ROUTER from '@roninbuilders/contracts/katana_router'
 ```
 
 ## Contract Structure
@@ -32,7 +42,7 @@ Each contract export includes:
 
 Example:
 ```typescript
-import { AXIE_PROXY } from '@roninnetwork/contracts/a'
+import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
 
 console.log(AXIE_PROXY.address) // Contract address
 console.log(AXIE_PROXY.abi) // Contract ABI
@@ -40,12 +50,14 @@ console.log(AXIE_PROXY.proxy_abi) // Proxy ABI
 console.log(AXIE_PROXY.is_deprecated) // Deprecation status
 ```
 
+
 ## Viem Example
 Using viem to interact with contracts:
 
 ```typescript
 import { createPublicClient, http } from 'viem'
-import { AXIE_PROXY, WRAPPED_ETHER } from '@roninnetwork/contracts'
+import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
+import WRAPPED_ETHER from '@roninbuilders/contracts/wrapped_ether'
 
 const client = createPublicClient({
   chain: {
@@ -78,7 +90,8 @@ Using ethers.js to interact with contracts:
 
 ```typescript
 import { ethers } from 'ethers'
-import { AXIE_PROXY, WRAPPED_ETHER } from '@roninnetwork/contracts'
+import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
+import WRAPPED_ETHER from '@roninbuilders/contracts/wrapped_ether'
 
 const provider = new ethers.JsonRpcProvider('https://api.roninchain.com/rpc')
 

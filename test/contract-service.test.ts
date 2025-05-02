@@ -57,7 +57,6 @@ describe('ContractService', () => {
 
 	beforeEach(() => {
 		originalFetch = global.fetch
-		// Set up file system mocks
 		mockFs = {
 			mkdir: mock(async () => {}),
 			readdir: mock(async () => []),
@@ -65,8 +64,6 @@ describe('ContractService', () => {
 			writeFile: mock(async () => {}),
 		} as unknown as typeof fs
 
-		// Mock fetch responses
-		// @ts-expect-error We are mocking fetch
 		global.fetch = mock(async (url: string) => {
 			if (url.includes('/abi')) {
 				return new Response(
@@ -108,15 +105,13 @@ describe('ContractService', () => {
 	test('fetchAbi should retrieve contract ABI', async () => {
 		const service = new ContractService()
 
-		// Override fetch with the exact API response format
-		// @ts-expect-error We are mocking fetch
 		global.fetch = mock(async () => {
 			return new Response(
 				JSON.stringify({
 					status: true,
 					result: {
 						output: {
-							abi: mockAbi, // API returns the ABI directly
+							abi: mockAbi,
 						},
 					},
 				}),
@@ -125,7 +120,6 @@ describe('ContractService', () => {
 
 		const abi = await service.fetchAbi(mockContractItem.address)
 
-		// The ABI should be valid and match our mock data
 		expect(abi).toBeDefined()
 		expect(Array.isArray(abi)).toBe(true)
 		expect(abi!.length).toBe(1)
@@ -141,25 +135,20 @@ describe('ContractService', () => {
 	test('transformContractName should format contract names correctly', () => {
 		const service = new ContractService()
 
-		// Test different cases
 		expect(service.transformContractName('MyContract')).toBe('my_contract')
 		expect(service.transformContractName('my-contract')).toBe('my_contract')
 		expect(service.transformContractName('myContract123')).toBe('my_contract_123')
 		expect(service.transformContractName('MY_CONTRACT')).toBe('my_contract')
 		expect(service.transformContractName('my.contract')).toBe('my_contract')
 
-		// Test with ID
 		expect(service.transformContractName('MyContract', 123)).toBe('my_contract_123')
 	})
 
 	test('processContract should handle proxy contracts', async () => {
 		const service = new ContractService()
 
-		// Override fetch specifically for this test
-		// @ts-expect-error We are mocking fetch
 		global.fetch = mock(async (url: string) => {
 			if (url.includes('/abi')) {
-				// Important: Match the exact structure that fetchAbi expects
 				return new Response(
 					JSON.stringify({
 						status: true,
@@ -178,30 +167,23 @@ describe('ContractService', () => {
 			)
 		})
 
-		// Mock generateContractFile with a spy function
 		const generateContractFileSpy = mock(async () => {})
 		service['generateContractFile'] = generateContractFileSpy
 
-		// Process a proxy contract
 		await service.processContract(mockProxyItem)
 
-		// Verify the spy was called with correct arguments
 		expect(generateContractFileSpy).toHaveBeenCalled()
 		const calls = generateContractFileSpy.mock.calls
 		expect(calls.length).toBe(1)
 
-		// @ts-expect-error We know the first argument is the contract
 		const [[contractArg]] = calls
 
-		// Check contract has combined ABI (no proxy_abi anymore)
 		expect(contractArg).toHaveProperty('abi')
 	})
 
 	test('processBatch should handle multiple contracts', async () => {
 		const service = new ContractService()
 
-		// Override fetch to return proper ABI format
-		// @ts-expect-error We are mocking fetch
 		global.fetch = mock(async () => {
 			return new Response(
 				JSON.stringify({
@@ -215,13 +197,11 @@ describe('ContractService', () => {
 			)
 		})
 
-		// Create a spy for generateContractFile
 		const generateContractFileSpy = mock(async () => {})
 		service['generateContractFile'] = generateContractFileSpy
 
 		await service.processBatch([mockContractItem, mockProxyItem])
 
-		// Verify both contracts were processed
 		expect(generateContractFileSpy.mock.calls.length).toBe(2)
 	})
 
@@ -229,17 +209,12 @@ describe('ContractService', () => {
 		const service = new ContractService()
 		const spyGenerateFile = spyOn(service as any, 'generateContractFile')
 
-		// Important: First we need to override allContracts in the fetchAllContracts method
-		// to properly filter out MainToken contracts
 		spyOn(service, 'fetchAllContracts').mockImplementation(async () => {
 			const contracts = [mockContractItem, mockProxyItem, mockDeprecatedProxyItem, mockMainTokenItem]
-			// This mirrors the logic in the actual fetchAllContracts method
-			service['skippedCount'] = 1 // Simulate skipping the MainToken
+			service['skippedCount'] = 1
 			return contracts.filter((c) => c.contract_name !== 'MainToken')
 		})
 
-		// We're not calling processContract directly because MainToken should be
-		// filtered out earlier in the fetchAllContracts method
 		const contracts = await service.fetchAllContracts()
 
 		expect(service['skippedCount']).toBe(1)
@@ -255,7 +230,7 @@ describe('ContractService', () => {
 
 		expect(service['skippedCount']).toBe(0)
 		expect(service['processedCount']).toBe(1)
-		expect(spyFetchAbi).toHaveBeenCalledTimes(2) // Once for proxy, once for implementation
+		expect(spyFetchAbi).toHaveBeenCalledTimes(2)
 		expect(spyGenerateFile).toHaveBeenCalled()
 	})
 
@@ -265,22 +240,20 @@ describe('ContractService', () => {
 
 		await service.processContract(mockProxyItem)
 
-		expect(spyFetchAbi).toHaveBeenCalledTimes(2)
 		expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.address)
 		expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.proxy_to)
+		expect(spyFetchAbi).toHaveBeenCalledTimes(2)
 	})
 
 	test('should process all contracts except MainToken in update', async () => {
 		const service = new ContractService()
 
-		// Mock fetchAllContracts to return our test contracts
 		spyOn(service, 'fetchAllContracts').mockResolvedValue([mockContractItem, mockProxyItem, mockDeprecatedProxyItem])
 
 		const spyProcessBatch = spyOn(service, 'processBatch').mockResolvedValue(undefined)
 
 		await service.update()
 
-		// We've mocked fetchAllContracts to return 3 items
 		expect(service['totalContracts']).toBe(3)
 		expect(spyProcessBatch).toHaveBeenCalled()
 		const batchArg = spyProcessBatch.mock.calls[0][0]
@@ -297,7 +270,7 @@ describe('ContractService', () => {
 		await service.processContract(mockContractItem)
 
 		expect(service['skippedCount']).toBe(1)
-		expect(service['failedCount']).toBe(0) // Should skip not fail when ABI is undefined
+		expect(service['failedCount']).toBe(0)
 		expect(spyGenerateFile).not.toHaveBeenCalled()
 	})
 })

@@ -1,6 +1,5 @@
 import type { Abi } from 'abitype'
 
-// Just use a type that ensures the ABI is properly typed
 export type Contract = {
 	readonly id: number
 	readonly address: `0x${string}`

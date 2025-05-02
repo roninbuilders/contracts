@@ -8,7 +8,7 @@ const contract = {
   is_deprecated: true,
   is_proxy: true,
   proxy_to: '0x4444444444444444444444444444444444444444',
-  created_at: 1744046187517,
+  created_at: 1746217865530,
   abi: [
   {
     "name": "transfer",
