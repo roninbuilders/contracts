@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Collection Offer Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x132733bafd074dd7a0447622d02ea3cd3f7bf5f3',
+  proxy_to: '0xf0ac6d807d2afa88ef5d2e266d03c69bed4726d9',
   created_at: 1738826817,
   abi: [
   {
@@ -128,7 +128,12 @@ const contract = {
     ]
   },
   {
-    "name": "InvalidAllocation",
+    "name": "InvalidLength",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidRoyaltyRegistry",
     "type": "error",
     "inputs": []
   },
@@ -173,6 +178,11 @@ const contract = {
         "name": "expected"
       }
     ]
+  },
+  {
+    "name": "InvalidTotalRoyaltyFees",
+    "type": "error",
+    "inputs": []
   },
   {
     "name": "MismatchedArraysLength",
@@ -225,7 +235,7 @@ const contract = {
     ]
   },
   {
-    "name": "SumOfAllocationsNotMatchTheTotal",
+    "name": "UnexpectedTotalRecipientAmounts",
     "type": "error",
     "inputs": []
   },
@@ -485,27 +495,15 @@ const contract = {
       },
       {
         "type": "tuple[]",
-        "name": "allocations",
+        "name": "recipients",
         "components": [
-          {
-            "type": "uint8",
-            "name": "allocType"
-          },
           {
             "type": "address",
             "name": "recipient"
           },
           {
-            "type": "address",
-            "name": "owner"
-          },
-          {
             "type": "uint256",
-            "name": "ratio"
-          },
-          {
-            "type": "uint256",
-            "name": "value"
+            "name": "amount"
           }
         ]
       },
@@ -880,6 +878,16 @@ const contract = {
         "type": "address",
         "name": "sender",
         "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoyaltyRegistryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltyRegistry"
       }
     ]
   },
@@ -1275,6 +1283,17 @@ const contract = {
     ]
   },
   {
+    "name": "getRoyaltyRegistry",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
     "name": "getStateOf",
     "type": "function",
     "stateMutability": "view",
@@ -1346,6 +1365,18 @@ const contract = {
       {
         "type": "address",
         "name": "trustedVerifier_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltyRegistry"
       }
     ],
     "outputs": []

@@ -7,7 +7,7 @@ const contract = {
   display_name: 'PHA Support Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x0163b77eab723c38c4d324e0d3fa5d881cfdf608',
+  proxy_to: '0x21182dd73eeb5dab634cbd9e05a97ee102630089',
   created_at: 1737608850,
   abi: [
   {

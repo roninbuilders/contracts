@@ -7,7 +7,7 @@ const contract = {
   display_name: 'ERC1967 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x10bd092e77134ab72ea5413811265158ddf7985e',
+  proxy_to: '0x12770ddef183215161a75afe0da4feb6c06ee907',
   created_at: 1736774351,
   abi: [
   {
@@ -70,6 +70,76 @@ const contract = {
   }
 ] as const satisfies Abi,
   proxy_abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AddressCannotBeEOA",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AddressCannotBeZero",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "CallerIsNotRouter",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "CannotVerifyCalldataHash",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedToCollectFunds",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedToRemoveFreeNode",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FreeNodeAlreadyWhitelisted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FreeNodeNotWhitelisted",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "GasPaymentAfterCalculationMustBeSet",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "IncorrectInputMessage",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "IncorrectPublicKeyOrSignaturePoints",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NonceAlreadyProcessed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "PaymentFailed",
+    "type": "error",
+    "inputs": []
+  },
   {
     "name": "AdminChanged",
     "type": "event",
@@ -243,6 +313,52 @@ const contract = {
         "type": "address",
         "name": "clientWalletAddress",
         "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      }
+    ]
+  },
+  {
+    "name": "RequestRetry",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "uint256",
+        "name": "instanceId"
+      },
+      {
+        "type": "address",
+        "name": "callerContract"
+      },
+      {
+        "type": "string",
+        "name": "functionName"
+      },
+      {
+        "type": "uint8",
+        "name": "rngCount"
+      },
+      {
+        "type": "uint256",
+        "name": "clientSeed"
+      },
+      {
+        "type": "address",
+        "name": "clientWalletAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "requestBlockNumber"
       }
     ]
   },
@@ -331,14 +447,6 @@ const contract = {
         "name": "_nonce"
       },
       {
-        "type": "bytes32",
-        "name": "_bhash"
-      },
-      {
-        "type": "bytes",
-        "name": "_message"
-      },
-      {
         "type": "uint256[2]",
         "name": "_signature"
       },
@@ -361,17 +469,24 @@ const contract = {
       {
         "type": "address",
         "name": "_clientWalletAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_requestBlockNumber"
       }
     ],
     "outputs": [
       {
-        "type": "bool"
+        "type": "bool",
+        "name": "_rngSuccess"
       },
       {
-        "type": "bool"
+        "type": "bool",
+        "name": "paymentSuccess"
       },
       {
-        "type": "bytes"
+        "type": "bytes",
+        "name": "data"
       }
     ]
   },
@@ -403,6 +518,50 @@ const contract = {
       {
         "type": "uint256",
         "name": "_gasAfterPaymentCalculation"
+      },
+      {
+        "type": "uint256",
+        "name": "_supraMinimumGasPerTx"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_domain"
+      },
+      {
+        "type": "address",
+        "name": "_supraRouterContract"
+      },
+      {
+        "type": "uint256[4]",
+        "name": "_publicKey"
+      },
+      {
+        "type": "uint256",
+        "name": "_instanceId"
+      },
+      {
+        "type": "uint256",
+        "name": "_blsPreCompileGasCost"
+      },
+      {
+        "type": "uint256",
+        "name": "_gasAfterPaymentCalculation"
+      },
+      {
+        "type": "uint256",
+        "name": "_requiredL1Gas"
+      },
+      {
+        "type": "uint256",
+        "name": "_supraMinimumGasPerTx"
       }
     ],
     "outputs": []
@@ -513,6 +672,17 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "requiredL1Gas",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "rngRequest",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -559,6 +729,29 @@ const contract = {
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "setSupraMinimumGasPerTx",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_supraMinimumGasPerTx"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "supraMinimumGasPerTx",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
   },
   {
     "name": "supraRouterContract",

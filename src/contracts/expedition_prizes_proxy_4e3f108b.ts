@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Expedition Prizes Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x256546446be148e77dd8c1f7e15f80eb1e017395',
+  proxy_to: '0xa1c19b7f07678afa6db061c9d193ffb8a9eacc71',
   created_at: 1704968036,
   abi: [
   {
@@ -223,6 +223,58 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "_treasureIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cleanBatchUserExpeditionTreasures",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_expeditionId"
+      },
+      {
+        "type": "tuple[]",
+        "name": "_treasures",
+        "components": [
+          {
+            "type": "address",
+            "name": "user"
+          },
+          {
+            "type": "uint256",
+            "name": "burnKeyAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "treasureId"
+          },
+          {
+            "type": "tuple[]",
+            "name": "prizes",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "prizeType"
+              },
+              {
+                "type": "address",
+                "name": "addr"
+              },
+              {
+                "type": "uint256",
+                "name": "tokenId"
+              },
+              {
+                "type": "uint256",
+                "name": "amount"
+              }
+            ]
+          }
+        ]
       }
     ],
     "outputs": []
@@ -571,6 +623,34 @@ const contract = {
       {
         "type": "bytes",
         "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdrawERC1155",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      },
+      {
+        "type": "address",
+        "name": "_targetWallet"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
       }
     ],
     "outputs": []

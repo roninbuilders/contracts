@@ -7,7 +7,7 @@ const contract = {
   display_name: 'VX Ronin Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x7f3f820432ffd45e411f003d78d8b3702e768f16',
+  proxy_to: '0xef5c56459e1df054ec0da5dd66a547015c351828',
   created_at: 1706954651,
   abi: [
   {
@@ -481,6 +481,21 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "minters",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
     "name": "name",
     "type": "function",
     "stateMutability": "view",
@@ -596,6 +611,22 @@ const contract = {
       {
         "type": "bool",
         "name": "approved"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMinter",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_minter"
+      },
+      {
+        "type": "bool",
+        "name": "_isMinter"
       }
     ],
     "outputs": []

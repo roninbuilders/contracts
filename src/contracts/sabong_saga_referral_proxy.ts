@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Sabong Saga Referral Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x55fb20341a1a8c9708002166c750bf6e39647d39',
+  proxy_to: '0x716043e6de344d0722dc29a0720dd75b9d6ce54f',
   created_at: 1742537129,
   abi: [
   {
@@ -340,6 +340,18 @@ const contract = {
         "type": "address[]",
         "name": "_creators"
       },
+      {
+        "type": "string[]",
+        "name": "_codes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchRemoveReferralCodes",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
       {
         "type": "string[]",
         "name": "_codes"

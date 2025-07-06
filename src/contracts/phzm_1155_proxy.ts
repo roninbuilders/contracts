@@ -7,7 +7,7 @@ const contract = {
   display_name: 'PHZM1155 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x73b84c1478865f59eda69c5acf0b076ff8337483',
+  proxy_to: '0xcf531543023f033e3eb5742e915b9bb338eb5f1f',
   created_at: 1727834489,
   abi: [
   {
@@ -316,12 +316,44 @@ const contract = {
     ]
   },
   {
+    "name": "TokenLocked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "approvedContract",
+        "indexed": true
+      }
+    ]
+  },
+  {
     "name": "TokenUnblocked",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
         "name": "tokenId"
+      }
+    ]
+  },
+  {
+    "name": "TokenUnlocked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "approvedContract",
+        "indexed": true
       }
     ]
   },

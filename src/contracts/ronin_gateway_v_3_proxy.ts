@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Ronin Gateway V3 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xd2c2746db8ecc5e13b7f9cd0cc6eba84a68b26ba',
+  proxy_to: '0x6e5495b13bdbe56ad63962413daed02687de7f2d',
   created_at: 1655882578,
   abi: [
   {
@@ -264,9 +264,43 @@ const contract = {
     ]
   },
   {
+    "name": "ErrNotWhitelistedToken",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "ErrNullMinVoteWeightProvided",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "msgSig"
+      }
+    ]
+  },
+  {
     "name": "ErrQueryForTooSmallQuantity",
     "type": "error",
     "inputs": []
+  },
+  {
+    "name": "ErrRestricted",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "fnSig"
+      },
+      {
+        "type": "uint8",
+        "name": "standard"
+      }
+    ]
   },
   {
     "name": "ErrTokenCouldNotTransfer",
@@ -357,6 +391,11 @@ const contract = {
   },
   {
     "name": "ErrUnsupportedToken",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ErrWhitelistWrappedTokenInstead",
     "type": "error",
     "inputs": []
   },
@@ -612,6 +651,26 @@ const contract = {
     ]
   },
   {
+    "name": "Restricted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "by",
+        "indexed": true
+      },
+      {
+        "type": "bytes4",
+        "name": "fnSig",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "enumBitmap"
+      }
+    ]
+  },
+  {
     "name": "RoleAdminChanged",
     "type": "event",
     "inputs": [
@@ -769,12 +828,51 @@ const contract = {
     ]
   },
   {
+    "name": "UnRestricted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "by",
+        "indexed": true
+      },
+      {
+        "type": "bytes4",
+        "name": "fnSig",
+        "indexed": true
+      }
+    ]
+  },
+  {
     "name": "Unpaused",
     "type": "event",
     "inputs": [
       {
         "type": "address",
         "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "WhitelistUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "by",
+        "indexed": true
+      },
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint64[]",
+        "name": "remoteChainSelectors"
       }
     ]
   },
@@ -933,10 +1031,6 @@ const contract = {
     ]
   },
   {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
     "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
@@ -987,6 +1081,26 @@ const contract = {
       {
         "type": "uint256",
         "name": "chainId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "bulkSetApprovalForAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "nfts"
+      },
+      {
+        "type": "address[]",
+        "name": "operators"
+      },
+      {
+        "type": "bool[]",
+        "name": "approveds"
       }
     ],
     "outputs": []
@@ -1298,6 +1412,27 @@ const contract = {
     ]
   },
   {
+    "name": "getWhitelistedAddresses",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "whitelisteds"
+      },
+      {
+        "type": "uint64[]",
+        "name": "remoteChainSelectors"
+      }
+    ]
+  },
+  {
     "name": "getWithdrawalSignatures",
     "type": "function",
     "stateMutability": "view",
@@ -1355,65 +1490,38 @@ const contract = {
     ]
   },
   {
-    "name": "initialize",
+    "name": "initializeV4",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "_roleSetter"
+        "name": "migrator"
       },
       {
-        "type": "uint256",
-        "name": "_numerator"
+        "type": "address",
+        "name": "newEmergencyPauser"
       },
       {
-        "type": "uint256",
-        "name": "_denominator"
+        "type": "address[]",
+        "name": "tokens"
       },
       {
-        "type": "uint256",
-        "name": "_trustedNumerator"
+        "type": "address[]",
+        "name": "recipients"
       },
       {
-        "type": "uint256",
-        "name": "_trustedDenominator"
-      },
-      {
-        "type": "address[]"
-      },
-      {
-        "type": "address[][2]",
-        "name": "_packedAddresses"
-      },
-      {
-        "type": "uint256[][2]",
-        "name": "_packedNumbers"
-      },
-      {
-        "type": "uint8[]",
-        "name": "_standards"
+        "type": "uint64[]",
+        "name": "remoteChainSelectors"
       }
     ],
     "outputs": []
   },
   {
-    "name": "initializeV2",
+    "name": "initializeV5",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "initializeV3",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "bridgeAdmin"
-      }
-    ],
     "outputs": []
   },
   {
@@ -1528,6 +1636,22 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "minimumThresholds_"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "migrateERC20",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
       }
     ],
     "outputs": []
@@ -1713,6 +1837,43 @@ const contract = {
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "restrict",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "fnSig"
+      },
+      {
+        "type": "uint8",
+        "name": "enumBitmap"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "restricted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "fnSig"
+      },
+      {
+        "type": "uint8",
+        "name": "standard"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "yes"
+      }
+    ]
   },
   {
     "name": "revokeRole",
@@ -1951,6 +2112,26 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "whitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients"
+      },
+      {
+        "type": "uint64[]",
+        "name": "remoteChainSelectors"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "withdrawal",
     "type": "function",
     "stateMutability": "view",
@@ -2060,6 +2241,17 @@ const contract = {
       {
         "type": "uint256",
         "name": "createdAt"
+      }
+    ]
+  },
+  {
+    "name": "wrappedNativeToken",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
       }
     ]
   },
