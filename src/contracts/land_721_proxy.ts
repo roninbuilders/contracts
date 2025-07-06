@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Land 721 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xfdbc67ac95564ec4f7bc281dce55d2186dac5ec4',
+  proxy_to: '0x5f044a25d1a02f75c55ee233cda9431d3c0a3caf',
   created_at: 1740460447,
   abi: [
   {
@@ -261,7 +261,7 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "FailedInnerCall",
+    "name": "FailedCall",
     "type": "error",
     "inputs": []
   },
@@ -583,6 +583,22 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "approveAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tos"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "stateMutability": "view",
@@ -623,6 +639,18 @@ const contract = {
       {
         "type": "uint256",
         "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "cleanCache",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "arr"
       }
     ],
     "outputs": []
@@ -793,6 +821,38 @@ const contract = {
     "outputs": [
       {
         "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMembers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getTokenGrade",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint8"
       }
     ]
   },
@@ -1169,6 +1229,22 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "setTokenGrade",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint8[]",
+        "name": "grades"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "stakeNFT",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -1263,6 +1339,21 @@ const contract = {
     "outputs": [
       {
         "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "tokenGrade",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint8"
       }
     ]
   },
@@ -1362,6 +1453,18 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "updateOwnedPush",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
     "outputs": []
   },
   {

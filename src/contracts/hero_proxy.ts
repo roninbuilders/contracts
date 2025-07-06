@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Hero Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x38032d6fa46d596d3b82eee6f1627d59119eba83',
+  proxy_to: '0xb8684523a6b8ff079e4f5899aacef344fd395f89',
   created_at: 1741603913,
   abi: [
   {
@@ -111,7 +111,7 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "TokenLocked",
+    "name": "TokenAlreadyLocked",
     "type": "error",
     "inputs": []
   },
@@ -331,6 +331,38 @@ const contract = {
       {
         "type": "uint96",
         "name": "feeNumerator"
+      }
+    ]
+  },
+  {
+    "name": "TokenLocked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "approvedContract",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TokenUnlocked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "approvedContract",
+        "indexed": true
       }
     ]
   },
@@ -683,6 +715,30 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "logTokenLocked",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "logTokenUnlocked",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ],
     "outputs": []
   },
   {
