@@ -7,7 +7,7 @@ const contract = {
   display_name: 'M Gold 20 Wallet Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x5e5b8a8ac6b1bcbc251bf6eec2318e451fc7e1d8',
+  proxy_to: '0x39f944c2277a7c6b570bc2d5f1ee4aa2ceaf8f28',
   created_at: 1728626464,
   abi: [
   {
@@ -92,6 +92,32 @@ const contract = {
         "type": "address",
         "name": "beacon",
         "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Deposit",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
       }
     ]
   },
@@ -216,6 +242,28 @@ const contract = {
     ]
   },
   {
+    "name": "Withdraw",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
     "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
@@ -270,6 +318,30 @@ const contract = {
       {
         "type": "uint256",
         "name": "value"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "deposit",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
       }
     ],
     "outputs": []
@@ -331,6 +403,26 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "multiWithdraw",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tos"
+      },
+      {
+        "type": "address[]",
+        "name": "tokens"
+      },
+      {
+        "type": "uint256[]",
+        "name": "values"
+      }
+    ],
     "outputs": []
   },
   {

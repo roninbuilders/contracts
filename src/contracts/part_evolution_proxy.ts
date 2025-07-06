@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Part Evolution Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x6efa5b84b9706914e2932453812ab60d6ac8e781',
+  proxy_to: '0xed8f143c8ae16442ba0a87ebcf78532d1e1ad3d3',
   created_at: 1702269527,
   abi: [
   {
@@ -144,6 +144,20 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "ComputedPriceTooSmall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "int8",
+        "name": "expo"
+      }
+    ]
+  },
+  {
     "name": "ErrBodyPartAlreadyEvolved",
     "type": "error",
     "inputs": []
@@ -164,37 +178,9 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "ErrComputedPriceTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo1"
-      },
-      {
-        "type": "int32",
-        "name": "expo2"
-      },
-      {
-        "type": "int64",
-        "name": "price1"
-      }
-    ]
-  },
-  {
     "name": "ErrExcessiveInputAmount",
     "type": "error",
     "inputs": []
-  },
-  {
-    "name": "ErrExponentTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo"
-      }
-    ]
   },
   {
     "name": "ErrInvalidPath",
@@ -241,19 +227,19 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "ErrPositiveExponent",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo"
-      }
-    ]
-  },
-  {
     "name": "ErrRequestPaymentAmountFailed",
     "type": "error",
     "inputs": []
+  },
+  {
+    "name": "LargeDecimal",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "decimal"
+      }
+    ]
   },
   {
     "name": "OutRangeValue",
@@ -266,6 +252,30 @@ const contract = {
       {
         "type": "uint256",
         "name": "max"
+      }
+    ]
+  },
+  {
+    "name": "PanicNegativeQuotePrice",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "int256",
+        "name": "answer"
+      }
+    ]
+  },
+  {
+    "name": "PriceTooOld",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "latestTimestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "maxAcceptableTimestamp"
       }
     ]
   },
@@ -285,6 +295,29 @@ const contract = {
     "inputs": [
       {
         "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "ChainlinkPriceFeedUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "string",
+        "name": "description"
       }
     ]
   },
@@ -334,6 +367,21 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "costs"
+      }
+    ]
+  },
+  {
+    "name": "MaxAcceptableAgeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
       }
     ]
   },
@@ -420,32 +468,6 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "evolutionFees"
-      },
-      {
-        "type": "tuple",
-        "name": "priceFeed",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
-          }
-        ]
       }
     ]
   },
@@ -750,7 +772,7 @@ const contract = {
     ]
   },
   {
-    "name": "getPriceFeed",
+    "name": "getPriceFeedData",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -759,24 +781,20 @@ const contract = {
         "type": "tuple",
         "components": [
           {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
             "type": "address",
-            "name": "pyth"
+            "name": "_aggregator"
           },
           {
-            "type": "bytes32",
-            "name": "priceId"
+            "type": "uint8",
+            "name": "_tokenInDecimal"
           },
           {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
           }
         ]
       }
@@ -936,32 +954,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "specialMaterialCost"
-      },
-      {
-        "type": "tuple",
-        "name": "priceFeed",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
-          }
-        ]
       }
     ],
     "outputs": []
@@ -978,32 +970,6 @@ const contract = {
       {
         "type": "address",
         "name": "nightmareContract"
-      },
-      {
-        "type": "tuple",
-        "name": "priceFeed",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
-          }
-        ]
       }
     ],
     "outputs": []
@@ -1016,6 +982,36 @@ const contract = {
       {
         "type": "address",
         "name": "axieDelegation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV4",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "priceFeed",
+        "components": [
+          {
+            "type": "address",
+            "name": "_aggregator"
+          },
+          {
+            "type": "uint8",
+            "name": "_tokenInDecimal"
+          },
+          {
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
+          }
+        ]
       }
     ],
     "outputs": []
@@ -1153,32 +1149,30 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "evolutionFees"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPriceFeedData",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator"
       },
       {
-        "type": "tuple",
-        "name": "priceFeed",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
-          }
-        ]
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
       }
     ],
     "outputs": []

@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Lumiterra Game Item',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xaf28c2c91a6a75f30475ff4323444127f6eeeb02',
+  proxy_to: '0x1b1cb7f488de236bc9225d8ace9e157a087bf296',
   created_at: 1720869853,
   abi: [
   {

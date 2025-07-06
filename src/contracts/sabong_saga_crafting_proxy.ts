@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Sabong Saga Crafting Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xffbda5cbd0496eb071710af915d209d4366be999',
+  proxy_to: '0xa8a197a1bc7c45b1f123b7e1469c9e1a7bad7e15',
   created_at: 1742537159,
   abi: [
   {
@@ -718,6 +718,49 @@ const contract = {
     "outputs": [
       {
         "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getCraftingRecipeBatch",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "itemIds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "tuple[][]",
+        "name": "materials",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "tokenType"
+          },
+          {
+            "type": "address",
+            "name": "tokenAddress"
+          },
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ]
+      },
+      {
+        "type": "bool[]",
+        "name": "exists"
       }
     ]
   },

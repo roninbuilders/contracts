@@ -4,10 +4,10 @@ const contract = {
   id: 147,
   address: '0x9d3936dbd9a794ee31ef9f13814233d435bd806c' as const,
   contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Atias Blessing',
+  display_name: 'Atia Shrine Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x9dbae14350f54370b11503ebedde62445007b512',
+  proxy_to: '0x8bffa236f479d1984f736294f3783d5c2a7dc399',
   created_at: 1686041020,
   abi: [
   {
@@ -144,6 +144,20 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "ComputedPriceTooSmall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "int8",
+        "name": "expo"
+      }
+    ]
+  },
+  {
     "name": "ErrActivateBeforeStartingBlock",
     "type": "error",
     "inputs": []
@@ -159,37 +173,9 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "ErrComputedPriceTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo1"
-      },
-      {
-        "type": "int32",
-        "name": "expo2"
-      },
-      {
-        "type": "int64",
-        "name": "price1"
-      }
-    ]
-  },
-  {
     "name": "ErrExceedDailyPrayThreshold",
     "type": "error",
     "inputs": []
-  },
-  {
-    "name": "ErrExponentTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo"
-      }
-    ]
   },
   {
     "name": "ErrFreezeTimeEnded",
@@ -237,12 +223,69 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "LargeDecimal",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "decimal"
+      }
+    ]
+  },
+  {
+    "name": "PanicNegativeQuotePrice",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "int256",
+        "name": "answer"
+      }
+    ]
+  },
+  {
+    "name": "PriceTooOld",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "latestTimestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "maxAcceptableTimestamp"
+      }
+    ]
+  },
+  {
     "name": "ActiveStreakLifeTimeChanged",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
         "name": "streakLifeTime"
+      }
+    ]
+  },
+  {
+    "name": "ChainlinkPriceFeedUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "string",
+        "name": "description"
       }
     ]
   },
@@ -277,6 +320,21 @@ const contract = {
     ]
   },
   {
+    "name": "MaxAcceptableAgeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
+      }
+    ]
+  },
+  {
     "name": "PaymentTokenUpdated",
     "type": "event",
     "inputs": [
@@ -306,38 +364,6 @@ const contract = {
           {
             "type": "uint64",
             "name": "countPerDay"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "PriceFeedDataUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "tuple",
-        "name": "priceFeedData",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
           }
         ]
       }
@@ -654,24 +680,20 @@ const contract = {
         "type": "tuple",
         "components": [
           {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
             "type": "address",
-            "name": "pyth"
+            "name": "_aggregator"
           },
           {
-            "type": "bytes32",
-            "name": "priceId"
+            "type": "uint8",
+            "name": "_tokenInDecimal"
           },
           {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
           }
         ]
       }
@@ -916,34 +938,38 @@ const contract = {
         ]
       },
       {
+        "type": "uint256",
+        "name": "dailyPrayerThreshold"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV4",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
         "type": "tuple",
         "name": "priceFeedData",
         "components": [
           {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
             "type": "address",
-            "name": "pyth"
+            "name": "_aggregator"
           },
           {
-            "type": "bytes32",
-            "name": "priceId"
+            "type": "uint8",
+            "name": "_tokenInDecimal"
           },
           {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
           }
         ]
-      },
-      {
-        "type": "uint256",
-        "name": "dailyPrayerThreshold"
       }
     ],
     "outputs": []
@@ -1054,30 +1080,20 @@ const contract = {
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "tuple",
-        "name": "priceFeedData",
-        "components": [
-          {
-            "type": "uint8",
-            "name": "tokenInDecimal"
-          },
-          {
-            "type": "uint8",
-            "name": "tokenOutDecimal"
-          },
-          {
-            "type": "address",
-            "name": "pyth"
-          },
-          {
-            "type": "bytes32",
-            "name": "priceId"
-          },
-          {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
-          }
-        ]
+        "type": "address",
+        "name": "aggregator"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
       }
     ],
     "outputs": []

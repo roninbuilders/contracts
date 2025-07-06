@@ -7,7 +7,7 @@ const contract = {
   display_name: 'RNS Domain Price Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x482dd60f3b8d961ba4629d6b2ecc0b24329746d0',
+  proxy_to: '0xf3a8507766def8d940efbbbda357813e8dda46b0',
   created_at: 1699254612,
   abi: [
   {
@@ -80,29 +80,29 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "ErrComputedPriceTooLarge",
+    "name": "ComputedPriceTooLarge",
     "type": "error",
     "inputs": [
       {
-        "type": "int32",
-        "name": "expo1"
+        "type": "uint256",
+        "name": "price"
       },
       {
-        "type": "int32",
-        "name": "expo2"
-      },
-      {
-        "type": "int64",
-        "name": "price1"
+        "type": "int8",
+        "name": "expo"
       }
     ]
   },
   {
-    "name": "ErrExponentTooLarge",
+    "name": "ComputedPriceTooSmall",
     "type": "error",
     "inputs": [
       {
-        "type": "int32",
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "int8",
         "name": "expo"
       }
     ]
@@ -118,6 +118,26 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "LargeDecimal",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "decimal"
+      }
+    ]
+  },
+  {
+    "name": "PanicNegativeQuotePrice",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "int256",
+        "name": "answer"
+      }
+    ]
+  },
+  {
     "name": "PeriodNumOverflowedUint16",
     "type": "error",
     "inputs": [
@@ -128,14 +148,51 @@ const contract = {
     ]
   },
   {
-    "name": "RenewalFeeIsNotOverriden",
+    "name": "PriceTooOld",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "latestTimestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "maxAcceptableTimestamp"
+      }
+    ]
+  },
+  {
+    "name": "RenewalFeeIsNotOverridden",
     "type": "error",
     "inputs": []
   },
   {
-    "name": "TierIsNotOverriden",
+    "name": "TierIsNotOverridden",
     "type": "error",
     "inputs": []
+  },
+  {
+    "name": "ChainlinkPriceFeedUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "string",
+        "name": "description"
+      }
+    ]
   },
   {
     "name": "DomainPriceScaleRuleUpdated",
@@ -196,6 +253,21 @@ const contract = {
     ]
   },
   {
+    "name": "MaxAcceptableAgeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
+      }
+    ]
+  },
+  {
     "name": "MaxRenewalFeeLengthUpdated",
     "type": "event",
     "inputs": [
@@ -207,31 +279,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "maxLength",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "PythOracleConfigUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "pyth",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "maxAcceptableAge"
-      },
-      {
-        "type": "bytes32",
-        "name": "pythIdForRONUSD",
         "indexed": true
       }
     ]
@@ -421,6 +468,17 @@ const contract = {
     ]
   },
   {
+    "name": "RON_DECIMALS",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
     "name": "USD_DECIMALS",
     "type": "function",
     "stateMutability": "view",
@@ -606,22 +664,31 @@ const contract = {
     ]
   },
   {
-    "name": "getPythOracleConfig",
+    "name": "getPriceFeedData",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address",
-        "name": "pyth"
-      },
-      {
-        "type": "uint256",
-        "name": "maxAcceptableAge"
-      },
-      {
-        "type": "bytes32",
-        "name": "pythIdForRONUSD"
+        "type": "tuple",
+        "components": [
+          {
+            "type": "address",
+            "name": "_aggregator"
+          },
+          {
+            "type": "uint8",
+            "name": "_tokenInDecimal"
+          },
+          {
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
+          }
+        ]
       }
     ]
   },
@@ -878,19 +945,23 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "pyth"
-      },
+        "name": "auction"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
       {
         "type": "address",
-        "name": "auction"
+        "name": "aggregator"
       },
       {
-        "type": "uint256",
+        "type": "uint64",
         "name": "maxAcceptableAge"
-      },
-      {
-        "type": "bytes32",
-        "name": "pythIdForRONUSD"
       }
     ],
     "outputs": []
@@ -928,21 +999,25 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setPythOracleConfig",
+    "name": "setPriceFeedData",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "pyth"
+        "name": "aggregator"
       },
       {
-        "type": "uint256",
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "uint64",
         "name": "maxAcceptableAge"
-      },
-      {
-        "type": "bytes32",
-        "name": "pythIdForRONUSD"
       }
     ],
     "outputs": []
