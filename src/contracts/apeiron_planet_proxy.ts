@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Apeiron Planet Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xd77140ecd7da864db03d1fb42e366c95f8fd1287',
+  proxy_to: '0x27235cedb7333d110b54af0c98c478dd3d4ca10b',
   created_at: 1702561152,
   abi: [
   {
@@ -423,6 +423,18 @@ const contract = {
     ]
   },
   {
+    "name": "increaseNonce",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "initialize",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -791,6 +803,54 @@ const contract = {
       {
         "type": "bool",
         "name": "setBornTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "updatePlanetDataMap",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "_gene"
+      },
+      {
+        "type": "uint256",
+        "name": "_baseAge"
+      },
+      {
+        "type": "uint256",
+        "name": "_breedCount"
+      },
+      {
+        "type": "uint256",
+        "name": "_breedCountMax"
+      },
+      {
+        "type": "uint256",
+        "name": "_createTime"
+      },
+      {
+        "type": "uint256",
+        "name": "_bornTime"
+      },
+      {
+        "type": "uint256",
+        "name": "_lastBreedTime"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_parent"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_children"
       }
     ],
     "outputs": []

@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Ronin VRF Coordinator Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xdf3fec9dbe1875d437483b85e1cc8466dddc6b42',
+  proxy_to: '0x2ffc00d1f28534aa91ae547d16dc20e56773dc45',
   created_at: 1692000372,
   abi: [
   {
@@ -149,6 +149,20 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "ComputedPriceTooSmall",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "int8",
+        "name": "expo"
+      }
+    ]
+  },
+  {
     "name": "DuplicateOracle",
     "type": "error",
     "inputs": [
@@ -166,34 +180,6 @@ const contract = {
     "name": "EmptyOracleSet",
     "type": "error",
     "inputs": []
-  },
-  {
-    "name": "ErrComputedPriceTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo1"
-      },
-      {
-        "type": "int32",
-        "name": "expo2"
-      },
-      {
-        "type": "int64",
-        "name": "price1"
-      }
-    ]
-  },
-  {
-    "name": "ErrExponentTooLarge",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "int32",
-        "name": "expo"
-      }
-    ]
   },
   {
     "name": "ErrUnauthorizedConsumer",
@@ -280,6 +266,16 @@ const contract = {
     ]
   },
   {
+    "name": "LargeDecimal",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "decimal"
+      }
+    ]
+  },
+  {
     "name": "LengthMismatch",
     "type": "error",
     "inputs": []
@@ -311,6 +307,30 @@ const contract = {
       {
         "type": "bytes32",
         "name": "keyHash"
+      }
+    ]
+  },
+  {
+    "name": "PanicNegativeQuotePrice",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "int256",
+        "name": "answer"
+      }
+    ]
+  },
+  {
+    "name": "PriceTooOld",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "latestTimestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "maxAcceptableTimestamp"
       }
     ]
   },
@@ -394,6 +414,29 @@ const contract = {
     ]
   },
   {
+    "name": "ChainlinkPriceFeedUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "string",
+        "name": "description"
+      }
+    ]
+  },
+  {
     "name": "ConstantFeeUpdated",
     "type": "event",
     "inputs": [
@@ -430,6 +473,21 @@ const contract = {
       {
         "type": "uint8",
         "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MaxAcceptableAgeUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator",
+        "indexed": true
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
       }
     ]
   },
@@ -544,30 +602,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "periodDuration"
-      }
-    ]
-  },
-  {
-    "name": "PythConverterUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "pyth",
-        "indexed": true
-      },
-      {
-        "type": "bytes32",
-        "name": "priceId",
-        "indexed": true
-      },
-      {
-        "type": "uint8",
-        "name": "tokenDecimal"
-      },
-      {
-        "type": "uint256",
-        "name": "maxAcceptableAge"
       }
     ]
   },
@@ -1300,22 +1334,6 @@ const contract = {
         ]
       },
       {
-        "type": "address",
-        "name": "pyth"
-      },
-      {
-        "type": "uint8",
-        "name": "usdDecimal"
-      },
-      {
-        "type": "bytes32",
-        "name": "priceId"
-      },
-      {
-        "type": "uint256",
-        "name": "maxAcceptableAge"
-      },
-      {
         "type": "uint256",
         "name": "usdConstantFee"
       },
@@ -1334,6 +1352,37 @@ const contract = {
       {
         "type": "address[]",
         "name": "oracles"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV4",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "initializeV5",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "aggregator"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenInDecimal"
+      },
+      {
+        "type": "uint8",
+        "name": "tokenOutDecimal"
+      },
+      {
+        "type": "uint64",
+        "name": "maxAcceptableAge"
       }
     ],
     "outputs": []
@@ -1493,20 +1542,20 @@ const contract = {
         "type": "tuple",
         "components": [
           {
-            "type": "uint8",
-            "name": "tokenDecimal"
-          },
-          {
             "type": "address",
-            "name": "pyth"
+            "name": "_aggregator"
           },
           {
-            "type": "bytes32",
-            "name": "priceId"
+            "type": "uint8",
+            "name": "_tokenInDecimal"
           },
           {
-            "type": "uint256",
-            "name": "maxAcceptableAge"
+            "type": "uint8",
+            "name": "_tokenOutDecimal"
+          },
+          {
+            "type": "uint64",
+            "name": "_maxAcceptableAge"
           }
         ]
       }
@@ -1651,18 +1700,18 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "pyth"
+        "name": "aggregator"
       },
       {
         "type": "uint8",
-        "name": "tokenDecimal"
+        "name": "tokenInDecimal"
       },
       {
-        "type": "bytes32",
-        "name": "priceId"
+        "type": "uint8",
+        "name": "tokenOutDecimal"
       },
       {
-        "type": "uint256",
+        "type": "uint64",
         "name": "maxAcceptableAge"
       }
     ],

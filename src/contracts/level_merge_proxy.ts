@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Level Merge Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xcd5ceeb7a29b97895b8c2f32895e6c6208885309',
+  proxy_to: '0x05e25d340c453fd77e51eda246c122372fd4a450',
   created_at: 1721787854,
   abi: [
   {

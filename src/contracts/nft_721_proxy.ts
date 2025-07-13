@@ -7,7 +7,7 @@ const contract = {
   display_name: 'NFT721 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xc3f8d932566f583127af2fa3a3679d94ad0c00fc',
+  proxy_to: '0xaa60bfa14055b2493108d0265bcea2c8f198ff94',
   created_at: 1729522001,
   abi: [
   {
@@ -189,6 +189,28 @@ const contract = {
     ]
   },
   {
+    "name": "NFTStakingAtRegion",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
     "name": "NFTUnStaking",
     "type": "event",
     "inputs": [
@@ -199,6 +221,28 @@ const contract = {
       {
         "type": "uint256",
         "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
+    "name": "NFTUnStakingAtRegion",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
       },
       {
         "type": "uint256",
@@ -777,6 +821,22 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "multiNftStakingAtRegion",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "regionIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "name",
     "type": "function",
     "stateMutability": "view",
@@ -795,6 +855,22 @@ const contract = {
       {
         "type": "uint256",
         "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "nftStakingAtRegion",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
       }
     ],
     "outputs": []
