@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Relic Apostle Management Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xd57fd085e5724f0e3738da746e5f8ae0990b658b',
+  proxy_to: '0xcf140be3bf8f39dd0e7f662fa78bbc7631637b96',
   created_at: 1724227917,
   abi: [
   {
@@ -257,6 +257,22 @@ const contract = {
         "indexed": true
       }
     ]
+  },
+  {
+    "name": "coverPlanetSlotsWithApostleIDsMapping",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_planetWithSlotId"
+      },
+      {
+        "type": "uint256",
+        "name": "_targetPlanetId"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "getPlanetNonceArray",

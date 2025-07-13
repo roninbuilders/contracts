@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Level Upgrade Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xe63d16ac7823eae3503b136a6b0bf08e70aa5e62',
+  proxy_to: '0xe5548048ab14d401bf8b50888f5c81ab4d5cc13b',
   created_at: 1729576812,
   abi: [
   {

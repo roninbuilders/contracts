@@ -4,10 +4,10 @@ const contract = {
   id: 163,
   address: '0xfff9ce5f71ca6178d3beecedb61e7eff1602950e' as const,
   contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Marketplace Gateway V2',
+  display_name: 'Market Gateway Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x53a11a02195d284c78b79801056ea893a2e6ea09',
+  proxy_to: '0x74197c6cbcea7e8dffca09bfd48cabe93de15886',
   created_at: 1659687134,
   abi: [
   {
@@ -144,6 +144,21 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "InvalidLength",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidRoyaltyRegistry",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidTotalRoyaltyFees",
+    "type": "error",
+    "inputs": []
+  },
+  {
     "name": "AllowedAllPaymentTokens",
     "type": "event",
     "inputs": [
@@ -187,20 +202,18 @@ const contract = {
     ]
   },
   {
-    "name": "MarketCommissionConfigUpdated",
+    "name": "MakerNonceUpdated",
     "type": "event",
     "inputs": [
       {
-        "type": "bool",
-        "name": "referralFeature"
-      },
-      {
         "type": "address",
-        "name": "marketCommission"
+        "name": "maker",
+        "indexed": true
       },
       {
-        "type": "bool",
-        "name": "autoTransferReferralReward"
+        "type": "uint256",
+        "name": "nonce",
+        "indexed": true
       }
     ]
   },
@@ -288,6 +301,16 @@ const contract = {
         "type": "address",
         "name": "sender",
         "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoyaltyRegistryUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltyRegistry"
       }
     ]
   },
@@ -395,26 +418,6 @@ const contract = {
     ]
   },
   {
-    "name": "getMarketCommissionConfig",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "bool",
-        "name": "referralFeature"
-      },
-      {
-        "type": "address",
-        "name": "marketCommission"
-      },
-      {
-        "type": "bool",
-        "name": "autoTransferReferralReward"
-      }
-    ]
-  },
-  {
     "name": "getRoleAdmin",
     "type": "function",
     "stateMutability": "view",
@@ -467,6 +470,17 @@ const contract = {
     ]
   },
   {
+    "name": "getRoyaltyRegistry",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
     "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -503,6 +517,13 @@ const contract = {
     ]
   },
   {
+    "name": "incrementNonceMaker",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
     "name": "initialize",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -520,16 +541,13 @@ const contract = {
         "name": "allowedAllPaymentTokens"
       },
       {
-        "type": "bool",
-        "name": "referralFeature"
+        "type": "bool"
       },
       {
-        "type": "address",
-        "name": "marketCommission"
+        "type": "address"
       },
       {
-        "type": "bool",
-        "name": "autoTransferReferralReward"
+        "type": "bool"
       },
       {
         "type": "address[]",
@@ -542,6 +560,26 @@ const contract = {
       {
         "type": "address[][2]",
         "name": "addresses"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltyRegistry"
+      },
+      {
+        "type": "string[]",
+        "name": "interfaces"
+      },
+      {
+        "type": "address[]",
+        "name": "logics"
       }
     ],
     "outputs": []
@@ -561,6 +599,38 @@ const contract = {
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "makerNonce",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "maker"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "orderFinalized",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
   },
   {
     "name": "renounceRole",
@@ -635,26 +705,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setMarketCommissionConfig",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "bool",
-        "name": "referralFeature"
-      },
-      {
-        "type": "address",
-        "name": "marketCommission"
-      },
-      {
-        "type": "bool",
-        "name": "autoTransferReferralReward"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "setPaymentTokens",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -666,6 +716,18 @@ const contract = {
       {
         "type": "bool",
         "name": "allowed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRoyaltyRegistry",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "royaltyRegistry"
       }
     ],
     "outputs": []
