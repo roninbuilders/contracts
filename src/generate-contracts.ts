@@ -14,6 +14,8 @@ const RONIN_EXPLORER_API_URL = 'https://explorer-kintsugi.roninchain.com/v2/2020
 const CONTRACTS_PER_PAGE = 1000
 const FILE_WRITE_BATCH_SIZE = 200
 const TEMP_PAGE_LIMIT = 100 // Temporal limit for testing
+const MAX_CONTRACT_RETRIES = 3
+const PROXY_CACHE_TTL = 3600000 // 1 hour in milliseconds
 
 export interface ExplorerResponse<T> {
 	message: string
@@ -61,9 +63,10 @@ export class ContractService {
 	private failedCount = 0
 	private totalContracts = 0
 	private startTime = Date.now()
-	private failedContracts: Array<{ address: string; error: string }> = []
+	private failedContracts: Array<{ address: string; error: string; retryCount: number }> = []
 	private allContracts: ContractItem[] = []
 	private readonly preserveExisting: boolean
+	private proxyAbiCache = new Map<string, Abi | undefined>()
 
 	constructor(concurrency = QUEUE_CONCURRENCY, fetchConcurrency = FETCH_CONCURRENCY, preserveExisting = false) {
 		this.queue = new PQueue({ concurrency })
@@ -296,6 +299,20 @@ export class ContractService {
 		}
 	}
 
+	// Add new method to fetch and cache proxy ABIs
+	async fetchProxyAbi(proxyAddress: string): Promise<Abi | undefined> {
+		if (this.proxyAbiCache.has(proxyAddress)) {
+			if (process.env.DEBUG) {
+				console.log(`[CACHE] Using cached ABI for proxy: ${proxyAddress}`)
+			}
+			return this.proxyAbiCache.get(proxyAddress)
+		}
+
+		const abi = await this.fetchAbi(proxyAddress)
+		this.proxyAbiCache.set(proxyAddress, abi)
+		return abi
+	}
+
 	sanitizeString(str: string): string {
 		return str
 			.replace(/'/g, '') // Remove single quotes
@@ -425,6 +442,27 @@ export class ContractService {
 		return undefined
 	}
 
+	// Helper method to extract existing contract data
+	private async getExistingContractData(filePath: string): Promise<{ is_proxy: boolean; proxy_to: string | false } | null> {
+		try {
+			const content = await fs.readFile(filePath, 'utf8')
+			
+			const isProxyMatch = content.match(/is_proxy:\s*(true|false)/)
+			const proxyToMatch = content.match(/proxy_to:\s*(?:'([^']+)'|false)/)
+			
+			if (isProxyMatch) {
+				const is_proxy = isProxyMatch[1] === 'true'
+				const proxy_to = proxyToMatch ? (proxyToMatch[1] || false) : false
+				return { is_proxy, proxy_to }
+			}
+		} catch (error) {
+			if (process.env.DEBUG) {
+				console.warn(`Failed to read existing contract data: ${error}`)
+			}
+		}
+		return null
+	}
+
 	transformContractName(name: string, id?: number): string {
 		// Handle special cases first
 		if (!name) return ''
@@ -450,7 +488,10 @@ export class ContractService {
 		return result
 	}
 
-	async processContract(item: ContractItem): Promise<void> {
+		async processContract(item: ContractItem, retryCount = 0): Promise<void> {
+		const maxRetries = MAX_CONTRACT_RETRIES
+		const retryDelay = 1000 * Math.pow(2, retryCount) // Exponential backoff
+
 		// Sanitize names before transforming
 		const sanitizedDisplayName = this.sanitizeString(item.display_name || item.contract_name)
 		const baseName = this.transformContractName(sanitizedDisplayName)
@@ -467,32 +508,54 @@ export class ContractService {
 			const existingFiles = await fs.readdir(dirPath)
 			const existingFile = await this.findExistingContract(dirPath, existingFiles, item.id)
 
-			// If contract exists and it's not a proxy, don't fetch ABI again
+			let existingData: { is_proxy: boolean; proxy_to: string | false } | null = null
+
+			// Enhanced logic for existing contracts
+			if (existingFile && this.preserveExisting) {
+				if (process.env.DEBUG) {
+					console.log(`Preserving existing contract: ${existingFile}`)
+				}
+				this.skippedCount++
+				this.logProgress()
+				return
+			}
+
+			// For existing contracts, check if proxy data has actually changed
 			if (existingFile) {
-				if (this.preserveExisting || !item.is_proxy) {
-					if (process.env.DEBUG) {
-						console.log(`Skipping ABI fetch for existing contract: ${existingFile}`)
+				const existingPath = path.join(dirPath, existingFile)
+				existingData = await this.getExistingContractData(existingPath)
+
+				if (existingData) {
+					// Skip if proxy status and proxy_to haven't changed
+					const proxyUnchanged = existingData.is_proxy === item.is_proxy && existingData.proxy_to === (item.proxy_to || false)
+
+					if (proxyUnchanged && !item.is_proxy) {
+						if (process.env.DEBUG) {
+							console.log(`Skipping unchanged non-proxy contract: ${existingFile}`)
+						}
+						this.skippedCount++
+						this.logProgress()
+						return
 					}
-					this.skippedCount++
-					this.logProgress() // Update progress when skipping
-					return
 				}
 			}
 
-			let abi: Abi | undefined = await this.fetchAbi(item.address)
+			const abi: Abi | undefined = await this.fetchAbi(item.address)
 			let proxyAbi: Abi | undefined
-			// Try fetching proxy ABI if it's a proxy contract
-			if (item.is_proxy) {
-				proxyAbi = await this.fetchAbi(item.proxy_to)
+
+			// If it's a proxy, fetch the proxy ABI (this will be cached)
+			const resolvedProxyTo = item.proxy_to || false
+			if (item.is_proxy && resolvedProxyTo) {
+				proxyAbi = await this.fetchProxyAbi(resolvedProxyTo as string)
 			}
 
 			// Only skip if abi is undefined, allow empty arrays to pass through
 			if (abi === undefined) {
 				if (process.env.DEBUG) {
-					// process.stdout.write(`\n⚠️  Skipping contract ${item.address} due to missing ABI\n`)
+					console.warn(`Skipping contract ${item.address} due to missing ABI`)
 				}
 				this.skippedCount++
-				this.logProgress() // Update progress when skipping
+				this.logProgress()
 				return
 			}
 
@@ -503,7 +566,7 @@ export class ContractService {
 				display_name: item.display_name,
 				is_deprecated: item.is_deprecated,
 				is_proxy: item.is_proxy,
-				proxy_to: item.proxy_to || false,
+				proxy_to: resolvedProxyTo,
 				created_at: item.created_at,
 				abi,
 				proxy_abi: proxyAbi,
@@ -515,14 +578,25 @@ export class ContractService {
 			this.processedCount++
 			this.logProgress()
 		} catch (error) {
+			// Retry logic
+			if (retryCount < maxRetries) {
+				if (process.env.DEBUG) {
+					console.warn(`Retrying contract ${item.address} (attempt ${retryCount + 1}/${maxRetries}): ${error}`)
+				}
+				await new Promise((resolve) => setTimeout(resolve, retryDelay))
+				return this.processContract(item, retryCount + 1)
+			}
+
+			// Max retries exceeded
 			this.failedCount++
 			this.failedContracts.push({
 				address: item.address,
 				error: error instanceof Error ? error.message : String(error),
+				retryCount,
 			})
-			this.logProgress() // Update progress when failing
+			this.logProgress()
 			if (process.env.DEBUG) {
-				// process.stdout.write(`\n❌ Failed to process contract ${item.address}: ${error}\n`)
+				console.error(`Failed to process contract ${item.address} after ${retryCount} retries: ${error}`)
 			}
 		}
 	}
@@ -580,8 +654,8 @@ export class ContractService {
 
 			if (this.failedCount > 0) {
 				console.log('\nFailed contracts:')
-				this.failedContracts.forEach(({ address, error }) => {
-					console.log(`- ${address}: ${error}`)
+				this.failedContracts.forEach(({ address, error, retryCount }) => {
+					console.log(`- ${address}: ${error} (retried ${retryCount} times)`)
 				})
 			}
 		} catch (error) {
