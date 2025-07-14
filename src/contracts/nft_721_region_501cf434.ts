@@ -1,278 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36078,
-  address: '0x86c653fc405e03ebc0c6510efd3ab5a49e00d530' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Awakening Hunters Proxy',
+  id: 35449,
+  address: '0xa1dbb6680786e654a85a5834004097ae501cf434' as const,
+  contract_name: 'NFT721Region',
+  display_name: 'NFT721 Region',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x31d48e0ef33b77f4424a9db6038aac15066ffc88',
-  created_at: 1751999548,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1749622806,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "AccessControlBadConfirmation",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "AccessControlUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      },
-      {
-        "type": "bytes32",
-        "name": "neededRole"
-      }
-    ]
-  },
-  {
-    "name": "ERC721EnumerableForbiddenBatchMint",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ERC721IncorrectOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InsufficientApproval",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidApprover",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "approver"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidOperator",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidReceiver",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidSender",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender"
-      }
-    ]
-  },
-  {
-    "name": "ERC721NonexistentToken",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ]
-  },
-  {
-    "name": "ERC721OutOfBoundsIndex",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      },
-      {
-        "type": "uint256",
-        "name": "index"
-      }
-    ]
-  },
-  {
-    "name": "EnforcedPause",
-    "type": "error",
-    "inputs": []
-  },
   {
     "name": "ErrInvalidArrayLength",
     "type": "error",
@@ -298,19 +35,18 @@ const contract = {
     ]
   },
   {
-    "name": "ExpectedPause",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "InvalidInitialization",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "NotInitializing",
-    "type": "error",
-    "inputs": []
+    "name": "AdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
   },
   {
     "name": "Approval",
@@ -354,12 +90,103 @@ const contract = {
     ]
   },
   {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
+      }
+    ]
+  },
+  {
     "name": "Initialized",
     "type": "event",
     "inputs": [
       {
-        "type": "uint64",
+        "type": "uint8",
         "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "NFTStaking",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
+    "name": "NFTStakingAtRegion",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
+    "name": "NFTUnStaking",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
+    "name": "NFTUnStakingAtRegion",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
       }
     ]
   },
@@ -484,6 +311,17 @@ const contract = {
     ]
   },
   {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
     "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
@@ -578,6 +416,38 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "getAllHolders",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
+    "name": "getAllList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "birthTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "stateMutability": "view",
@@ -590,6 +460,74 @@ const contract = {
     "outputs": [
       {
         "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getNft",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "birthTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getNftList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "birthTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getNftTokenIdList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
       }
     ]
   },
@@ -646,22 +584,6 @@ const contract = {
     ]
   },
   {
-    "name": "getRoleMembers",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "address[]"
-      }
-    ]
-  },
-  {
     "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -712,7 +634,7 @@ const contract = {
       },
       {
         "type": "string",
-        "name": "baseTokenURI"
+        "name": "_prefixURI"
       }
     ],
     "outputs": []
@@ -744,6 +666,26 @@ const contract = {
     "inputs": [
       {
         "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "birthTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
         "name": "to"
       }
     ],
@@ -755,60 +697,84 @@ const contract = {
     ]
   },
   {
-    "name": "mintLaunchpad",
+    "name": "multiBurn",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "quantity"
-      },
-      {
-        "type": "bytes"
-      }
-    ],
-    "outputs": [
-      {
         "type": "uint256[]",
         "name": "tokenIds"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts"
       }
-    ]
+    ],
+    "outputs": []
   },
   {
-    "name": "mintPresale",
+    "name": "multiMint",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "to"
+        "type": "address[]",
+        "name": "players"
       },
-      {
-        "type": "uint256",
-        "name": "quantity"
-      },
-      {
-        "type": "bytes"
-      }
-    ],
-    "outputs": [
       {
         "type": "uint256[]",
         "name": "tokenIds"
       },
       {
         "type": "uint256[]",
-        "name": "amounts"
+        "name": "birthTimes"
       }
-    ]
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multiMintForSinglePlayer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "players"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256",
+        "name": "birthTimes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multiNftStaking",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multiNftStakingAtRegion",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "regionIds"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "name",
@@ -820,6 +786,34 @@ const contract = {
         "type": "string"
       }
     ]
+  },
+  {
+    "name": "nftStaking",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "nftStakingAtRegion",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "regionId"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "nonces",
@@ -872,6 +866,17 @@ const contract = {
     ]
   },
   {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
     "name": "renounceRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -882,7 +887,7 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "callerConfirmation"
+        "name": "account"
       }
     ],
     "outputs": []
@@ -964,13 +969,29 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setBaseUri",
+    "name": "setBaseURI",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "string",
-        "name": "baseTokenURI"
+        "name": "newBaseURI"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setGrantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "bytes32",
+        "name": "role"
       }
     ],
     "outputs": []
@@ -1106,6 +1127,34 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "upgradeTo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
     "outputs": []
   }
 ] as const satisfies Abi
