@@ -65,6 +65,9 @@ jobs:
           
           # Create and push tag
           git tag "v$NEW_VERSION"
+          
+          # Pull remote changes and push (with retry logic)
+          git pull --rebase origin main
           git push origin main
           git push origin "v$NEW_VERSION"
 
