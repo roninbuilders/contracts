@@ -1,143 +1,37 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36078,
-  address: '0x86c653fc405e03ebc0c6510efd3ab5a49e00d530' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Awakening Hunters Proxy',
+  id: 36200,
+  address: '0xdc31efc043575ab7b914fed0632d91dec3d0f0dd' as const,
+  contract_name: 'ERC721Sale',
+  display_name: 'ERC721 Sale',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x31d48e0ef33b77f4424a9db6038aac15066ffc88',
-  created_at: 1751999548,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1752568121,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
+        "name": "owner"
+      },
       {
-        "type": "address",
-        "name": "implementation_"
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "symbol"
+      },
+      {
+        "type": "string",
+        "name": "baseURI"
       }
     ]
   },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "AccessControlBadConfirmation",
     "type": "error",
@@ -274,41 +168,7 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "ErrInvalidArrayLength",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrNonExistentToken",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      },
-      {
-        "type": "bytes32",
-        "name": "neededRole"
-      }
-    ]
-  },
-  {
     "name": "ExpectedPause",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "InvalidInitialization",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "NotInitializing",
     "type": "error",
     "inputs": []
   },
@@ -354,27 +214,17 @@ const contract = {
     ]
   },
   {
-    "name": "Initialized",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint64",
-        "name": "version"
-      }
-    ]
-  },
-  {
     "name": "NonceUpdated",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
-        "name": "tokenId",
+        "name": "_tokenId",
         "indexed": true
       },
       {
         "type": "uint256",
-        "name": "nonce",
+        "name": "_nonce",
         "indexed": true
       }
     ]
@@ -646,22 +496,6 @@ const contract = {
     ]
   },
   {
-    "name": "getRoleMembers",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "address[]"
-      }
-    ]
-  },
-  {
     "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -698,26 +532,6 @@ const contract = {
     ]
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "string",
-        "name": "name"
-      },
-      {
-        "type": "string",
-        "name": "symbol"
-      },
-      {
-        "type": "string",
-        "name": "baseTokenURI"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "isApprovedForAll",
     "type": "function",
     "stateMutability": "view",
@@ -750,7 +564,7 @@ const contract = {
     "outputs": [
       {
         "type": "uint256",
-        "name": "tokenId"
+        "name": "_tokenId"
       }
     ]
   },
@@ -827,8 +641,7 @@ const contract = {
     "stateMutability": "view",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "tokenId"
+        "type": "uint256"
       }
     ],
     "outputs": [
@@ -964,7 +777,7 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setBaseUri",
+    "name": "setBaseURI",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [

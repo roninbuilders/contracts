@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36078,
-  address: '0x86c653fc405e03ebc0c6510efd3ab5a49e00d530' as const,
+  id: 36176,
+  address: '0xf8ce848f72dcf390378fbc8c8fb237585b84fb0c' as const,
   contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Awakening Hunters Proxy',
+  display_name: 'Kingdom Story Random Box Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x31d48e0ef33b77f4424a9db6038aac15066ffc88',
-  created_at: 1751999548,
+  proxy_to: '0x6b6a1ffae6bcdcb484a64bc978a2abbffc7845a0',
+  created_at: 1752478473,
   abi: [
   {
     "type": "constructor",
@@ -139,177 +139,8 @@ const contract = {
 ] as const satisfies Abi,
   proxy_abi: [
   {
-    "name": "AccessControlBadConfirmation",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "AccessControlUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      },
-      {
-        "type": "bytes32",
-        "name": "neededRole"
-      }
-    ]
-  },
-  {
-    "name": "ERC721EnumerableForbiddenBatchMint",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ERC721IncorrectOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InsufficientApproval",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidApprover",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "approver"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidOperator",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "operator"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidReceiver",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver"
-      }
-    ]
-  },
-  {
-    "name": "ERC721InvalidSender",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "sender"
-      }
-    ]
-  },
-  {
-    "name": "ERC721NonexistentToken",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ]
-  },
-  {
-    "name": "ERC721OutOfBoundsIndex",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      },
-      {
-        "type": "uint256",
-        "name": "index"
-      }
-    ]
-  },
-  {
-    "name": "EnforcedPause",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrInvalidArrayLength",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrNonExistentToken",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      },
-      {
-        "type": "bytes32",
-        "name": "neededRole"
-      }
-    ]
-  },
-  {
-    "name": "ExpectedPause",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "InvalidInitialization",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "NotInitializing",
-    "type": "error",
+    "type": "constructor",
+    "stateMutability": "nonpayable",
     "inputs": []
   },
   {
@@ -354,27 +185,186 @@ const contract = {
     ]
   },
   {
-    "name": "Initialized",
+    "name": "BatchMetadataUpdate",
     "type": "event",
     "inputs": [
       {
-        "type": "uint64",
-        "name": "version"
+        "type": "uint256",
+        "name": "_fromTokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "_toTokenId"
       }
     ]
   },
   {
-    "name": "NonceUpdated",
+    "name": "Box2Burned",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
         "name": "tokenId",
         "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Box2Migrated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "string",
+        "name": "uri"
       },
       {
         "type": "uint256",
-        "name": "nonce",
+        "name": "tokenId",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "FusionCompleted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "string",
+        "name": "ipfsHash"
+      }
+    ]
+  },
+  {
+    "name": "FusionRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "requestId"
+      }
+    ]
+  },
+  {
+    "name": "Initialized",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "InitializedExecute",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "MarketContractChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAddr"
+      }
+    ]
+  },
+  {
+    "name": "MasterChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAddr"
+      }
+    ]
+  },
+  {
+    "name": "MetadataUpdate",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ]
+  },
+  {
+    "name": "NftContractChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAddr"
+      }
+    ]
+  },
+  {
+    "name": "OpenBoxCompleted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "string",
+        "name": "ipfsHash"
+      }
+    ]
+  },
+  {
+    "name": "OpenBoxRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "requestId"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
         "indexed": true
       }
     ]
@@ -386,69 +376,6 @@ const contract = {
       {
         "type": "address",
         "name": "account"
-      }
-    ]
-  },
-  {
-    "name": "RoleAdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "indexed": true
-      },
-      {
-        "type": "bytes32",
-        "name": "previousAdminRole",
-        "indexed": true
-      },
-      {
-        "type": "bytes32",
-        "name": "newAdminRole",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "RoleGranted",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "sender",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "RoleRevoked",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "account",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "sender",
-        "indexed": true
       }
     ]
   },
@@ -484,10 +411,33 @@ const contract = {
     ]
   },
   {
-    "name": "DEFAULT_ADMIN_ROLE",
+    "name": "VrfContractChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAddr"
+      }
+    ]
+  },
+  {
+    "name": "CreateFusionDigest",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint8",
+        "name": "fusionId"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      }
+    ],
     "outputs": [
       {
         "type": "bytes32"
@@ -495,10 +445,19 @@ const contract = {
     ]
   },
   {
-    "name": "MINTER_ROLE",
+    "name": "CreateOpenBoxDigest",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint8",
+        "name": "boxRarity"
+      }
+    ],
     "outputs": [
       {
         "type": "bytes32"
@@ -506,15 +465,283 @@ const contract = {
     ]
   },
   {
-    "name": "PAUSER_ROLE",
+    "name": "FusionHero",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint8",
+        "name": "fusionID"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "GetMigrationStatus",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "GetOfficialAddr",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "id"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "MsAddBoxHashes",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "_boxRarity"
+      },
+      {
+        "type": "string[]",
+        "name": "_boxHashes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsBurnMany",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsGetMaxTokenId",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "bytes32"
+        "type": "uint256"
       }
     ]
+  },
+  {
+    "name": "MsMigrateMulti",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "string[]",
+        "name": "uris"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsMintBox",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "boxRarity"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsPause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "MsSetBoxTypes",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "_boxTypes",
+        "components": [
+          {
+            "type": "string",
+            "name": "hash"
+          },
+          {
+            "type": "string[]",
+            "name": "heroHash"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsSetDummyHash",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_dummyHash"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsSetFusionInfo",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "tuple[]",
+        "name": "_fusionInfos",
+        "components": [
+          {
+            "type": "uint8",
+            "name": "id"
+          },
+          {
+            "type": "tuple[]",
+            "name": "ratio",
+            "components": [
+              {
+                "type": "uint8",
+                "name": "boxRarity"
+              },
+              {
+                "type": "uint256",
+                "name": "ratio"
+              }
+            ]
+          },
+          {
+            "type": "uint256",
+            "name": "totalRatio"
+          }
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsSetMaxTokenId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "maxTokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsSetOfficialAddr",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "id"
+      },
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MsUnpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "OnVrfResult",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256[]",
+        "name": "randomSeeds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "OpenBox",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint8",
+        "name": "boxRarity"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "approve",
@@ -549,19 +776,18 @@ const contract = {
     ]
   },
   {
-    "name": "bulkMint",
+    "name": "boxTypes",
     "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "inputs": [
       {
-        "type": "address[]",
-        "name": "recipients"
+        "type": "uint8"
       }
     ],
     "outputs": [
       {
-        "type": "uint256[]",
-        "name": "tokenIds"
+        "type": "string",
+        "name": "hash"
       }
     ]
   },
@@ -576,6 +802,48 @@ const contract = {
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "contractType",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "contractVersion",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint8"
+      }
+    ]
+  },
+  {
+    "name": "fusionInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint8"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint8",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "totalRatio"
+      }
+    ]
   },
   {
     "name": "getApproved",
@@ -594,106 +862,19 @@ const contract = {
     ]
   },
   {
-    "name": "getRoleAdmin",
+    "name": "getRequestInfo",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bytes32"
-      }
-    ]
-  },
-  {
-    "name": "getRoleMember",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      },
       {
         "type": "uint256",
-        "name": "index"
+        "name": "_requestId"
       }
     ],
     "outputs": [
       {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "getRoleMemberCount",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "getRoleMembers",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "address[]"
-      }
-    ]
-  },
-  {
-    "name": "grantRole",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      },
-      {
-        "type": "address",
-        "name": "account"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "hasRole",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      },
-      {
-        "type": "address",
-        "name": "account"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
+        "type": "uint256",
+        "name": "tokenId"
       }
     ]
   },
@@ -711,8 +892,16 @@ const contract = {
         "name": "symbol"
       },
       {
-        "type": "string",
-        "name": "baseTokenURI"
+        "type": "address",
+        "name": "_nftAddr"
+      },
+      {
+        "type": "address",
+        "name": "_marketAddr"
+      },
+      {
+        "type": "address",
+        "name": "_vrfAddr"
       }
     ],
     "outputs": []
@@ -738,79 +927,6 @@ const contract = {
     ]
   },
   {
-    "name": "mint",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ]
-  },
-  {
-    "name": "mintLaunchpad",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "quantity"
-      },
-      {
-        "type": "bytes"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256[]",
-        "name": "tokenIds"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts"
-      }
-    ]
-  },
-  {
-    "name": "mintPresale",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "quantity"
-      },
-      {
-        "type": "bytes"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256[]",
-        "name": "tokenIds"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts"
-      }
-    ]
-  },
-  {
     "name": "name",
     "type": "function",
     "stateMutability": "view",
@@ -822,18 +938,13 @@ const contract = {
     ]
   },
   {
-    "name": "nonces",
+    "name": "owner",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "uint256"
+        "type": "address"
       }
     ]
   },
@@ -854,13 +965,6 @@ const contract = {
     ]
   },
   {
-    "name": "pause",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
     "name": "paused",
     "type": "function",
     "stateMutability": "view",
@@ -872,35 +976,10 @@ const contract = {
     ]
   },
   {
-    "name": "renounceRole",
+    "name": "renounceOwnership",
     "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      },
-      {
-        "type": "address",
-        "name": "callerConfirmation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "revokeRole",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "role"
-      },
-      {
-        "type": "address",
-        "name": "account"
-      }
-    ],
+    "inputs": [],
     "outputs": []
   },
   {
@@ -962,34 +1041,6 @@ const contract = {
       }
     ],
     "outputs": []
-  },
-  {
-    "name": "setBaseUri",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "string",
-        "name": "baseTokenURI"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "stateOf",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bytes"
-      }
-    ]
   },
   {
     "name": "supportsInterface",
@@ -1102,10 +1153,15 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "unpause",
+    "name": "transferOwnership",
     "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
     "outputs": []
   }
 ] as const satisfies Abi
