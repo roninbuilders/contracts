@@ -8,8 +8,8 @@ import { formatAbi } from 'abitype'
 import { generateIndex } from './generate-index'
 
 // Increased concurrency settings for better parallel processing
-const QUEUE_CONCURRENCY = 50
-const FETCH_CONCURRENCY = 10
+const QUEUE_CONCURRENCY = 100
+const FETCH_CONCURRENCY = 20
 const RONIN_EXPLORER_API_URL = 'https://explorer-kintsugi.roninchain.com/v2/2020/'
 const CONTRACTS_PER_PAGE = 1000
 const FILE_WRITE_BATCH_SIZE = 200
@@ -62,11 +62,14 @@ export class ContractService {
 	private skippedCount = 0
 	private failedCount = 0
 	private totalContracts = 0
+	private filteredCount = 0
 	private startTime = Date.now()
 	private failedContracts: Array<{ address: string; error: string; retryCount: number }> = []
 	private allContracts: ContractItem[] = []
 	private readonly preserveExisting: boolean
 	private proxyAbiCache = new Map<string, Abi | undefined>()
+	private existingContractsCache = new Map<number, string>()
+	private lastProgressUpdate = 0
 
 	constructor(concurrency = QUEUE_CONCURRENCY, fetchConcurrency = FETCH_CONCURRENCY, preserveExisting = false) {
 		this.queue = new PQueue({ concurrency })
@@ -93,10 +96,15 @@ export class ContractService {
 	private logProgress() {
 		if (this.totalContracts === 0) return
 
+		const now = Date.now()
+		// Only update progress every 2 seconds to reduce overhead
+		if (now - this.lastProgressUpdate < 2000) return
+		this.lastProgressUpdate = now
+
 		const elapsed = (Date.now() - this.startTime) / 1000
-		const totalProcessed = this.processedCount + this.skippedCount + this.failedCount
-		const progress = Math.min(100, (totalProcessed / this.totalContracts) * 100)
-		const rate = this.processedCount / elapsed
+		const totalProcessed = this.processedCount + this.failedCount
+		const progress = this.totalContracts > 0 ? Math.min(100, (totalProcessed / this.totalContracts) * 100) : 0
+		const rate = elapsed > 0 ? this.processedCount / elapsed : 0
 
 		// Format a progress line that works in both CI and terminals
 		const progressLine = this.formatProgressLine(progress, rate, this.failedCount)
@@ -141,6 +149,7 @@ export class ContractService {
 			`  - Processed: ${this.processedCount}`,
 			`  - Skipped: ${this.skippedCount}`,
 			`  - Failed: ${this.failedCount}`,
+			`  - Filtered: ${this.filteredCount}`,
 		].join('\n')
 	}
 
@@ -209,7 +218,7 @@ export class ContractService {
 			if (item.contract_name !== 'MainToken' && item.display_name !== 'Main Token') {
 				uniqueContracts.set(item.address, item)
 			} else {
-				this.skippedCount++
+				this.filteredCount++
 			}
 		}
 
@@ -232,7 +241,7 @@ export class ContractService {
 				if (item.contract_name !== 'MainToken' && item.display_name !== 'Main Token') {
 					uniqueContracts.set(item.address, item)
 				} else {
-					this.skippedCount++
+					this.filteredCount++
 				}
 			}
 		}
@@ -294,7 +303,7 @@ export class ContractService {
 			}
 		} catch (error) {
 			if (retryCount >= 5) throw error
-			await new Promise((resolve) => setTimeout(resolve, 10000))
+			await new Promise((resolve) => setTimeout(resolve, 1000 * Math.min(retryCount + 1, 3)))
 			return this.fetchAbi(contractAddress, retryCount + 1)
 		}
 	}
@@ -415,31 +424,46 @@ export class ContractService {
 			.join('\n')
 	}
 
-	// Add new helper method to find existing contract by ID
+	// Initialize existing contracts cache
+	private async initializeExistingContractsCache(): Promise<void> {
+		if (this.existingContractsCache.size > 0) return
+
+		const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'contracts')
+		
+		try {
+			await fs.mkdir(dirPath, { recursive: true })
+			const files = await fs.readdir(dirPath)
+			
+			// Process files in parallel for faster cache initialization
+			const tasks = files
+				.filter(file => file.endsWith('.ts'))
+				.map(file => async () => {
+					try {
+						const filePath = path.join(dirPath, file)
+						const content = await fs.readFile(filePath, 'utf8')
+						const idMatch = content.match(/id:\s*(\d+)/)
+						if (idMatch) {
+							const contractId = parseInt(idMatch[1])
+							this.existingContractsCache.set(contractId, file)
+						}
+					} catch (error) {
+						// Skip files that can't be read
+					}
+				})
+			
+			await this.fetchQueue.addAll(tasks)
+		} catch (error) {
+			// Directory doesn't exist yet, cache will remain empty
+		}
+	}
+
+	// Add new helper method to find existing contract by ID using cache
 	private async findExistingContract(
-		dirPath: string,
-		files: string[],
+		_dirPath: string,
+		_files: string[],
 		contractId: number,
 	): Promise<string | undefined> {
-		for (const file of files) {
-			if (!file.endsWith('.ts')) continue
-
-			try {
-				const filePath = path.join(dirPath, file)
-				const content = await fs.readFile(filePath, 'utf8')
-
-				// Check if the file contains the contract ID
-				const idMatch = content.match(/id:\s*(\d+)/)
-				// @ts-expect-error - type mismatch
-				if (idMatch && parseInt(idMatch[1]) === contractId) {
-					return file
-				}
-			} catch (error) {
-				// Skip files that can't be read
-				continue
-			}
-		}
-		return undefined
+		return this.existingContractsCache.get(contractId)
 	}
 
 	// Helper method to extract existing contract data
@@ -490,10 +514,10 @@ export class ContractService {
 
 		async processContract(item: ContractItem, retryCount = 0): Promise<void> {
 		const maxRetries = MAX_CONTRACT_RETRIES
-		const retryDelay = 1000 * Math.pow(2, retryCount) // Exponential backoff
+		const retryDelay = 500 * Math.min(Math.pow(2, retryCount), 4) // Faster exponential backoff, capped at 2s
 
 		// Sanitize names before transforming
-		const sanitizedDisplayName = this.sanitizeString(item.display_name || item.contract_name)
+		const sanitizedDisplayName = this.sanitizeString(item.display_name || item.contract_name || '')
 		const baseName = this.transformContractName(sanitizedDisplayName)
 		if (!baseName) {
 			this.skippedCount++
@@ -631,6 +655,10 @@ export class ContractService {
 			if (!this.allContracts.length) {
 				throw new Error('No valid contracts found after filtering')
 			}
+
+			// Initialize existing contracts cache for faster lookups
+			console.log('📂 Initializing existing contracts cache...')
+			await this.initializeExistingContractsCache()
 
 			// Set the actual count of contracts to process
 			this.totalContracts = this.allContracts.length
