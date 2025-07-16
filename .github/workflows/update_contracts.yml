@@ -51,7 +51,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Increment package version and create release
+      - name: Increment package version and commit
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
           # Increment version and get the new version
@@ -62,11 +62,7 @@ jobs:
           # Commit all changes
           git add .
           git commit -m "chore: update contracts to v$NEW_VERSION"
-          
-          # Create and push tag
-          git tag "v$NEW_VERSION"
           git push origin main
-          git push origin "v$NEW_VERSION"
 
       - name: Build
         if: steps.git-check.outputs.changes_detected == 'true'
@@ -97,6 +93,17 @@ jobs:
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create and push tag
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: |
+          # Create and push tag only after successful npm publish
+          if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
+            echo "Tag v$NEW_VERSION already exists, skipping tag creation"
+          else
+            git tag "v$NEW_VERSION"
+            git push origin "v$NEW_VERSION"
+          fi
 
       - name: Create GitHub Release
         if: steps.git-check.outputs.changes_detected == 'true'
