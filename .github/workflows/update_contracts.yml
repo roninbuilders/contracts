@@ -68,29 +68,11 @@ jobs:
         if: steps.git-check.outputs.changes_detected == 'true'
         run: pnpm build
 
-      - name: Debug npm config
-        if: steps.git-check.outputs.changes_detected == 'true'
-        run: |
-          echo "=== NPM Configuration Debug ==="
-          npm config list
-          echo "=== Registry check ==="
-          npm config get registry
-          echo "=== PNPM Registry check ==="
-          pnpm config get registry
-          echo "=== Package name check ==="
-          cat package.json | grep '"name"'
-          echo "=== NPM whoami ==="
-          npm whoami
-          echo "=== PNPM whoami ==="
-          pnpm whoami
-          echo "=== Package access check ==="
-          npm access ls-collaborators @roninbuilders/contracts || echo "Could not check collaborators"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish to npm
         if: steps.git-check.outputs.changes_detected == 'true'
-        run: pnpm publish --no-git-checks
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+          pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
