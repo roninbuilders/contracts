@@ -442,7 +442,7 @@ export class ContractService {
 						const filePath = path.join(dirPath, file)
 						const content = await fs.readFile(filePath, 'utf8')
 						const idMatch = content.match(/id:\s*(\d+)/)
-						if (idMatch) {
+						if (idMatch && idMatch[1]) {
 							const contractId = parseInt(idMatch[1])
 							this.existingContractsCache.set(contractId, file)
 						}
