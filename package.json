@@ -1,6 +1,6 @@
 {
 	"name": "@roninbuilders/contracts",
-	"version": "0.6.3",
+	"version": "0.6.4",
 	"description": "Type safe Contract ABIs for Ronin Network",
 	"type": "module",
 	"main": "dist/index.js",
