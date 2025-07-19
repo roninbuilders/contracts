@@ -5,16 +5,18 @@ Contract ABIs for the Ronin Network.
 ## Installation
 
 ```bash
-npm install @roninnetwork/contracts
+npm install --save-exact @roninnetwork/contracts
 # or
-pnpm add @roninnetwork/contracts
+pnpm add --save-exact @roninnetwork/contracts
 # or
-bun add @roninnetwork/contracts
+bun add --exact @roninnetwork/contracts
 ```
+
+> **Security Best Practice**: Always use `--save-exact` (or `--exact` for Bun) when installing packages to ensure deterministic builds and avoid potential security vulnerabilities from dependency updates.
 
 ## Usage
 
-### Import contracts individually:
+### Import contracts individually
 
 This is the only supported approach as it minimizes the bundle size for your application.
 
@@ -24,7 +26,7 @@ import MY_CONTRACT from '@roninbuilders/contracts/my_contract';
 const MY_CONTRACT = require('@roninbuilders/contracts/my_contract');
 ```
 
-### Named imports are not supported:
+### Named imports are not supported
 
 To ensure optimal bundle size, named imports from the main package are not available:
 
@@ -36,11 +38,13 @@ import KATANA_ROUTER from '@roninbuilders/contracts/katana_router'
 ## Contract Structure
 
 Each contract export includes:
+
 - Contract ABI
 - Contract address
 - Metadata (name, deprecation status, creation date)
 
 Example:
+
 ```typescript
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
 
@@ -50,8 +54,8 @@ console.log(AXIE_PROXY.proxy_abi) // Proxy ABI
 console.log(AXIE_PROXY.is_deprecated) // Deprecation status
 ```
 
-
 ## Viem Example
+
 Using viem to interact with contracts:
 
 ```typescript
@@ -86,6 +90,7 @@ const balance = await client.readContract({
 ```
 
 ## Ethers Example
+
 Using ethers.js to interact with contracts:
 
 ```typescript
@@ -109,19 +114,31 @@ const balance = await contract.balanceOf(address)
 ## Development
 
 Update contracts from Ronin Explorer:
+
 ```bash
 bun run update
 ```
 
 Build the package:
+
 ```bash
 bun run build
 ```
 
 Format code:
+
 ```bash
 bun run format
 ```
+
+## Security Considerations
+
+⚠️ **Important Security Notice**: This package provides contract ABIs and addresses for blockchain interactions. Always verify contract addresses independently before executing transactions. Be aware that:
+
+- Contract addresses should be verified against official sources
+- Smart contract interactions carry inherent risks
+- This package is provided as-is without warranty
+- Always audit smart contract code before interacting with it
 
 ## Contributing
 
