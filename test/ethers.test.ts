@@ -37,24 +37,20 @@ describe('js Contract Integration', () => {
 		logSection('Testing Atias Blessing Streak Data with Ethers')
 
 		// Create contract using direct ABI reference without Interface wrapper
-		const atiasContract = new Contract(
-			ATIAS_BLESSING.address,
-			ATIAS_BLESSING.proxy_abi,
-			provider
-		)
+		const atiasContract = new Contract(ATIAS_BLESSING.address, ATIAS_BLESSING.proxy_abi, provider)
 
-		// Get streak data 
+		// Get streak data
 		const streakData = await atiasContract.getStreak(TEST_ADDRESS)
-		
+
 		// Destructure the returned data
 		const [currentStreak, lastActivated, longestStreak, lostStreak] = streakData
-		
+
 		console.log('Atias Blessing Streak Data:')
 		console.log(`  Current Streak: ${currentStreak.toString()}`)
 		console.log(`  Last Activated: ${new Date(Number(lastActivated) * 1000).toISOString()}`)
 		console.log(`  Longest Streak: ${longestStreak.toString()}`)
 		console.log(`  Lost Streak: ${lostStreak.toString()}`)
-		
+
 		// Verify types
 		expect(typeof currentStreak).toBe('bigint')
 		expect(typeof lastActivated).toBe('bigint')
@@ -65,11 +61,7 @@ describe('js Contract Integration', () => {
 	test('should fetch Atias Blessing activation status', async () => {
 		logSection('Testing Atias Blessing Activation Status with Ethers')
 
-		const atiasContract = new Contract(
-			ATIAS_BLESSING.address,
-			ATIAS_BLESSING.proxy_abi,
-			provider
-		)
+		const atiasContract = new Contract(ATIAS_BLESSING.address, ATIAS_BLESSING.proxy_abi, provider)
 
 		const activationStatus = await atiasContract.getActivationStatus(TEST_ADDRESS)
 

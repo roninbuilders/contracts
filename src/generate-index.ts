@@ -5,7 +5,6 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 async function generateIndex() {
-
 	const mainIndex = [
 		'// This file is auto-generated. Do not edit manually.',
 		'// Named exports are no longer supported to ensure optimal bundle size.',

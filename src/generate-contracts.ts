@@ -429,15 +429,15 @@ export class ContractService {
 		if (this.existingContractsCache.size > 0) return
 
 		const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'contracts')
-		
+
 		try {
 			await fs.mkdir(dirPath, { recursive: true })
 			const files = await fs.readdir(dirPath)
-			
+
 			// Process files in parallel for faster cache initialization
 			const tasks = files
-				.filter(file => file.endsWith('.ts'))
-				.map(file => async () => {
+				.filter((file) => file.endsWith('.ts'))
+				.map((file) => async () => {
 					try {
 						const filePath = path.join(dirPath, file)
 						const content = await fs.readFile(filePath, 'utf8')
@@ -450,7 +450,7 @@ export class ContractService {
 						// Skip files that can't be read
 					}
 				})
-			
+
 			await this.fetchQueue.addAll(tasks)
 		} catch (error) {
 			// Directory doesn't exist yet, cache will remain empty
@@ -467,16 +467,18 @@ export class ContractService {
 	}
 
 	// Helper method to extract existing contract data
-	private async getExistingContractData(filePath: string): Promise<{ is_proxy: boolean; proxy_to: string | false } | null> {
+	private async getExistingContractData(
+		filePath: string,
+	): Promise<{ is_proxy: boolean; proxy_to: string | false } | null> {
 		try {
 			const content = await fs.readFile(filePath, 'utf8')
-			
+
 			const isProxyMatch = content.match(/is_proxy:\s*(true|false)/)
 			const proxyToMatch = content.match(/proxy_to:\s*(?:'([^']+)'|false)/)
-			
+
 			if (isProxyMatch) {
 				const is_proxy = isProxyMatch[1] === 'true'
-				const proxy_to = proxyToMatch ? (proxyToMatch[1] || false) : false
+				const proxy_to = proxyToMatch ? proxyToMatch[1] || false : false
 				return { is_proxy, proxy_to }
 			}
 		} catch (error) {
@@ -512,7 +514,7 @@ export class ContractService {
 		return result
 	}
 
-		async processContract(item: ContractItem, retryCount = 0): Promise<void> {
+	async processContract(item: ContractItem, retryCount = 0): Promise<void> {
 		const maxRetries = MAX_CONTRACT_RETRIES
 		const retryDelay = 500 * Math.min(Math.pow(2, retryCount), 4) // Faster exponential backoff, capped at 2s
 
@@ -551,7 +553,8 @@ export class ContractService {
 
 				if (existingData) {
 					// Skip if proxy status and proxy_to haven't changed
-					const proxyUnchanged = existingData.is_proxy === item.is_proxy && existingData.proxy_to === (item.proxy_to || false)
+					const proxyUnchanged =
+						existingData.is_proxy === item.is_proxy && existingData.proxy_to === (item.proxy_to || false)
 
 					if (proxyUnchanged && !item.is_proxy) {
 						if (process.env.DEBUG) {

@@ -75,13 +75,13 @@ describe('Viem Contract Integration', () => {
 
 		// With viem, the result is returned as a tuple
 		const [currentStreak, lastActivated, longestStreak, lostStreak] = streakData
-		
+
 		console.log('Atias Blessing Streak Data:')
 		console.log(`  Current Streak: ${currentStreak.toString()}`)
 		console.log(`  Last Activated: ${formatTimestamp(lastActivated)}`)
 		console.log(`  Longest Streak: ${longestStreak.toString()}`)
 		console.log(`  Lost Streak: ${lostStreak.toString()}`)
-		
+
 		// Verify we have valid bigint values
 		expect(typeof currentStreak).toBe('bigint')
 		expect(typeof lastActivated).toBe('bigint')
