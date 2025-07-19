@@ -5,9 +5,7 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"build": "NODE_OPTIONS='--max-old-space-size=8192' tsup",
 		"generate-contracts": "bun src/generate-contracts.ts",
@@ -30,15 +28,14 @@
 		"tsup": "^8.4.0",
 		"viem": "^2.25.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/roninbuilders/contracts.git"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
-	"keywords": [
-		"ronin",
-		"blockchain",
-		"contracts",
-		"abi"
-	],
+	"keywords": ["ronin", "axie", "bot", "contracts", "abi", "viem", "ethers"],
 	"engines": {
 		"node": ">=18"
 	},

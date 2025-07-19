@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   update-and-publish:
@@ -75,6 +76,14 @@ jobs:
           pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to GitHub Packages
+        if: steps.git-check.outputs.changes_detected == 'true'
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+          pnpm publish --registry https://npm.pkg.github.com --no-git-checks
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create and push tag
         if: steps.git-check.outputs.changes_detected == 'true'
