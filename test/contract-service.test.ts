@@ -167,18 +167,33 @@ describe('ContractService', () => {
 			)
 		})
 
+		// Mock the generateContractFile method to prevent actual file creation
 		const generateContractFileSpy = mock(async () => {})
 		service['generateContractFile'] = generateContractFileSpy
 
-		await service.processContract(mockProxyItem)
+		// Mock fs operations to prevent any file system access
+		const spyMkdir = spyOn(fs, 'mkdir').mockResolvedValue(undefined as any)
+		const spyReaddir = spyOn(fs, 'readdir').mockResolvedValue([] as any)
+		const spyReadFile = spyOn(fs, 'readFile').mockResolvedValue('')
+		const spyWriteFile = spyOn(fs, 'writeFile').mockResolvedValue(undefined as any)
 
-		expect(generateContractFileSpy).toHaveBeenCalled()
-		const calls = generateContractFileSpy.mock.calls
-		expect(calls.length).toBe(1)
+		try {
+			await service.processContract(mockProxyItem)
 
-		const [[contractArg]] = calls
+			expect(generateContractFileSpy).toHaveBeenCalled()
+			const calls = generateContractFileSpy.mock.calls
+			expect(calls.length).toBe(1)
 
-		expect(contractArg).toHaveProperty('abi')
+			const [[contractArg]] = calls
+
+			expect(contractArg).toHaveProperty('abi')
+		} finally {
+			// Restore all mocks
+			spyMkdir.mockRestore()
+			spyReaddir.mockRestore()
+			spyReadFile.mockRestore()
+			spyWriteFile.mockRestore()
+		}
 	})
 
 	test('processBatch should handle multiple contracts', async () => {
@@ -197,12 +212,27 @@ describe('ContractService', () => {
 			)
 		})
 
+		// Mock the generateContractFile method to prevent actual file creation
 		const generateContractFileSpy = mock(async () => {})
 		service['generateContractFile'] = generateContractFileSpy
 
-		await service.processBatch([mockContractItem, mockProxyItem])
+		// Mock fs operations to prevent any file system access
+		const spyMkdir = spyOn(fs, 'mkdir').mockResolvedValue(undefined as any)
+		const spyReaddir = spyOn(fs, 'readdir').mockResolvedValue([] as any)
+		const spyReadFile = spyOn(fs, 'readFile').mockResolvedValue('')
+		const spyWriteFile = spyOn(fs, 'writeFile').mockResolvedValue(undefined as any)
 
-		expect(generateContractFileSpy.mock.calls.length).toBe(2)
+		try {
+			await service.processBatch([mockContractItem, mockProxyItem])
+
+			expect(generateContractFileSpy.mock.calls.length).toBe(2)
+		} finally {
+			// Restore all mocks
+			spyMkdir.mockRestore()
+			spyReaddir.mockRestore()
+			spyReadFile.mockRestore()
+			spyWriteFile.mockRestore()
+		}
 	})
 
 	test('should skip MainToken contracts', async () => {
@@ -223,26 +253,56 @@ describe('ContractService', () => {
 
 	test('should not skip deprecated proxy contracts', async () => {
 		const service = new ContractService()
-		const spyGenerateFile = spyOn(service as any, 'generateContractFile')
+		const spyGenerateFile = spyOn(service as any, 'generateContractFile').mockResolvedValue(undefined)
 		const spyFetchAbi = spyOn(service, 'fetchAbi').mockResolvedValue(mockAbi)
 
-		await service.processContract(mockDeprecatedProxyItem)
+		// Mock fs operations to prevent any file system access
+		const spyMkdir = spyOn(fs, 'mkdir').mockResolvedValue(undefined as any)
+		const spyReaddir = spyOn(fs, 'readdir').mockResolvedValue([] as any)
+		const spyReadFile = spyOn(fs, 'readFile').mockResolvedValue('')
+		const spyWriteFile = spyOn(fs, 'writeFile').mockResolvedValue(undefined as any)
 
-		expect(service['skippedCount']).toBe(0)
-		expect(service['processedCount']).toBe(1)
-		expect(spyFetchAbi).toHaveBeenCalledTimes(2)
-		expect(spyGenerateFile).toHaveBeenCalled()
+		try {
+			await service.processContract(mockDeprecatedProxyItem)
+
+			expect(service['skippedCount']).toBe(0)
+			expect(service['processedCount']).toBe(1)
+			expect(spyFetchAbi).toHaveBeenCalledTimes(2)
+			expect(spyGenerateFile).toHaveBeenCalled()
+		} finally {
+			// Restore all mocks
+			spyMkdir.mockRestore()
+			spyReaddir.mockRestore()
+			spyReadFile.mockRestore()
+			spyWriteFile.mockRestore()
+		}
 	})
 
 	test('should fetch ABIs for both proxy and implementation contracts', async () => {
 		const service = new ContractService()
 		const spyFetchAbi = spyOn(service, 'fetchAbi').mockResolvedValue(mockAbi)
+		const spyGenerateFile = spyOn(service as any, 'generateContractFile').mockResolvedValue(undefined)
 
-		await service.processContract(mockProxyItem)
+		// Mock fs operations to prevent any file system access
+		const spyMkdir = spyOn(fs, 'mkdir').mockResolvedValue(undefined as any)
+		const spyReaddir = spyOn(fs, 'readdir').mockResolvedValue([] as any)
+		const spyReadFile = spyOn(fs, 'readFile').mockResolvedValue('')
+		const spyWriteFile = spyOn(fs, 'writeFile').mockResolvedValue(undefined as any)
 
-		expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.address)
-		expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.proxy_to)
-		expect(spyFetchAbi).toHaveBeenCalledTimes(2)
+		try {
+			await service.processContract(mockProxyItem)
+
+			expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.address)
+			expect(spyFetchAbi).toHaveBeenCalledWith(mockProxyItem.proxy_to)
+			expect(spyFetchAbi).toHaveBeenCalledTimes(2)
+		} finally {
+			// Restore all mocks
+			spyGenerateFile.mockRestore()
+			spyMkdir.mockRestore()
+			spyReaddir.mockRestore()
+			spyReadFile.mockRestore()
+			spyWriteFile.mockRestore()
+		}
 	})
 
 	test('should process all contracts except MainToken in update', async () => {
@@ -265,12 +325,26 @@ describe('ContractService', () => {
 	test('should handle failed ABI fetches gracefully', async () => {
 		const service = new ContractService()
 		const spyFetchAbi = spyOn(service, 'fetchAbi').mockResolvedValue(undefined)
-		const spyGenerateFile = spyOn(service as any, 'generateContractFile')
+		const spyGenerateFile = spyOn(service as any, 'generateContractFile').mockResolvedValue(undefined)
 
-		await service.processContract(mockContractItem)
+		// Mock fs operations to prevent any file system access
+		const spyMkdir = spyOn(fs, 'mkdir').mockResolvedValue(undefined as any)
+		const spyReaddir = spyOn(fs, 'readdir').mockResolvedValue([] as any)
+		const spyReadFile = spyOn(fs, 'readFile').mockResolvedValue('')
+		const spyWriteFile = spyOn(fs, 'writeFile').mockResolvedValue(undefined as any)
 
-		expect(service['skippedCount']).toBe(1)
-		expect(service['failedCount']).toBe(0)
-		expect(spyGenerateFile).not.toHaveBeenCalled()
+		try {
+			await service.processContract(mockContractItem)
+
+			expect(service['skippedCount']).toBe(1)
+			expect(service['failedCount']).toBe(0)
+			expect(spyGenerateFile).not.toHaveBeenCalled()
+		} finally {
+			// Restore all mocks
+			spyMkdir.mockRestore()
+			spyReaddir.mockRestore()
+			spyReadFile.mockRestore()
+			spyWriteFile.mockRestore()
+		}
 	})
 })

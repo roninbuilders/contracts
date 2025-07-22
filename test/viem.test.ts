@@ -1,10 +1,11 @@
 import { test, describe, expect } from 'bun:test'
-import { createPublicClient, http, formatEther } from 'viem'
-import { RONIN_RPC_URL, TEST_ADDRESS, logSection, formatTimestamp } from './utils'
+import { createPublicClient, http, formatEther, formatUnits } from 'viem'
+import { RONIN_RPC_URL, TEST_ADDRESS, formatTimestamp } from './utils'
 import WRAPPED_ETHER from '../dist/wrapped_ether'
 import USD_COIN from '../dist/usd_coin'
 import AXIE_PROXY from '../dist/axie_proxy'
 import ATIAS_BLESSING from '../dist/atias_blessing'
+import SMOOTH_LOVE_POTION from '../dist/smooth_love_potion'
 
 describe('Viem Contract Integration', () => {
 	const client = createPublicClient({
@@ -25,16 +26,10 @@ describe('Viem Contract Integration', () => {
 		transport: http(),
 	})
 
-	test('should fetch token balances', async () => {
-		logSection('Testing Viem Token Balance Fetching')
-
-		// Fetch RON balance
-		const ronBalance = await client.getBalance({
-			address: TEST_ADDRESS,
-		})
+	test('should read contract data using viem', async () => {
+		const ronBalance = await client.getBalance({ address: TEST_ADDRESS })
 		console.log(`RON: ${formatEther(ronBalance)}`)
 
-		// Fetch WETH balance
 		const wethBalance = await client.readContract({
 			address: WRAPPED_ETHER.address,
 			abi: WRAPPED_ETHER.abi,
@@ -43,16 +38,32 @@ describe('Viem Contract Integration', () => {
 		})
 		console.log(`WETH: ${formatEther(wethBalance)}`)
 
-		// Fetch USD Coin balance
 		const usdcBalance = await client.readContract({
 			address: USD_COIN.address,
 			abi: USD_COIN.abi,
 			functionName: 'balanceOf',
 			args: [TEST_ADDRESS],
 		})
-		console.log(`USDC balance: ${formatEther(usdcBalance)}`)
+		const usdcDecimals = await client.readContract({
+			address: USD_COIN.address,
+			abi: USD_COIN.abi,
+			functionName: 'decimals',
+		})
+		console.log(`USDC: ${formatUnits(usdcBalance, usdcDecimals)}`)
 
-		// Fetch Axies balance
+		const slpBalance = await client.readContract({
+			address: SMOOTH_LOVE_POTION.address,
+			abi: SMOOTH_LOVE_POTION.abi,
+			functionName: 'balanceOf',
+			args: [TEST_ADDRESS],
+		})
+		const slpDecimals = await client.readContract({
+			address: SMOOTH_LOVE_POTION.address,
+			abi: SMOOTH_LOVE_POTION.abi,
+			functionName: 'decimals',
+		})
+		console.log(`SLP: ${formatUnits(slpBalance, slpDecimals)}`)
+
 		const axiesBalance = await client.readContract({
 			address: AXIE_PROXY.address,
 			abi: AXIE_PROXY.proxy_abi,
@@ -60,54 +71,39 @@ describe('Viem Contract Integration', () => {
 			args: [TEST_ADDRESS],
 		})
 		console.log(`Axies: ${axiesBalance.toString()}`)
+
+		expect(typeof ronBalance).toBe('bigint')
+		expect(typeof wethBalance).toBe('bigint')
+		expect(typeof usdcBalance).toBe('bigint')
+		expect(typeof slpBalance).toBe('bigint')
+		expect(typeof axiesBalance).toBe('bigint')
 	})
 
-	test('should fetch Atias Blessing streak data', async () => {
-		logSection('Testing Atias Blessing Streak Data with Viem')
-
-		// Fetch streak data using viem
+	test('should interact with contract using proxy ABI', async () => {
 		const streakData = await client.readContract({
 			address: ATIAS_BLESSING.address,
 			abi: ATIAS_BLESSING.proxy_abi,
 			functionName: 'getStreak',
 			args: [TEST_ADDRESS],
 		})
-
-		// With viem, the result is returned as a tuple
 		const [currentStreak, lastActivated, longestStreak, lostStreak] = streakData
 
-		console.log('Atias Blessing Streak Data:')
-		console.log(`  Current Streak: ${currentStreak.toString()}`)
-		console.log(`  Last Activated: ${formatTimestamp(lastActivated)}`)
-		console.log(`  Longest Streak: ${longestStreak.toString()}`)
-		console.log(`  Lost Streak: ${lostStreak.toString()}`)
+		console.log(`Current Streak: ${currentStreak.toString()}`)
+		console.log(`Last Activated: ${formatTimestamp(lastActivated)}`)
 
-		// Verify we have valid bigint values
 		expect(typeof currentStreak).toBe('bigint')
 		expect(typeof lastActivated).toBe('bigint')
 		expect(typeof longestStreak).toBe('bigint')
 		expect(typeof lostStreak).toBe('bigint')
-	})
 
-	test('should fetch Atias Blessing activation status', async () => {
-		logSection('Testing Atias Blessing Activation Status with Viem')
-
-		// Fetch activation status using viem
 		const activationStatus = await client.readContract({
 			address: ATIAS_BLESSING.address,
 			abi: ATIAS_BLESSING.proxy_abi,
 			functionName: 'getActivationStatus',
 			args: [TEST_ADDRESS],
 		})
-
-		// With viem, the result is returned as a tuple
 		const [isLostStreak, hasPrayedToday] = activationStatus
 
-		console.log('Atias Blessing Activation Status:')
-		console.log(`  Is Lost Streak: ${isLostStreak}`)
-		console.log(`  Has Prayed Today: ${hasPrayedToday}`)
-
-		// Verify we have valid boolean values
 		expect(typeof isLostStreak).toBe('boolean')
 		expect(typeof hasPrayedToday).toBe('boolean')
 	})
