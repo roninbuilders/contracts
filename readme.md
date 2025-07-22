@@ -131,6 +131,25 @@ Format code:
 bun run format
 ```
 
+## Examples
+
+Working examples demonstrating how to use this package in different environments:
+
+### [CommonJS Example](https://github.com/roninbuilders/contracts/tree/main/examples/commonjs)
+- **Environment**: Node.js with CommonJS
+- **Library**: ethers.js
+- **Features**: Shows `require()` syntax and basic token balance fetching
+
+### [TypeScript Example](https://github.com/roninbuilders/contracts/tree/main/examples/typescript)
+- **Environment**: Bun runtime with TypeScript
+- **Library**: viem
+- **Features**: ES modules, type safety, and advanced contract interactions
+
+### [Browser Example](https://github.com/roninbuilders/contracts/tree/main/examples/browser)
+- **Environment**: Web browser with JavaScript
+- **Library**: viem (bundled with Rollup)
+- **Features**: Interactive HTML interface with live blockchain data
+
 ## Security Considerations
 
 ⚠️ **Important Security Notice**: This package provides contract ABIs and addresses for blockchain interactions. Always verify contract addresses independently before executing transactions. Be aware that:

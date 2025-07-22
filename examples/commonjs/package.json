@@ -1,0 +1,18 @@
+{
+	"name": "commonjs-example",
+	"version": "1.0.0",
+	"description": "CommonJS example for @roninbuilders/contracts",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"install-deps": "npm install --save-exact @roninbuilders/contracts ethers"
+	},
+	"dependencies": {
+		"@roninbuilders/contracts": "latest",
+		"ethers": "6.13.5"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}

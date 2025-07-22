@@ -1,0 +1,20 @@
+{
+	"name": "browser-example",
+	"version": "1.0.0",
+	"description": "Browser example for @roninbuilders/contracts",
+	"type": "module",
+	"scripts": {
+		"build": "rollup -c",
+		"serve": "python3 -m http.server 8000",
+		"install-deps": "npm install --save-exact @roninbuilders/contracts viem rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs"
+	},
+	"dependencies": {
+		"@roninbuilders/contracts": "latest",
+		"viem": "2.25.0"
+	},
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "28.0.1",
+		"@rollup/plugin-node-resolve": "16.0.0",
+		"rollup": "4.31.0"
+	}
+}
