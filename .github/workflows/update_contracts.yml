@@ -72,7 +72,7 @@ jobs:
       - name: Publish to npm
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > ~/.npmrc
           pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -80,10 +80,11 @@ jobs:
       - name: Publish to GitHub Packages
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+          echo "@roninbuilders:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> ~/.npmrc
           pnpm publish --registry https://npm.pkg.github.com --no-git-checks
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PAT }}
 
       - name: Create and push tag
         if: steps.git-check.outputs.changes_detected == 'true'
