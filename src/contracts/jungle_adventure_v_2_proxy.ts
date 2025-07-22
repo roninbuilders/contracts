@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Jungle Adventure V2 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x7f9c7c7ab38452cb383c051ace71ce05cb1db032',
+  proxy_to: '0x8dc3b50ada4156719adcd3926eb03ce90f5a2f82',
   created_at: 1711311665,
   abi: [
   {
@@ -573,6 +573,17 @@ const contract = {
     ]
   },
   {
+    "name": "gasPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "getGene",
     "type": "function",
     "stateMutability": "view",
@@ -775,6 +786,13 @@ const contract = {
         "type": "uint256"
       }
     ]
+  },
+  {
+    "name": "initGasPrice",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
   },
   {
     "name": "initialize",
@@ -1173,6 +1191,18 @@ const contract = {
       {
         "type": "bool",
         "name": "_val"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setGasPrice",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_gasPrice"
       }
     ],
     "outputs": []
