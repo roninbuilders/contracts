@@ -35,8 +35,7 @@
 		"url": "git+https://github.com/roninbuilders/contracts.git"
 	},
 	"publishConfig": {
-		"access": "public",
-		"registry": "https://npm.pkg.github.com/"
+		"access": "public"
 	},
 	"keywords": [
 		"ronin",
