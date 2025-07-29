@@ -1,161 +1,19 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 456,
-  address: '0x16a62a921e7fec5bf867ff5c805b662db757b778' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Ronin VRF Coordinator Proxy',
+  id: 33097,
+  address: '0x2ffc00d1f28534aa91ae547d16dc20e56773dc45' as const,
+  contract_name: 'RoninVRFCoordinator',
+  display_name: 'Ronin VRF Coordinator',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xe94d53979c71ecb9c8cb2326eb476bed1a740a79',
-  created_at: 1692000372,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1744367392,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
     "inputs": []
-  },
-  {
-    "name": "CallbackGasLimitTooHigh",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "max"
-      },
-      {
-        "type": "uint256",
-        "name": "current"
-      }
-    ]
   },
   {
     "name": "CallerIsNotAConsumer",
@@ -471,16 +329,6 @@ const contract = {
     ]
   },
   {
-    "name": "GasPriceBufferBpsUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "gasPriceBufferBps"
-      }
-    ]
-  },
-  {
     "name": "GasToEstimateRandomFeeUpdated",
     "type": "event",
     "inputs": [
@@ -516,16 +364,6 @@ const contract = {
     ]
   },
   {
-    "name": "MaxCallbackGasLimitBpsUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "maxCallbackGasLimitBps"
-      }
-    ]
-  },
-  {
     "name": "MaxResponseBlockUpdated",
     "type": "event",
     "inputs": [
@@ -537,16 +375,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "numBlock"
-      }
-    ]
-  },
-  {
-    "name": "MinRequestGasPriceUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "minRequestGasPrice"
       }
     ]
   },
@@ -1038,8 +866,8 @@ const contract = {
     ],
     "outputs": [
       {
-        "type": "bool",
-        "name": "internalCallSuccess"
+        "type": "uint256",
+        "name": "paymentAmount"
       }
     ]
   },
@@ -1082,17 +910,6 @@ const contract = {
     ]
   },
   {
-    "name": "getGasPriceBufferBps",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
     "name": "getKeyHashesAndScores",
     "type": "function",
     "stateMutability": "view",
@@ -1105,28 +922,6 @@ const contract = {
       {
         "type": "uint64[]",
         "name": "scores"
-      }
-    ]
-  },
-  {
-    "name": "getMaxCallbackGasLimitBps",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "getMinRequestGasPrice",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
       }
     ]
   },
@@ -1465,26 +1260,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "initializeV6",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "minRequestGasPrice"
-      },
-      {
-        "type": "uint256",
-        "name": "gasPriceBufferBps"
-      },
-      {
-        "type": "uint256",
-        "name": "maxCallbackGasLimitBps"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "isOracleInturn",
     "type": "function",
     "stateMutability": "view",
@@ -1779,18 +1554,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setGasPriceBufferBps",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "gasPriceBufferBps"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "setGasToEstimateRandomFee",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -1798,30 +1561,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "gas"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMaxCallbackGasLimitBps",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "maxCallbackGasLimitBps"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMinRequestGasPrice",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "minRequestGasPrice"
       }
     ],
     "outputs": []

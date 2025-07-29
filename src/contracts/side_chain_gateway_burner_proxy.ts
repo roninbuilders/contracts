@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Side Chain Gateway Burner Proxy',
   is_deprecated: true,
   is_proxy: true,
-  proxy_to: '0xa10d46d672816aeae828da9270d181dd4b46f973',
+  proxy_to: '0x000000000000000000000000000000000000dead',
   created_at: 1611574123,
   abi: [
   {
@@ -411,80 +411,6 @@ const contract = {
       {
         "type": "uint256",
         "name": "tokenNumber"
-      }
-    ]
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "admin"
-      }
-    ]
-  },
-  {
-    "name": "AXS",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "SLP",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "USDC",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "WETH",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "burnAll",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "getAdmin",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
       }
     ]
   }

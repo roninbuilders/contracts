@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36278,
-  address: '0xf4f76d4f67bb46b9a81f175b2cb9db68d7bd226b' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'Agent Station Proxy',
+  id: 36399,
+  address: '0x2bb1b58640871f323a32fdfb709b3429f1dbdfb9' as const,
+  contract_name: 'AgentStation',
+  display_name: 'Agent Station',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x2bb1b58640871f323a32fdfb709b3429f1dbdfb9',
-  created_at: 1753074824,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1753692213,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
