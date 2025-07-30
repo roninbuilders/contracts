@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 35776,
-  address: '0x4c4fdd9f2070b27da1eeeaf18cdd0c98ffa18dac' as const,
+  id: 36434,
+  address: '0x90ee90c97acb720c5b3f9c316c11fea9e9c701a8' as const,
   contract_name: 'BeaconProxy',
   display_name: 'NFT Mystery Pack Proxy',
   is_deprecated: false,
   is_proxy: true,
   proxy_to: '0x2b8d145d2d33a80b0f1d192054f710b547694c6d',
-  created_at: 1750836453,
+  created_at: 1753775421,
   abi: [
   {
     "type": "constructor",
