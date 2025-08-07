@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Genesis Heroes 721 Vault Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x7175cb73eeb5ce3eadc8b6c4fbbe6b02298ff40b',
+  proxy_to: '0x8a5844c27386ae54e087d1b1204f017710d51bf4',
   created_at: 1728621931,
   abi: [
   {
@@ -92,6 +92,32 @@ const contract = {
         "type": "address",
         "name": "beacon",
         "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "BridgedGenesisHeroz",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      },
+      {
+        "type": "uint256",
+        "name": "collectionTime"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
       }
     ]
   },
@@ -265,6 +291,34 @@ const contract = {
     ]
   },
   {
+    "name": "bridgeIn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "clearStakeDataFor",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "collectionTimeTable",
     "type": "function",
     "stateMutability": "view",
@@ -325,7 +379,7 @@ const contract = {
     ]
   },
   {
-    "name": "getCollectionTime",
+    "name": "getChainIdByTokenId",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
@@ -399,6 +453,36 @@ const contract = {
     "outputs": [
       {
         "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getStakedListByAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "timestamp"
+          },
+          {
+            "type": "address",
+            "name": "owner"
+          }
+        ]
       }
     ]
   },
@@ -480,6 +564,50 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "multiBridgeIn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "chainIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multiBridgeOut",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "address[]",
+        "name": "players"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "stakedTimes"
+      },
+      {
+        "type": "uint256[]",
+        "name": "collectionTimes"
+      }
+    ],
     "outputs": []
   },
   {
@@ -612,6 +740,62 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "setChainIdForMultiToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setChainList",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "idx"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setClean",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "address[]",
+        "name": "players"
+      },
+      {
+        "type": "uint256[]",
+        "name": "stakedTimes"
+      },
+      {
+        "type": "uint256[]",
+        "name": "collectionTimes"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "setCollectionTime",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -712,6 +896,30 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "setStakeStatus",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "stakedTime"
+      },
+      {
+        "type": "uint256",
+        "name": "collectionTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "stakeHeroZGenesis",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -804,6 +1012,21 @@ const contract = {
     "outputs": [
       {
         "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "tokenBridgedChainId",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
