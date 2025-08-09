@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Mavis Presale Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x8c723416d0ace09e5025d77b4e973b499595292c',
+  proxy_to: '0x0688ec464c01c9c9ded6815ffd90be555774ff86',
   created_at: 1736825002,
   abi: [
   {
@@ -1305,6 +1305,10 @@ const contract = {
     "stateMutability": "payable",
     "inputs": [
       {
+        "type": "address",
+        "name": "subscriber"
+      },
+      {
         "type": "uint64",
         "name": "quantity"
       }
@@ -1376,6 +1380,10 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
+      {
+        "type": "address",
+        "name": "subscriber"
+      },
       {
         "type": "uint64",
         "name": "quantity"

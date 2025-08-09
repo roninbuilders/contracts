@@ -7,7 +7,7 @@ const contract = {
   display_name: 'NFT Mystery Pack Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x2b8d145d2d33a80b0f1d192054f710b547694c6d',
+  proxy_to: '0x81b568b9b415f1758315fc300d3e3ace7fb09611',
   created_at: 1753775421,
   abi: [
   {
@@ -253,16 +253,7 @@ const contract = {
   {
     "name": "InvalidExpectedPrice",
     "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "expectPrice"
-      },
-      {
-        "type": "uint256",
-        "name": "actualPrice"
-      }
-    ]
+    "inputs": []
   },
   {
     "name": "InvalidInitialization",
@@ -585,12 +576,12 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "user",
+        "name": "requester",
         "indexed": true
       },
       {
         "type": "address",
-        "name": "requester",
+        "name": "recipient",
         "indexed": true
       },
       {
@@ -1721,6 +1712,10 @@ const contract = {
     "type": "function",
     "stateMutability": "payable",
     "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
       {
         "type": "uint32",
         "name": "amount"
