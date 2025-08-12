@@ -4,7 +4,7 @@ const contract = {
   id: 1341,
   address: '0xa5cb85d2910e7b384afa3121e7d0a6f623b05da3' as const,
   contract_name: 'ERC1967Proxy',
-  display_name: 'Apostle Spiritual Merge Proxy',
+  display_name: 'AAP Reward Proxy',
   is_deprecated: false,
   is_proxy: true,
   proxy_to: '0xbfde1bed22ec88b06b6381558368aa31c829c69a',
