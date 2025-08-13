@@ -4,10 +4,10 @@ const contract = {
   id: 4507,
   address: '0x554bced1db572e16fdf4c8a6f23a301f7eb0293b' as const,
   contract_name: 'NFT721Proxy',
-  display_name: 'NFT721 Proxy',
+  display_name: 'NFT721 Region Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xa1dbb6680786e654a85a5834004097ae501cf434',
+  proxy_to: '0x3227f7d926dcca93318a446c3fde0a5727029971',
   created_at: 1728624286,
   abi: [
   {

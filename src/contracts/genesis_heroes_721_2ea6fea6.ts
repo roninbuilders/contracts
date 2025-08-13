@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4506,
-  address: '0x09736b41ba78633d435e06019dc1a79b1545babc' as const,
-  contract_name: 'NFT721Proxy',
-  display_name: 'NFT721 Region Proxy',
+  id: 36604,
+  address: '0xcc657239e8ed191b4cec7a0486fccdfb2ea6fea6' as const,
+  contract_name: 'GenesisHeroes721',
+  display_name: 'Genesis Heroes 721',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x445224e9c0eb85175428ed2afd4e59bda3101f93',
-  created_at: 1728624454,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1755029829,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "ErrInvalidArrayLength",
     "type": "error",
@@ -167,86 +107,6 @@ const contract = {
       {
         "type": "uint8",
         "name": "version"
-      }
-    ]
-  },
-  {
-    "name": "NFTStaking",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
-      }
-    ]
-  },
-  {
-    "name": "NFTStakingAtRegion",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "regionId"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
-      }
-    ]
-  },
-  {
-    "name": "NFTUnStaking",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
-      }
-    ]
-  },
-  {
-    "name": "NFTUnStakingAtRegion",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "regionId"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
       }
     ]
   },
@@ -431,6 +291,22 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "approveAll",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "tos"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "stateMutability": "view",
@@ -476,18 +352,7 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "getAllHolders",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address[]"
-      }
-    ]
-  },
-  {
-    "name": "getAllList",
+    "name": "getAllHeroesList",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -508,6 +373,17 @@ const contract = {
     ]
   },
   {
+    "name": "getAllHolders",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "stateMutability": "view",
@@ -524,7 +400,7 @@ const contract = {
     ]
   },
   {
-    "name": "getNft",
+    "name": "getHeroZ",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
@@ -550,7 +426,7 @@ const contract = {
     ]
   },
   {
-    "name": "getNftList",
+    "name": "getHeroZList",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
@@ -572,22 +448,6 @@ const contract = {
             "name": "birthTime"
           }
         ]
-      }
-    ]
-  },
-  {
-    "name": "getNftTokenIdList",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_account"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256[]"
       }
     ]
   },
@@ -644,6 +504,22 @@ const contract = {
     ]
   },
   {
+    "name": "getTokenIdByGrade",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -678,6 +554,26 @@ const contract = {
         "type": "bool"
       }
     ]
+  },
+  {
+    "name": "heroZMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "player"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "birthTime"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "initialize",
@@ -718,26 +614,6 @@ const contract = {
         "type": "bool"
       }
     ]
-  },
-  {
-    "name": "mint",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "birthTime"
-      }
-    ],
-    "outputs": []
   },
   {
     "name": "mint",
@@ -809,29 +685,17 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "multiNftStaking",
+    "name": "multiTransfer",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "uint256[]",
-        "name": "tokenIds"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "multiNftStakingAtRegion",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256[]",
-        "name": "tokenIds"
+        "type": "address[]",
+        "name": "players"
       },
       {
         "type": "uint256[]",
-        "name": "regionIds"
+        "name": "tokenIds"
       }
     ],
     "outputs": []
@@ -846,34 +710,6 @@ const contract = {
         "type": "string"
       }
     ]
-  },
-  {
-    "name": "nftStaking",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "nftStakingAtRegion",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "regionId"
-      }
-    ],
-    "outputs": []
   },
   {
     "name": "nonces",
@@ -1052,6 +888,38 @@ const contract = {
       {
         "type": "bytes32",
         "name": "role"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMultiTokenIdByGrade",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "grades"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenIdByGrade",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "grade"
       }
     ],
     "outputs": []
