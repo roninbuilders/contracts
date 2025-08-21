@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4309,
-  address: '0x0e268edc8750d50c440d715c935eba2e7c6ae775' as const,
-  contract_name: 'PHZM1155Proxy',
-  display_name: 'PHZM1155 Proxy',
+  id: 36668,
+  address: '0x28b75e48329789c2c5a0baef346ea98dd90edf45' as const,
+  contract_name: 'PHZM1155',
+  display_name: 'PHZM1155',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x28b75e48329789c2c5a0baef346ea98dd90edf45',
-  created_at: 1727834489,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1755657606,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "AdminChanged",
     "type": "event",
