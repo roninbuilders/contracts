@@ -1,88 +1,39 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 3265,
-  address: '0xcc451977a4be9adee892f7e610fe3e3b3927b5a1' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'Ronin Game NFT Proxy',
+  id: 36687,
+  address: '0x285f75f69e67a919d50436072857e4b69b151f42' as const,
+  contract_name: 'Miner1155',
+  display_name: 'Miner 1155',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x872c536dc184c1f28ab17e6110a789a49fc9614e',
-  created_at: 1720869853,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1755806216,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
+        "type": "string",
+        "name": "_defaultUri"
       }
     ]
   },
   {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
+    "name": "LengthMismatch",
+    "type": "error",
+    "inputs": []
   },
   {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
+    "name": "UnknownId",
+    "type": "error",
+    "inputs": []
   },
   {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
+    "name": "ZeroAmount",
+    "type": "error",
+    "inputs": []
   },
   {
     "name": "ApprovalForAll",
@@ -105,67 +56,80 @@ const contract = {
     ]
   },
   {
-    "name": "BatchMetadataUpdate",
+    "name": "RoleAdminChanged",
     "type": "event",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "_fromTokenId"
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
       },
       {
-        "type": "uint256",
-        "name": "_toTokenId"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
       {
-        "type": "address",
-        "name": "beacon",
+        "type": "bytes32",
+        "name": "newAdminRole",
         "indexed": true
       }
     ]
   },
   {
-    "name": "GameRollupMessage",
+    "name": "RoleGranted",
     "type": "event",
     "inputs": [
       {
         "type": "bytes32",
-        "name": "messageId"
-      }
-    ]
-  },
-  {
-    "name": "Initialized",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint8",
-        "name": "version"
-      }
-    ]
-  },
-  {
-    "name": "LuLuMoonAirdropUpdate",
-    "type": "event",
-    "inputs": [
+        "name": "role",
+        "indexed": true
+      },
       {
         "type": "address",
-        "name": "airdrop"
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
       }
     ]
   },
   {
-    "name": "MetadataUpdate",
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "TemplateURISet",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
-        "name": "_tokenId"
+        "name": "id",
+        "indexed": true
+      },
+      {
+        "type": "string",
+        "name": "uri"
       }
     ]
   },
@@ -243,57 +207,71 @@ const contract = {
     ]
   },
   {
-    "name": "Upgraded",
-    "type": "event",
+    "name": "ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "DEFAULT_ADMIN_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "MINTER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "addAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "implementation",
-        "indexed": true
+        "name": "account"
       }
-    ]
+    ],
+    "outputs": []
   },
   {
-    "name": "ERC1155NFTPrefix",
+    "name": "addMinter",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "allIds",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "uint8"
-      }
-    ]
-  },
-  {
-    "name": "ERC20NFTPrefix",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint8"
-      }
-    ]
-  },
-  {
-    "name": "ERC721NFTPrefix",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint8"
-      }
-    ]
-  },
-  {
-    "name": "GameNFTPrefix",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint8"
+        "type": "uint256[]",
+        "name": "ids"
       }
     ]
   },
@@ -338,63 +316,146 @@ const contract = {
     ]
   },
   {
-    "name": "config",
+    "name": "balanceOfIds",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "getItemId",
-    "type": "function",
-    "stateMutability": "pure",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "tokenId"
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ids"
       }
     ],
     "outputs": [
       {
-        "type": "uint8"
-      },
+        "type": "uint256[]",
+        "name": "balances"
+      }
+    ]
+  },
+  {
+    "name": "balanceOfOwnerTypes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ],
+    "outputs": [
       {
         "type": "uint256"
       }
     ]
   },
   {
-    "name": "hex2Uint256",
-    "type": "function",
-    "stateMutability": "pure",
-    "inputs": [
-      {
-        "type": "bytes",
-        "name": "b"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "value"
-      }
-    ]
-  },
-  {
-    "name": "initialize",
+    "name": "burnBatch",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "config_"
+        "type": "uint256[]",
+        "name": "ids"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "idOfOwnerByIndex",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "idsOfOwner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "ids"
+      }
+    ]
   },
   {
     "name": "isApprovedForAll",
@@ -417,60 +478,42 @@ const contract = {
     ]
   },
   {
-    "name": "luluMoonAirdrop",
+    "name": "launchpadId",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
     ]
   },
   {
-    "name": "name",
-    "type": "function",
-    "stateMutability": "pure",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "string"
-      }
-    ]
-  },
-  {
-    "name": "proxiableUUID",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "bytes32"
-      }
-    ]
-  },
-  {
-    "name": "safeBatchBurn",
+    "name": "mint",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "from"
+        "name": "to"
       },
       {
-        "type": "uint256[]",
-        "name": "tokenIds"
+        "type": "uint256",
+        "name": "id"
       },
       {
-        "type": "uint256[]",
-        "name": "amounts"
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
       }
     ],
     "outputs": []
   },
   {
-    "name": "safeBatchMint",
+    "name": "mintBatch",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
@@ -484,11 +527,96 @@ const contract = {
       },
       {
         "type": "uint256[]",
-        "name": "itemIds"
+        "name": "amounts"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "mintLaunchpad",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "quantity"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
       },
       {
         "type": "uint256[]",
         "name": "amounts"
+      }
+    ]
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeMinter",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
       }
     ],
     "outputs": []
@@ -517,30 +645,6 @@ const contract = {
       {
         "type": "bytes",
         "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "safeBatchTransferFrom",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from"
-      },
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256[]",
-        "name": "tokenIds"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts"
       }
     ],
     "outputs": []
@@ -590,7 +694,19 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setCanTransfer",
+    "name": "setLaunchpadId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTokenURI",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
@@ -598,65 +714,9 @@ const contract = {
         "type": "uint256",
         "name": "id"
       },
-      {
-        "type": "bool",
-        "name": "canTransfer"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setDistableExchange",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "id"
-      },
-      {
-        "type": "bool",
-        "name": "disableExchange"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setLocked",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user"
-      },
-      {
-        "type": "bool",
-        "name": "locked"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setLuLuMoonAirdrop",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "airdrop"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMetadataURI",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
       {
         "type": "string",
-        "name": "newURI"
+        "name": "newUri"
       }
     ],
     "outputs": []
@@ -678,41 +738,13 @@ const contract = {
     ]
   },
   {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "uri",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
       {
         "type": "uint256",
-        "name": "tokenId"
+        "name": "id"
       }
     ],
     "outputs": [

@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Ronin Game Inbox Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x4bba9f2cc156cb885fa5b605f693be20c5d1aa9b',
+  proxy_to: '0xabbb89c01338cb874fd73f025b1b2ebef620c393',
   created_at: 1720869871,
   abi: [
   {
@@ -599,6 +599,26 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "safeBatchBurn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "safeBatchMint",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -637,6 +657,30 @@ const contract = {
       },
       {
         "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "safeBatchTransferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
       },
       {
         "type": "uint256[]",
