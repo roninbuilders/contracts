@@ -1,26 +1,22 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 32692,
-  address: '0x75ca7ffe6565837dae1e42e6036bb0d8e67ab005' as const,
-  contract_name: 'RWJackpotProxy',
-  display_name: 'RW Jackpot Proxy',
+  id: 36841,
+  address: '0x496c0fc447c4bddedcabf6301720fbfeaaf582e3' as const,
+  contract_name: 'ERC1967Proxy',
+  display_name: 'RRW Jackpot Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x224b69908a5df64d354ef79a8c392332bc0f274c',
-  created_at: 1743968501,
+  proxy_to: '0x215e403cb97c19051e31e7e02567525c2c5adad8',
+  created_at: 1756693179,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "inputs": [
       {
         "type": "address",
         "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
       },
       {
         "type": "bytes",
@@ -85,42 +81,49 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "BaseFeePercentageUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "newBaseFeePercentage"
-      }
-    ]
-  },
-  {
-    "name": "CreatorAdded",
+    "name": "AddressRemovedFromWhitelist",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "creator"
+        "name": "addr",
+        "indexed": true
       }
     ]
   },
   {
-    "name": "CreatorRemoved",
+    "name": "AddressWhitelisted",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "creator"
+        "name": "addr",
+        "indexed": true
       }
     ]
   },
   {
-    "name": "FeeCollectorUpdated",
+    "name": "AdminChanged",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "newFeeCollector"
+        "name": "previousAdmin"
+      },
+      {
+        "type": "address",
+        "name": "newAdmin"
+      }
+    ]
+  },
+  {
+    "name": "BeaconUpgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
       }
     ]
   },
@@ -135,28 +138,6 @@ const contract = {
     ]
   },
   {
-    "name": "JackpotCancelled",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "JackpotCancelledError",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      }
-    ]
-  },
-  {
     "name": "JackpotCreated",
     "type": "event",
     "inputs": [
@@ -167,15 +148,44 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "creator"
+        "name": "creator",
+        "indexed": true
       },
       {
         "type": "uint256",
         "name": "ticketPrice"
       },
       {
+        "type": "address",
+        "name": "paymentToken"
+      },
+      {
         "type": "uint256",
-        "name": "maxWinners"
+        "name": "initialDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime"
+      }
+    ]
+  },
+  {
+    "name": "JackpotDeposited",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "jackpotId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "depositor",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
       }
     ]
   },
@@ -191,61 +201,10 @@ const contract = {
       {
         "type": "address[]",
         "name": "winners"
-      }
-    ]
-  },
-  {
-    "name": "JackpotRandomnessReceived",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
       },
       {
-        "type": "uint256",
-        "name": "randomSeed"
-      }
-    ]
-  },
-  {
-    "name": "JackpotRandomnessRequested",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      },
-      {
-        "type": "bytes32",
-        "name": "requestId"
-      }
-    ]
-  },
-  {
-    "name": "JackpotVRFFailed",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      },
-      {
-        "type": "string",
-        "name": "reason"
-      }
-    ]
-  },
-  {
-    "name": "MinValueAllowedUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "newMinValue"
+        "type": "uint256[]",
+        "name": "prizes"
       }
     ]
   },
@@ -266,37 +225,7 @@ const contract = {
     ]
   },
   {
-    "name": "PaymentTokenAdded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token"
-      }
-    ]
-  },
-  {
-    "name": "PaymentTokenRemoved",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token"
-      }
-    ]
-  },
-  {
-    "name": "RealFeePercentageUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "newRealFeePercentage"
-      }
-    ]
-  },
-  {
-    "name": "TicketsPurchased",
+    "name": "TicketPurchased",
     "type": "event",
     "inputs": [
       {
@@ -306,11 +235,62 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "buyer"
+        "name": "buyer",
+        "indexed": true
       },
       {
         "type": "uint256",
-        "name": "amount"
+        "name": "quantity"
+      },
+      {
+        "type": "uint256",
+        "name": "totalCost"
+      },
+      {
+        "type": "address",
+        "name": "referrer"
+      }
+    ]
+  },
+  {
+    "name": "TreasuryDistributed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "jackpotId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "treasury1"
+      },
+      {
+        "type": "uint256",
+        "name": "treasury1Amount"
+      },
+      {
+        "type": "address",
+        "name": "treasury2"
+      },
+      {
+        "type": "uint256",
+        "name": "treasury2Amount"
+      },
+      {
+        "type": "uint256",
+        "name": "nextJackpotAmount"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
       }
     ]
   },
@@ -326,7 +306,7 @@ const contract = {
     ]
   },
   {
-    "name": "FEE_PERCENTAGE",
+    "name": "NEXT_JACKPOT_PERCENTAGE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -348,7 +328,7 @@ const contract = {
     ]
   },
   {
-    "name": "REAL_TOKEN",
+    "name": "RON_ADDRESS",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -359,13 +339,24 @@ const contract = {
     ]
   },
   {
-    "name": "RON_ADDRESS",
+    "name": "TREASURY_1_PERCENTAGE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "TREASURY_2_PERCENTAGE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
@@ -381,43 +372,27 @@ const contract = {
     ]
   },
   {
-    "name": "addAllowedCreator",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_creator"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "addPaymentToken",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_token"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "allowedCreators",
+    "name": "WINNER_PERCENTAGE",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "bool"
+        "type": "uint256"
       }
     ]
+  },
+  {
+    "name": "addToWhitelist",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "buyTickets",
@@ -430,19 +405,7 @@ const contract = {
       },
       {
         "type": "uint256",
-        "name": "_numberOfTickets"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "cancelJackpotError",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
+        "name": "_quantity"
       }
     ],
     "outputs": []
@@ -450,7 +413,7 @@ const contract = {
   {
     "name": "createJackpot",
     "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "inputs": [
       {
         "type": "uint256",
@@ -459,6 +422,10 @@ const contract = {
       {
         "type": "address",
         "name": "_paymentToken"
+      },
+      {
+        "type": "uint256",
+        "name": "_initialDeposit"
       },
       {
         "type": "uint256",
@@ -472,15 +439,32 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "feeCollector",
+    "name": "depositToJackpot",
     "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "stateMutability": "payable",
+    "inputs": [
       {
-        "type": "address"
+        "type": "uint256",
+        "name": "_jackpotId"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
       }
-    ]
+    ],
+    "outputs": []
+  },
+  {
+    "name": "emergencyWithdrawToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "finalizeJackpot",
@@ -495,179 +479,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "finalizeJackpotWithFallback",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "getActiveJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "jackpotId"
-          },
-          {
-            "type": "address",
-            "name": "creator"
-          },
-          {
-            "type": "uint256",
-            "name": "ticketPrice"
-          },
-          {
-            "type": "address",
-            "name": "paymentToken"
-          },
-          {
-            "type": "uint256",
-            "name": "endTime"
-          },
-          {
-            "type": "bool",
-            "name": "isActive"
-          },
-          {
-            "type": "uint256",
-            "name": "participantCount"
-          },
-          {
-            "type": "bool",
-            "name": "isFinalized"
-          },
-          {
-            "type": "uint256",
-            "name": "totalTickets"
-          },
-          {
-            "type": "uint256",
-            "name": "maxWinners"
-          },
-          {
-            "type": "uint256",
-            "name": "totalPrizePool"
-          },
-          {
-            "type": "tuple[]",
-            "name": "winners",
-            "components": [
-              {
-                "type": "address",
-                "name": "winner"
-              },
-              {
-                "type": "uint256",
-                "name": "position"
-              },
-              {
-                "type": "uint256",
-                "name": "ticketsUsed"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "getEndedJackpotIds",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256[]"
-      }
-    ]
-  },
-  {
-    "name": "getEndedJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "jackpotId"
-          },
-          {
-            "type": "address",
-            "name": "creator"
-          },
-          {
-            "type": "uint256",
-            "name": "ticketPrice"
-          },
-          {
-            "type": "address",
-            "name": "paymentToken"
-          },
-          {
-            "type": "uint256",
-            "name": "endTime"
-          },
-          {
-            "type": "bool",
-            "name": "isActive"
-          },
-          {
-            "type": "uint256",
-            "name": "participantCount"
-          },
-          {
-            "type": "bool",
-            "name": "isFinalized"
-          },
-          {
-            "type": "uint256",
-            "name": "totalTickets"
-          },
-          {
-            "type": "uint256",
-            "name": "maxWinners"
-          },
-          {
-            "type": "uint256",
-            "name": "totalPrizePool"
-          },
-          {
-            "type": "tuple[]",
-            "name": "winners",
-            "components": [
-              {
-                "type": "address",
-                "name": "winner"
-              },
-              {
-                "type": "uint256",
-                "name": "position"
-              },
-              {
-                "type": "uint256",
-                "name": "ticketsUsed"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "name": "getJackpotInfo",
     "type": "function",
     "stateMutability": "view",
@@ -679,84 +490,7 @@ const contract = {
     ],
     "outputs": [
       {
-        "type": "address",
-        "name": "creator"
-      },
-      {
-        "type": "uint256",
-        "name": "ticketPrice"
-      },
-      {
-        "type": "address",
-        "name": "paymentToken"
-      },
-      {
-        "type": "uint256",
-        "name": "endTime"
-      },
-      {
-        "type": "bool",
-        "name": "isActive"
-      },
-      {
-        "type": "uint256",
-        "name": "participantCount"
-      },
-      {
-        "type": "bool",
-        "name": "isFinalized"
-      },
-      {
-        "type": "uint256",
-        "name": "totalTickets"
-      },
-      {
-        "type": "uint256",
-        "name": "maxWinners"
-      },
-      {
-        "type": "uint256",
-        "name": "totalPrizePool"
-      },
-      {
-        "type": "address[]",
-        "name": "winners"
-      }
-    ]
-  },
-  {
-    "name": "getJackpotParticipantsSorted",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "address[]",
-        "name": "addresses"
-      },
-      {
-        "type": "uint256[]",
-        "name": "ticketCounts"
-      },
-      {
-        "type": "uint256[]",
-        "name": "winningPercentages"
-      }
-    ]
-  },
-  {
-    "name": "getMyParticipatedJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
+        "type": "tuple",
         "components": [
           {
             "type": "uint256",
@@ -803,6 +537,18 @@ const contract = {
             "name": "totalPrizePool"
           },
           {
+            "type": "uint256",
+            "name": "initialDeposit"
+          },
+          {
+            "type": "uint256",
+            "name": "totalDeposits"
+          },
+          {
+            "type": "uint256",
+            "name": "nextJackpotReserve"
+          },
+          {
             "type": "tuple[]",
             "name": "winners",
             "components": [
@@ -817,10 +563,30 @@ const contract = {
               {
                 "type": "uint256",
                 "name": "ticketsUsed"
+              },
+              {
+                "type": "uint256",
+                "name": "prizeAmount"
               }
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "getParticipantList",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_jackpotId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
       }
     ]
   },
@@ -840,12 +606,7 @@ const contract = {
     ],
     "outputs": [
       {
-        "type": "uint256",
-        "name": "tickets"
-      },
-      {
-        "type": "uint256",
-        "name": "winningPercentage"
+        "type": "uint256"
       }
     ]
   },
@@ -856,14 +617,42 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "_feeCollector"
+        "name": "_vrfCoordinator"
       },
       {
         "type": "address",
-        "name": "_vrfCoordinator"
+        "name": "_referralSystem"
+      },
+      {
+        "type": "address",
+        "name": "_treasury1"
+      },
+      {
+        "type": "address",
+        "name": "_treasury2"
+      },
+      {
+        "type": "address",
+        "name": "_owner"
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "isWhitelisted",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
   },
   {
     "name": "jackpotCounter",
@@ -925,11 +714,23 @@ const contract = {
       {
         "type": "uint256",
         "name": "totalPrizePool"
+      },
+      {
+        "type": "uint256",
+        "name": "initialDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "totalDeposits"
+      },
+      {
+        "type": "uint256",
+        "name": "nextJackpotReserve"
       }
     ]
   },
   {
-    "name": "minValueAllowed",
+    "name": "maxTicketPrice",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -940,18 +741,24 @@ const contract = {
     ]
   },
   {
-    "name": "needsFallbackFinalization",
+    "name": "minInitialDeposit",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "bool"
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "minTicketPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
@@ -963,6 +770,17 @@ const contract = {
     "outputs": [
       {
         "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
       }
     ]
   },
@@ -983,25 +801,24 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "removeAllowedCreator",
+    "name": "referralSystem",
     "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
       {
-        "type": "address",
-        "name": "_creator"
+        "type": "address"
       }
-    ],
-    "outputs": []
+    ]
   },
   {
-    "name": "removePaymentToken",
+    "name": "removeFromWhitelist",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "_token"
+        "name": "_addr"
       }
     ],
     "outputs": []
@@ -1011,6 +828,78 @@ const contract = {
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setMinMaxValues",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_minInitialDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_minTicketPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "_maxTicketPrice"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPaymentToken",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      },
+      {
+        "type": "bool",
+        "name": "_isValid"
+      },
+      {
+        "type": "uint256",
+        "name": "_minDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_maxDeposit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setReferralSystem",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_referralSystem"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasuryAddresses",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_treasury1"
+      },
+      {
+        "type": "address",
+        "name": "_treasury2"
+      }
+    ],
     "outputs": []
   },
   {
@@ -1026,49 +915,51 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "updateBaseFeePercentage",
+    "name": "treasury1",
     "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
       {
-        "type": "uint256",
-        "name": "_newBaseFeePercentage"
+        "type": "address"
       }
-    ],
-    "outputs": []
+    ]
   },
   {
-    "name": "updateFeeCollector",
+    "name": "treasury2",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "upgradeTo",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "_newFeeCollector"
+        "name": "newImplementation"
       }
     ],
     "outputs": []
   },
   {
-    "name": "updateMinValueAllowed",
+    "name": "upgradeToAndCall",
     "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "_newMinValue"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "updateRealFeePercentage",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+        "type": "address",
+        "name": "newImplementation"
+      },
       {
-        "type": "uint256",
-        "name": "_newRealFeePercentage"
+        "type": "bytes",
+        "name": "data"
       }
     ],
     "outputs": []
@@ -1086,6 +977,14 @@ const contract = {
       {
         "type": "bool",
         "name": "isValid"
+      },
+      {
+        "type": "uint256",
+        "name": "minDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "maxDeposit"
       }
     ]
   },
@@ -1099,6 +998,28 @@ const contract = {
         "type": "address"
       }
     ]
+  },
+  {
+    "name": "whitelistedAddresses",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "withdrawFees",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
   },
   {
     "type": "receive",
