@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36841,
-  address: '0x496c0fc447c4bddedcabf6301720fbfeaaf582e3' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'RRW Jackpot Proxy',
+  id: 36848,
+  address: '0x215e403cb97c19051e31e7e02567525c2c5adad8' as const,
+  contract_name: 'RRWJackpot',
+  display_name: 'RRW Jackpot',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xd2775558192e5b583289f5282e036120b583412c',
-  created_at: 1756693179,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1756763165,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -134,17 +74,6 @@ const contract = {
       {
         "type": "uint8",
         "name": "version"
-      }
-    ]
-  },
-  {
-    "name": "JackpotCancelledError",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
       }
     ]
   },
@@ -216,51 +145,6 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "prizes"
-      }
-    ]
-  },
-  {
-    "name": "JackpotRandomnessReceived",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "randomSeed"
-      }
-    ]
-  },
-  {
-    "name": "JackpotRandomnessRequested",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      },
-      {
-        "type": "bytes32",
-        "name": "requestId"
-      }
-    ]
-  },
-  {
-    "name": "JackpotVRFFailed",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "jackpotId",
-        "indexed": true
-      },
-      {
-        "type": "string",
-        "name": "reason"
       }
     ]
   },
@@ -467,18 +351,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "cancelJackpotError",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "createJackpot",
     "type": "function",
     "stateMutability": "payable",
@@ -547,211 +419,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "finalizeJackpotWithFallback",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "getActiveJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "jackpotId"
-          },
-          {
-            "type": "address",
-            "name": "creator"
-          },
-          {
-            "type": "uint256",
-            "name": "ticketPrice"
-          },
-          {
-            "type": "address",
-            "name": "paymentToken"
-          },
-          {
-            "type": "uint256",
-            "name": "endTime"
-          },
-          {
-            "type": "bool",
-            "name": "isActive"
-          },
-          {
-            "type": "uint256",
-            "name": "participantCount"
-          },
-          {
-            "type": "bool",
-            "name": "isFinalized"
-          },
-          {
-            "type": "uint256",
-            "name": "totalTickets"
-          },
-          {
-            "type": "uint256",
-            "name": "maxWinners"
-          },
-          {
-            "type": "uint256",
-            "name": "totalPrizePool"
-          },
-          {
-            "type": "uint256",
-            "name": "initialDeposit"
-          },
-          {
-            "type": "uint256",
-            "name": "totalDeposits"
-          },
-          {
-            "type": "uint256",
-            "name": "nextJackpotReserve"
-          },
-          {
-            "type": "tuple[]",
-            "name": "winners",
-            "components": [
-              {
-                "type": "address",
-                "name": "winner"
-              },
-              {
-                "type": "uint256",
-                "name": "position"
-              },
-              {
-                "type": "uint256",
-                "name": "ticketsUsed"
-              },
-              {
-                "type": "uint256",
-                "name": "prizeAmount"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "getEndedJackpotIds",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256[]"
-      }
-    ]
-  },
-  {
-    "name": "getEndedJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "jackpotId"
-          },
-          {
-            "type": "address",
-            "name": "creator"
-          },
-          {
-            "type": "uint256",
-            "name": "ticketPrice"
-          },
-          {
-            "type": "address",
-            "name": "paymentToken"
-          },
-          {
-            "type": "uint256",
-            "name": "endTime"
-          },
-          {
-            "type": "bool",
-            "name": "isActive"
-          },
-          {
-            "type": "uint256",
-            "name": "participantCount"
-          },
-          {
-            "type": "bool",
-            "name": "isFinalized"
-          },
-          {
-            "type": "uint256",
-            "name": "totalTickets"
-          },
-          {
-            "type": "uint256",
-            "name": "maxWinners"
-          },
-          {
-            "type": "uint256",
-            "name": "totalPrizePool"
-          },
-          {
-            "type": "uint256",
-            "name": "initialDeposit"
-          },
-          {
-            "type": "uint256",
-            "name": "totalDeposits"
-          },
-          {
-            "type": "uint256",
-            "name": "nextJackpotReserve"
-          },
-          {
-            "type": "tuple[]",
-            "name": "winners",
-            "components": [
-              {
-                "type": "address",
-                "name": "winner"
-              },
-              {
-                "type": "uint256",
-                "name": "position"
-              },
-              {
-                "type": "uint256",
-                "name": "ticketsUsed"
-              },
-              {
-                "type": "uint256",
-                "name": "prizeAmount"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "name": "getJackpotInfo",
     "type": "function",
     "stateMutability": "view",
@@ -764,122 +431,6 @@ const contract = {
     "outputs": [
       {
         "type": "tuple",
-        "components": [
-          {
-            "type": "uint256",
-            "name": "jackpotId"
-          },
-          {
-            "type": "address",
-            "name": "creator"
-          },
-          {
-            "type": "uint256",
-            "name": "ticketPrice"
-          },
-          {
-            "type": "address",
-            "name": "paymentToken"
-          },
-          {
-            "type": "uint256",
-            "name": "endTime"
-          },
-          {
-            "type": "bool",
-            "name": "isActive"
-          },
-          {
-            "type": "uint256",
-            "name": "participantCount"
-          },
-          {
-            "type": "bool",
-            "name": "isFinalized"
-          },
-          {
-            "type": "uint256",
-            "name": "totalTickets"
-          },
-          {
-            "type": "uint256",
-            "name": "maxWinners"
-          },
-          {
-            "type": "uint256",
-            "name": "totalPrizePool"
-          },
-          {
-            "type": "uint256",
-            "name": "initialDeposit"
-          },
-          {
-            "type": "uint256",
-            "name": "totalDeposits"
-          },
-          {
-            "type": "uint256",
-            "name": "nextJackpotReserve"
-          },
-          {
-            "type": "tuple[]",
-            "name": "winners",
-            "components": [
-              {
-                "type": "address",
-                "name": "winner"
-              },
-              {
-                "type": "uint256",
-                "name": "position"
-              },
-              {
-                "type": "uint256",
-                "name": "ticketsUsed"
-              },
-              {
-                "type": "uint256",
-                "name": "prizeAmount"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "getJackpotParticipantsSorted",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "address[]",
-        "name": "addresses"
-      },
-      {
-        "type": "uint256[]",
-        "name": "ticketCounts"
-      },
-      {
-        "type": "uint256[]",
-        "name": "winningPercentages"
-      }
-    ]
-  },
-  {
-    "name": "getMyParticipatedJackpots",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "tuple[]",
         "components": [
           {
             "type": "uint256",
@@ -995,12 +546,7 @@ const contract = {
     ],
     "outputs": [
       {
-        "type": "uint256",
-        "name": "tickets"
-      },
-      {
-        "type": "uint256",
-        "name": "winningPercentage"
+        "type": "uint256"
       }
     ]
   },
@@ -1153,22 +699,6 @@ const contract = {
     "outputs": [
       {
         "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "needsFallbackFinalization",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
       }
     ]
   },
