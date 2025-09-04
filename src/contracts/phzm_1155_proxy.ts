@@ -7,7 +7,7 @@ const contract = {
   display_name: 'PHZM1155 Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x28b75e48329789c2c5a0baef346ea98dd90edf45',
+  proxy_to: '0x495b4ff9f4e5e1d776eade0f8c403b557cc7951c',
   created_at: 1727834489,
   abi: [
   {
@@ -282,6 +282,10 @@ const contract = {
         "type": "uint256",
         "name": "tokenId",
         "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
       }
     ]
   },
@@ -1127,6 +1131,22 @@ const contract = {
       {
         "type": "string",
         "name": "newuri"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "summoningStoneMultiUse",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
       }
     ],
     "outputs": []
