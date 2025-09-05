@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36866,
-  address: '0x8e1612d71a7182a2be1c2f99e99b6420d76410bd' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'RRW Jackpot Proxy',
+  id: 36874,
+  address: '0x4cc949e3c4c971a98760581f755fcff14a8b1235' as const,
+  contract_name: 'RRWJackpot',
+  display_name: 'RRW Jackpot',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x7370b7ab2b33ca5475943b3b381f50baa34bb92f',
-  created_at: 1756862022,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1756955257,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",

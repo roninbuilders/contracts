@@ -1,76 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36824,
-  address: '0x5c9e9d11a6fbee98397e60238d986ea4991cb6f7' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'Ronke Staking Platform Proxy',
+  id: 36826,
+  address: '0x38b4d7d4897159de8e0b50645a0dabea8ad015e4' as const,
+  contract_name: 'RonkeStakingPlatform',
+  display_name: 'Ronke Staking Platform',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x28ef2ad20e90801142caa2198bd28a71f702cefd',
-  created_at: 1756292376,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1756491554,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AddressEmptyCode",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "target"
-      }
-    ]
-  },
-  {
-    "name": "ERC1967InvalidImplementation",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation"
-      }
-    ]
-  },
-  {
-    "name": "ERC1967NonPayable",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "FailedInnerCall",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -259,11 +198,6 @@ const contract = {
         "name": "jailStartTime"
       }
     ]
-  },
-  {
-    "name": "StakeInLock",
-    "type": "error",
-    "inputs": []
   },
   {
     "name": "StakingOptionAlreadyExists",
