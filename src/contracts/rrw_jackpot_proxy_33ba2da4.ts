@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36866,
-  address: '0x8e1612d71a7182a2be1c2f99e99b6420d76410bd' as const,
+  id: 36925,
+  address: '0xad6f99fb6295d1d202b232e27a914b5f33ba2da4' as const,
   contract_name: 'ERC1967Proxy',
   display_name: 'RRW Jackpot Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xb166062ff43d8abf3a0fe7a9e18bbac55cdf07e8',
-  created_at: 1756862022,
+  proxy_to: '0xa61df9b11c64e744a7b5f865c0809535f11912f3',
+  created_at: 1757114771,
   abi: [
   {
     "type": "constructor",

@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 36866,
-  address: '0x8e1612d71a7182a2be1c2f99e99b6420d76410bd' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'RRW Jackpot Proxy',
+  id: 36898,
+  address: '0x7370b7ab2b33ca5475943b3b381f50baa34bb92f' as const,
+  contract_name: 'RRWJackpot',
+  display_name: 'RRW Jackpot',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xb166062ff43d8abf3a0fe7a9e18bbac55cdf07e8',
-  created_at: 1756862022,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1757028505,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -340,24 +280,6 @@ const contract = {
     ]
   },
   {
-    "name": "TreasuryPercentagesUpdated",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "treasury1Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "treasury2Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "nextJackpotPercentage"
-      }
-    ]
-  },
-  {
     "name": "Upgraded",
     "type": "event",
     "inputs": [
@@ -370,6 +292,17 @@ const contract = {
   },
   {
     "name": "ALTERNATIVE_SEED_ITERATIONS",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "NEXT_JACKPOT_PERCENTAGE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -402,7 +335,40 @@ const contract = {
     ]
   },
   {
+    "name": "TREASURY_1_PERCENTAGE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "TREASURY_2_PERCENTAGE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "VRF_TIMEOUT",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "WINNER_PERCENTAGE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -983,58 +949,6 @@ const contract = {
     ]
   },
   {
-    "name": "getPrizeDistribution",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_winnerCount"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256[]"
-      }
-    ]
-  },
-  {
-    "name": "getTreasuryPercentages",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "_treasury1Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "_treasury2Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "_nextJackpotPercentage"
-      }
-    ]
-  },
-  {
-    "name": "getWinnerPrizePool",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_jackpotId"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
     "name": "initialize",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -1211,17 +1125,6 @@ const contract = {
     ]
   },
   {
-    "name": "nextJackpotPercentage",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
     "name": "owner",
     "type": "function",
     "stateMutability": "view",
@@ -1362,26 +1265,6 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setTreasuryPercentages",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_treasury1Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "_treasury2Percentage"
-      },
-      {
-        "type": "uint256",
-        "name": "_nextJackpotPercentage"
-      }
-    ],
-    "outputs": []
-  },
-  {
     "name": "transferOwnership",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -1405,17 +1288,6 @@ const contract = {
     ]
   },
   {
-    "name": "treasury1Percentage",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
     "name": "treasury2",
     "type": "function",
     "stateMutability": "view",
@@ -1423,17 +1295,6 @@ const contract = {
     "outputs": [
       {
         "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "treasury2Percentage",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
       }
     ]
   },
