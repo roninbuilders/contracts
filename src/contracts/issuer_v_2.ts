@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4512,
-  address: '0x6a1d85c9876ea93ee460ca1d36ae7d95d0cd8f05' as const,
-  contract_name: 'MGold20Proxy',
-  display_name: 'M Gold 20 Proxy',
+  id: 36993,
+  address: '0xf84cc8217713a53fc3e3eb2d62d2af33a084ff85' as const,
+  contract_name: 'IssuerV2',
+  display_name: 'Issuer V2',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x49bf44e9d7c2719ce7841a6589ff9c79299838af',
-  created_at: 1728626383,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1756201697,
   abi: [
   {
     "type": "constructor",
@@ -16,134 +16,183 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
+        "name": "_collateralVault"
       },
       {
         "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
+        "name": "_dstable"
       },
       {
         "type": "address",
-        "name": "newAdmin"
+        "name": "oracle"
+      },
+      {
+        "type": "address",
+        "name": "_amoManager"
       }
     ]
   },
   {
-    "name": "Approval",
-    "type": "event",
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "owner",
-        "indexed": true
+        "name": "account"
       },
       {
+        "type": "bytes32",
+        "name": "neededRole"
+      }
+    ]
+  },
+  {
+    "name": "AssetMintingPaused",
+    "type": "error",
+    "inputs": [
+      {
         "type": "address",
-        "name": "spender",
-        "indexed": true
+        "name": "asset"
+      }
+    ]
+  },
+  {
+    "name": "EnforcedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExpectedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "IncorrectBaseCurrencyUnit",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "baseCurrencyUnit"
+      }
+    ]
+  },
+  {
+    "name": "IssuanceSurpassesExcessCollateral",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "collateralInDstable"
       },
       {
         "type": "uint256",
-        "name": "value"
+        "name": "circulatingDstable"
       }
     ]
   },
   {
-    "name": "BeaconUpgraded",
+    "name": "MintingToAmoShouldNotIncreaseSupply",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "circulatingDstableBefore"
+      },
+      {
+        "type": "uint256",
+        "name": "circulatingDstableAfter"
+      }
+    ]
+  },
+  {
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "SafeERC20FailedOperation",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ]
+  },
+  {
+    "name": "SlippageTooHigh",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "minDStable"
+      },
+      {
+        "type": "uint256",
+        "name": "dstableAmount"
+      }
+    ]
+  },
+  {
+    "name": "UnsupportedCollateral",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "collateralAsset"
+      }
+    ]
+  },
+  {
+    "name": "AmoManagerSet",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "beacon",
+        "name": "amoManager",
         "indexed": true
       }
     ]
   },
   {
-    "name": "Initialized",
+    "name": "AssetMintingPauseUpdated",
     "type": "event",
     "inputs": [
       {
-        "type": "uint8",
-        "name": "version"
+        "type": "address",
+        "name": "asset",
+        "indexed": true
+      },
+      {
+        "type": "bool",
+        "name": "paused"
       }
     ]
   },
   {
-    "name": "MGTDeposit",
+    "name": "CollateralVaultSet",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "player"
-      },
+        "name": "collateralVault",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "OracleSet",
+    "type": "event",
+    "inputs": [
       {
         "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
+        "name": "newOracle",
+        "indexed": true
       }
     ]
   },
@@ -221,26 +270,6 @@ const contract = {
     ]
   },
   {
-    "name": "Transfer",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from",
-        "indexed": true
-      },
-      {
-        "type": "address",
-        "name": "to",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "value"
-      }
-    ]
-  },
-  {
     "name": "Unpaused",
     "type": "event",
     "inputs": [
@@ -251,13 +280,13 @@ const contract = {
     ]
   },
   {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
+    "name": "AMO_MANAGER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
       {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
+        "type": "bytes32"
       }
     ]
   },
@@ -273,37 +302,45 @@ const contract = {
     ]
   },
   {
-    "name": "allowance",
+    "name": "INCENTIVES_MANAGER_ROLE",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      },
-      {
-        "type": "address",
-        "name": "spender"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "uint256"
+        "type": "bytes32"
       }
     ]
   },
   {
-    "name": "approve",
+    "name": "PAUSER_ROLE",
     "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "amoManager",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "assetMintingPaused",
+    "type": "function",
+    "stateMutability": "view",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
+        "type": "address"
       }
     ],
     "outputs": [
@@ -313,13 +350,24 @@ const contract = {
     ]
   },
   {
-    "name": "balanceOf",
+    "name": "baseCurrencyUnit",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "baseValueToDstableAmount",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "type": "uint256",
+        "name": "baseValue"
       }
     ],
     "outputs": [
@@ -329,49 +377,57 @@ const contract = {
     ]
   },
   {
-    "name": "burn",
+    "name": "circulatingDstable",
     "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
       {
-        "type": "address",
-        "name": "_user"
-      },
-      {
-        "type": "uint256",
-        "name": "_amount"
+        "type": "uint256"
       }
-    ],
-    "outputs": []
+    ]
   },
   {
-    "name": "decimals",
+    "name": "collateralInDstable",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "collateralVault",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "dstable",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "dstableDecimals",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
         "type": "uint8"
-      }
-    ]
-  },
-  {
-    "name": "decreaseAllowance",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "spender"
-      },
-      {
-        "type": "uint256",
-        "name": "subtractedValue"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
       }
     ]
   },
@@ -428,17 +484,25 @@ const contract = {
     ]
   },
   {
-    "name": "increaseAllowance",
+    "name": "increaseAmoSupply",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
-      },
-      {
         "type": "uint256",
-        "name": "addedValue"
+        "name": "dstableAmount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isAssetMintingEnabled",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset"
       }
     ],
     "outputs": [
@@ -448,66 +512,54 @@ const contract = {
     ]
   },
   {
-    "name": "initialize",
+    "name": "issue",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "string",
-        "name": "name"
+        "type": "uint256",
+        "name": "collateralAmount"
       },
       {
-        "type": "string",
-        "name": "symbol"
+        "type": "address",
+        "name": "collateralAsset"
+      },
+      {
+        "type": "uint256",
+        "name": "minDStable"
       }
     ],
     "outputs": []
   },
   {
-    "name": "mint",
+    "name": "issueUsingExcessCollateral",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "account"
+        "name": "receiver"
       },
       {
         "type": "uint256",
-        "name": "amount"
+        "name": "dstableAmount"
       }
     ],
     "outputs": []
   },
   {
-    "name": "multiMint",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "accounts"
-      },
-      {
-        "type": "uint256[]",
-        "name": "rewards"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "name",
+    "name": "oracle",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "string"
+        "type": "address"
       }
     ]
   },
   {
-    "name": "pause",
+    "name": "pauseMinting",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
@@ -525,17 +577,6 @@ const contract = {
     ]
   },
   {
-    "name": "proxiableUUID",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "bytes32"
-      }
-    ]
-  },
-  {
     "name": "renounceRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -546,7 +587,7 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "account"
+        "name": "callerConfirmation"
       }
     ],
     "outputs": []
@@ -568,17 +609,65 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setGrantRole",
+    "name": "setAmoManager",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "to"
+        "name": "_amoManager"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setAssetMintingPause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset"
       },
       {
-        "type": "bytes32",
-        "name": "role"
+        "type": "bool",
+        "name": "paused"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setBaseCurrencyUnit",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newBaseCurrencyUnit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setCollateralVault",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_collateralVault"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setOracle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOracle"
       }
     ],
     "outputs": []
@@ -600,104 +689,10 @@ const contract = {
     ]
   },
   {
-    "name": "symbol",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "string"
-      }
-    ]
-  },
-  {
-    "name": "totalSupply",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "transfer",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
-      }
-    ]
-  },
-  {
-    "name": "transferFrom",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from"
-      },
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
-      }
-    ]
-  },
-  {
-    "name": "unpause",
+    "name": "unpauseMinting",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
     "outputs": []
   }
 ] as const satisfies Abi
