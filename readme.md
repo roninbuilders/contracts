@@ -5,11 +5,11 @@ Contract ABIs for the Ronin Network.
 ## Installation
 
 ```bash
-npm install --save-exact @roninnetwork/contracts
+npm install --save-exact @roninbuilders/contracts
 # or
-pnpm add --save-exact @roninnetwork/contracts
+pnpm add --save-exact @roninbuilders/contracts
 # or
-bun add --exact @roninnetwork/contracts
+bun add --exact @roninbuilders/contracts
 ```
 
 > **Security Best Practice**: Always use `--save-exact` (or `--exact` for Bun) when installing packages to ensure deterministic builds and avoid potential security vulnerabilities from dependency updates.
@@ -26,9 +26,9 @@ import MY_CONTRACT from '@roninbuilders/contracts/my_contract';
 const MY_CONTRACT = require('@roninbuilders/contracts/my_contract');
 ```
 
-### Named imports are not supported
+### Barrel (named) imports are not supported
 
-To ensure optimal bundle size, named imports from the main package are not available:
+To keep bundle size minimal, importing from the package root with named exports is not supported (e.g., `import { AXIE_PROXY } from '@roninbuilders/contracts'`). Always import individual contract files via default import:
 
 ```typescript
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
@@ -59,9 +59,10 @@ console.log(AXIE_PROXY.is_deprecated) // Deprecation status
 Using viem to interact with contracts:
 
 ```typescript
-import { createPublicClient, http } from 'viem'
+import { createPublicClient, http, formatEther, formatUnits } from 'viem'
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
 import WRAPPED_ETHER from '@roninbuilders/contracts/wrapped_ether'
+import USD_COIN from '@roninbuilders/contracts/usd_coin'
 
 const client = createPublicClient({
   chain: {
@@ -74,19 +75,46 @@ const client = createPublicClient({
       symbol: 'RON'
     },
     rpcUrls: {
-      default: { http: ['https://api.roninchain.com/rpc'] }
+      default: { http: ['https://api.roninchain.com/rpc'] },
+      public: { http: ['https://api.roninchain.com/rpc'] },
     }
   },
   transport: http()
 })
 
-// Read contract data
-const balance = await client.readContract({
+// Replace with an address you want to query
+const address = '0xYourRoninAddressHere'
+
+// Get RON balance
+const ronBalance = await client.getBalance({ address })
+console.log(`RON: ${formatEther(ronBalance)}`)
+
+// Read WETH balance (18 decimals)
+const weth = await client.readContract({
   address: WRAPPED_ETHER.address,
   abi: WRAPPED_ETHER.abi,
   functionName: 'balanceOf',
   args: [address]
-})
+}) as bigint
+console.log(`WETH: ${formatEther(weth)}`)
+
+// Read Axies balance via proxy ABI (integer amount)
+const axies = await client.readContract({
+  address: AXIE_PROXY.address,
+  abi: AXIE_PROXY.proxy_abi,
+  functionName: 'balanceOf',
+  args: [address]
+}) as bigint
+console.log(`Axies: ${axies.toString()}`)
+
+// Read USDC balance (6 decimals)
+const usdc = await client.readContract({
+  address: USD_COIN.address,
+  abi: USD_COIN.abi,
+  functionName: 'balanceOf',
+  args: [address]
+}) as bigint
+console.log(`USDC: ${formatUnits(usdc, 6)}`)
 ```
 
 ## Ethers Example
@@ -94,21 +122,34 @@ const balance = await client.readContract({
 Using ethers.js to interact with contracts:
 
 ```typescript
-import { ethers } from 'ethers'
+import { ethers, formatEther, formatUnits, Contract } from 'ethers'
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
 import WRAPPED_ETHER from '@roninbuilders/contracts/wrapped_ether'
+import USD_COIN from '@roninbuilders/contracts/usd_coin'
 
 const provider = new ethers.JsonRpcProvider('https://api.roninchain.com/rpc')
 
-// Create contract instance
-const contract = new ethers.Contract(
-  WRAPPED_ETHER.address,
-  WRAPPED_ETHER.abi,
-  provider
-)
+// Replace with an address you want to query
+const address = '0xYourRoninAddressHere'
 
-// Read contract data
-const balance = await contract.balanceOf(address)
+// Get RON balance
+const ron = await provider.getBalance(address)
+console.log(`RON: ${formatEther(ron)}`)
+
+// Get WETH balance (18 decimals)
+const wethContract = new Contract(WRAPPED_ETHER.address, WRAPPED_ETHER.abi, provider)
+const weth = await wethContract.balanceOf(address)
+console.log(`WETH: ${formatEther(weth)}`)
+
+// Get Axies balance via proxy ABI
+const axieContract = new Contract(AXIE_PROXY.address, AXIE_PROXY.proxy_abi, provider)
+const axies = await axieContract.balanceOf(address)
+console.log(`Axies: ${axies.toString()}`)
+
+// Get USDC balance with proper decimals (6)
+const usdcContract = new Contract(USD_COIN.address, USD_COIN.abi, provider)
+const usdc = await usdcContract.balanceOf(address)
+console.log(`USDC: ${formatUnits(usdc, 6)}`)
 ```
 
 ## Development
@@ -136,16 +177,19 @@ bun run format
 Working examples demonstrating how to use this package in different environments:
 
 ### [CommonJS Example](https://github.com/roninbuilders/contracts/tree/main/examples/commonjs)
+
 - **Environment**: Node.js with CommonJS
 - **Library**: ethers.js
 - **Features**: Shows `require()` syntax and basic token balance fetching
 
 ### [TypeScript Example](https://github.com/roninbuilders/contracts/tree/main/examples/typescript)
+
 - **Environment**: Bun runtime with TypeScript
 - **Library**: viem
 - **Features**: ES modules, type safety, and advanced contract interactions
 
 ### [Browser Example](https://github.com/roninbuilders/contracts/tree/main/examples/browser)
+
 - **Environment**: Web browser with JavaScript
 - **Library**: viem (bundled with Rollup)
 - **Features**: Interactive HTML interface with live blockchain data
