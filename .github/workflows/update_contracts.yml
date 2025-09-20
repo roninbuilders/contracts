@@ -1,9 +1,22 @@
 name: Automated contract update and publish
 
 on:
-  schedule:
-    - cron: "0 0 * * *" # Runs daily at midnight
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Version increment type"
+        required: true
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+          - prerelease
+      preid:
+        description: "Pre-release identifier (e.g., rc, beta) — used only when release_type=prerelease"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -55,8 +68,16 @@ jobs:
       - name: Increment package version and commit
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          # Increment version and get the new version
-          pnpm version patch --no-git-tag-version
+          # Increment version based on selected bump type and get the new version
+          BUMP_TYPE="${{ github.event.inputs.release_type }}"
+          PREID="${{ github.event.inputs.preid }}"
+          echo "Selected version bump: $BUMP_TYPE"
+          if [ "$BUMP_TYPE" = "prerelease" ] && [ -n "$PREID" ]; then
+            echo "Using preid: $PREID"
+            pnpm version "$BUMP_TYPE" --preid "$PREID" --no-git-tag-version
+          else
+            pnpm version "$BUMP_TYPE" --no-git-tag-version
+          fi
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
           
@@ -95,6 +116,7 @@ jobs:
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
           # Create and push tag only after successful npm publish
+          echo "Preparing to tag version v$NEW_VERSION"
           if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
             echo "Tag v$NEW_VERSION already exists, skipping tag creation"
           else
@@ -116,4 +138,4 @@ jobs:
             ## Changes
             - Synchronized with latest contract deployments
           draft: false
-          prerelease: false
+          prerelease: ${{ github.event.inputs.release_type == 'prerelease' }}
