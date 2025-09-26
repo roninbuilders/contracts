@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
-import path from 'node:path'
-import fs from 'node:fs/promises'
+import { dirname, join } from 'node:path'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { parseAbi, type Abi } from 'abitype'
 import PQueue from 'p-queue'
 import type { Contract } from './contract'
@@ -15,7 +15,6 @@ const CONTRACTS_PER_PAGE = 1000
 const FILE_WRITE_BATCH_SIZE = 200
 const TEMP_PAGE_LIMIT = 100 // Temporal limit for testing
 const MAX_CONTRACT_RETRIES = 3
-const PROXY_CACHE_TTL = 3600000 // 1 hour in milliseconds
 
 export interface ExplorerResponse<T> {
 	message: string
@@ -119,7 +118,7 @@ export class ContractService {
 			}
 		} else {
 			// In terminals, use carriage return for a single updating line
-			process.stdout.write('\r\x1b[K' + progressLine)
+			process.stdout.write(`\r\x1b[K${progressLine}`)
 		}
 	}
 
@@ -144,7 +143,7 @@ export class ContractService {
 
 		return [
 			`✅ Processed ${this.processedCount} contracts in ${elapsedFormatted}`,
-			`📊 Statistics:`,
+			'📊 Statistics:',
 			`  - Total: ${this.totalContracts}`,
 			`  - Processed: ${this.processedCount}`,
 			`  - Skipped: ${this.skippedCount}`,
@@ -168,40 +167,27 @@ export class ContractService {
 	async fetchContracts(page: number): Promise<ContractsResponse> {
 		const url = `${RONIN_EXPLORER_API_URL}contracts?ps=${CONTRACTS_PER_PAGE}&p=${page}`
 
-		try {
-			const response = await fetch(url, {
-				headers: {
-					accept: 'application/json',
-					'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-					'accept-language': 'en-US,en;q=0.9',
-					'cache-control': 'no-cache',
-					'sec-fetch-dest': 'empty',
-					'sec-fetch-mode': 'cors',
-					'sec-fetch-site': 'same-origin',
-					Referer: 'https://app.roninchain.com/contracts',
-					Origin: 'https://app.roninchain.com',
-				},
-			})
+		const response = await fetch(url, {
+			headers: {
+				accept: 'application/json',
+			},
+		})
 
-			if (!response.ok) {
-				// Handle 403 with alternative endpoint
-				if (response.status === 403) {
-					// process.stdout.write('\n🔄 Using alternative API endpoint...\n')
-					return this.fetchContractsAlternative(page)
-				}
-				throw new Error(`HTTP Error: ${response.status}`)
+		if (!response.ok) {
+			// Handle 403 with alternative endpoint
+			if (response.status === 403) {
+				// process.stdout.write('\n🔄 Using alternative API endpoint...\n')
+				return this.fetchContractsAlternative(page)
 			}
-
-			const data = (await response.json()) as ExplorerResponse<ContractsResponse>
-			if (!data.status || !data.result) {
-				throw new Error('Invalid API response')
-			}
-
-			return data.result
-		} catch (error) {
-			// process.stdout.write(`\n❌ Error fetching page ${page}: ${error}\n`)
-			throw error
+			throw new Error(`HTTP Error: ${response.status}`)
 		}
+
+		const data = (await response.json()) as ExplorerResponse<ContractsResponse>
+		if (!data.status || !data.result) {
+			throw new Error('Invalid API response')
+		}
+
+		return data.result
 	}
 
 	// New method to fetch all contracts in parallel
@@ -281,7 +267,7 @@ export class ContractService {
 			if (!response.ok) throw new Error(`Failed to fetch ABI: ${response.status}`)
 
 			const data = (await response.json()) as ExplorerResponse<AbiResponse>
-			let rawAbi = data.result?.output?.abi
+			const rawAbi = data.result?.output?.abi
 
 			// Handle string ABI format
 			try {
@@ -333,11 +319,11 @@ export class ContractService {
 	}
 
 	private async generateContractFile(contract: Contract, baseName: string): Promise<void> {
-		const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'contracts')
-		await fs.mkdir(dirPath, { recursive: true })
+		const dirPath = join(dirname(fileURLToPath(import.meta.url)), 'contracts')
+		await mkdir(dirPath, { recursive: true })
 
 		// Check if file with same contract ID exists first
-		const existingFiles = await fs.readdir(dirPath)
+		const existingFiles = await readdir(dirPath)
 		const existingFile = await this.findExistingContract(dirPath, existingFiles, contract.id)
 
 		let finalFileName: string
@@ -346,7 +332,7 @@ export class ContractService {
 			finalFileName = existingFile
 
 			// Compare existing contract content with new one
-			const existingContent = await fs.readFile(path.join(dirPath, existingFile), 'utf8')
+			const existingContent = await readFile(join(dirPath, existingFile), 'utf8')
 			const newContent = this.generateContractContent(contract)
 
 			// Skip if content hasn't changed or preserveExisting is true
@@ -370,8 +356,8 @@ export class ContractService {
 
 		// Generate new content
 		const content = this.generateContractContent(contract)
-		const filePath = path.join(dirPath, finalFileName)
-		await fs.writeFile(filePath, content, 'utf8')
+		const filePath = join(dirPath, finalFileName)
+		await writeFile(filePath, content, 'utf8')
 
 		if (process.env.DEBUG) {
 			console.log(`${existingFile ? 'Updated' : 'Generated'} file: ${finalFileName}`)
@@ -401,10 +387,10 @@ export class ContractService {
 		}
 
 		return [
-			`import type { Contract } from '@/contract'`,
-			`import type { Abi } from 'abitype'`,
-			``,
-			`const contract = {`,
+			"import type { Contract } from '@/contract'",
+			"import type { Abi } from 'abitype'",
+			'',
+			'const contract = {',
 			`  id: ${sanitizedContract.id},`,
 			`  address: '${sanitizedContract.address}' as const,`,
 			`  contract_name: '${sanitizedContract.contract_name}',`,
@@ -415,10 +401,10 @@ export class ContractService {
 			`  created_at: ${sanitizedContract.created_at},`,
 			`  abi: ${processAbi(contract.abi)} as const satisfies Abi${contract.proxy_abi ? ',' : ''}`,
 			contract.proxy_abi ? `  proxy_abi: ${processAbi(contract.proxy_abi)} as const satisfies Abi` : '',
-			`} as const satisfies Contract`,
-			``,
-			`export default contract`,
-			``,
+			'} as const satisfies Contract',
+			'',
+			'export default contract',
+			'',
 		]
 			.filter(Boolean)
 			.join('\n')
@@ -428,22 +414,22 @@ export class ContractService {
 	private async initializeExistingContractsCache(): Promise<void> {
 		if (this.existingContractsCache.size > 0) return
 
-		const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'contracts')
+		const dirPath = join(dirname(fileURLToPath(import.meta.url)), 'contracts')
 
 		try {
-			await fs.mkdir(dirPath, { recursive: true })
-			const files = await fs.readdir(dirPath)
+			await mkdir(dirPath, { recursive: true })
+			const files = await readdir(dirPath)
 
 			// Process files in parallel for faster cache initialization
 			const tasks = files
 				.filter((file) => file.endsWith('.ts'))
 				.map((file) => async () => {
 					try {
-						const filePath = path.join(dirPath, file)
-						const content = await fs.readFile(filePath, 'utf8')
+						const filePath = join(dirPath, file)
+						const content = await readFile(filePath, 'utf8')
 						const idMatch = content.match(/id:\s*(\d+)/)
-						if (idMatch && idMatch[1]) {
-							const contractId = parseInt(idMatch[1])
+						if (idMatch?.[1]) {
+							const contractId = Number.parseInt(idMatch[1])
 							this.existingContractsCache.set(contractId, file)
 						}
 					} catch (error) {
@@ -471,7 +457,7 @@ export class ContractService {
 		filePath: string,
 	): Promise<{ is_proxy: boolean; proxy_to: string | false } | null> {
 		try {
-			const content = await fs.readFile(filePath, 'utf8')
+			const content = await readFile(filePath, 'utf8')
 
 			const isProxyMatch = content.match(/is_proxy:\s*(true|false)/)
 			const proxyToMatch = content.match(/proxy_to:\s*(?:'([^']+)'|false)/)
@@ -516,7 +502,7 @@ export class ContractService {
 
 	async processContract(item: ContractItem, retryCount = 0): Promise<void> {
 		const maxRetries = MAX_CONTRACT_RETRIES
-		const retryDelay = 500 * Math.min(Math.pow(2, retryCount), 4) // Faster exponential backoff, capped at 2s
+		const retryDelay = 500 * Math.min(2 ** retryCount, 4) // Faster exponential backoff, capped at 2s
 
 		// Sanitize names before transforming
 		const sanitizedDisplayName = this.sanitizeString(item.display_name || item.contract_name || '')
@@ -529,9 +515,9 @@ export class ContractService {
 
 		try {
 			// Check if contract already exists
-			const dirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'contracts')
-			await fs.mkdir(dirPath, { recursive: true })
-			const existingFiles = await fs.readdir(dirPath)
+			const dirPath = join(dirname(fileURLToPath(import.meta.url)), 'contracts')
+			await mkdir(dirPath, { recursive: true })
+			const existingFiles = await readdir(dirPath)
 			const existingFile = await this.findExistingContract(dirPath, existingFiles, item.id)
 
 			let existingData: { is_proxy: boolean; proxy_to: string | false } | null = null
@@ -548,7 +534,7 @@ export class ContractService {
 
 			// For existing contracts, check if proxy data has actually changed
 			if (existingFile) {
-				const existingPath = path.join(dirPath, existingFile)
+				const existingPath = join(dirPath, existingFile)
 				existingData = await this.getExistingContractData(existingPath)
 
 				if (existingData) {
@@ -685,9 +671,9 @@ export class ContractService {
 
 			if (this.failedCount > 0) {
 				console.log('\nFailed contracts:')
-				this.failedContracts.forEach(({ address, error, retryCount }) => {
+				for (const { address, error, retryCount } of this.failedContracts) {
 					console.log(`- ${address}: ${error} (retried ${retryCount} times)`)
-				})
+				}
 			}
 		} catch (error) {
 			this.cleanupProgress()
