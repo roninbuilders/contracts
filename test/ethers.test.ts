@@ -15,21 +15,21 @@ describe('Ethers Contract Integration', () => {
 		console.log(`RON: ${formatEther(ronBalance)}`)
 
 		const wethContract = new Contract(WRAPPED_ETHER.address, WRAPPED_ETHER.abi, provider)
-		const wethBalance = await wethContract.balanceOf(TEST_ADDRESS)
+		const wethBalance = await wethContract.balanceOf!(TEST_ADDRESS)
 		console.log(`WETH: ${formatEther(wethBalance)}`)
 
 		const usdcContract = new Contract(USD_COIN.address, USD_COIN.abi, provider)
-		const usdcBalance = await usdcContract.balanceOf(TEST_ADDRESS)
-		const usdcDecimals = await usdcContract.decimals()
+		const usdcBalance = await usdcContract.balanceOf!(TEST_ADDRESS)
+		const usdcDecimals = await usdcContract.decimals!()
 		console.log(`USDC: ${formatUnits(usdcBalance, usdcDecimals)}`)
 
 		const slpContract = new Contract(SMOOTH_LOVE_POTION.address, SMOOTH_LOVE_POTION.abi, provider)
-		const slpBalance = await slpContract.balanceOf(TEST_ADDRESS)
-		const slpDecimals = await slpContract.decimals()
+		const slpBalance = await slpContract.balanceOf!(TEST_ADDRESS)
+		const slpDecimals = await slpContract.decimals!()
 		console.log(`SLP: ${formatUnits(slpBalance, slpDecimals)}`)
 
 		const axieContract = new Contract(AXIE_PROXY.address, AXIE_PROXY.proxy_abi, provider)
-		const axiesBalance = await axieContract.balanceOf(TEST_ADDRESS)
+		const axiesBalance = await axieContract.balanceOf!(TEST_ADDRESS)
 		console.log(`Axies: ${axiesBalance.toString()}`)
 
 		expect(typeof ronBalance).toBe('bigint')
@@ -41,7 +41,7 @@ describe('Ethers Contract Integration', () => {
 
 	test('should interact with contract using proxy ABI', async () => {
 		const atiasContract = new Contract(ATIAS_BLESSING.address, ATIAS_BLESSING.proxy_abi, provider)
-		const streakData = await atiasContract.getStreak(TEST_ADDRESS)
+		const streakData = await atiasContract.getStreak!(TEST_ADDRESS)
 		const [currentStreak, lastActivated, longestStreak, lostStreak] = streakData
 
 		console.log(`Current Streak: ${currentStreak.toString()}`)
@@ -52,7 +52,7 @@ describe('Ethers Contract Integration', () => {
 		expect(typeof longestStreak).toBe('bigint')
 		expect(typeof lostStreak).toBe('bigint')
 
-		const activationStatus = await atiasContract.getActivationStatus(TEST_ADDRESS)
+		const activationStatus = await atiasContract.getActivationStatus!(TEST_ADDRESS)
 		const [isLostStreak, hasPrayedToday] = activationStatus
 
 		expect(typeof isLostStreak).toBe('boolean')
