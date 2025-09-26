@@ -1,26 +1,30 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4510,
-  address: '0x4b2612de90a3cdadf8020dc17d4b692df1e1f705' as const,
-  contract_name: 'MGold20WalletProxy',
-  display_name: 'M Gold 20 Wallet Proxy',
+  id: 37091,
+  address: '0x40d06c213709e9837a9d7ca30d3f1cce3f85923f' as const,
+  contract_name: 'TransparentProxyOZv4_9_5',
+  display_name: 'Mystery Pack Ticket Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x795d8ac8958ea0b161c102e26e4073d576180d5b',
-  created_at: 1728626464,
+  proxy_to: '0x35be76fd872c4e717eaf5cd7db9ddc39c1eded76',
+  created_at: 1758183870,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "inputs": [
       {
         "type": "address",
-        "name": "_logic"
+        "name": "logic"
+      },
+      {
+        "type": "address",
+        "name": "admin"
       },
       {
         "type": "bytes",
-        "name": "_data"
+        "name": "data"
       }
     ]
   },
@@ -71,53 +75,137 @@ const contract = {
 ] as const satisfies Abi,
   proxy_abi: [
   {
-    "name": "AdminChanged",
-    "type": "event",
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "previousAdmin"
+        "name": "account"
       },
       {
-        "type": "address",
-        "name": "newAdmin"
+        "type": "bytes32",
+        "name": "neededRole"
       }
     ]
   },
   {
-    "name": "BeaconUpgraded",
+    "name": "ERC20InsufficientAllowance",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "allowance"
+      },
+      {
+        "type": "uint256",
+        "name": "needed"
+      }
+    ]
+  },
+  {
+    "name": "ERC20InsufficientBalance",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "balance"
+      },
+      {
+        "type": "uint256",
+        "name": "needed"
+      }
+    ]
+  },
+  {
+    "name": "ERC20InvalidApprover",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "approver"
+      }
+    ]
+  },
+  {
+    "name": "ERC20InvalidReceiver",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "receiver"
+      }
+    ]
+  },
+  {
+    "name": "ERC20InvalidSender",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ]
+  },
+  {
+    "name": "ERC20InvalidSpender",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ]
+  },
+  {
+    "name": "InvalidInitialization",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "NotInitializing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "TransferNotAllowed",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "Approval",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "beacon",
+        "name": "owner",
         "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Deposit",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
       },
       {
         "type": "address",
-        "name": "token"
+        "name": "spender",
+        "indexed": true
       },
       {
         "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
-      },
-      {
-        "type": "uint256",
-        "name": "regionId"
+        "name": "value"
       }
     ]
   },
@@ -126,34 +214,23 @@ const contract = {
     "type": "event",
     "inputs": [
       {
-        "type": "uint8",
+        "type": "uint64",
         "name": "version"
       }
     ]
   },
   {
-    "name": "OwnershipTransferred",
+    "name": "MysteryPackSet",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "previousOwner",
+        "name": "mysteryPack",
         "indexed": true
       },
       {
-        "type": "address",
-        "name": "newOwner",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Paused",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
+        "type": "bool",
+        "name": "enabled"
       }
     ]
   },
@@ -221,45 +298,22 @@ const contract = {
     ]
   },
   {
-    "name": "Unpaused",
+    "name": "Transfer",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "account"
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
+        "name": "from",
         "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Withdraw",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
       },
       {
         "type": "address",
-        "name": "token"
+        "name": "to",
+        "indexed": true
       },
       {
         "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
+        "name": "value"
       }
     ]
   },
@@ -275,76 +329,109 @@ const contract = {
     ]
   },
   {
-    "name": "MGold20MultiTransferFrom",
+    "name": "MINTER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "OPERATOR_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "allowance",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "approve",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "bulkMint",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address[]",
-        "name": "tos"
+        "name": "recipients"
       },
       {
         "type": "uint256[]",
-        "name": "values"
+        "name": "amounts"
       }
     ],
     "outputs": []
   },
   {
-    "name": "MGold20Transfer",
+    "name": "decimals",
     "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
       {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "value"
+        "type": "uint8"
       }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "MGold20TransferFrom",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "value"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "deposit",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "from"
-      },
-      {
-        "type": "address",
-        "name": "token"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "regionId"
-      }
-    ],
-    "outputs": []
+    ]
   },
   {
     "name": "getRoleAdmin",
@@ -359,6 +446,42 @@ const contract = {
     "outputs": [
       {
         "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
@@ -402,52 +525,36 @@ const contract = {
     "name": "initialize",
     "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "multiWithdraw",
-    "type": "function",
-    "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address[]",
-        "name": "tos"
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "symbol"
       },
       {
         "type": "address[]",
-        "name": "tokens"
+        "name": "operators"
       },
       {
-        "type": "uint256[]",
-        "name": "values"
+        "type": "address[]",
+        "name": "minters"
       }
     ],
     "outputs": []
   },
   {
-    "name": "owner",
+    "name": "isMysteryPackWhitelisted",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "inputs": [
       {
-        "type": "address"
+        "type": "address",
+        "name": "mysteryPack"
       }
-    ]
-  },
-  {
-    "name": "pause",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "paused",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
+    ],
     "outputs": [
       {
         "type": "bool"
@@ -455,22 +562,31 @@ const contract = {
     ]
   },
   {
-    "name": "proxiableUUID",
+    "name": "mint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "name",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "bytes32"
+        "type": "string"
       }
     ]
-  },
-  {
-    "name": "renounceOwnership",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
   },
   {
     "name": "renounceRole",
@@ -483,7 +599,7 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "account"
+        "name": "callerConfirmation"
       }
     ],
     "outputs": []
@@ -505,29 +621,17 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setGrantRole",
+    "name": "setMysteryPack",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "to"
+        "name": "mysteryPack"
       },
       {
-        "type": "bytes32",
-        "name": "role"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMGold20",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newMGold20"
+        "type": "bool",
+        "name": "enabled"
       }
     ],
     "outputs": []
@@ -549,51 +653,70 @@ const contract = {
     ]
   },
   {
-    "name": "transferOwnership",
+    "name": "symbol",
     "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newOwner"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "unpause",
-    "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "inputs": [],
-    "outputs": []
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
   },
   {
-    "name": "upgradeTo",
+    "name": "totalSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "transfer",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
+        "name": "to"
       },
       {
-        "type": "bytes",
-        "name": "data"
+        "type": "uint256",
+        "name": "amount"
       }
     ],
-    "outputs": []
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "transferFrom",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
   }
 ] as const satisfies Abi
 } as const satisfies Contract

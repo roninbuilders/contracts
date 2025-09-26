@@ -1,143 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 34119,
-  address: '0x58fac88b5899fd894fb7153d3c8a12db05333ac5' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Dragon Ring Proxy',
+  id: 37177,
+  address: '0xae8f2f9a9594ca41a29d15a1e5b46e35cef378a5' as const,
+  contract_name: 'DragonRing',
+  display_name: 'Dragon Ring',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xae8f2f9a9594ca41a29d15a1e5b46e35cef378a5',
-  created_at: 1745609596,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1758751546,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "ERC2981InvalidDefaultRoyalty",
     "type": "error",

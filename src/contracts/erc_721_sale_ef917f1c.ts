@@ -1,196 +1,53 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 34119,
-  address: '0x58fac88b5899fd894fb7153d3c8a12db05333ac5' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Dragon Ring Proxy',
+  id: 37185,
+  address: '0x18fa56d8599d842ca351d3306686484aef917f1c' as const,
+  contract_name: 'ERC721Sale',
+  display_name: 'ERC721 Sale',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xae8f2f9a9594ca41a29d15a1e5b46e35cef378a5',
-  created_at: 1745609596,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1758807151,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
+        "name": "owner"
+      },
       {
-        "type": "address",
-        "name": "implementation_"
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "symbol"
+      },
+      {
+        "type": "string",
+        "name": "baseURI"
       }
     ]
   },
   {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "ERC2981InvalidDefaultRoyalty",
+    "name": "AccessControlBadConfirmation",
     "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "numerator"
-      },
-      {
-        "type": "uint256",
-        "name": "denominator"
-      }
-    ]
+    "inputs": []
   },
   {
-    "name": "ERC2981InvalidDefaultRoyaltyReceiver",
+    "name": "AccessControlUnauthorizedAccount",
     "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "receiver"
-      }
-    ]
-  },
-  {
-    "name": "ERC2981InvalidTokenRoyalty",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
+        "name": "account"
       },
       {
-        "type": "uint256",
-        "name": "numerator"
-      },
-      {
-        "type": "uint256",
-        "name": "denominator"
-      }
-    ]
-  },
-  {
-    "name": "ERC2981InvalidTokenRoyaltyReceiver",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "address",
-        "name": "receiver"
+        "type": "bytes32",
+        "name": "neededRole"
       }
     ]
   },
@@ -306,37 +163,12 @@ const contract = {
     ]
   },
   {
-    "name": "InvalidInitialization",
+    "name": "EnforcedPause",
     "type": "error",
     "inputs": []
   },
   {
-    "name": "NotInitializing",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "OwnableInvalidOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "OwnableUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      }
-    ]
-  },
-  {
-    "name": "ReentrancyGuardReentrantCall",
+    "name": "ExpectedPause",
     "type": "error",
     "inputs": []
   },
@@ -382,90 +214,91 @@ const contract = {
     ]
   },
   {
-    "name": "Initialized",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint64",
-        "name": "version"
-      }
-    ]
-  },
-  {
-    "name": "LockId",
+    "name": "NonceUpdated",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
-        "name": "tokenId",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Mint",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user",
+        "name": "_tokenId",
         "indexed": true
       },
       {
         "type": "uint256",
-        "name": "amount"
+        "name": "_nonce",
+        "indexed": true
       }
     ]
   },
   {
-    "name": "OwnershipTransferred",
+    "name": "Paused",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "previousOwner",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "RoleAdminChanged",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleGranted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
         "indexed": true
       },
       {
         "type": "address",
-        "name": "newOwner",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "SetRoyalty",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver",
+        "name": "account",
         "indexed": true
       },
       {
-        "type": "uint256",
-        "name": "royalty"
-      }
-    ]
-  },
-  {
-    "name": "SetSigner",
-    "type": "event",
-    "inputs": [
-      {
         "type": "address",
-        "name": "signer",
+        "name": "sender",
         "indexed": true
       }
     ]
   },
   {
-    "name": "SetUri",
+    "name": "RoleRevoked",
     "type": "event",
     "inputs": [
       {
-        "type": "string",
-        "name": "_url"
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
       }
     ]
   },
@@ -491,39 +324,45 @@ const contract = {
     ]
   },
   {
-    "name": "UnlockId",
+    "name": "Unpaused",
     "type": "event",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "tokenId",
-        "indexed": true
+        "type": "address",
+        "name": "account"
       }
     ]
   },
   {
-    "name": "MAX_SUPPLY",
+    "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "uint256"
+        "type": "bytes32"
       }
     ]
   },
   {
-    "name": "__deprecated_lockedIds",
+    "name": "MINTER_ROLE",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "bool"
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "PAUSER_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
       }
     ]
   },
@@ -560,6 +399,35 @@ const contract = {
     ]
   },
   {
+    "name": "bulkMint",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "recipients"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ]
+  },
+  {
+    "name": "burn",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "stateMutability": "view",
@@ -576,20 +444,92 @@ const contract = {
     ]
   },
   {
-    "name": "initialize",
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMember",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getRoleMemberCount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "_owner"
+        "type": "bytes32",
+        "name": "role"
       },
       {
         "type": "address",
-        "name": "_oracle"
+        "name": "account"
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
   },
   {
     "name": "isApprovedForAll",
@@ -612,18 +552,24 @@ const contract = {
     ]
   },
   {
-    "name": "isLockPeriod",
+    "name": "mint",
     "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
     "outputs": [
       {
-        "type": "bool"
+        "type": "uint256",
+        "name": "_tokenId"
       }
     ]
   },
   {
-    "name": "mint",
+    "name": "mintLaunchpad",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
@@ -633,10 +579,50 @@ const contract = {
       },
       {
         "type": "uint256",
-        "name": "tokenId"
+        "name": "quantity"
+      },
+      {
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ]
+  },
+  {
+    "name": "mintPresale",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "quantity"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts"
+      }
+    ]
   },
   {
     "name": "name",
@@ -650,24 +636,17 @@ const contract = {
     ]
   },
   {
-    "name": "oracle",
+    "name": "nonces",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "inputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
-    ]
-  },
-  {
-    "name": "owner",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
+    ],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
     ]
   },
@@ -688,36 +667,54 @@ const contract = {
     ]
   },
   {
-    "name": "renounceOwnership",
+    "name": "pause",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
     "outputs": []
   },
   {
-    "name": "royaltyInfo",
+    "name": "paused",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "salePrice"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "address",
-        "name": "receiver"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
+        "type": "bool"
       }
     ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "callerConfirmation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "safeTransferFrom",
@@ -780,44 +777,32 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setDefaultRoyalty",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver"
-      },
-      {
-        "type": "uint96",
-        "name": "feeNumerator"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setOracle",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_oracle"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setUri",
+    "name": "setBaseURI",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "string",
-        "name": "_url"
+        "name": "baseTokenURI"
       }
     ],
     "outputs": []
+  },
+  {
+    "name": "stateOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes"
+      }
+    ]
   },
   {
     "name": "supportsInterface",
@@ -845,13 +830,6 @@ const contract = {
         "type": "string"
       }
     ]
-  },
-  {
-    "name": "toggleLockPeriod",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
   },
   {
     "name": "tokenByIndex",
@@ -937,15 +915,10 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "transferOwnership",
+    "name": "unpause",
     "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newOwner"
-      }
-    ],
+    "inputs": [],
     "outputs": []
   }
 ] as const satisfies Abi

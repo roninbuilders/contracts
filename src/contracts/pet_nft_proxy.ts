@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 34119,
-  address: '0x58fac88b5899fd894fb7153d3c8a12db05333ac5' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Dragon Ring Proxy',
+  id: 37144,
+  address: '0x6c120f16dfec5fb564310dc7513fac27d2f7aa56' as const,
+  contract_name: 'ERC1967Proxy',
+  display_name: 'Pet NFT Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xae8f2f9a9594ca41a29d15a1e5b46e35cef378a5',
-  created_at: 1745609596,
+  proxy_to: '0xca968d5951ad68654c5a3f69df0f2aae3fe33987',
+  created_at: 1757953831,
   abi: [
   {
     "type": "constructor",
@@ -16,11 +16,7 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
+        "name": "implementation"
       },
       {
         "type": "bytes",
@@ -29,29 +25,34 @@ const contract = {
     ]
   },
   {
-    "name": "AdminChanged",
-    "type": "event",
+    "name": "AddressEmptyCode",
+    "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
+        "name": "target"
       }
     ]
   },
   {
-    "name": "BeaconUpgraded",
-    "type": "event",
+    "name": "ERC1967InvalidImplementation",
+    "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "beacon",
-        "indexed": true
+        "name": "implementation"
       }
     ]
+  },
+  {
+    "name": "ERC1967NonPayable",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedCall",
+    "type": "error",
+    "inputs": []
   },
   {
     "name": "Upgraded",
@@ -67,77 +68,53 @@ const contract = {
   {
     "type": "fallback",
     "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
   }
 ] as const satisfies Abi,
   proxy_abi: [
+  {
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "bytes32",
+        "name": "neededRole"
+      }
+    ]
+  },
+  {
+    "name": "AddressEmptyCode",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967InvalidImplementation",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation"
+      }
+    ]
+  },
+  {
+    "name": "ERC1967NonPayable",
+    "type": "error",
+    "inputs": []
+  },
   {
     "name": "ERC2981InvalidDefaultRoyalty",
     "type": "error",
@@ -306,6 +283,21 @@ const contract = {
     ]
   },
   {
+    "name": "EnforcedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ExpectedPause",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FailedCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
     "name": "InvalidInitialization",
     "type": "error",
     "inputs": []
@@ -316,29 +308,24 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "OwnableInvalidOwner",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      }
-    ]
-  },
-  {
-    "name": "OwnableUnauthorizedAccount",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "account"
-      }
-    ]
-  },
-  {
     "name": "ReentrancyGuardReentrantCall",
     "type": "error",
     "inputs": []
+  },
+  {
+    "name": "UUPSUnauthorizedCallContext",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "slot"
+      }
+    ]
   },
   {
     "name": "Approval",
@@ -382,6 +369,20 @@ const contract = {
     ]
   },
   {
+    "name": "BatchMetadataUpdate",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_fromTokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "_toTokenId"
+      }
+    ]
+  },
+  {
     "name": "Initialized",
     "type": "event",
     "inputs": [
@@ -392,80 +393,141 @@ const contract = {
     ]
   },
   {
-    "name": "LockId",
+    "name": "MetadataUpdate",
     "type": "event",
     "inputs": [
       {
         "type": "uint256",
-        "name": "tokenId",
+        "name": "_tokenId"
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "PetDelisted",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "petId",
         "indexed": true
       }
     ]
   },
   {
-    "name": "Mint",
+    "name": "PetListed",
     "type": "event",
     "inputs": [
       {
+        "type": "uint256",
+        "name": "petId",
+        "indexed": true
+      },
+      {
         "type": "address",
-        "name": "user",
+        "name": "seller",
         "indexed": true
       },
       {
         "type": "uint256",
-        "name": "amount"
+        "name": "price"
       }
     ]
   },
   {
-    "name": "OwnershipTransferred",
+    "name": "PetSold",
     "type": "event",
     "inputs": [
       {
-        "type": "address",
-        "name": "previousOwner",
+        "type": "uint256",
+        "name": "petId",
         "indexed": true
       },
       {
         "type": "address",
-        "name": "newOwner",
+        "name": "seller",
         "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "SetRoyalty",
-    "type": "event",
-    "inputs": [
+      },
       {
         "type": "address",
-        "name": "receiver",
+        "name": "buyer",
         "indexed": true
       },
       {
         "type": "uint256",
-        "name": "royalty"
+        "name": "price"
       }
     ]
   },
   {
-    "name": "SetSigner",
+    "name": "RoleAdminChanged",
     "type": "event",
     "inputs": [
       {
-        "type": "address",
-        "name": "signer",
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
         "indexed": true
       }
     ]
   },
   {
-    "name": "SetUri",
+    "name": "RoleGranted",
     "type": "event",
     "inputs": [
       {
-        "type": "string",
-        "name": "_url"
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "RoleRevoked",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
       }
     ]
   },
@@ -491,41 +553,124 @@ const contract = {
     ]
   },
   {
-    "name": "UnlockId",
+    "name": "Unpaused",
     "type": "event",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "tokenId",
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "Upgraded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
         "indexed": true
       }
     ]
   },
   {
-    "name": "MAX_SUPPLY",
+    "name": "ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "uint256"
+        "type": "bytes32"
       }
     ]
   },
   {
-    "name": "__deprecated_lockedIds",
+    "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "outputs": [
       {
-        "type": "bool"
+        "type": "bytes32"
       }
     ]
+  },
+  {
+    "name": "FINANCE_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "GAME_ROLE",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "UPGRADE_INTERFACE_VERSION",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "adminEmitBatchMetadataUpdate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "fromTokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "toTokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminEmitMetadataUpdate",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "adminSetTokenURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
+      {
+        "type": "string",
+        "name": "newUri"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "approve",
@@ -560,6 +705,68 @@ const contract = {
     ]
   },
   {
+    "name": "breedPets",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "p1"
+      },
+      {
+        "type": "uint256",
+        "name": "p2"
+      },
+      {
+        "type": "string",
+        "name": "childUri"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "buyPet",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "petId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "contractURI",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "deleteDefaultRoyalty",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "delistPet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "petId"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "stateMutability": "view",
@@ -576,19 +783,62 @@ const contract = {
     ]
   },
   {
-    "name": "initialize",
+    "name": "getRoleAdmin",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "grantRole",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "_owner"
+        "type": "bytes32",
+        "name": "role"
       },
       {
         "type": "address",
-        "name": "_oracle"
+        "name": "account"
       }
     ],
+    "outputs": []
+  },
+  {
+    "name": "hasRole",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
     "outputs": []
   },
   {
@@ -612,18 +862,23 @@ const contract = {
     ]
   },
   {
-    "name": "isLockPeriod",
+    "name": "listPet",
     "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "stateMutability": "nonpayable",
+    "inputs": [
       {
-        "type": "bool"
+        "type": "uint256",
+        "name": "petId"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
       }
-    ]
+    ],
+    "outputs": []
   },
   {
-    "name": "mint",
+    "name": "mintPet",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
@@ -632,8 +887,8 @@ const contract = {
         "name": "to"
       },
       {
-        "type": "uint256",
-        "name": "tokenId"
+        "type": "string",
+        "name": "tokenUri"
       }
     ],
     "outputs": []
@@ -646,28 +901,6 @@ const contract = {
     "outputs": [
       {
         "type": "string"
-      }
-    ]
-  },
-  {
-    "name": "oracle",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "owner",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
       }
     ]
   },
@@ -688,10 +921,128 @@ const contract = {
     ]
   },
   {
-    "name": "renounceOwnership",
+    "name": "pause",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "petSales",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "seller"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "bool",
+        "name": "active"
+      }
+    ]
+  },
+  {
+    "name": "pets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "level"
+      },
+      {
+        "type": "uint256",
+        "name": "xp"
+      },
+      {
+        "type": "uint256",
+        "name": "parent1"
+      },
+      {
+        "type": "uint256",
+        "name": "parent2"
+      }
+    ]
+  },
+  {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "renounceRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "callerConfirmation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "resetTokenRoyalty",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revokeRole",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
     "outputs": []
   },
   {
@@ -780,6 +1131,18 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "setContractURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "newContractURI"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "setDefaultRoyalty",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -796,25 +1159,21 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setOracle",
+    "name": "setTokenRoyalty",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      },
       {
         "type": "address",
-        "name": "_oracle"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setUri",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
+        "name": "receiver"
+      },
       {
-        "type": "string",
-        "name": "_url"
+        "type": "uint96",
+        "name": "feeNumerator"
       }
     ],
     "outputs": []
@@ -845,13 +1204,6 @@ const contract = {
         "type": "string"
       }
     ]
-  },
-  {
-    "name": "toggleLockPeriod",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
   },
   {
     "name": "tokenByIndex",
@@ -937,13 +1289,60 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "transferOwnership",
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "updatePet",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "petId"
+      },
+      {
+        "type": "uint256",
+        "name": "newLevel"
+      },
+      {
+        "type": "uint256",
+        "name": "newXp"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "newOwner"
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
       }
     ],
     "outputs": []

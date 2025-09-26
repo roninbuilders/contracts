@@ -7,7 +7,7 @@ const contract = {
   display_name: 'NFT Mystery Pack Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0x81b568b9b415f1758315fc300d3e3ace7fb09611',
+  proxy_to: '0xbd3b247473dd3d8b14bc2e8e8fd5a5dc6e3dfbf1',
   created_at: 1751944785,
   abi: [
   {
@@ -262,11 +262,6 @@ const contract = {
   },
   {
     "name": "InvalidMysteryPackManager",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "InvalidOrderOfTiers",
     "type": "error",
     "inputs": []
   },
@@ -561,6 +556,30 @@ const contract = {
     ]
   },
   {
+    "name": "InsufficientBuybackFund",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "requestHash",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "available"
+      },
+      {
+        "type": "uint256",
+        "name": "required"
+      }
+    ]
+  },
+  {
     "name": "MaxPackOpenPerTxUpdated",
     "type": "event",
     "inputs": [
@@ -642,6 +661,10 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
+          },
+          {
+            "type": "address",
+            "name": "buybackToken"
           }
         ]
       }
@@ -769,16 +792,16 @@ const contract = {
       },
       {
         "type": "uint256",
-        "name": "fulfilledAt",
+        "name": "revenue",
         "indexed": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "outOfStockHitsByTier"
       },
       {
         "type": "uint256",
         "name": "numOpenedPacks"
+      },
+      {
+        "type": "uint256[]",
+        "name": "outOfStockHitsByTier"
       },
       {
         "type": "tuple",
@@ -797,10 +820,6 @@ const contract = {
             "name": "token"
           }
         ]
-      },
-      {
-        "type": "uint256",
-        "name": "revenue"
       },
       {
         "type": "tuple[]",
@@ -1381,6 +1400,10 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
+          },
+          {
+            "type": "address",
+            "name": "buybackToken"
           }
         ]
       }
@@ -1640,6 +1663,10 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
+          },
+          {
+            "type": "address",
+            "name": "buybackToken"
           }
         ]
       },
@@ -1719,6 +1746,10 @@ const contract = {
       {
         "type": "uint32",
         "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPriceToFulFill"
       },
       {
         "type": "uint256",
@@ -1944,6 +1975,10 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
+          },
+          {
+            "type": "address",
+            "name": "buybackToken"
           }
         ]
       },
@@ -2018,6 +2053,10 @@ const contract = {
       }
     ],
     "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
   }
 ] as const satisfies Abi
 } as const satisfies Contract

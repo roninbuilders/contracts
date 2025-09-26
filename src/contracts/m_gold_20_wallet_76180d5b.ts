@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4510,
-  address: '0x4b2612de90a3cdadf8020dc17d4b692df1e1f705' as const,
-  contract_name: 'MGold20WalletProxy',
-  display_name: 'M Gold 20 Wallet Proxy',
+  id: 37214,
+  address: '0x795d8ac8958ea0b161c102e26e4073d576180d5b' as const,
+  contract_name: 'MGold20Wallet',
+  display_name: 'M Gold 20 Wallet',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x795d8ac8958ea0b161c102e26e4073d576180d5b',
-  created_at: 1728626464,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1758859649,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "AdminChanged",
     "type": "event",
