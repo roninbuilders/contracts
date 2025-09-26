@@ -1,10 +1,10 @@
-name: Automated contract update and publish
+name: Contracts Sync & Release
 
 on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: "Version increment type"
+        description: "Version bump type (patch | minor | major | prerelease)"
         required: true
         type: choice
         default: patch
@@ -14,7 +14,7 @@ on:
           - major
           - prerelease
       preid:
-        description: "Pre-release identifier (e.g., rc, beta) — used only when release_type=prerelease"
+        description: "Pre-release identifier (e.g., rc, beta) - used only when release_type=prerelease"
         required: false
         type: string
 
@@ -24,87 +24,89 @@ permissions:
 
 jobs:
   update-and-publish:
+    name: Update Contracts & Publish Package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT }}
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: Setup Node.js
+      - name: Setup Node.js (npm registry)
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org/"
-          cache: 'pnpm'
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org/'
+          cache: pnpm
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Install Dependencies
+      - name: Install Dependencies (pnpm)
         run: pnpm install --frozen-lockfile
 
-      - name: Update Contracts
+      - name: Generate Updated Contracts
         run: pnpm run generate-contracts
 
-      - name: Check for changes
+      - name: Detect Changes
         id: git-check
         run: |
-          git diff --quiet && git diff --staged --quiet || echo "changes_detected=true" >> $GITHUB_OUTPUT
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Configure Git
+      - name: Configure Git Identity
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Increment package version and commit
+      - name: Bump Version & Commit
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          # Increment version based on selected bump type and get the new version
           BUMP_TYPE="${{ github.event.inputs.release_type }}"
           PREID="${{ github.event.inputs.preid }}"
           echo "Selected version bump: $BUMP_TYPE"
           if [ "$BUMP_TYPE" = "prerelease" ] && [ -n "$PREID" ]; then
-            echo "Using preid: $PREID"
             pnpm version "$BUMP_TYPE" --preid "$PREID" --no-git-tag-version
           else
             pnpm version "$BUMP_TYPE" --no-git-tag-version
           fi
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          
-          # Commit all changes
           git add .
           git commit -m "chore: update contracts to v$NEW_VERSION"
           git push origin main
 
-      - name: Build
+      - name: Build Package
         if: steps.git-check.outputs.changes_detected == 'true'
         run: pnpm build
 
-      - name: Publish to npm
+      - name: Publish to npm Registry
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
           pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Setup Node.js for GitHub Packages
+      - name: Setup Node.js (GitHub Packages)
         if: steps.git-check.outputs.changes_detected == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@roninbuilders"
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@roninbuilders'
 
       - name: Publish to GitHub Packages
         if: steps.git-check.outputs.changes_detected == 'true'
@@ -112,17 +114,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create and push tag
+      - name: Create & Push Tag
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
-          # Create and push tag only after successful npm publish
-          echo "Preparing to tag version v$NEW_VERSION"
-          if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
-            echo "Tag v$NEW_VERSION already exists, skipping tag creation"
-          else
-            git tag "v$NEW_VERSION"
-            git push origin "v$NEW_VERSION"
-          fi
+            echo "Preparing to tag version v$NEW_VERSION"
+            if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
+              echo "Tag v$NEW_VERSION already exists, skipping"
+            else
+              git tag "v$NEW_VERSION"
+              git push origin "v$NEW_VERSION"
+            fi
 
       - name: Create GitHub Release
         if: steps.git-check.outputs.changes_detected == 'true'
@@ -134,7 +135,7 @@ jobs:
           release_name: "Release v${{ env.NEW_VERSION }}"
           body: |
             Automated release with updated contracts.
-            
+
             ## Changes
             - Synchronized with latest contract deployments
           draft: false
