@@ -10,7 +10,12 @@
 		}
 	},
 	"files": {
-		"ignore": ["src/contracts/**", "dist/**"]
+		"ignore": [
+			"src/contracts/**",
+			"dist/**",
+			".claude/**",
+			".github/**"
+		]
 	},
 	"javascript": {
 		"formatter": {
