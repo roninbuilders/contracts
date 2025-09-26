@@ -1,13 +1,11 @@
 {
 	"name": "@roninbuilders/contracts",
 	"version": "0.6.22",
-	"description": "Type safe Contract ABIs for Ronin Network",
+	"description": "Verified smart contract ABIs and addresses for the Ronin Network blockchain. TypeScript-ready with optimized bundle size.",
 	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"scripts": {
 		"build": "NODE_OPTIONS='--max-old-space-size=8192' tsup",
 		"generate-contracts": "bun src/generate-contracts.ts",
@@ -16,6 +14,7 @@
 		"test:viem": "bun test test/viem.test.ts",
 		"typecheck": "tsc --noEmit",
 		"format": "biome format . --write",
+		"format:check": "biome ci .",
 		"generate-index": "bun run src/generate-index.ts"
 	},
 	"dependencies": {
@@ -40,11 +39,16 @@
 	"keywords": [
 		"ronin",
 		"axie",
-		"bot",
-		"contracts",
+		"blockchain",
+		"smart-contracts",
 		"abi",
 		"viem",
-		"ethers"
+		"ethers",
+		"typescript",
+		"javascript",
+		"web3",
+		"axie-infinity",
+		"addresses"
 	],
 	"engines": {
 		"node": ">=18"
