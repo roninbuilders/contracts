@@ -1,10 +1,8 @@
 <div align="center">
 
-![RoninBuilders Contracts](examples/roninbuilders.png)
+![RoninBuilders Contracts](https://raw.githubusercontent.com/roninbuilders/contracts/main/examples/roninbuilders.png)
 
 # @roninbuilders/contracts
-
-</div>
 
 [![npm version](https://img.shields.io/npm/v/@roninbuilders/contracts.svg)](https://www.npmjs.com/package/@roninbuilders/contracts)
 [![npm downloads](https://img.shields.io/npm/dm/@roninbuilders/contracts.svg)](https://www.npmjs.com/package/@roninbuilders/contracts)
@@ -12,12 +10,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![Bundle Friendly](https://img.shields.io/badge/Bundle-Tree--Shakable-success.svg)](https://github.com/roninbuilders/contracts)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-informational.svg)](./.github/workflows/ci.yml)
+</div>
 
-Verified smart contract ABIs and addresses for Ronin Network. Import just what you need and get full TypeScript safety.
-
-Works great with viem, ethers.js, browser apps, and server scripts.
-
----
 
 ## Table of contents
 
@@ -40,7 +34,6 @@ All the contract addresses and ABIs come straight from the official Ronin Networ
 Everything has proper TypeScript types generated automatically. Works with whatever web3 library you're already using, whether that's viem, ethers.js, or something else. We keep adding new contracts as they get deployed and verified on the network.
 
 You don't have to hunt down contract addresses or copy ABIs from block explorers anymore. Just import what you need and start building.
-
 
 ## Installation
 
