@@ -1,11 +1,13 @@
 {
 	"name": "@roninbuilders/contracts",
-	"version": "0.6.22",
+	"version": "0.6.23",
 	"description": "Verified smart contract ABIs and addresses for the Ronin Network blockchain. TypeScript-ready with optimized bundle size.",
 	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "NODE_OPTIONS='--max-old-space-size=8192' tsup",
 		"generate-contracts": "bun src/generate-contracts.ts",

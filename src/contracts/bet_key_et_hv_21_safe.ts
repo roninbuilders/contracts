@@ -1,14 +1,14 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 7596,
-  address: '0x3a4b90ac0476a81011fea1bc46535a5a4a0998ca' as const,
-  contract_name: 'PHASupportProxy',
-  display_name: 'PHA Support Proxy',
+  id: 37163,
+  address: '0x55fc6df40e8e9baea2926838932e50de350ec629' as const,
+  contract_name: 'BetKeyETHv21Safe',
+  display_name: 'Bet Key ET Hv 21 Safe',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xdac9e524b9118a69ae44dec2efc4986105f1e49f',
-  created_at: 1737608850,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1758524825,
   abi: [
   {
     "type": "constructor",
@@ -16,111 +16,224 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "ArenaBoxPurchased",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "buyer",
-        "indexed": true
+        "name": "_owner"
       },
       {
         "type": "uint256",
-        "name": "amount"
+        "name": "subscriptionId"
+      },
+      {
+        "type": "bytes32",
+        "name": "keyHash"
+      },
+      {
+        "type": "address",
+        "name": "vrfCoordinator"
+      },
+      {
+        "type": "uint32",
+        "name": "callbackGasLimit"
+      },
+      {
+        "type": "uint16",
+        "name": "requestConfirmations"
+      },
+      {
+        "type": "uint32",
+        "name": "numWords"
       },
       {
         "type": "uint256",
-        "name": "totalCost"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
+        "name": "_minBet"
+      },
       {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Initialized",
-    "type": "event",
-    "inputs": [
+        "type": "uint256",
+        "name": "_maxPercWin"
+      },
+      {
+        "type": "uint256",
+        "name": "_houseEdge"
+      },
+      {
+        "type": "uint256",
+        "name": "_referrerEdge"
+      },
       {
         "type": "uint8",
-        "name": "version"
+        "name": "_maxBetRepetition"
+      }
+    ]
+  },
+  {
+    "name": "AccessControlBadConfirmation",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "bytes32",
+        "name": "neededRole"
+      }
+    ]
+  },
+  {
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "have"
+      },
+      {
+        "type": "address",
+        "name": "want"
+      }
+    ]
+  },
+  {
+    "name": "OnlyOwnerOrCoordinator",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "have"
+      },
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "coordinator"
+      }
+    ]
+  },
+  {
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ZeroAddress",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "BetPlaced",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "requestId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "gambler",
+        "indexed": true
+      },
+      {
+        "type": "tuple",
+        "name": "betInfo",
+        "components": [
+          {
+            "type": "address",
+            "name": "gambler"
+          },
+          {
+            "type": "uint256",
+            "name": "betAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "winAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "reservedAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "prediction"
+          },
+          {
+            "type": "uint256",
+            "name": "rollDirection"
+          },
+          {
+            "type": "uint256",
+            "name": "modulo"
+          },
+          {
+            "type": "uint256",
+            "name": "timestamp"
+          },
+          {
+            "type": "address",
+            "name": "referrer"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "BetResult",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "requestId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "gambler",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "result"
+      },
+      {
+        "type": "uint256",
+        "name": "payout"
+      },
+      {
+        "type": "bool",
+        "name": "win"
+      }
+    ]
+  },
+  {
+    "name": "CoordinatorSet",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "vrfCoordinator"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
       }
     ]
   },
@@ -130,50 +243,13 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "previousOwner",
+        "name": "from",
         "indexed": true
       },
       {
         "type": "address",
-        "name": "newOwner",
+        "name": "to",
         "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "PremiumBoxPurchased",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "buyer",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "totalCost"
-      }
-    ]
-  },
-  {
-    "name": "PrimalHeroZDarkSummon",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "player"
-      },
-      {
-        "type": "uint256[]",
-        "name": "tokenIds"
-      },
-      {
-        "type": "uint256",
-        "name": "timestamp"
       }
     ]
   },
@@ -241,40 +317,6 @@ const contract = {
     ]
   },
   {
-    "name": "SealPurchased",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "buyer",
-        "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      },
-      {
-        "type": "uint256",
-        "name": "totalCost"
-      },
-      {
-        "type": "uint256",
-        "name": "sealIdx"
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
     "name": "DEFAULT_ADMIN_ROLE",
     "type": "function",
     "stateMutability": "view",
@@ -286,7 +328,14 @@ const contract = {
     ]
   },
   {
-    "name": "MAX_DAILY_PURCHASE",
+    "name": "acceptOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "availableLiquidity",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -297,134 +346,58 @@ const contract = {
     ]
   },
   {
-    "name": "RESET_TIME",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "TOKEN_COST_PER_BOX",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "UTC_KST_OFFSET",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "arenaSealPurchase",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "boxPriceInMGT",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "buyPremiumBox",
+    "name": "bet",
     "type": "function",
     "stateMutability": "payable",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "buySeal",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "getBoxPrice",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "getLandZ",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "getLandZVault",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
-      }
-    ]
-  },
-  {
-    "name": "getRemainingPurchasableBoxes",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
+        "type": "uint256[4]",
+        "name": "_betParams"
+      },
       {
         "type": "address",
-        "name": "user"
+        "name": "_referrer"
+      },
+      {
+        "type": "uint8",
+        "name": "_betRepetition"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "budget",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "calculateWinAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "modulo"
+      },
+      {
+        "type": "uint256",
+        "name": "odds"
       }
     ],
     "outputs": [
       {
-        "type": "uint256"
+        "type": "uint256",
+        "name": "winAmount"
       }
     ]
   },
@@ -441,33 +414,6 @@ const contract = {
     "outputs": [
       {
         "type": "bytes32"
-      }
-    ]
-  },
-  {
-    "name": "getSealPrice",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "getSealPriceByUser",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_user"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
       }
     ]
   },
@@ -508,53 +454,57 @@ const contract = {
     ]
   },
   {
-    "name": "heroZGenesis721",
+    "name": "houseEdge",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
     ]
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "material",
+    "name": "maxBetRepetition",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint8"
       }
     ]
   },
   {
-    "name": "mgold20",
+    "name": "maxPercWin",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
     ]
   },
   {
-    "name": "mgold20Wallet",
+    "name": "maxWin",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "minBet",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
@@ -570,52 +520,124 @@ const contract = {
     ]
   },
   {
-    "name": "phzm1155",
+    "name": "pendingBets",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
     "outputs": [
       {
-        "type": "address"
+        "type": "address",
+        "name": "gambler"
+      },
+      {
+        "type": "uint256",
+        "name": "betAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "winAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "reservedAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "prediction"
+      },
+      {
+        "type": "uint256",
+        "name": "rollDirection"
+      },
+      {
+        "type": "uint256",
+        "name": "modulo"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      },
+      {
+        "type": "address",
+        "name": "referrer"
       }
     ]
   },
   {
-    "name": "primalHeroZ",
+    "name": "pendingPayouts",
     "type": "function",
     "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "inputs": [
       {
         "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
   {
-    "name": "primalHeroZDarkSummon",
+    "name": "rawFulfillRandomWords",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
+        "type": "uint256",
+        "name": "requestId"
+      },
+      {
         "type": "uint256[]",
-        "name": "tokenIds"
+        "name": "randomWords"
       }
     ],
     "outputs": []
   },
   {
-    "name": "proxiableUUID",
+    "name": "recoverOrRefund",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "requestId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "referrerEarnings",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "referrerEdge",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "bytes32"
+        "type": "uint256"
       }
     ]
   },
   {
-    "name": "renounceOwnership",
+    "name": "releaseAllReservedFunds",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
@@ -632,7 +654,7 @@ const contract = {
       },
       {
         "type": "address",
-        "name": "account"
+        "name": "callerConfirmation"
       }
     ],
     "outputs": []
@@ -654,7 +676,51 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "sealEndTime",
+    "name": "s_callbackGasLimit",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint32"
+      }
+    ]
+  },
+  {
+    "name": "s_keyHash",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "s_numWords",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint32"
+      }
+    ]
+  },
+  {
+    "name": "s_requestConfirmations",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint16"
+      }
+    ]
+  },
+  {
+    "name": "s_subscriptionId",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -665,240 +731,152 @@ const contract = {
     ]
   },
   {
-    "name": "sealIdx",
+    "name": "s_vrfCoordinator",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "sealPrice",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "sealStartTime",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "seasonalSealPurchase",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
       {
         "type": "address"
-      },
-      {
-        "type": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
       }
     ]
   },
   {
-    "name": "setBoxPrice",
+    "name": "setCallbackGasLimit",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "_boxPriceInMGT"
+        "type": "uint32",
+        "name": "callbackGasLimit"
       }
     ],
     "outputs": []
   },
   {
-    "name": "setGrantRole",
+    "name": "setCoordinator",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "address",
-        "name": "to"
-      },
+        "name": "_vrfCoordinator"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setHouseEdgePerc",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_perc"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setKeyHash",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
       {
         "type": "bytes32",
-        "name": "role"
+        "name": "keyHash"
       }
     ],
     "outputs": []
   },
   {
-    "name": "setHeroesGenesis",
+    "name": "setMaxBetRepetition",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
-        "type": "address",
-        "name": "newheroesGenesis721"
+        "type": "uint8",
+        "name": "_value"
       }
     ],
     "outputs": []
   },
   {
-    "name": "setLandZ",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_landZ"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setLandZVault",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_landZVault"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMaterial",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newMaterial"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMaxDailyPurchase",
+    "name": "setMaxPercWin",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "uint256",
-        "name": "newDailyCount"
+        "name": "_perc"
       }
     ],
     "outputs": []
   },
   {
-    "name": "setMgold20",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newMgold20"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setMgold20Wallet",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newMgold20Wallet"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setPHZM1155",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newPHZM1155"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setPrimalHeroZ",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newPrimalHeroZ"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setSealIdx",
+    "name": "setMinBet",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "uint256",
-        "name": "_idx"
+        "name": "_value"
       }
     ],
     "outputs": []
   },
   {
-    "name": "setSealPeriod",
+    "name": "setReferrerEdgePerc",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "uint256",
-        "name": "_startTime"
+        "name": "_perc"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRequestConfirmations",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint16",
+        "name": "requestConfirmations"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setSubscriptionId",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "subscriptionId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setUserReferrer",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      },
+      {
+        "type": "address",
+        "name": "_ref"
       },
       {
         "type": "uint256",
-        "name": "_endTime"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setSealPrice",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_sealPrice"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setToyZ",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newToyZ"
+        "name": "_perc"
       }
     ],
     "outputs": []
@@ -920,13 +898,13 @@ const contract = {
     ]
   },
   {
-    "name": "toyZ",
+    "name": "totalReserved",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "address"
+        "type": "uint256"
       }
     ]
   },
@@ -937,41 +915,13 @@ const contract = {
     "inputs": [
       {
         "type": "address",
-        "name": "newOwner"
+        "name": "to"
       }
     ],
     "outputs": []
   },
   {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "userPurchases",
+    "name": "userReferrer",
     "type": "function",
     "stateMutability": "view",
     "inputs": [
@@ -981,12 +931,12 @@ const contract = {
     ],
     "outputs": [
       {
-        "type": "uint256",
-        "name": "lastPurchaseTime"
+        "type": "address",
+        "name": "refAddress"
       },
       {
         "type": "uint256",
-        "name": "dailyAmount"
+        "name": "edge"
       }
     ]
   },
@@ -994,8 +944,17 @@ const contract = {
     "name": "withdraw",
     "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
     "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
   }
 ] as const satisfies Abi
 } as const satisfies Contract

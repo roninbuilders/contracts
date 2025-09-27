@@ -1,75 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 4309,
-  address: '0x0e268edc8750d50c440d715c935eba2e7c6ae775' as const,
-  contract_name: 'PHZM1155Proxy',
-  display_name: 'PHZM1155 Proxy',
+  id: 36869,
+  address: '0x495b4ff9f4e5e1d776eade0f8c403b557cc7951c' as const,
+  contract_name: 'PHZM1155',
+  display_name: 'PHZM1155',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xf4dc2473a52f0adde25f5b7c4371a99bb47a832e',
-  created_at: 1727834489,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1756869336,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "name": "AdminChanged",
     "type": "event",
@@ -1000,37 +940,20 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "sealEndTime",
+    "name": "setAllowBoxOpen",
     "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+    "stateMutability": "nonpayable",
+    "inputs": [
       {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "sealIdx",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
+        "type": "address",
+        "name": "user"
+      },
       {
-        "type": "uint256"
+        "type": "bool",
+        "name": "allowed"
       }
-    ]
-  },
-  {
-    "name": "sealStartTime",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
+    ],
+    "outputs": []
   },
   {
     "name": "setApprovalForAll",
@@ -1044,22 +967,6 @@ const contract = {
       {
         "type": "bool",
         "name": "approved"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setBoxOpenAllowed",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user"
-      },
-      {
-        "type": "bool",
-        "name": "allowed"
       }
     ],
     "outputs": []
@@ -1152,50 +1059,6 @@ const contract = {
       {
         "type": "uint256[]",
         "name": "_amounts"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setSealIdx",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_idx"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setSealPeriod",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_startTime"
-      },
-      {
-        "type": "uint256",
-        "name": "_endTime"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setSeasonalAllowed",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "user"
-      },
-      {
-        "type": "bool",
-        "name": "allowed"
       }
     ],
     "outputs": []

@@ -1,201 +1,52 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 34119,
-  address: '0x58fac88b5899fd894fb7153d3c8a12db05333ac5' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Dragon Ring Proxy',
+  id: 37139,
+  address: '0x26b5ebc57d0ef13dadd41a52ba32b28ee06d7fae' as const,
+  contract_name: 'DummyBooks',
+  display_name: 'Dummy Books',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xae8f2f9a9594ca41a29d15a1e5b46e35cef378a5',
-  created_at: 1745609596,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1758589871,
   abi: [
   {
     "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
     "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
+    "inputs": []
   },
   {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
-  {
-    "name": "ERC2981InvalidDefaultRoyalty",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "numerator"
-      },
-      {
-        "type": "uint256",
-        "name": "denominator"
-      }
-    ]
-  },
-  {
-    "name": "ERC2981InvalidDefaultRoyaltyReceiver",
+    "name": "AddressEmptyCode",
     "type": "error",
     "inputs": [
       {
         "type": "address",
-        "name": "receiver"
+        "name": "target"
       }
     ]
   },
   {
-    "name": "ERC2981InvalidTokenRoyalty",
+    "name": "BatchSizeZero",
     "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "numerator"
-      },
-      {
-        "type": "uint256",
-        "name": "denominator"
-      }
-    ]
+    "inputs": []
   },
   {
-    "name": "ERC2981InvalidTokenRoyaltyReceiver",
+    "name": "BookNotExists",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "ERC1967InvalidImplementation",
     "type": "error",
     "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId"
-      },
       {
         "type": "address",
-        "name": "receiver"
+        "name": "implementation"
       }
     ]
   },
   {
-    "name": "ERC721EnumerableForbiddenBatchMint",
+    "name": "ERC1967NonPayable",
     "type": "error",
     "inputs": []
   },
@@ -292,18 +143,19 @@ const contract = {
     ]
   },
   {
-    "name": "ERC721OutOfBoundsIndex",
+    "name": "ExceedsMaxSupply",
     "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      },
-      {
-        "type": "uint256",
-        "name": "index"
-      }
-    ]
+    "inputs": []
+  },
+  {
+    "name": "FailedCall",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "InvalidArrayLength",
+    "type": "error",
+    "inputs": []
   },
   {
     "name": "InvalidInitialization",
@@ -311,7 +163,22 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "InvalidTokenId",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "MaxSupplyReached",
+    "type": "error",
+    "inputs": []
+  },
+  {
     "name": "NotInitializing",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "OnlyMintingContract",
     "type": "error",
     "inputs": []
   },
@@ -336,9 +203,19 @@ const contract = {
     ]
   },
   {
-    "name": "ReentrancyGuardReentrantCall",
+    "name": "UUPSUnauthorizedCallContext",
     "type": "error",
     "inputs": []
+  },
+  {
+    "name": "UUPSUnsupportedProxiableUUID",
+    "type": "error",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "slot"
+      }
+    ]
   },
   {
     "name": "Approval",
@@ -382,6 +259,65 @@ const contract = {
     ]
   },
   {
+    "name": "BaseTokenUriUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "baseTokenUri"
+      }
+    ]
+  },
+  {
+    "name": "BookAdded",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "nftId"
+      },
+      {
+        "type": "uint256[3]",
+        "name": "toolIds"
+      },
+      {
+        "type": "uint256",
+        "name": "goldenTicketId"
+      }
+    ]
+  },
+  {
+    "name": "BookBurned",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "burner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "HiddenMetadataUriUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "hiddenMetadataUri"
+      }
+    ]
+  },
+  {
     "name": "Initialized",
     "type": "event",
     "inputs": [
@@ -392,28 +328,13 @@ const contract = {
     ]
   },
   {
-    "name": "LockId",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "tokenId",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Mint",
+    "name": "MintingContractUpdated",
     "type": "event",
     "inputs": [
       {
         "type": "address",
-        "name": "user",
+        "name": "newMintingContract",
         "indexed": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
       }
     ]
   },
@@ -434,38 +355,33 @@ const contract = {
     ]
   },
   {
-    "name": "SetRoyalty",
+    "name": "Revealed",
     "type": "event",
     "inputs": [
       {
-        "type": "address",
-        "name": "receiver",
-        "indexed": true
-      },
+        "type": "bool",
+        "name": "revealed"
+      }
+    ]
+  },
+  {
+    "name": "TokenRevealed",
+    "type": "event",
+    "inputs": [
       {
         "type": "uint256",
-        "name": "royalty"
-      }
-    ]
-  },
-  {
-    "name": "SetSigner",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "signer",
+        "name": "tokenId",
         "indexed": true
       }
     ]
   },
   {
-    "name": "SetUri",
+    "name": "TokensRevealed",
     "type": "event",
     "inputs": [
       {
-        "type": "string",
-        "name": "_url"
+        "type": "uint256[]",
+        "name": "tokenIds"
       }
     ]
   },
@@ -491,39 +407,24 @@ const contract = {
     ]
   },
   {
-    "name": "UnlockId",
+    "name": "Upgraded",
     "type": "event",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "tokenId",
+        "type": "address",
+        "name": "implementation",
         "indexed": true
       }
     ]
   },
   {
-    "name": "MAX_SUPPLY",
+    "name": "UPGRADE_INTERFACE_VERSION",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
     "outputs": [
       {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "__deprecated_lockedIds",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "bool"
+        "type": "string"
       }
     ]
   },
@@ -560,6 +461,89 @@ const contract = {
     ]
   },
   {
+    "name": "baseTokenUri",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "batchMintBooks",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "nftIds"
+      },
+      {
+        "type": "uint256[3][]",
+        "name": "toolIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "goldenTicketIds"
+      },
+      {
+        "type": "string[]",
+        "name": "nftTypes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "batchRevealTokens",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "burnBook",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "exists",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "stateMutability": "view",
@@ -576,6 +560,109 @@ const contract = {
     ]
   },
   {
+    "name": "getBook",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nftId"
+          },
+          {
+            "type": "uint256[3]",
+            "name": "toolIds"
+          },
+          {
+            "type": "uint256",
+            "name": "goldenTicketId"
+          },
+          {
+            "type": "bool",
+            "name": "hasGoldenTicket"
+          },
+          {
+            "type": "string",
+            "name": "nftType"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getUserBooks",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getUserBooksDetails",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "nftId"
+          },
+          {
+            "type": "uint256[3]",
+            "name": "toolIds"
+          },
+          {
+            "type": "uint256",
+            "name": "goldenTicketId"
+          },
+          {
+            "type": "bool",
+            "name": "hasGoldenTicket"
+          },
+          {
+            "type": "string",
+            "name": "nftType"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "hiddenMetadataUri",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string"
+      }
+    ]
+  },
+  {
     "name": "initialize",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -585,8 +672,24 @@ const contract = {
         "name": "_owner"
       },
       {
+        "type": "string",
+        "name": "_name"
+      },
+      {
+        "type": "string",
+        "name": "_symbol"
+      },
+      {
+        "type": "uint256",
+        "name": "_maxSupply"
+      },
+      {
+        "type": "string",
+        "name": "_hiddenMetadataUri"
+      },
+      {
         "type": "address",
-        "name": "_oracle"
+        "name": "_mintingContract"
       }
     ],
     "outputs": []
@@ -612,7 +715,7 @@ const contract = {
     ]
   },
   {
-    "name": "isLockPeriod",
+    "name": "isRevealed",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -623,20 +726,31 @@ const contract = {
     ]
   },
   {
-    "name": "mint",
+    "name": "isTokenRevealed",
     "type": "function",
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
       {
         "type": "uint256",
         "name": "tokenId"
       }
     ],
-    "outputs": []
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "maxSupply",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
   },
   {
     "name": "name",
@@ -646,17 +760,6 @@ const contract = {
     "outputs": [
       {
         "type": "string"
-      }
-    ]
-  },
-  {
-    "name": "oracle",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address"
       }
     ]
   },
@@ -688,6 +791,17 @@ const contract = {
     ]
   },
   {
+    "name": "proxiableUUID",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
     "name": "renounceOwnership",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -695,29 +809,16 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "royaltyInfo",
+    "name": "revealToken",
     "type": "function",
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "uint256",
         "name": "tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "salePrice"
       }
     ],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "receiver"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ]
+    "outputs": []
   },
   {
     "name": "safeTransferFrom",
@@ -780,41 +881,49 @@ const contract = {
     "outputs": []
   },
   {
-    "name": "setDefaultRoyalty",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "receiver"
-      },
-      {
-        "type": "uint96",
-        "name": "feeNumerator"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setOracle",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_oracle"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setUri",
+    "name": "setBaseTokenURI",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
       {
         "type": "string",
-        "name": "_url"
+        "name": "_baseTokenUri"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setHiddenMetadataURI",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_hiddenMetadataUri"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMintingContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_mintingContract"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRevealed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bool",
+        "name": "_revealed"
       }
     ],
     "outputs": []
@@ -843,49 +952,6 @@ const contract = {
     "outputs": [
       {
         "type": "string"
-      }
-    ]
-  },
-  {
-    "name": "toggleLockPeriod",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "tokenByIndex",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "index"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
-      }
-    ]
-  },
-  {
-    "name": "tokenOfOwnerByIndex",
-    "type": "function",
-    "stateMutability": "view",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "owner"
-      },
-      {
-        "type": "uint256",
-        "name": "index"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256"
       }
     ]
   },
@@ -944,6 +1010,22 @@ const contract = {
       {
         "type": "address",
         "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgradeToAndCall",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
       }
     ],
     "outputs": []

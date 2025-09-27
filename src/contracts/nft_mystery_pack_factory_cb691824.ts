@@ -1,79 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 35739,
-  address: '0xcf642977657e7b3fc6b26e6e5091536bea61b6dc' as const,
-  contract_name: 'TransparentProxyOZv4_9_5',
-  display_name: 'NFT Mystery Pack Factory Proxy',
+  id: 35737,
+  address: '0x12ed912662f7163c68422e3eaad7f78dcb691824' as const,
+  contract_name: 'NFTMysteryPackFactory',
+  display_name: 'NFT Mystery Pack Factory',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x5972ab56ed26701b67d9c145f85636047fe0e7a6',
+  is_proxy: false,
+  proxy_to: false,
   created_at: 1750747994,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "logic"
-      },
-      {
-        "type": "address",
-        "name": "admin"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -335,10 +271,6 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
-          },
-          {
-            "type": "address",
-            "name": "buybackToken"
           }
         ]
       },
@@ -534,10 +466,6 @@ const contract = {
           {
             "type": "bool",
             "name": "buybackEnabled"
-          },
-          {
-            "type": "address",
-            "name": "buybackToken"
           }
         ]
       },
