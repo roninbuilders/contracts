@@ -20,10 +20,13 @@
 		"experimentalDecorators": true,
 		/* Completeness */
 		"skipLibCheck": true,
+		/* Performance Optimizations */
+		"incremental": true,
+		"assumeChangesOnlyAffectDirectDependencies": true,
 		"paths": {
 			"@/*": ["./src/*"]
 		}
 	},
-	"exclude": ["node_modules", "dist", "types", "out", ".next", ".turbo"],
+	"exclude": ["node_modules", "dist", "types", "out", ".next", ".turbo", "**/*.test.ts", "**/*.spec.ts", "src/contracts"],
 	"include": ["global.d.ts", "src"]
 }
