@@ -1,4 +1,10 @@
-# ⚡ @roninbuilders/contracts
+<div align="center">
+
+![RoninBuilders Contracts](examples/roninbuilders.png)
+
+# @roninbuilders/contracts
+
+</div>
 
 [![npm version](https://img.shields.io/npm/v/@roninbuilders/contracts.svg)](https://www.npmjs.com/package/@roninbuilders/contracts)
 [![npm downloads](https://img.shields.io/npm/dm/@roninbuilders/contracts.svg)](https://www.npmjs.com/package/@roninbuilders/contracts)
@@ -7,37 +13,36 @@
 [![Bundle Friendly](https://img.shields.io/badge/Bundle-Tree--Shakable-success.svg)](https://github.com/roninbuilders/contracts)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-informational.svg)](./.github/workflows/ci.yml)
 
-**Verified Ronin Network smart contract ABIs & addresses — import exactly what you need with full TypeScript ABI inference safety.**
+Verified smart contract ABIs and addresses for Ronin Network. Import just what you need and get full TypeScript safety.
 
-> Optimized for modern web3 stacks: viem • ethers.js • browser dApps • server scripts
+Works great with viem, ethers.js, browser apps, and server scripts.
 
 ---
 
-## 📑 Table of Contents
+## Table of contents
 
-- [Why Choose This Library?](#-why-choose-this-library)
-- [Installation](#-installation)
-- [Quick Start](#-quick-start)
-- [Contract Structure](#-contract-structure)
-- [Examples](#-examples)
+- [Why use this?](#why-use-this)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Contract structure](#contract-structure)
+- [Examples](#examples)
   - [Viem](#viem-integration)
   - [Ethers.js](#ethersjs-integration)
-- [Development](#️-development)
-- [Working Examples](#-working-examples)
-- [Security Considerations](#-security-considerations)
-- [Contributing](#-contributing)
+- [Development](#development)
+- [Working examples](#working-examples)
+- [Security considerations](#security-considerations)
+- [Contributing](#contributing)
 
-## ✨ Why Choose This Library?
+## Why use this?
 
-- **🔒 Verified & Secure**: All contract addresses and ABIs are verified against official Ronin Network Explorer API
-- **📦 Optimized Bundle Size**: Tree-shakable imports minimize your application's bundle size
-- **🔧 TypeScript First**: Full type safety with generated TypeScript definitions
-- **🚀 Framework Agnostic**: Works with viem, ethers.js, and other web3 libraries
-- **📚 Comprehensive Coverage**: Extensive collection of Ronin ecosystem contracts
-- **🔄 Always Up-to-Date**: Regularly updated with latest contract deployments
+All the contract addresses and ABIs come straight from the official Ronin Network Explorer API, so you know they're legit. You can import just the contracts you actually need instead of pulling in everything, which keeps your bundle size reasonable.
+
+Everything has proper TypeScript types generated automatically. Works with whatever web3 library you're already using, whether that's viem, ethers.js, or something else. We keep adding new contracts as they get deployed and verified on the network.
+
+You don't have to hunt down contract addresses or copy ABIs from block explorers anymore. Just import what you need and start building.
 
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install --save-exact @roninbuilders/contracts
@@ -47,13 +52,13 @@ pnpm add --save-exact @roninbuilders/contracts
 bun add --exact @roninbuilders/contracts
 ```
 
-> **Security Best Practice**: Always use `--save-exact` (or `--exact` for Bun) when installing packages to ensure deterministic builds and avoid potential security vulnerabilities from dependency updates.
+Use the exact flags to pin the version. This keeps your builds consistent and avoids any surprises from automatic updates.
 
-## 🚀 Quick Start
+## Quick start
 
 ### Import contracts individually
 
-This is the only supported approach as it minimizes the bundle size for your application.
+You need to import each contract separately. This keeps your bundle size small since you only get what you actually use.
 
 ```typescript
 import MY_CONTRACT from '@roninbuilders/contracts/my_contract';
@@ -61,24 +66,18 @@ import MY_CONTRACT from '@roninbuilders/contracts/my_contract';
 const MY_CONTRACT = require('@roninbuilders/contracts/my_contract');
 ```
 
-### ⚠️ Barrel (named) imports are not supported
+### No barrel imports
 
-To keep bundle size minimal, importing from the package root with named exports is not supported (e.g., `import { AXIE_PROXY } from '@roninbuilders/contracts'`). Always import individual contract files via default import:
+Don't try to import multiple contracts from the package root like `import { AXIE_PROXY } from '@roninbuilders/contracts'`. That would pull in everything. Instead, import each contract file directly:
 
 ```typescript
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
 import KATANA_ROUTER from '@roninbuilders/contracts/katana_router'
 ```
 
-## 📋 Contract Structure
+## Contract structure
 
-Each contract export includes:
-
-- **Contract ABI** - The contract's Application Binary Interface
-- **Contract address** - Verified deployment address on Ronin Network
-- **Metadata** - Name, deprecation status, and creation date
-
-Example:
+Each contract gives you the ABI, the verified address on Ronin Network, and some basic info like whether it's deprecated.
 
 ```typescript
 import AXIE_PROXY from '@roninbuilders/contracts/axie_proxy'
@@ -89,11 +88,13 @@ console.log(AXIE_PROXY.proxy_abi) // Proxy ABI (if applicable)
 console.log(AXIE_PROXY.is_deprecated) // Deprecation status
 ```
 
-## 💻 Examples
+Some contracts also include a proxy ABI if they're behind a proxy pattern.
 
-### Viem Integration
+## Examples
 
-Using viem to interact with contracts:
+### Viem integration
+
+Here's how to use it with viem:
 
 ```typescript
 import { createPublicClient, http, formatEther, formatUnits } from 'viem'
@@ -154,9 +155,9 @@ const usdc = await client.readContract({
 console.log(`USDC: ${formatUnits(usdc, 6)}`)
 ```
 
-### Ethers.js Integration
+### Ethers.js integration
 
-Using ethers.js to interact with contracts:
+Same thing but with ethers.js:
 
 ```typescript
 import { ethers, formatEther, formatUnits, Contract } from 'ethers'
@@ -189,7 +190,7 @@ const usdc = await usdcContract.balanceOf(address)
 console.log(`USDC: ${formatUnits(usdc, 6)}`)
 ```
 
-## 🛠️ Development
+## Development
 
 Update contracts from Ronin Explorer:
 
@@ -209,37 +210,30 @@ Format code:
 bun run format
 ```
 
-## 📚 Working Examples
+## Working examples
 
-Working examples demonstrating how to use this package in different environments:
+Check out these examples to see how to use the package in different setups:
 
-### [CommonJS Example](https://github.com/roninbuilders/contracts/tree/main/examples/commonjs)
+### [CommonJS example](https://github.com/roninbuilders/contracts/tree/main/examples/commonjs)
 
-- **Environment**: Node.js with CommonJS
-- **Library**: ethers.js
-- **Features**: Shows `require()` syntax and basic token balance fetching
+Node.js with CommonJS and ethers.js. Shows the `require()` syntax and basic token balance fetching.
 
-### [TypeScript Example](https://github.com/roninbuilders/contracts/tree/main/examples/typescript)
+### [TypeScript example](https://github.com/roninbuilders/contracts/tree/main/examples/typescript)
 
-- **Environment**: Bun runtime with TypeScript
-- **Library**: viem
-- **Features**: ES modules, type safety, and advanced contract interactions
+Bun runtime with TypeScript and viem. Uses ES modules with full type safety and more advanced contract interactions.
 
-### [Browser Example](https://github.com/roninbuilders/contracts/tree/main/examples/browser)
+### [Browser example](https://github.com/roninbuilders/contracts/tree/main/examples/browser)
 
-- **Environment**: Web browser with JavaScript
-- **Library**: viem (bundled with Rollup)
-- **Features**: Interactive HTML interface with live blockchain data
+Web browser with JavaScript and viem bundled with Rollup. Has an interactive HTML interface with live blockchain data.
 
-## 🔒 Security Considerations
+## Security considerations
 
-⚠️ **Important Security Notice**: This package provides contract ABIs and addresses for blockchain interactions. Always verify contract addresses independently before executing transactions. Be aware that:
+This package gives you contract ABIs and addresses, but you should still double check addresses before doing any transactions with real money. Smart contracts are risky by nature.
 
-- Contract addresses should be verified against official sources
-- Smart contract interactions carry inherent risks
-- This package is provided as-is without warranty
-- Always audit smart contract code before interacting with it
+We get the data from the official Ronin Explorer, but things can change. Always verify addresses against official sources if you're doing anything important. This package comes with no warranty, so use it at your own risk.
 
-## 🤝 Contributing
+If you're interacting with a contract you haven't used before, take a look at the contract code first to make sure it does what you expect.
+
+## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
