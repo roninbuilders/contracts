@@ -47,7 +47,7 @@ function displayContractInfo() {
 }
 
 // Fetch token balances
-window.fetchBalances = async function () {
+window.fetchBalances = async () => {
 	const balancesDiv = document.getElementById('balances')
 	const button = document.getElementById('fetch-balances')
 
@@ -121,7 +121,7 @@ window.fetchBalances = async function () {
 }
 
 // Fetch Atias Blessing data
-window.fetchBlessingData = async function () {
+window.fetchBlessingData = async () => {
 	const blessingDiv = document.getElementById('blessing-data')
 	const button = document.getElementById('fetch-blessing')
 

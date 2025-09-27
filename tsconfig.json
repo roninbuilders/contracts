@@ -26,6 +26,16 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"exclude": ["node_modules", "dist", "types", "out", ".next", ".turbo", "**/*.test.ts", "**/*.spec.ts", "src/contracts"],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"types",
+		"out",
+		".next",
+		".turbo",
+		"**/*.test.ts",
+		"**/*.spec.ts",
+		"src/contracts"
+	],
 	"include": ["global.d.ts", "src"]
 }

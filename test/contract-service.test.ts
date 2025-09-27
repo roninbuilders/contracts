@@ -313,7 +313,7 @@ describe('ContractService', () => {
 		expect((service as unknown as { totalContracts: number }).totalContracts).toBe(3)
 		expect(spyProcessBatch).toHaveBeenCalled()
 		const firstCall = spyProcessBatch.mock.calls[0]
-		if (firstCall && firstCall[0]) {
+		if (firstCall?.[0]) {
 			const batchArg = firstCall[0]
 			expect(batchArg).toContainEqual(mockContractItem)
 			expect(batchArg).toContainEqual(mockProxyItem)
