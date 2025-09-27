@@ -21,7 +21,6 @@
 		/* Completeness */
 		"skipLibCheck": true,
 		/* Performance Optimizations */
-		"incremental": true,
 		"assumeChangesOnlyAffectDirectDependencies": true,
 		"paths": {
 			"@/*": ["./src/*"]
