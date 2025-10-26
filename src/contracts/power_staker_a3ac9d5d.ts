@@ -1,76 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 35795,
-  address: '0x569899aab0ff89c1711114ba9d7be0774bd23c71' as const,
-  contract_name: 'ERC1967Proxy',
-  display_name: 'Power Staker Proxy',
+  id: 35794,
+  address: '0x3b22ea511f25143f1d881cad182e2491a3ac9d5d' as const,
+  contract_name: 'PowerStaker',
+  display_name: 'Power Staker',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0x12a8d2226d50797cb6298d5c4b895a49e4342e4c',
+  is_proxy: false,
+  proxy_to: false,
   created_at: 1750864061,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AddressEmptyCode",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "target"
-      }
-    ]
-  },
-  {
-    "name": "ERC1967InvalidImplementation",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation"
-      }
-    ]
-  },
-  {
-    "name": "ERC1967NonPayable",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "FailedCall",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -482,17 +421,6 @@ const contract = {
       {
         "type": "uint96",
         "name": "extraData",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "UpdatedRewardSource",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newRewardSource",
         "indexed": true
       }
     ]
@@ -995,18 +923,6 @@ const contract = {
       {
         "type": "address",
         "name": "account"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setRewardSource",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newRewardSource"
       }
     ],
     "outputs": []

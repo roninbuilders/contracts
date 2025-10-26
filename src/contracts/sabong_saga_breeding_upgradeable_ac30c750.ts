@@ -1,143 +1,15 @@
 import type { Contract } from '@/contract'
 import type { Abi } from 'abitype'
 const contract = {
-  id: 34315,
-  address: '0x89c49f0a4c3f9c6b7bbe690463073f1813821ba6' as const,
-  contract_name: 'TransparentUpgradeableProxy',
-  display_name: 'Sabong Saga Breeding Upgradeable Proxy',
+  id: 37418,
+  address: '0xb3b56a5ed6c975e05b5e941ef865d684ac30c750' as const,
+  contract_name: 'SabongSagaBreedingUpgradeable',
+  display_name: 'Sabong Saga Breeding Upgradeable',
   is_deprecated: false,
-  is_proxy: true,
-  proxy_to: '0xf201e2daacb7e2f657a68175afbd0ffad33b786f',
-  created_at: 1745851959,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1760342340,
   abi: [
-  {
-    "type": "constructor",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_logic"
-      },
-      {
-        "type": "address",
-        "name": "admin_"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ]
-  },
-  {
-    "name": "AdminChanged",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "previousAdmin"
-      },
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ]
-  },
-  {
-    "name": "BeaconUpgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "beacon",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "name": "Upgraded",
-    "type": "event",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "implementation",
-        "indexed": true
-      }
-    ]
-  },
-  {
-    "type": "fallback",
-    "stateMutability": "payable"
-  },
-  {
-    "name": "admin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "admin_"
-      }
-    ]
-  },
-  {
-    "name": "changeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newAdmin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "implementation",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "implementation_"
-      }
-    ]
-  },
-  {
-    "name": "upgradeTo",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgradeToAndCall",
-    "type": "function",
-    "stateMutability": "payable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "newImplementation"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "type": "receive",
-    "stateMutability": "payable"
-  }
-] as const satisfies Abi,
-  proxy_abi: [
   {
     "type": "constructor",
     "stateMutability": "nonpayable",
@@ -388,7 +260,8 @@ const contract = {
       },
       {
         "type": "uint256[]",
-        "name": "chickenIds"
+        "name": "chickenIds",
+        "indexed": true
       },
       {
         "type": "uint256[]",
@@ -396,7 +269,8 @@ const contract = {
       },
       {
         "type": "uint256[]",
-        "name": "resourcesTokenids"
+        "name": "resourcesTokenids",
+        "indexed": true
       },
       {
         "type": "uint256[]",
