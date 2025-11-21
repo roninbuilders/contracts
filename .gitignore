@@ -3,3 +3,4 @@ dist
 .npmrc
 .env
 .vscode/
+.DS_Store
