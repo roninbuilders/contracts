@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Mavis Launchpad Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xcc586c388ba7449e885848033ee8350dc8cdd4a3',
+  proxy_to: '0x36e83fa9741a794d888fedcea4d5de522d003368',
   created_at: 1711516331,
   abi: [
   {
@@ -128,25 +128,6 @@ const contract = {
     ]
   },
   {
-    "name": "ErrFeeExceedsMintPrice",
-    "type": "error",
-    "inputs": []
-  },
-  {
-    "name": "ErrHasValueWhileMintByERC20",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "currency"
-      },
-      {
-        "type": "uint256",
-        "name": "value"
-      }
-    ]
-  },
-  {
     "name": "ErrIncorrectConditionalType",
     "type": "error",
     "inputs": [
@@ -166,20 +147,6 @@ const contract = {
       },
       {
         "type": "uint8",
-        "name": "expected"
-      }
-    ]
-  },
-  {
-    "name": "ErrInsufficientTxValue",
-    "type": "error",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "actual"
-      },
-      {
-        "type": "uint256",
         "name": "expected"
       }
     ]
@@ -450,7 +417,7 @@ const contract = {
     "inputs": []
   },
   {
-    "name": "FailedInnerCall",
+    "name": "FailedCall",
     "type": "error",
     "inputs": []
   },
@@ -629,7 +596,7 @@ const contract = {
               },
               {
                 "type": "uint80",
-                "name": "mintPrice"
+                "name": "price"
               },
               {
                 "type": "uint16",
@@ -855,15 +822,15 @@ const contract = {
       },
       {
         "type": "tuple",
-        "name": "userTier",
+        "name": "customizedConfig",
         "components": [
           {
             "type": "uint80",
-            "name": "mintPrice"
+            "name": "price"
           },
           {
             "type": "uint32",
-            "name": "mintableLimit"
+            "name": "limit"
           },
           {
             "type": "uint144",
@@ -1021,15 +988,15 @@ const contract = {
       },
       {
         "type": "tuple",
-        "name": "userTier",
+        "name": "customizedConfig",
         "components": [
           {
             "type": "uint80",
-            "name": "mintPrice"
+            "name": "price"
           },
           {
             "type": "uint32",
-            "name": "mintableLimit"
+            "name": "limit"
           },
           {
             "type": "uint144",
@@ -1217,7 +1184,7 @@ const contract = {
               },
               {
                 "type": "uint80",
-                "name": "mintPrice"
+                "name": "price"
               },
               {
                 "type": "uint16",
@@ -1277,11 +1244,11 @@ const contract = {
         "components": [
           {
             "type": "uint80",
-            "name": "mintPrice"
+            "name": "price"
           },
           {
             "type": "uint32",
-            "name": "mintableLimit"
+            "name": "limit"
           },
           {
             "type": "uint144",
@@ -1454,7 +1421,7 @@ const contract = {
               },
               {
                 "type": "uint80",
-                "name": "mintPrice"
+                "name": "price"
               },
               {
                 "type": "uint16",
@@ -1503,7 +1470,7 @@ const contract = {
               },
               {
                 "type": "uint80",
-                "name": "mintPrice"
+                "name": "price"
               },
               {
                 "type": "uint16",
@@ -1552,7 +1519,7 @@ const contract = {
               },
               {
                 "type": "uint80",
-                "name": "mintPrice"
+                "name": "price"
               },
               {
                 "type": "uint16",
@@ -1761,6 +1728,22 @@ const contract = {
     ]
   },
   {
+    "name": "getRoleMembers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]"
+      }
+    ]
+  },
+  {
     "name": "getStageLogicsOf",
     "type": "function",
     "stateMutability": "view",
@@ -1806,11 +1789,11 @@ const contract = {
         "components": [
           {
             "type": "uint80",
-            "name": "mintPrice"
+            "name": "price"
           },
           {
             "type": "uint32",
-            "name": "mintableLimit"
+            "name": "limit"
           },
           {
             "type": "uint144",
@@ -2236,11 +2219,11 @@ const contract = {
         "components": [
           {
             "type": "uint80",
-            "name": "mintPrice"
+            "name": "price"
           },
           {
             "type": "uint32",
-            "name": "mintableLimit"
+            "name": "limit"
           },
           {
             "type": "uint144",

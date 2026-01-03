@@ -7,7 +7,7 @@ const contract = {
   display_name: 'PHA Support Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xdac9e524b9118a69ae44dec2efc4986105f1e49f',
+  proxy_to: '0x4278f0a8288f2afd2f0c899c0060959588029fcf',
   created_at: 1737608850,
   abi: [
   {
@@ -115,12 +115,62 @@ const contract = {
     ]
   },
   {
+    "name": "CitizenshipPurchased",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "buyer",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
+      }
+    ]
+  },
+  {
     "name": "Initialized",
     "type": "event",
     "inputs": [
       {
         "type": "uint8",
         "name": "version"
+      }
+    ]
+  },
+  {
+    "name": "ItemBought",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "buyer",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "itemId"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      },
+      {
+        "type": "uint256",
+        "name": "timestamp"
       }
     ]
   },
@@ -356,6 +406,22 @@ const contract = {
     ]
   },
   {
+    "name": "buy",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "itemId"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "buyPremiumBox",
     "type": "function",
     "stateMutability": "payable",
@@ -380,10 +446,41 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "citizenshipConfig",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "getBoxPrice",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getCitizenshipPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
     "outputs": [
       {
         "type": "uint256"
@@ -409,6 +506,26 @@ const contract = {
     "outputs": [
       {
         "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "getPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "itemId"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
       }
     ]
   },
@@ -581,6 +698,24 @@ const contract = {
     ]
   },
   {
+    "name": "prices",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
     "name": "primalHeroZ",
     "type": "function",
     "stateMutability": "view",
@@ -728,6 +863,22 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "setCitizenshipConfig",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "setGrantRole",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -835,6 +986,26 @@ const contract = {
       {
         "type": "address",
         "name": "newPHZM1155"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setPrices",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "itemId"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "price"
       }
     ],
     "outputs": []

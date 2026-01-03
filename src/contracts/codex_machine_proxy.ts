@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Codex Machine Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xea187253c4f2e83c8d047c48dc6b914aac35dc98',
+  proxy_to: '0x6594f1b1de10adba6661153cfa82d9bb001c3540',
   created_at: 1760596144,
   abi: [
   {
@@ -272,6 +272,17 @@ const contract = {
       {
         "type": "bytes4",
         "name": "sig"
+      }
+    ]
+  },
+  {
+    "name": "AccessoryContractUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAccessoryContract",
+        "indexed": true
       }
     ]
   },
@@ -1063,6 +1074,18 @@ const contract = {
     "outputs": []
   },
   {
+    "name": "initializeV2",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "axieAccessory_"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "isUsedNonce",
     "type": "function",
     "stateMutability": "view",
@@ -1192,6 +1215,18 @@ const contract = {
         "name": "requestHash"
       }
     ]
+  },
+  {
+    "name": "setAccessoryContract",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newAccessoryContract"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "setGasConfiguration",

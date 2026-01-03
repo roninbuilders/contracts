@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Sabong Saga Breeding Upgradeable Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xf201e2daacb7e2f657a68175afbd0ffad33b786f',
+  proxy_to: '0x8eef75252e5d9c127fa501910be0c9e408f60dca',
   created_at: 1745851959,
   abi: [
   {
@@ -174,6 +174,11 @@ const contract = {
     "inputs": []
   },
   {
+    "name": "InvalidFee",
+    "type": "error",
+    "inputs": []
+  },
+  {
     "name": "InvalidInitialization",
     "type": "error",
     "inputs": []
@@ -328,6 +333,35 @@ const contract = {
       {
         "type": "uint256",
         "name": "breedingCooldownTime"
+      }
+    ]
+  },
+  {
+    "name": "EmergencyETHRelease",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "FeePercentageUpdated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "oldPercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "newPercentage"
       }
     ]
   },
@@ -574,7 +608,41 @@ const contract = {
     ]
   },
   {
+    "name": "emergencyReleaseETH",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "feathers",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "feePercentage",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "feeWallet",
     "type": "function",
     "stateMutability": "view",
     "inputs": [],
@@ -768,11 +836,84 @@ const contract = {
     ]
   },
   {
+    "name": "remoteBreed",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "params",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "chickenLeftTokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "chickenRightTokenId"
+          },
+          {
+            "type": "uint256",
+            "name": "totalAmount"
+          },
+          {
+            "type": "uint256",
+            "name": "amountToVault"
+          },
+          {
+            "type": "uint256",
+            "name": "amountToNinuno"
+          },
+          {
+            "type": "uint256",
+            "name": "breedingCooldownTime"
+          },
+          {
+            "type": "uint256[][]",
+            "name": "feathersData"
+          },
+          {
+            "type": "uint256[][]",
+            "name": "resourcesData"
+          },
+          {
+            "type": "uint256",
+            "name": "remoteBreedingFee"
+          },
+          {
+            "type": "address",
+            "name": "remoteOwner"
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "_sig"
+      },
+      {
+        "type": "string",
+        "name": "referralCode"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "renounceOwnership",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [],
     "outputs": []
+  },
+  {
+    "name": "rentalAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
   },
   {
     "name": "resources",
@@ -784,6 +925,76 @@ const contract = {
         "type": "address"
       }
     ]
+  },
+  {
+    "name": "revShareAddress",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "revSharePercentage",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "setFeePercentage",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_newFeePercentage"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRentalAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newRentalAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setRevShareAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_revShareAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setTreasuryAddress",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_treasury"
+      }
+    ],
+    "outputs": []
   },
   {
     "name": "signer",
@@ -872,6 +1083,30 @@ const contract = {
     ]
   },
   {
+    "name": "updateFees",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_feeWallet"
+      },
+      {
+        "type": "uint256",
+        "name": "_feePercentage"
+      },
+      {
+        "type": "address",
+        "name": "_revShareAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_revSharePercentage"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "updateReferral",
     "type": "function",
     "stateMutability": "nonpayable",
@@ -924,6 +1159,10 @@ const contract = {
         "type": "bool"
       }
     ]
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
   }
 ] as const satisfies Abi
 } as const satisfies Contract

@@ -1,0 +1,1255 @@
+import type { Contract } from '@/contract'
+import type { Abi } from 'abitype'
+const contract = {
+  id: 37797,
+  address: '0xc9f1d80c55bfca7ff96b237111737412790d51cd' as const,
+  contract_name: 'LotteryContract',
+  display_name: 'Lottery Contract',
+  is_deprecated: false,
+  is_proxy: false,
+  proxy_to: false,
+  created_at: 1762885717,
+  abi: [
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_vrfCoordinator"
+      }
+    ]
+  },
+  {
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error",
+    "inputs": []
+  },
+  {
+    "name": "FeesDistributed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "validatorShare"
+      },
+      {
+        "type": "uint256",
+        "name": "feeRecipientShare"
+      },
+      {
+        "type": "uint256",
+        "name": "secondaryShare"
+      },
+      {
+        "type": "uint256",
+        "name": "prizePoolShare"
+      }
+    ]
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "name": "Paused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "PrizeClaimed",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "ticketId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "winner"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "RaffleCreated",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "ticketPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime"
+      }
+    ]
+  },
+  {
+    "name": "TicketsPurchased",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "buyer",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "ticketIds"
+      }
+    ]
+  },
+  {
+    "name": "UnclaimedPrizeSwept",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ]
+  },
+  {
+    "name": "Unpaused",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ]
+  },
+  {
+    "name": "VRFFulfilled",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      },
+      {
+        "type": "uint256",
+        "name": "randomness"
+      }
+    ]
+  },
+  {
+    "name": "VRFRequested",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "requestId"
+      }
+    ]
+  },
+  {
+    "name": "WinnersDrawn",
+    "type": "event",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId",
+        "indexed": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "winningTicketIds"
+      }
+    ]
+  },
+  {
+    "name": "FEE_DIVISOR",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "balanceOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_owner"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "buyTickets",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      },
+      {
+        "type": "uint256",
+        "name": "_quantity"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "canEndRaffle",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "claimAllPrizesForRaffle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claimPrize",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_ticketId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "createRaffle",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_ticketPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "_duration"
+      },
+      {
+        "type": "uint256",
+        "name": "_minTicketsSold"
+      },
+      {
+        "type": "uint256",
+        "name": "_winningTicketCount"
+      },
+      {
+        "type": "uint256",
+        "name": "_claimPeriod"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "depositPrizeFunds",
+    "type": "function",
+    "stateMutability": "payable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "drawWinnersManually",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      },
+      {
+        "type": "uint256",
+        "name": "_randomSeed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "feeRecipientFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getContractBalance",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getDynamicGasPrice",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getFeeStatistics",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "validatorTotal"
+      },
+      {
+        "type": "uint256",
+        "name": "feeRecipientTotal"
+      },
+      {
+        "type": "uint256",
+        "name": "secondaryTotal"
+      },
+      {
+        "type": "uint256",
+        "name": "prizePoolTotal"
+      }
+    ]
+  },
+  {
+    "name": "getRaffleInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "ticketPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime"
+      },
+      {
+        "type": "uint256",
+        "name": "claimDeadline"
+      },
+      {
+        "type": "uint256",
+        "name": "totalTickets"
+      },
+      {
+        "type": "uint256",
+        "name": "winningTicketCount"
+      },
+      {
+        "type": "bool",
+        "name": "isCompleted"
+      },
+      {
+        "type": "bool",
+        "name": "winnersDrawn"
+      },
+      {
+        "type": "uint256",
+        "name": "prizePool"
+      },
+      {
+        "type": "bool",
+        "name": "vrfRequested"
+      }
+    ]
+  },
+  {
+    "name": "getUserAllWinningTicketsWithClaimStatus",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "raffleId"
+          },
+          {
+            "type": "uint256",
+            "name": "ticketId"
+          },
+          {
+            "type": "uint256",
+            "name": "prizeAmount"
+          },
+          {
+            "type": "bool",
+            "name": "isClaimed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "getUserInfo",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "totalRonSpent"
+      },
+      {
+        "type": "uint256",
+        "name": "totalTickets"
+      },
+      {
+        "type": "uint256",
+        "name": "totalRaffles"
+      },
+      {
+        "type": "tuple[]",
+        "name": "raffleInfos",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "raffleId"
+          },
+          {
+            "type": "uint256",
+            "name": "userTicketsCount"
+          },
+          {
+            "type": "uint256",
+            "name": "userRonSpent"
+          }
+        ]
+      },
+      {
+        "type": "uint256[]",
+        "name": "allTicketIds"
+      }
+    ]
+  },
+  {
+    "name": "getUserRaffleIDs",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getUserRaffleIdsAndTicketCounts",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getUserTickets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      },
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "getUserTotalPrizeAmount",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "getUserWinningTicketsAndPrizes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "userTicketIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ticketPrizes"
+      }
+    ]
+  },
+  {
+    "name": "getUserWinningTicketsInRaffle",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "raffleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]",
+        "name": "userTicketIds"
+      },
+      {
+        "type": "uint256[]",
+        "name": "ticketPrizes"
+      }
+    ]
+  },
+  {
+    "name": "getWinnersAndPrizes",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "winners"
+      },
+      {
+        "type": "uint256[]",
+        "name": "prizes"
+      }
+    ]
+  },
+  {
+    "name": "getWinningTickets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256[]"
+      }
+    ]
+  },
+  {
+    "name": "isTicketWinner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      },
+      {
+        "type": "uint256",
+        "name": "_ticketId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "isWinningTicket",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "ownerOf",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "pause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "paused",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "prizeAmounts",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "raffleTicketIds",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "raffleVrfRequests",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "raffleWinningTickets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "raffles",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "ticketPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "endTime"
+      },
+      {
+        "type": "uint256",
+        "name": "claimDeadline"
+      },
+      {
+        "type": "uint256",
+        "name": "totalTickets"
+      },
+      {
+        "type": "uint256",
+        "name": "minTicketsSold"
+      },
+      {
+        "type": "uint256",
+        "name": "winningTicketCount"
+      },
+      {
+        "type": "bool",
+        "name": "isCompleted"
+      },
+      {
+        "type": "bool",
+        "name": "winnersDrawn"
+      },
+      {
+        "type": "uint256",
+        "name": "prizePool"
+      },
+      {
+        "type": "uint256",
+        "name": "randomSeed"
+      },
+      {
+        "type": "bool",
+        "name": "vrfRequested"
+      }
+    ]
+  },
+  {
+    "name": "rawFulfillRandomSeed",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "_reqHash"
+      },
+      {
+        "type": "uint256",
+        "name": "_randomSeed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "recoverFunds",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "requestRandomWinners",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "rescueRON",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "ronToWei",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_ronAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "secondaryFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "setFees",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_validatorFee"
+      },
+      {
+        "type": "uint256",
+        "name": "_feeRecipientFee"
+      },
+      {
+        "type": "uint256",
+        "name": "_secondaryFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setVrfConfig",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_callbackGasLimit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "sweepUnclaimedPrizes",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_raffleId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tickets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "raffleId"
+      },
+      {
+        "type": "uint256",
+        "name": "ticketId"
+      },
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "bool",
+        "name": "isClaimed"
+      }
+    ]
+  },
+  {
+    "name": "totalFeeRecipientFees",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalPrizePool",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalSecondaryFees",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "totalValidatorFees",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "unpause",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "userRaffleTickets",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "userRonSpentPerRaffle",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "userTotalRonSpent",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "validatorFee",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "vrfCallbackGasLimit",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "vrfCoordinator",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "name": "vrfRequests",
+    "type": "function",
+    "stateMutability": "view",
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "weiToRon",
+    "type": "function",
+    "stateMutability": "pure",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_weiAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "name": "withdrawAllFunds",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "receive",
+    "stateMutability": "payable"
+  }
+] as const satisfies Abi
+} as const satisfies Contract
+export default contract

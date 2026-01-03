@@ -7,7 +7,7 @@ const contract = {
   display_name: 'RRW Color Guess Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xca7a9e453a81897c026daeb6305d25a8d6c9bb5e',
+  proxy_to: '0x0ec358603eda1a2a144bf01710e675fd37a9afe0',
   created_at: 1757281941,
   abi: [
   {

@@ -7,7 +7,7 @@ const contract = {
   display_name: 'Axie Battle Pass Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xcffe40c02899fa126e37d92f46fe09c8a20a6026',
+  proxy_to: '0x024247c48c684bc1837e6975bd51553d6edc972a',
   created_at: 1760596144,
   abi: [
   {
@@ -1017,6 +1017,10 @@ const contract = {
             "name": "currentLevel"
           },
           {
+            "type": "bool",
+            "name": "materialMinted"
+          },
+          {
             "type": "uint256",
             "name": "unlockedLevelsBitMap"
           },
@@ -1234,6 +1238,26 @@ const contract = {
       {
         "type": "address",
         "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "setMaterialMintedStatus",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "uint32",
+        "name": "seasonId"
+      },
+      {
+        "type": "address[]",
+        "name": "users"
+      },
+      {
+        "type": "bool[]",
+        "name": "statuses"
       }
     ],
     "outputs": []

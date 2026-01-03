@@ -4,10 +4,10 @@ const contract = {
   id: 194,
   address: '0x8bd81a19420bad681b7bfc20e703ebd8e253782d' as const,
   contract_name: 'ERC20StakingManagerProxyDeprecated',
-  display_name: 'Staking Manager',
+  display_name: 'ERC20 Staking Manager Proxy',
   is_deprecated: false,
   is_proxy: true,
-  proxy_to: '0xe1147ff24e404ba38202ea4aee04191ef0890db2',
+  proxy_to: '0x9b532621892899a3f22e49771c1beeb2e7192183',
   created_at: 1632969648,
   abi: [
   {
@@ -665,6 +665,54 @@ const contract = {
     ]
   },
   {
+    "name": "overwriteFutureBlockReward",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256",
+        "name": "_fromBlock"
+      },
+      {
+        "type": "uint256",
+        "name": "_rewardPerBlock"
+      },
+      {
+        "type": "uint256",
+        "name": "_overwriteIndex"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "overwriteManyFutureBlockRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_fromBlocks"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_rewardPerBlocks"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_overwriteIndexes"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "poolInfo",
     "type": "function",
     "stateMutability": "view",
@@ -697,26 +745,7 @@ const contract = {
     ]
   },
   {
-    "name": "removeAdmin",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "resetRewards",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_user"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setFutureBlockReward",
+    "name": "pushFutureBlockReward",
     "type": "function",
     "stateMutability": "nonpayable",
     "inputs": [
@@ -731,6 +760,45 @@ const contract = {
       {
         "type": "uint256",
         "name": "_rewardPerBlock"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "pushManyFutureBlockRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_fromBlocks"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_rewardPerBlocks"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "removeAdmin",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "resetRewards",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
       }
     ],
     "outputs": []
