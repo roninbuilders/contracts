@@ -3,6 +3,7 @@
 	"version": "0.6.25",
 	"description": "Verified smart contract ABIs and addresses for the Ronin Network blockchain. TypeScript-ready with optimized bundle size.",
 	"type": "module",
+	"packageManager": "pnpm@10.33.2",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"files": [
